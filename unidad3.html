@@ -856,41 +856,43 @@ String cadena = <span class="text-green-400">"10101"</span>;
 
                     <!-- TICKET DEL PROYECTO -->
                     <div id="resultado-u3" class="hidden">
-                        <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
-                            <div class="mb-4 md:mb-0">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
-                                    <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
-                                </h2>
-                                <p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
-                            </div>
-                            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                                <div class="text-left md:text-right">
-                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
-                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg"></span>
-                                </div>
-                                <button onclick="descargarPDF()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg transition flex items-center">
-                                    <i class="fas fa-file-pdf mr-2"></i> PDF
-                                </button>
-                            </div>
+                        <div class="flex justify-end mb-4">
+                            <button onclick="descargarPDF()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center">
+                                <i class="fas fa-file-pdf mr-2"></i> Descargar Ticket en PDF
+                            </button>
                         </div>
-
+                        
                         <!-- ENVOLTURA PARA EL PDF -->
-                        <div id="ticket-pdf-content" class="bg-slate-900 p-2">
+                        <div id="ticket-pdf-content" class="bg-slate-900 p-8 rounded-xl border border-slate-700" style="background-color: #0f172a; color: #f8fafc;">
+                            <!-- Header de Ticket -->
+                            <div class="mb-6 flex flex-col md:flex-row justify-between items-start border-b border-slate-700 pb-4">
+                                <div class="mb-4 md:mb-0">
+                                    <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center" style="color: white;">
+                                        <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
+                                    </h2>
+                                    <p class="text-slate-400 mt-2 text-sm" style="color: #94a3b8;">Construcción de un Motor AFD (GUI) en Java.</p>
+                                </div>
+                                <div class="text-left md:text-right">
+                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1" style="color: #64748b;">Estudiante:</span>
+                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg" style="color: #22d3ee;"></span>
+                                </div>
+                            </div>
+
                             <!-- ACERTIJO ASIGNADO -->
-                            <div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
-                                <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
-                                <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
-                                <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
-                                <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
-                                    <strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono"></span><br>
-                                    <strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300"></span>
+                            <div class="bg-slate-800 p-6 rounded-xl border-2 border-rose-500 mb-8" style="background-color: #1e293b;">
+                                <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs" style="color: #fb7185;">Reto Asignado</h4>
+                                <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4" style="color: white;"></h3>
+                                <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4" style="color: #cbd5e1;"></p>
+                                <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm" style="background-color: #020617;">
+                                    <strong class="text-cyan-400" style="color: #22d3ee;">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono" style="color: #cbd5e1;"></span><br>
+                                    <strong class="text-cyan-400 mt-2 block" style="color: #22d3ee;">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300" style="color: #cbd5e1;"></span>
                                 </div>
                             </div>
 
                             <!-- REQUERIMIENTOS TÉCNICOS -->
-                            <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
-                                <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
-                                <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mb-8" style="background-color: #1e293b;">
+                                <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm" style="color: #fb7185;"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
+                                <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5" style="color: #cbd5e1;">
                                     <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
                                     <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
                                     <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
@@ -899,31 +901,31 @@ String cadena = <span class="text-green-400">"10101"</span>;
                             </div>
 
                             <!-- RÚBRICA -->
-                            <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-                            <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-                                <table class="w-full text-left">
-                                    <thead class="text-xs uppercase bg-slate-900 text-slate-400">
+                            <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm" style="color: #fb7185;"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
+                            <div class="bg-slate-800 rounded-xl border border-slate-700 text-sm text-slate-300" style="background-color: #1e293b; color: #cbd5e1;">
+                                <table class="w-full text-left" style="border-collapse: collapse;">
+                                    <thead class="text-xs uppercase bg-slate-900 text-slate-400" style="background-color: #0f172a;">
                                         <tr>
-                                            <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
-                                            <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+                                            <th class="px-5 py-3 w-3/4 border-b border-slate-700" style="border-bottom: 1px solid #334155;">Criterio</th>
+                                            <th class="px-5 py-3 border-b border-l border-slate-700 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155;">Puntaje</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-slate-700">
-                                        <tr class="hover:bg-slate-700/50">
-                                            <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
+                                        <tr>
+                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">40 pts</td>
                                         </tr>
-                                        <tr class="hover:bg-slate-700/50">
-                                            <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                        <tr>
+                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
                                         </tr>
-                                        <tr class="hover:bg-slate-700/50">
-                                            <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                        <tr>
+                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
                                         </tr>
-                                        <tr class="hover:bg-slate-700/50">
+                                        <tr>
                                             <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1074,7 +1076,7 @@ String cadena = <span class="text-green-400">"10101"</span>;
             },
             {
                 titulo: "La Máquina de Canicas (Laberinto Lógico)",
-                desc: "Una caja lógica tiene 2 agujeros arriba (A y B) y 3 salidas abajo (X, Y, Z). Dentro, hay dos compuertas (Flip-Flops) conectadas. Si una canica cae y golpea una compuerta, esta cambia de inclinación (si apuntaba Izq, cambia a Der). Diseña el autómata donde los estados son las posiciones de las compuertas (Ej. C1_Izq y C2_Der) y el alfabeto indica por dónde entra la canica.",
+                desc: "Una caja lógica tiene 2 agujeros arriba (A y B) y 3 salidas abajo (X, Y, Z). Dentro, hay dos compuertas (Flip-Flops) conectadas. Si una canica cae y golpea una compuerta, esta cambia de inclinación (si apuntaba Izq, cambia a Der). Diseña el autómata donde los estados son las posiciones combinadas de las compuertas (Ej. C1_Izq y C2_Der) y el alfabeto indica por dónde entra la canica.",
                 alfabeto: "{ Ingresar por A, Ingresar por B }",
                 aceptacion: "Llegar a un estado donde se garantice que la próxima canica que caiga por A saldrá por la salida Z.",
                 solucion: "El grafo modela los estados compuestos (C1_Dir, C2_Dir). Al recibir el evento de ingreso, se calcula la salida, se actualiza el estado interno de la compuerta afectada y se imprime en pantalla por qué orificio salió."
@@ -1087,11 +1089,11 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 solucion: "Estados compuestos por (Marcha, Freno). Ej: Inicial=(P, SinFreno). Si recibe 'Mover Abajo' -> Error/Se mantiene. Si recibe 'Pisar Freno' -> Estado (P, ConFreno) -> Recibe 'Mover Abajo' -> Estado (R, ConFreno)... hasta llegar a D."
             },
             {
-                titulo: "Las 3 Jarras (El acertijo de Poisson)",
-                desc: "Tienes una jarra de 8 Litros (totalmente llena), una de 5 Litros (vacía) y una de 3 Litros (vacía). Solo puedes verter agua de una jarra a otra. El vertido siempre ocurre hasta que la jarra destino se llene a tope, o la jarra de origen se vacíe por completo.",
-                alfabeto: "{ 8->5, 8->3, 5->8, 5->3, 3->8, 3->5 }",
-                aceptacion: "Cualquier estado donde la jarra de 8L o la de 5L tenga exactamente 4 litros medidos.",
-                solucion: "8->5 (queda 3,5,0) -> 5->3 (queda 3,2,3) -> 3->8 (queda 6,2,0) -> 5->3 (queda 6,0,2) -> 8->5 (queda 1,5,2) -> 5->3 (queda 1,4,3). ¡Ahí hay 4L en la de 5L!"
+                titulo: "El Controlador de un Microondas",
+                desc: "Modela el cerebro lógico de un horno de microondas básico (perfecto para electrónica). Inicia en estado 'Reposo' (Puerta cerrada, inactivo). Si el usuario abre la puerta, transita a 'Puerta Abierta' y el sistema se bloquea. Si cierra la puerta, vuelve a 'Reposo'. Desde 'Reposo', si presiona 'Start', transita a 'Cocinando'. Si estando cocinando se abre la puerta, se pausa el proceso por seguridad (estado 'Pausado').",
+                alfabeto: "{ Abrir Puerta, Cerrar Puerta, Botón Start, Botón Stop, Tiempo Agotado }",
+                aceptacion: "El sistema maneja el ciclo completo y llega a 'Reposo' tras un 'Tiempo Agotado'.",
+                solucion: "Reposo -> (Abrir) -> Puerta Abierta -> (Cerrar) -> Reposo -> (Start) -> Cocinando -> (Tiempo Agotado) -> Reposo. [Si en Cocinando recibe 'Abrir' -> Pausado -> (Cerrar) -> Reposo]"
             }
         ];
 
@@ -1164,9 +1166,9 @@ String cadena = <span class="text-green-400">"10101"</span>;
             const nombreAlumno = document.getElementById('lblNombreEstudiante').innerText.replace(/\s+/g, '_');
             
             const opt = {
-                margin:       0.5,
+                margin:       0.3,
                 filename:     `Proyecto_U3_${nombreAlumno}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
+                image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
