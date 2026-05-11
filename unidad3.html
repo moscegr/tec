@@ -862,75 +862,136 @@ String cadena = <span class="text-green-400">"10101"</span>;
                             </button>
                         </div>
                         
-                        <!-- ENVOLTURA PARA EL PDF -->
-                        <div id="ticket-pdf-content" class="bg-slate-900 p-8 rounded-xl border border-slate-700" style="background-color: #0f172a; color: #f8fafc;">
-                            <!-- Header de Ticket -->
-                            <div class="mb-6 flex flex-col md:flex-row justify-between items-start border-b border-slate-700 pb-4">
-                                <div class="mb-4 md:mb-0">
-                                    <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center" style="color: white;">
-                                        <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
-                                    </h2>
-                                    <p class="text-slate-400 mt-2 text-sm" style="color: #94a3b8;">Construcción de un Motor AFD (GUI) en Java.</p>
-                                </div>
+                        <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
+                            <div class="mb-4 md:mb-0">
+                                <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
+                                    <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
+                                </h2>
+                                <p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
+                            </div>
+                            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
                                 <div class="text-left md:text-right">
-                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1" style="color: #64748b;">Estudiante:</span>
-                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg" style="color: #22d3ee;"></span>
+                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
+                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg"></span>
                                 </div>
-                            </div>
-
-                            <!-- ACERTIJO ASIGNADO -->
-                            <div class="bg-slate-800 p-6 rounded-xl border-2 border-rose-500 mb-8" style="background-color: #1e293b;">
-                                <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs" style="color: #fb7185;">Reto Asignado</h4>
-                                <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4" style="color: white;"></h3>
-                                <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4" style="color: #cbd5e1;"></p>
-                                <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm" style="background-color: #020617;">
-                                    <strong class="text-cyan-400" style="color: #22d3ee;">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono" style="color: #cbd5e1;"></span><br>
-                                    <strong class="text-cyan-400 mt-2 block" style="color: #22d3ee;">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300" style="color: #cbd5e1;"></span>
-                                </div>
-                            </div>
-
-                            <!-- REQUERIMIENTOS TÉCNICOS -->
-                            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 mb-8" style="background-color: #1e293b;">
-                                <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm" style="color: #fb7185;"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
-                                <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5" style="color: #cbd5e1;">
-                                    <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
-                                    <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
-                                    <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
-                                    <li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -> Se presionó [Boton_A] -> Nuevo Estado [q2]"</code>.</li>
-                                </ol>
-                            </div>
-
-                            <!-- RÚBRICA -->
-                            <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm" style="color: #fb7185;"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-                            <div class="bg-slate-800 rounded-xl border border-slate-700 text-sm text-slate-300" style="background-color: #1e293b; color: #cbd5e1;">
-                                <table class="w-full text-left" style="border-collapse: collapse;">
-                                    <thead class="text-xs uppercase bg-slate-900 text-slate-400" style="background-color: #0f172a;">
-                                        <tr>
-                                            <th class="px-5 py-3 w-3/4 border-b border-slate-700" style="border-bottom: 1px solid #334155;">Criterio</th>
-                                            <th class="px-5 py-3 border-b border-l border-slate-700 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155;">Puntaje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-700">
-                                        <tr>
-                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">40 pts</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-5 py-3" style="border-bottom: 1px solid #334155;"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-bottom: 1px solid #334155; border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
-                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center" style="border-left: 1px solid #334155; color: #fb7185;">20 pts</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
+
+                        <!-- ACERTIJO ASIGNADO -->
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
+                            <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
+                            <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
+                            <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+                            <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
+                                <strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono"></span><br>
+                                <strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300"></span>
+                            </div>
+                        </div>
+
+                        <!-- REQUERIMIENTOS TÉCNICOS -->
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
+                            <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
+                            <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+                                <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
+                                <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
+                                <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
+                                <li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -> Se presionó [Boton_A] -> Nuevo Estado [q2]"</code>.</li>
+                            </ol>
+                        </div>
+
+                        <!-- RÚBRICA -->
+                        <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
+                        <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+                            <table class="w-full text-left">
+                                <thead class="text-xs uppercase bg-slate-900 text-slate-400">
+                                    <tr>
+                                        <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
+                                        <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700">
+                                    <tr class="hover:bg-slate-700/50">
+                                        <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
+                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/50">
+                                        <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
+                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/50">
+                                        <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
+                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-700/50">
+                                        <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
+                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ENVOLTURA PARA EL PDF (Oculta visualmente en la UI, solo para render html2pdf) -->
+                <div id="ticket-pdf-content" style="display: none; padding: 40px; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; width: 800px;">
+                    <div style="border-bottom: 3px solid #0891b2; padding-bottom: 15px; margin-bottom: 25px;">
+                        <h1 style="color: #0891b2; margin: 0; font-size: 26px; font-weight: bold;">Ticket de Proyecto: Autómatas Finitos</h1>
+                        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Lenguajes y Autómatas I - IT Chilpancingo</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <p style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin: 0 0 5px 0;">Estudiante Asignado:</p>
+                        <h2 id="pdfNombreEstudiante" style="margin: 0; font-size: 22px; color: #0f172a; font-weight: bold;"></h2>
+                    </div>
+
+                    <div style="background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
+                        <h3 id="pdfTituloAcertijo" style="color: #e11d48; margin: 0 0 15px 0; font-size: 20px; font-weight: bold;"></h3>
+                        <p id="pdfDescAcertijo" style="font-size: 15px; line-height: 1.6; color: #334155; margin-bottom: 20px;"></p>
+                        
+                        <div style="background-color: #ffffff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px;">
+                            <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Alfabeto (&Sigma;):</strong> <span id="pdfAlfabeto" style="font-family: monospace; color: #0891b2; font-weight: bold;"></span></p>
+                            <p style="margin: 0; font-size: 14px;"><strong>Condición de Aceptación:</strong> <span id="pdfAceptacion"></span></p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Requerimientos Técnicos Obligatorios</h3>
+                        <ul style="font-size: 14px; line-height: 1.6; color: #334155; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Interfaz Gráfica (GUI):</strong> Programar en Java utilizando Swing o JavaFX. No se acepta terminal pura.</li>
+                            <li style="margin-bottom: 8px;"><strong>Cero Regex y Cero Switch-Case:</strong> Prohibido usar <code>java.util.regex</code> y sentencias <code>switch-case</code>. La lógica debe programarse usando una <strong>Matriz de Transiciones</strong> (arreglo 2D) o el <strong>Patrón 'State'</strong>.</li>
+                            <li style="margin-bottom: 8px;"><strong>Interfaz Completa:</strong> Mostrar visiblemente el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata como imágenes o tablas dentro de la propia ventana de la App.</li>
+                            <li style="margin-bottom: 8px;"><strong>Traza de Cambios:</strong> Etiqueta en tiempo real que muestre explícitamente: <br><code>"Estado actual -> Botón Presionado -> Nuevo Estado"</code>.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Rúbrica de Evaluación (100 pts)</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                            <thead>
+                                <tr style="background-color: #f1f5f9;">
+                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: left;">Criterio Evaluado</th>
+                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; width: 80px;">Puntaje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Lógica (Motor AFD):</strong> Modelado exacto de estados con Matriz 2D/Patrón State. Frena/resetea adecuadamente al recibir un comando incorrecto.</td>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">40 pts</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Interfaz y UX:</strong> Diseño usable de la GUI y botones correspondientes exactos a las letras del alfabeto del problema.</td>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Integración Teórica:</strong> Grafo y Tabla de transiciones visibles dentro del aplicativo.</td>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Traza de Estados:</strong> "Log" visible en la interfaz mostrando los saltos de transición en tiempo real.</td>
+                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -1082,11 +1143,11 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 solucion: "El grafo modela los estados compuestos (C1_Dir, C2_Dir). Al recibir el evento de ingreso, se calcula la salida, se actualiza el estado interno de la compuerta afectada y se imprime en pantalla por qué orificio salió."
             },
             {
-                titulo: "Transmisión Automática de un Vehículo",
-                desc: "Modela el cerebro de una caja de cambios automática (ideal para implementarse con un ESP32). Tiene 4 posiciones: P (Park), R (Reverse), N (Neutral) y D (Drive). El usuario solo puede mover la palanca 'Arriba' o 'Abajo'. Para salir de 'P' o pasar de 'N' a 'R', el conductor debe tener presionado el 'Freno'. Si intenta hacer un cambio prohibido sin el freno, el sistema emite una alerta y se queda en su estado actual.",
-                alfabeto: "{ Mover Arriba, Mover Abajo, Pisar Freno, Soltar Freno }",
-                aceptacion: "Llegar al estado 'D' (Drive) de forma segura y ponerse en marcha.",
-                solucion: "Estados compuestos por (Marcha, Freno). Ej: Inicial=(P, SinFreno). Si recibe 'Mover Abajo' -> Error/Se mantiene. Si recibe 'Pisar Freno' -> Estado (P, ConFreno) -> Recibe 'Mover Abajo' -> Estado (R, ConFreno)... hasta llegar a D."
+                titulo: "El Torniquete del Metro (Turnstile)",
+                desc: "Implementa el sistema lógico de un torniquete de acceso al metro. El torniquete inicia en estado 'Bloqueado'. Si un usuario empuja mientras está bloqueado, debe sonar una alarma (permaneciendo bloqueado). Si el usuario ingresa un boleto, pasa al estado 'Desbloqueado'. Si estando desbloqueado se mete otro boleto, el sistema simplemente lo absorbe y sigue desbloqueado. Finalmente, si el usuario empuja estando desbloqueado, el usuario pasa y el torniquete regresa automáticamente al estado 'Bloqueado'.",
+                alfabeto: "{ Ingresar Boleto, Empujar }",
+                aceptacion: "El ciclo lógico infinito debe cumplirse sin fallos. El estado de éxito es la transición de 'Desbloqueado' a 'Bloqueado' mediante la acción de empujar.",
+                solucion: "Bloqueado -> (Boleto) -> Desbloqueado -> (Boleto extra) -> Desbloqueado -> (Empujar) -> Bloqueado. (Si empuja en bloqueado, activa estado de advertencia/alarma)."
             },
             {
                 titulo: "El Controlador de un Microondas",
@@ -1149,34 +1210,46 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 localStorage.setItem('bd_proyectos_u3', JSON.stringify(asignaciones));
             }
 
-            // Mostrar Ticket
+            // Mostrar Ticket en UI
             document.getElementById('lblNombreEstudiante').innerText = nombreRaw;
             document.getElementById('lblTituloAcertijo').innerText = reto.titulo;
             document.getElementById('lblDescAcertijo').innerText = reto.desc;
             document.getElementById('lblAlfabeto').innerText = reto.alfabeto;
             document.getElementById('lblAceptacion').innerText = reto.aceptacion;
+            
+            // Preparar variables para el PDF Oculto
+            document.getElementById('pdfNombreEstudiante').innerText = nombreRaw;
+            document.getElementById('pdfTituloAcertijo').innerText = "Reto Asignado: " + reto.titulo;
+            document.getElementById('pdfDescAcertijo').innerText = reto.desc;
+            document.getElementById('pdfAlfabeto').innerText = reto.alfabeto;
+            document.getElementById('pdfAceptacion').innerText = reto.aceptacion;
 
             document.getElementById('registro-u3').classList.add('hidden');
             document.getElementById('resultado-u3').classList.remove('hidden');
         }
 
-        // Descargar PDF del Ticket
+        // Generador de PDF en Limpio (Evita problemas de Tailwind dark theme con html2pdf)
         function descargarPDF() {
+            const nombreAlumno = document.getElementById('lblNombreEstudiante').innerText;
             const element = document.getElementById('ticket-pdf-content');
-            const nombreAlumno = document.getElementById('lblNombreEstudiante').innerText.replace(/\s+/g, '_');
-            
+
+            alert("Generando PDF... por favor espera unos segundos.");
+
+            // Mostrar temporalmente para el renderizado
+            element.style.display = 'block';
+
             const opt = {
-                margin:       0.3,
-                filename:     `Proyecto_U3_${nombreAlumno}.pdf`,
+                margin:       0.5,
+                filename:     `Proyecto_U3_${nombreAlumno.replace(/\s+/g, '_')}.pdf`,
                 image:        { type: 'jpeg', quality: 1.0 },
-                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
+                html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
             };
-
-            // Notificación simple al usuario
-            alert("Generando PDF... por favor espera unos segundos.");
             
-            html2pdf().set(opt).from(element).save();
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Volver a ocultar
+                element.style.display = 'none';
+            });
         }
 
         // Login Docente
