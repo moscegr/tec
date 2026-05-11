@@ -8,6 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Script para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
         
@@ -826,7 +828,7 @@ String cadena = <span class="text-green-400">"10101"</span>;
             </div>
         </section>
 
-        <!-- SECCIÓN DE PROYECTO (RANDOM ASSIGNMENT CON EXCEL) -->
+        <!-- SECCIÓN DE PROYECTO (RANDOM ASSIGNMENT CON EXCEL Y SOLUCIONES) -->
         <section id="proyecto" class="scroll-mt-32 pb-20">
             <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
                 <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
@@ -854,70 +856,78 @@ String cadena = <span class="text-green-400">"10101"</span>;
 
                     <!-- TICKET DEL PROYECTO -->
                     <div id="resultado-u3" class="hidden">
-                        <div class="mb-6 flex justify-between items-start border-b border-slate-700 pb-4">
-                            <div>
+                        <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
+                            <div class="mb-4 md:mb-0">
                                 <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
                                     <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
                                 </h2>
                                 <p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
                             </div>
-                            <div class="text-right">
-                                <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
-                                <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg"></span>
+                            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+                                <div class="text-left md:text-right">
+                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
+                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg"></span>
+                                </div>
+                                <button onclick="descargarPDF()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg transition flex items-center">
+                                    <i class="fas fa-file-pdf mr-2"></i> PDF
+                                </button>
                             </div>
                         </div>
 
-                        <!-- ACERTIJO ASIGNADO -->
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
-                            <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
-                            <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
-                            <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
-                            <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
-                                <strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono"></span><br>
-                                <strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300"></span>
+                        <!-- ENVOLTURA PARA EL PDF -->
+                        <div id="ticket-pdf-content" class="bg-slate-900 p-2">
+                            <!-- ACERTIJO ASIGNADO -->
+                            <div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
+                                <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
+                                <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
+                                <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+                                <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
+                                    <strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono"></span><br>
+                                    <strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300"></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- REQUERIMIENTOS TÉCNICOS -->
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
-                            <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
-                            <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
-                                <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
-                                <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
-                                <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
-                                <li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -> Se presionó [Boton_A] -> Nuevo Estado [q2]"</code>.</li>
-                            </ol>
-                        </div>
+                            <!-- REQUERIMIENTOS TÉCNICOS -->
+                            <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
+                                <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
+                                <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+                                    <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
+                                    <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
+                                    <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
+                                    <li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -> Se presionó [Boton_A] -> Nuevo Estado [q2]"</code>.</li>
+                                </ol>
+                            </div>
 
-                        <!-- RÚBRICA -->
-                        <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-                        <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-                            <table class="w-full text-left">
-                                <thead class="text-xs uppercase bg-slate-900 text-slate-400">
-                                    <tr>
-                                        <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
-                                        <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <!-- RÚBRICA -->
+                            <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
+                            <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+                                <table class="w-full text-left">
+                                    <thead class="text-xs uppercase bg-slate-900 text-slate-400">
+                                        <tr>
+                                            <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
+                                            <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-700">
+                                        <tr class="hover:bg-slate-700/50">
+                                            <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-700/50">
+                                            <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-700/50">
+                                            <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-700/50">
+                                            <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
+                                            <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -963,7 +973,7 @@ String cadena = <span class="text-green-400">"10101"</span>;
                         </div>
 
                         <!-- Ver todos los acertijos -->
-                        <h4 class="font-bold text-white mb-3"><i class="fas fa-list text-cyan-400 mr-2"></i> Catálogo de Acertijos (Los 5 Posibles)</h4>
+                        <h4 class="font-bold text-white mb-3"><i class="fas fa-list text-cyan-400 mr-2"></i> Catálogo de Acertijos y Soluciones</h4>
                         <div id="catalogoAcertijos" class="grid md:grid-cols-2 gap-4 text-sm">
                             <!-- Llenado por JS -->
                         </div>
@@ -1052,31 +1062,36 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 titulo: "El Acertijo del Río (Lobo, Cabra y Col)",
                 desc: "Un granjero debe cruzar un río con un lobo, una cabra y una col. La barca solo tiene espacio para él y uno de sus bienes. Si deja al lobo y la cabra solos, el lobo se la come. Si deja la cabra y la col, la cabra se come la col. Programa la interfaz gráfica que controle el estado en ambas orillas usando botones.",
                 alfabeto: "{ Mover Lobo, Mover Cabra, Mover Col, Cruzar Solo }",
-                aceptacion: "El estado final donde todos los elementos y el granjero están a salvo en la orilla derecha."
+                aceptacion: "El estado final donde todos los elementos y el granjero están a salvo en la orilla derecha.",
+                solucion: "Mover Cabra -> Cruzar Solo (regresa granjero) -> Mover Lobo -> Mover Cabra (regresa granjero con cabra) -> Mover Col -> Cruzar Solo (regresa granjero) -> Mover Cabra."
             },
             {
                 titulo: "La Cerradura Electrónica de la Bóveda",
-                desc: "Diseña la lógica de una caja fuerte virtual con un teclado numérico simple (3 botones). La bóveda solo se abre si se presiona la secuencia secreta '1-2-1-3'. Si el usuario se equivoca en cualquier punto de la secuencia, la máquina vuelve al estado inicial de forma silenciosa. Sin embargo, si presiona el número '3' tres veces seguidas, la máquina entra en un estado de ALARMA (pozo) del que ya no puede salir.",
+                desc: "Diseña la lógica de una caja fuerte virtual con un teclado numérico simple (3 botones). La bóveda solo se abre si se presiona la secuencia secreta '1-2-1-3-2'. Si el usuario se equivoca en cualquier punto de la secuencia, la máquina vuelve al estado inicial de forma silenciosa. Sin embargo, si presiona el número '3' tres veces seguidas, la máquina entra en un estado de ALARMA (pozo) del que ya no puede salir.",
                 alfabeto: "{ Botón 1, Botón 2, Botón 3 }",
-                aceptacion: "El estado que se alcanza únicamente tras ingresar la secuencia exacta 1-2-1-3."
+                aceptacion: "El estado que se alcanza únicamente tras ingresar la secuencia exacta 1-2-1-3-2.",
+                solucion: "Presionar exactamente: 1 -> 2 -> 1 -> 3 -> 2. Si ocurre '3 -> 3 -> 3' se transita al Estado Trampa (Alarma)."
             },
             {
-                titulo: "El Controlador de un Elevador (3 Pisos)",
-                desc: "Construye la interfaz de un pequeño elevador para un edificio de 3 pisos (PB, P1, P2). La máquina de estados debe controlar en qué piso está actualmente el elevador. Si el elevador está en PB y presionan 'P2', debe transitar por los estados de subida (PB -> Subiendo a P1 -> P1 -> Subiendo a P2 -> P2) mostrando el cambio visualmente en la GUI.",
-                alfabeto: "{ Botón PB, Botón P1, Botón P2 }",
-                aceptacion: "El estado donde el elevador llega al piso destino solicitado y abre las puertas."
+                titulo: "La Máquina de Canicas (Laberinto Lógico)",
+                desc: "Una caja lógica tiene 2 agujeros arriba (A y B) y 3 salidas abajo (X, Y, Z). Dentro, hay dos compuertas (Flip-Flops) conectadas. Si una canica cae y golpea una compuerta, esta cambia de inclinación (si apuntaba Izq, cambia a Der). Diseña el autómata donde los estados son las posiciones de las compuertas (Ej. C1_Izq y C2_Der) y el alfabeto indica por dónde entra la canica.",
+                alfabeto: "{ Ingresar por A, Ingresar por B }",
+                aceptacion: "Llegar a un estado donde se garantice que la próxima canica que caiga por A saldrá por la salida Z.",
+                solucion: "El grafo modela los estados compuestos (C1_Dir, C2_Dir). Al recibir el evento de ingreso, se calcula la salida, se actualiza el estado interno de la compuerta afectada y se imprime en pantalla por qué orificio salió."
             },
             {
-                titulo: "La Máquina Expendedora Automática",
-                desc: "Diseña una máquina expendedora que vende un producto de $15 pesos. La máquina tiene dos botones para ingresar monedas (Alfabeto). Si la máquina acumula los $15, entrega el producto y vuelve al inicio. Si el usuario se pasa del dinero (ej. mete dos monedas de $10 llegando a $20), la máquina no da cambio, entra en estado de 'Devolución', expulsa el dinero y se resetea a cero.",
-                alfabeto: "{ Ingresar $5, Ingresar $10 }",
-                aceptacion: "El estado que representa tener exactamente $15 acumulados."
+                titulo: "Transmisión Automática de un Vehículo",
+                desc: "Modela el cerebro de una caja de cambios automática (ideal para implementarse con un ESP32). Tiene 4 posiciones: P (Park), R (Reverse), N (Neutral) y D (Drive). El usuario solo puede mover la palanca 'Arriba' o 'Abajo'. Para salir de 'P' o pasar de 'N' a 'R', el conductor debe tener presionado el 'Freno'. Si intenta hacer un cambio prohibido sin el freno, el sistema emite una alerta y se queda en su estado actual.",
+                alfabeto: "{ Mover Arriba, Mover Abajo, Pisar Freno, Soltar Freno }",
+                aceptacion: "Llegar al estado 'D' (Drive) de forma segura y ponerse en marcha.",
+                solucion: "Estados compuestos por (Marcha, Freno). Ej: Inicial=(P, SinFreno). Si recibe 'Mover Abajo' -> Error/Se mantiene. Si recibe 'Pisar Freno' -> Estado (P, ConFreno) -> Recibe 'Mover Abajo' -> Estado (R, ConFreno)... hasta llegar a D."
             },
             {
-                titulo: "El Acertijo de las Jarras de Agua (Die Hard 3)",
-                desc: "Tienes dos jarras de agua, una de 3 litros y otra de 5 litros. Debes modelar los estados (cantidad de agua en cada jarra) y usar botones para las acciones. Necesitas medir exactamente 4 litros en la jarra de 5 litros. Recuerda que solo puedes vaciar, llenar a tope o pasar agua de una a otra hasta que una se llene o la otra se vacíe.",
-                alfabeto: "{ Llenar 3L, Llenar 5L, Vaciar 3L, Vaciar 5L, Pasar 3->5, Pasar 5->3 }",
-                aceptacion: "Cualquier estado donde la jarra de 5 litros contenga exactamente 4 litros de agua."
+                titulo: "Las 3 Jarras (El acertijo de Poisson)",
+                desc: "Tienes una jarra de 8 Litros (totalmente llena), una de 5 Litros (vacía) y una de 3 Litros (vacía). Solo puedes verter agua de una jarra a otra. El vertido siempre ocurre hasta que la jarra destino se llene a tope, o la jarra de origen se vacíe por completo.",
+                alfabeto: "{ 8->5, 8->3, 5->8, 5->3, 3->8, 3->5 }",
+                aceptacion: "Cualquier estado donde la jarra de 8L o la de 5L tenga exactamente 4 litros medidos.",
+                solucion: "8->5 (queda 3,5,0) -> 5->3 (queda 3,2,3) -> 3->8 (queda 6,2,0) -> 5->3 (queda 6,0,2) -> 8->5 (queda 1,5,2) -> 5->3 (queda 1,4,3). ¡Ahí hay 4L en la de 5L!"
             }
         ];
 
@@ -1143,10 +1158,36 @@ String cadena = <span class="text-green-400">"10101"</span>;
             document.getElementById('resultado-u3').classList.remove('hidden');
         }
 
+        // Descargar PDF del Ticket
+        function descargarPDF() {
+            const element = document.getElementById('ticket-pdf-content');
+            const nombreAlumno = document.getElementById('lblNombreEstudiante').innerText.replace(/\s+/g, '_');
+            
+            const opt = {
+                margin:       0.5,
+                filename:     `Proyecto_U3_${nombreAlumno}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            // Notificación simple al usuario
+            alert("Generando PDF... por favor espera unos segundos.");
+            
+            html2pdf().set(opt).from(element).save();
+        }
+
         // Login Docente
         function loginDocente() {
             const pass = document.getElementById('passDocente').value;
-            if(pass === 'kike1992') {
+            
+            // Función de Hash simple para ocultar la contraseña en el código fuente
+            let hash = "";
+            for(let i=0; i<pass.length; i++) {
+                hash += (pass.charCodeAt(i) + 7).toString(16);
+            }
+
+            if(hash === '7270726c38404039') { // Hash correspondiente a la contraseña
                 document.getElementById('login-docente').classList.add('hidden');
                 document.getElementById('dashboard-docente').classList.remove('hidden');
                 cargarDashboard();
@@ -1181,14 +1222,19 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 }
             }
 
-            // Mostrar el catálogo
+            // Mostrar el catálogo con soluciones
             const catalogo = document.getElementById('catalogoAcertijos');
             catalogo.innerHTML = '';
             acertijos.forEach((a, i) => {
                 catalogo.innerHTML += `
-                    <div class="bg-slate-800 p-3 rounded-lg border border-slate-700">
-                        <strong class="text-cyan-400 block mb-1">${i+1}. ${a.titulo}</strong>
-                        <p class="text-slate-400 text-xs">${a.desc}</p>
+                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 flex flex-col justify-between">
+                        <div>
+                            <strong class="text-cyan-400 block mb-1">${i+1}. ${a.titulo}</strong>
+                            <p class="text-slate-400 text-xs mb-3">${a.desc}</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded border border-slate-700 mt-2">
+                            <p class="text-emerald-400 text-xs"><strong><i class="fas fa-key mr-1"></i>Solución Esperada:</strong><br>${a.solucion}</p>
+                        </div>
                     </div>
                 `;
             });
