@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4: Máquinas de Turing - ITChilpancingo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Script para exportar a PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+        
+        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; }
+
+        .u4-header {
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .u4-header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .sticky-sub-nav {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .concept-card {
+            background: white; border-radius: 1.5rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .tape-cell {
+            display: inline-block; width: 40px; height: 40px;
+            border: 2px solid #475569; text-align: center; line-height: 36px;
+            font-family: monospace; font-size: 1.2rem; font-weight: bold;
+            background: white; margin-right: -2px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 transition group">
+                    <div class="bg-slate-100 group-hover:bg-slate-200 p-2 rounded-lg transition">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <span class="font-bold text-sm">Volver al Temario</span>
+                </a>
+                <div class="flex items-center space-x-3">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Lenguajes y Autómatas I</span>
+                    <span class="bg-slate-800 text-white px-3 py-1 rounded-full text-xs font-bold">Unidad 4</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="u4-header text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-block mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+                <i class="fas fa-cogs text-3xl"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Máquinas de Turing</h1>
+            <p class="text-slate-300 text-lg font-light max-w-2xl mx-auto">
+                El modelo computacional absoluto propuesto por Alan Turing. Si un problema puede resolverse computacionalmente, una Máquina de Turing puede hacerlo.
+            </p>
+        </div>
+    </header>
+
+    <div class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
+            <div class="flex space-x-6 min-w-max py-4 text-sm font-medium text-slate-600">
+                <a href="#intro" class="hover:text-slate-900 transition">Intro</a>
+                <a href="#formal" class="hover:text-slate-900 transition">4.1 Definición</a>
+                <a href="#construccion" class="hover:text-slate-900 transition">4.2 Construcción Modular</a>
+                <a href="#lenguajes" class="hover:text-slate-900 transition">4.3 Lenguajes Aceptados</a>
+                <a href="#java-mt" class="hover:text-slate-900 transition">4.4 Implementación Java</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- INTRO -->
+        <section id="intro" class="scroll-mt-32">
+            <div class="bg-slate-100 border border-slate-200 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2"><i class="fas fa-tape mr-2 text-slate-500"></i>Analogía: La Cinta Infinita</h3>
+                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                        En la Unidad 3 vimos que los AFD no tienen memoria. Solo avanzan leyendo caracteres hacia adelante y no pueden volver atrás ni escribir.<br><br>
+                        Turing imaginó una máquina que tiene un <strong>cabezal lector/escritor</strong> montado sobre una <strong>cinta infinita</strong>. La máquina puede leer un símbolo, borrarlo, escribir uno nuevo y mover el cabezal hacia la Izquierda (L) o Derecha (R). Esto le da el poder de la <em>memoria infinita</em>.
+                    </p>
+                </div>
+                <div class="w-24 flex-shrink-0 text-center text-4xl text-slate-400">
+                    <i class="fas fa-infinity"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.1 Definición Formal -->
+        <section id="formal" class="scroll-mt-32">
+            <div class="concept-card p-8">
+                <div class="flex items-center mb-6">
+                    <span class="text-4xl font-black text-slate-300 mr-4">4.1</span>
+                    <h2 class="text-2xl font-bold text-slate-800">Definición Formal de la MT</h2>
+                </div>
+                
+                <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                    Formalmente, la Máquina de Turing (MT) se define como una 7-tupla matemática: \( M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) \).
+                </p>
+
+                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6 shadow-sm">
+                    <p class="text-indigo-800 text-sm font-medium flex items-start">
+                        <i class="fas fa-code mt-1 mr-3 text-indigo-500"></i>
+                        <span>Para no confundirnos con los símbolos griegos, en programación la leeremos con estas "variables" más amigables (ideales para modelarla en un ESP32 o en Java):<br>
+                        <code class="block mt-2 bg-white px-3 py-2 rounded border border-indigo-200 text-slate-800 font-bold">MT = (Estados, Alfabeto_Entrada, Alfabeto_Cinta, Reglas, Inicio, Acepta, Rechaza)</code></span>
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                    <div class="space-y-3 text-sm text-slate-700">
+                        <p><strong class="font-mono text-slate-900">Q <span class="text-indigo-500 ml-1">(Estados)</span> :</strong> Conjunto finito de estados.</p>
+                        <p><strong class="font-mono text-slate-900">\(\Sigma\) <span class="text-indigo-500 ml-1">(Alfabeto_Entrada)</span> :</strong> Alfabeto de entrada (sin el símbolo blanco \(\sqcup\)).</p>
+                        <p><strong class="font-mono text-slate-900">\(\Gamma\) <span class="text-indigo-500 ml-1">(Alfabeto_Cinta)</span> :</strong> Alfabeto de la cinta (incluye a \(\Sigma\) y al espacio en blanco \(\sqcup\)).</p>
+                        <p class="border-l-4 border-indigo-500 pl-3 py-1 my-2 bg-indigo-50"><strong class="font-mono text-indigo-900">\(\delta\) <span class="text-indigo-500 ml-1">(Reglas)</span> :</strong> Función de transición. Su formato es: <code>(EstadoActual, SímboloLeído) -> (NuevoEstado, SímboloEscrito, Dirección[L/R])</code></p>
+                        <p><strong class="font-mono text-slate-900">q_0 <span class="text-indigo-500 ml-1">(Inicio)</span> :</strong> Estado inicial.</p>
+                        <p><strong class="font-mono text-slate-900">q_accept <span class="text-indigo-500 ml-1">(Acepta)</span> :</strong> Estado de aceptación (Si la máquina llega aquí, se detiene y aprueba).</p>
+                        <p><strong class="font-mono text-slate-900">q_reject <span class="text-indigo-500 ml-1">(Rechaza)</span> :</strong> Estado de rechazo (Si la máquina llega aquí, se detiene y falla).</p>
+                    </div>
+                </div>
+
+                <!-- Ejemplo Visual -->
+                <div class="mt-8 text-center">
+                    <h4 class="font-bold text-slate-700 mb-4">Ejemplo Visual de la Cinta \(\Gamma\)</h4>
+                    <div class="flex justify-center mb-2">
+                        <div class="tape-cell">\(\sqcup\)</div>
+                        <div class="tape-cell bg-indigo-100">0</div>
+                        <div class="tape-cell">1</div>
+                        <div class="tape-cell">1</div>
+                        <div class="tape-cell">\(\sqcup\)</div>
+                    </div>
+                    <div class="text-xs font-bold text-indigo-600"><i class="fas fa-caret-up text-lg block"></i>Cabezal Lector en el índice 1</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.2 Construcción Modular -->
+        <section id="construccion" class="scroll-mt-32">
+            <div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
+                <div class="flex items-center mb-6">
+                    <span class="text-4xl font-black text-slate-300 mr-4">4.2</span>
+                    <h2 class="text-2xl font-bold text-slate-800">Construcción Modular</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Al igual que en programación no escribimos un bloque gigante de código (usamos funciones), las MT complejas se construyen combinando "sub-máquinas".
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-700">
+                            <li><i class="fas fa-arrow-circle-right text-slate-400 mr-2"></i> <strong>MT de desplazamiento:</strong> Va a la derecha hasta encontrar un espacio en blanco.</li>
+                            <li><i class="fas fa-eraser text-slate-400 mr-2"></i> <strong>MT de borrado:</strong> Cambia símbolos por espacios.</li>
+                            <li><i class="fas fa-copy text-slate-400 mr-2"></i> <strong>MT copiadora:</strong> Duplica una cadena en otra parte de la cinta.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-sm mb-3 uppercase tracking-wide">Actividad 4.1: Diseño Modular</h4>
+                        <p class="text-xs text-slate-600 mb-3 italic">"Piensa como Turing". Responde en libreta:</p>
+                        <p class="text-xs text-slate-700 bg-slate-50 p-2 rounded">
+                            Imagina que tienes una cinta con `1011`. Quieres invertir los bits para que diga `0100`. Escribe la lógica modular de la transición.
+                            <br><strong>Ayuda:</strong> "Si leo un 1, escribo un 0 y me muevo a R (derecha). Si leo un 0, escribo un 1 y me muevo a R. Si leo blanco (\(\sqcup\)), me detengo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.3 Lenguajes aceptados -->
+        <section id="lenguajes" class="scroll-mt-32">
+            <div class="concept-card p-8">
+                <div class="flex items-center mb-6">
+                    <span class="text-4xl font-black text-slate-300 mr-4">4.3</span>
+                    <h2 class="text-2xl font-bold text-slate-800">Lenguajes Recursivamente Enumerables</h2>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                    La MT reconoce la cúspide de la jerarquía de Chomsky (Tipo 0). Cualquier lenguaje que pueda ser reconocido o generado por un algoritmo computacional es "Recursivamente Enumerable".
+                </p>
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200 text-sm text-red-900 flex items-start">
+                    <i class="fas fa-exclamation-triangle mt-1 mr-3"></i>
+                    <div>
+                        <strong>El Problema de la Parada (Halting Problem):</strong> 
+                        Alan Turing demostró que existen lenguajes/problemas que la MT NO puede resolver. Es imposible escribir un programa general que tome otro código fuente y sepa con certeza absoluta si ese programa terminará algún día o se quedará colgado en un ciclo infinito.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4.4 IMPLEMENTACIÓN EN JAVA -->
+        <section id="java-mt" class="scroll-mt-32">
+            <div class="concept-card p-8">
+                <div class="flex items-center mb-6">
+                    <span class="text-4xl font-black text-slate-300 mr-4">4.4</span>
+                    <h2 class="text-2xl font-bold text-slate-800">Implementación en Java</h2>
+                </div>
+                <p class="text-slate-600 text-sm mb-8 leading-relaxed">
+                    Programar una Máquina de Turing te ayudará a entender las bases de la computación. En Java, simularemos la <strong>Cinta Infinita</strong> usando un arreglo (<code>char[]</code>) muy grande y el <strong>Cabezal</strong> será simplemente un índice (<code>int</code>) apuntando a esa memoria.
+                </p>
+
+                <!-- Explicación base Estructura -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-10 shadow-sm">
+                    <h3 class="font-bold text-slate-800 mb-4 text-lg"><i class="fas fa-building mr-2 text-indigo-500"></i> La Arquitectura Base</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-700 text-sm">1. La Memoria y el Cabezal</h4>
+                            <p class="text-xs text-slate-600 mt-1 mb-2">Creamos una cinta ficticia con espacios en blanco (<code>'_'</code>) y situamos el cabezal al medio para que pueda ir a la izquierda o derecha libremente.</p>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+<pre><code class="text-[11px] font-mono text-slate-300"><span class="text-purple-400">char</span>[] cinta = <span class="text-purple-400">new char</span>[<span class="text-rose-400">1000</span>];
+java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="text-green-400">'_'</span>); <span class="text-slate-500">// Llenar de blancos</span>
+
+<span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">500</span>; <span class="text-slate-500">// Inicio (Centro)</span>
+<span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;    <span class="text-slate-500">// q0</span></code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 text-sm">2. El Bucle de Estados</h4>
+                            <p class="text-xs text-slate-600 mt-1 mb-2">La MT no usa un bucle <code>for</code> porque puede retroceder. Se usa un bucle infinito <code>while</code> atado a los estados de <code>aceptación (99)</code> o <code>rechazo (-1)</code>.</p>
+                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+<pre><code class="text-[11px] font-mono text-slate-300"><span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+    <span class="text-purple-400">char</span> leido = cinta[cabezal];
+    <span class="text-slate-500">// Lógica de transiciones (switch/if)</span>
+    <span class="text-slate-500">// Escribe -> Mueve (++, --) -> Cambia Estado</span>
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EJEMPLOS DETALLADOS COMPLETOS -->
+                <div class="mt-12 border-t border-slate-200 pt-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4"><i class="fas fa-laptop-code mr-2 text-indigo-600"></i> Ejemplos Completos (Paso a Paso)</h3>
+                    <p class="text-sm text-slate-600 mb-8">Para comprender mejor cómo funciona la máquina, analizaremos programas en Java completos. Observa cómo la combinación de <strong>Estado Actual</strong> y <strong>Símbolo Leído</strong> decide el futuro de la transición.</p>
+
+                    <!-- Ejemplo A: Sumador Unario -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-indigo-50 border-b border-indigo-100 p-5">
+                            <h4 class="font-bold text-indigo-900 text-lg">Ejemplo A: El Sumador Unario (+1)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes un número unario (ej. "11" que representa el número 2). La máquina debe leer la cadena, viajar hacia la derecha hasta encontrar un hueco vacío <code>'_'</code>, escribir un <code>'1'</code> (sumando así +1), y detenerse en el estado de aceptación.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTSumador</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// 1. Preparamos la cinta</span>
+        <span class="text-purple-400">char</span>[] cinta = <span class="text-purple-400">new char</span>[<span class="text-rose-400">20</span>];
+        java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="text-green-400">'_'</span>);
+        
+        <span class="text-slate-500">// Simulamos la entrada "11" en el centro</span>
+        cinta[<span class="text-rose-400">5</span>] = <span class="text-green-400">'1'</span>; 
+        cinta[<span class="text-rose-400">6</span>] = <span class="text-green-400">'1'</span>;
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">5</span>;
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// 2. Máquina de Estados (Bucle)</span>
+        <span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">if</span> (estado == <span class="text-rose-400">0</span>) {
+                <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'1'</span>) {
+                    <span class="text-slate-500">// Solo paso por encima, no borro</span>
+                    cinta[cabezal] = <span class="text-green-400">'1'</span>; 
+                    cabezal++; <span class="text-slate-500">// Muevo a R (Derecha)</span>
+                    estado = <span class="text-rose-400">0</span>;  <span class="text-slate-500">// Me mantengo en q0 buscando el fin</span>
+                } 
+                <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) {
+                    <span class="text-slate-500">// ¡Encontré un hueco! Añado el "+1"</span>
+                    cinta[cabezal] = <span class="text-green-400">'1'</span>; 
+                    estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Estado de Aceptación (Fin)</span>
+                }
+            }
+        }
+        
+        <span class="text-slate-500">// Resultado: Imprime la cinta</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta));
+        <span class="text-slate-500">// Salida esperada: _____111____________</span>
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100 shadow-sm">
+                                    <h5 class="font-bold text-indigo-800 text-xs uppercase mb-1">¿Cómo lo procesa la computadora?</h5>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-decimal pl-4">
+                                        <li>El cabezal inicia en el índice <code>5</code>, donde hay un <code>'1'</code>.</li>
+                                        <li>El programa entra al <code>while</code> en el estado <code>0</code>. Lee un <code>'1'</code>. La regla le dice: <strong>"Deja el 1 como está, avanza a la derecha (índice 6) y sigue en estado 0"</strong>.</li>
+                                        <li>En la siguiente vuelta (vuelta 2), el cabezal está en el índice <code>6</code>. Vuelve a leer <code>'1'</code>. Hace lo mismo: avanza a la derecha (índice 7).</li>
+                                        <li>En la vuelta 3, el cabezal está en el índice <code>7</code>. ¡Ahora lee un <code>'_'</code>!</li>
+                                        <li>La regla para <code>'_'</code> en el estado 0 se activa: <strong>"Escribe un '1' aquí mismo y cambia el estado a 99"</strong>.</li>
+                                        <li>El ciclo <code>while</code> se rompe porque <code>estado</code> ahora es 99. La máquina ha terminado y hemos convertido "11" en "111".</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo B: Complemento Binario -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-emerald-50 border-b border-emerald-100 p-5">
+                            <h4 class="font-bold text-emerald-900 text-lg">Ejemplo B: El Complemento Binario (Filtro Inteligente)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes una cadena binaria (ej. "1010"). La MT debe leerla de izquierda a derecha, invirtiendo cada bit (los 1 se hacen 0 y los 0 se hacen 1). Al terminar la cadena (cuando lea <code>'_'</code>), se detiene.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTComplemento</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// 1. Cinta con la cadena "1010"</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'1'</span>, <span class="text-green-400">'0'</span>, <span class="text-green-400">'1'</span>, <span class="text-green-400">'0'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>; <span class="text-slate-500">// Apunta al primer '1'</span>
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// 2. Máquina de Estados (Bucle)</span>
+        <span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">if</span> (estado == <span class="text-rose-400">0</span>) {
+                <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'0'</span>) {
+                    cinta[cabezal] = <span class="text-green-400">'1'</span>; <span class="text-slate-500">// Reescribe a 1</span>
+                    cabezal++;           <span class="text-slate-500">// Sigue a la derecha</span>
+                    estado = <span class="text-rose-400">0</span>;
+                } 
+                <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'1'</span>) {
+                    cinta[cabezal] = <span class="text-green-400">'0'</span>; <span class="text-slate-500">// Reescribe a 0</span>
+                    cabezal++;           <span class="text-slate-500">// Sigue a la derecha</span>
+                    estado = <span class="text-rose-400">0</span>;
+                }
+                <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) {
+                    <span class="text-slate-500">// Si lee blanco, ya no hay más cadena</span>
+                    estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Detener máquina</span>
+                }
+            }
+        }
+        
+        <span class="text-slate-500">// Imprime: _0101_</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-emerald-50/50 p-4 rounded-lg border border-emerald-100 shadow-sm">
+                                    <h5 class="font-bold text-emerald-800 text-xs uppercase mb-1">El Poder de la Transformación *In Situ*</h5>
+                                    <p class="text-xs text-slate-600 mb-2">A diferencia de un arreglo tradicional en Java donde leeríamos y guardaríamos el resultado en <em>otro</em> String, la Máquina de Turing hace el trabajo en la misma cinta (memoria dinámica).</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>El bloque <code>if (leido == '0')</code> y <code>else if (leido == '1')</code> mantienen el estado en 0, lo que significa que la máquina <strong>repite la misma lógica</strong> una y otra vez para cada carácter de la palabra.</li>
+                                        <li>El cabezal avanza implacablemente a la derecha con <code>cabezal++</code>.</li>
+                                        <li>La condición de salida es elegantísima: Cuando la palabra física se acaba y el cabezal pisa un "hueco" (<code>'_'</code>), manda la señal <code>99</code> y apaga la máquina.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo C: MT Cajero ATM -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-amber-50 border-b border-amber-100 p-5">
+                            <h4 class="font-bold text-amber-900 text-lg">Ejemplo C: Máquina de Estados Estricta (Bloqueo de Cajero ATM)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Simular el sistema de seguridad de un cajero. La cinta contiene un historial de intentos de PIN (<code>'C'</code> = Correcto, <code>'E'</code> = Error). El cajero tolerará hasta 2 errores. Al 3er error consecutivo, la máquina entra en estado de Bloqueo, escribe una marca <code>'B'</code> en la cinta y retiene la tarjeta.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTCajeroSeguridad</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Historial: 2 errores, 1 acierto, 3 errores seguidos</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'C'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>;
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>; <span class="text-slate-500">// 0: Normal, 1: Un Error, 2: Dos Errores, 3: Bloqueado</span>
+        
+        <span class="text-slate-500">// Bucle de Transiciones (Motor Switch)</span>
+        <span class="text-purple-400">while</span> (estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">switch</span> (estado) {
+                <span class="text-purple-400">case</span> <span class="text-rose-400">0</span>: <span class="text-slate-500">// ESTADO SEGURO</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) cabezal++; <span class="text-slate-500">// Todo bien</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) { estado = <span class="text-rose-400">1</span>; cabezal++; } <span class="text-slate-500">// 1er Error</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Terminó sin bloqueo</span>
+                    <span class="text-purple-400">break</span>;
+                    
+                <span class="text-purple-400">case</span> <span class="text-rose-400">1</span>: <span class="text-slate-500">// UN ERROR RECIENTE</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) { estado = <span class="text-rose-400">0</span>; cabezal++; } <span class="text-slate-500">// Se recupera a 0</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) { estado = <span class="text-rose-400">2</span>; cabezal++; } <span class="text-slate-500">// 2do Error</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>;
+                    <span class="text-purple-400">break</span>;
+
+                <span class="text-purple-400">case</span> <span class="text-rose-400">2</span>: <span class="text-slate-500">// DOS ERRORES (Alerta)</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) { estado = <span class="text-rose-400">0</span>; cabezal++; } <span class="text-slate-500">// Salvado</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) {
+                        estado = <span class="text-rose-400">3</span>; <span class="text-slate-500">// 3er ERROR CONSECUTIVO</span>
+                        cinta[cabezal] = <span class="text-green-400">'B'</span>; <span class="text-slate-500">// Marca de Bloqueo en la cinta</span>
+                        cabezal++;
+                    }
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>;
+                    <span class="text-purple-400">break</span>;
+
+                <span class="text-purple-400">case</span> <span class="text-rose-400">3</span>: <span class="text-slate-500">// ESTADO POZO (Tarjeta Retenida)</span>
+                    <span class="text-slate-500">// Ignoramos todo hasta terminar el registro</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'_'</span>) estado = -<span class="text-rose-400">1</span>; <span class="text-slate-500">// Máquina Rechaza</span>
+                    <span class="text-purple-400">else</span> cabezal++;
+                    <span class="text-purple-400">break</span>;
+            }
+        }
+        
+        <span class="text-slate-500">// Imprime: _EEC E E B _ (El último intento fatal se marca)</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-amber-50/50 p-4 rounded-lg border border-amber-200 shadow-sm">
+                                    <h5 class="font-bold text-amber-900 text-xs uppercase mb-1">Transiciones Clásicas (\(\delta\))</h5>
+                                    <p class="text-xs text-slate-600 mb-2">Usar un bloque <code>switch(estado)</code> es la forma más pura y profesional de representar la <strong>Función de Transición (\(\delta\))</strong> de una Máquina de Turing en Java.</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>El <code>switch</code> controla en qué <strong>Estado de la máquina</strong> (Q) nos encontramos actualmente. Es la memoria del sistema.</li>
+                                        <li>Si ingresamos una 'C' (Correcto) estando en el Estado 1 o 2, la máquina se "resetea" regresando al Estado 0.</li>
+                                        <li>El <strong>Estado 3 es un Estado Pozo</strong>. Una vez que el sistema entra ahí (por 3 errores), ninguna combinación de caracteres lo dejará salir. Finalmente, detendrá el motor con un Rechazo Absoluto (-1).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo D: Transcriptor ADN a ARN (APLICACIÓN VIDA REAL) -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-rose-50 border-b border-rose-100 p-5">
+                            <h4 class="font-bold text-rose-900 text-lg">Ejemplo D: Transcriptor de ADN a ARN (Bioinformática)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Las Máquinas de Turing procesan letras, no solo números. En biología, para transcribir ADN a ARN, la Timina (T) se reemplaza por Uracilo (U). Nuestra MT leerá la cinta biológica, reemplazará cada 'T' que encuentre por 'U' dejando intactas las A, C y G, y se detendrá al final.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_Bioinformatica</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// 1. Cinta biológica (ADN: ATCGT)</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'A'</span>, <span class="text-green-400">'T'</span>, <span class="text-green-400">'C'</span>, <span class="text-green-400">'G'</span>, <span class="text-green-400">'T'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>; <span class="text-slate-500">// Apunta a la primera 'A'</span>
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// 2. Máquina de Estados (Bucle)</span>
+        <span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">switch</span>(estado) {
+                <span class="text-purple-400">case</span> <span class="text-rose-400">0</span>: <span class="text-slate-500">// Estado de Lectura/Traducción</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'A'</span> || leido == <span class="text-green-400">'C'</span> || leido == <span class="text-green-400">'G'</span>) {
+                        <span class="text-slate-500">// Bases válidas, avanzamos sin cambiar nada</span>
+                        cabezal++; 
+                    } 
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'T'</span>) {
+                        cinta[cabezal] = <span class="text-green-400">'U'</span>; <span class="text-slate-500">// Transcribimos Timina a Uracilo</span>
+                        cabezal++;           <span class="text-slate-500">// Seguimos adelante</span>
+                    }
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) {
+                        <span class="text-slate-500">// Fin de la secuencia genética</span>
+                        estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Aceptado</span>
+                    }
+                    <span class="text-purple-400">else</span> {
+                        <span class="text-slate-500">// Símbolo extraño (Ej. 'X' o 'Z') rompe el ADN</span>
+                        estado = -<span class="text-rose-400">1</span>; <span class="text-slate-500">// Rechazado</span>
+                    }
+                    <span class="text-purple-400">break</span>;
+            }
+        }
+        
+        <span class="text-slate-500">// Imprime la transcripción resultante (ARN): _AUCGU_</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-rose-50/50 p-4 rounded-lg border border-rose-200 shadow-sm">
+                                    <h5 class="font-bold text-rose-900 text-xs uppercase mb-1">Las MT procesan Textos Reales</h5>
+                                    <p class="text-xs text-slate-600 mb-2">Las Máquinas de Turing son modelos universales de computación. Cualquier operación de procesamiento de texto estructurado puede ser evaluada aquí.</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>Aquí vemos cómo el "Alfabeto" de entrada de la máquina es \(\Sigma = \{A, C, G, T\}\) y no los clásicos ceros y unos.</li>
+                                        <li>Se introduce un estado de <strong>Rechazo (-1)</strong>. Si la máquina lee un carácter fuera del alfabeto biológico (como una 'X'), aborta la ejecución para prevenir datos corruptos.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo E: Cifrado César Básico -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mt-10">
+                        <div class="bg-blue-50 border-b border-blue-100 p-5">
+                            <h4 class="font-bold text-blue-900 text-lg">Ejemplo E: Cifrado Básico (Procesamiento de Texto)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Diseñar una Máquina de Turing que encripte un mensaje desplazando el valor de cada letra una posición hacia adelante en el abecedario (A se vuelve B, B se vuelve C). Este es el principio básico de la criptografía antigua (Cifrado César ROT-1).</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_Encriptador</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// 1. Mensaje en la cinta (HOLZ)</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'H'</span>, <span class="text-green-400">'O'</span>, <span class="text-green-400">'L'</span>, <span class="text-green-400">'Z'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>;
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// 2. Máquina de Estados</span>
+        <span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">switch</span>(estado) {
+                <span class="text-purple-400">case</span> <span class="text-rose-400">0</span>:
+                    <span class="text-slate-500">// Si es una letra de la A a la Y</span>
+                    <span class="text-purple-400">if</span> (leido >= <span class="text-green-400">'A'</span> && leido < <span class="text-green-400">'Z'</span>) {
+                        <span class="text-slate-500">// Reescribe la cinta sumando +1 al valor ASCII</span>
+                        cinta[cabezal] = (<span class="text-purple-400">char</span>)(leido + <span class="text-rose-400">1</span>);
+                        cabezal++;
+                    } 
+                    <span class="text-slate-500">// Caso especial: Si es la Z, la rotamos hacia la A</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'Z'</span>) {
+                        cinta[cabezal] = <span class="text-green-400">'A'</span>;
+                        cabezal++;
+                    }
+                    <span class="text-slate-500">// Condición de parada</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) {
+                        estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Mensaje encriptado con éxito</span>
+                    }
+                    <span class="text-purple-400">break</span>;
+            }
+        }
+        
+        <span class="text-slate-500">// Imprime: _IPMA_</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-blue-50/50 p-4 rounded-lg border border-blue-200 shadow-sm">
+                                    <h5 class="font-bold text-blue-900 text-xs uppercase mb-1">Aprovechando el código ASCII</h5>
+                                    <p class="text-xs text-slate-600 mb-2">Para no tener que programar 26 estados `if` distintos (uno para cada letra), usamos las propiedades numéricas subyacentes de los caracteres en Java.</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>La operación <code>(char)(leido + 1)</code> toma el valor numérico de la letra (ej. H = 72) y le suma 1 (73 = I), reescribiéndolo de forma eficiente en la cinta.</li>
+                                        <li>Al llegar al espacio en blanco <code>'_'</code>, la MT da por concluida la operación criptográfica y se detiene automáticamente.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EJERCICIOS PRÁCTICOS PARA CLASE -->
+                <div class="mt-8 border-t border-slate-200 pt-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-indigo-500"></i> Ejercicios Prácticos (Java)</h3>
+                    <p class="text-sm text-slate-600 mb-6">Prueba los conceptos de lectura y modificación de la cinta con los siguientes retos reales para tu IDE.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Ejercicio 1 (MODIFICADO) -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto1_TrimCeros.java</span>
+                                <span class="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded font-bold uppercase">Básico</span>
+                            </div>
+                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_TrimCeros</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Cinta: Número con ceros basura a la izquierda</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'0'</span>,<span class="text-green-400">'0'</span>,<span class="text-green-400">'0'</span>,<span class="text-green-400">'7'</span>,<span class="text-green-400">'5'</span>,<span class="text-green-400">'_'</span>};
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// TAREA (Limpiador): Recorre la cinta.</span>
+        <span class="text-slate-500">// Si lees '0', bórralo (escribe '_') y avanza.</span>
+        <span class="text-slate-500">// Si lees un dígito ('1'-'9'), DETÉN la máquina.</span>
+        
+        <span class="text-slate-500">// ESCRIBE_TU_WHILE_AQUÍ</span>
+        
+        System.out.<span class="text-blue-300">println</span>(cinta); <span class="text-slate-500">// ___75_</span>
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Ejercicio 2 (MODIFICADO) -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto2_Censurador.java</span>
+                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+                            </div>
+                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_Censurador</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Cinta: Texto con información sensible (Un PIN)</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'P'</span>,<span class="text-green-400">'I'</span>,<span class="text-green-400">'N'</span>,<span class="text-green-400">':'</span>,<span class="text-green-400">'1'</span>,<span class="text-green-400">'2'</span>,<span class="text-green-400">'3'</span>,<span class="text-green-400">'_'</span>};
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// TAREA (Máscara): Recorre la cinta.</span>
+        <span class="text-slate-500">// Si lees letras o ':', avanza sin cambiar nada.</span>
+        <span class="text-slate-500">// Si lees un número ('0'-'9'), cámbialo por '*'.</span>
+        <span class="text-slate-500">// Detente al encontrar el blanco '_'.</span>
+        
+        <span class="text-slate-500">// ESCRIBE_TU_WHILE_AQUÍ</span>
+        
+        System.out.<span class="text-blue-300">println</span>(cinta); <span class="text-slate-500">// PIN:***_</span>
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Ejercicio 3 (NUEVO VIDA REAL) -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto3_ValidadorPIN.java</span>
+                                <span class="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded font-bold uppercase">Vida Real</span>
+                            </div>
+                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_ValidadorPIN</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Cinta contiene un supuesto PIN bancario</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'1'</span>,<span class="text-green-400">'2'</span>,<span class="text-green-400">'X'</span>,<span class="text-green-400">'4'</span>,<span class="text-green-400">'_'</span>};
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">0</span>, estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// TAREA: Recorre la cinta.</span>
+        <span class="text-slate-500">// Si lees un dígito ('0' al '9'), avanza.</span>
+        <span class="text-slate-500">// Si lees UNA LETRA o símbolo, RECHAZA (estado = -1).</span>
+        <span class="text-slate-500">// Si llegas al '_' sin errores, ACEPTA (estado = 99).</span>
+        
+        <span class="text-slate-500">// ESCRIBE_TU_WHILE_SWITCH_AQUÍ</span>
+        
+        <span class="text-purple-400">if</span> (estado == <span class="text-rose-400">99</span>) System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"PIN Válido"</span>);
+        <span class="text-purple-400">else</span> System.out.<span class="text-blue-300">println</span>(<span class="text-red-400">"PIN Inválido (Rechazado)"</span>);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Ejercicio 4 (NUEVO VIDA REAL) -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto4_BuscadorDominio.java</span>
+                                <span class="text-[10px] bg-rose-500 text-white px-2 py-0.5 rounded font-bold uppercase">Vida Real</span>
+                            </div>
+                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_BuscadorCorreo</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Cinta tiene un correo</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'h'</span>,<span class="text-green-400">'o'</span>,<span class="text-green-400">'l'</span>,<span class="text-green-400">'a'</span>,<span class="text-green-400">'@'</span>,<span class="text-green-400">'x'</span>,<span class="text-green-400">'_'</span>};
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">0</span>, estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// TAREA (2 Estados):</span>
+        <span class="text-slate-500">// Estado 0: Si lees letras, avanza. Si lees '@', </span>
+        <span class="text-slate-500">//   cambia a Estado 1 y avanza. Si lees '_', RECHAZA (-1).</span>
+        <span class="text-slate-500">// Estado 1: Si lees letras, avanza. Si lees '_', ACEPTA (99).</span>
+        
+        <span class="text-slate-500">// ESCRIBE_TU_WHILE_SWITCH_AQUÍ</span>
+        
+        <span class="text-purple-400">if</span> (estado == <span class="text-rose-400">99</span>) System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"Formato Correcto"</span>);
+        <span class="text-purple-400">else</span> System.out.<span class="text-blue-300">println</span>(<span class="text-red-400">"Falta el arroba"</span>);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Minimalista -->
+    <footer class="bg-slate-950 text-white py-12 border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+            <div class="flex items-center space-x-3">
+                <div class="bg-slate-700 p-2 rounded-lg">
+                    <i class="fas fa-university text-white text-sm"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold tracking-tight leading-none">IT Chilpancingo</h3>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 italic">Lenguajes y Autómatas I</p>
+                </div>
+            </div>
+            <div class="flex space-x-6 text-xs font-bold text-slate-400">
+                <a href="index.html" class="hover:text-white transition">INICIO</a>
+                <a href="unidad3.html" class="hover:text-white transition">UNIDAD 3</a>
+                <a href="#" class="text-white border-b border-slate-500">UNIDAD 4</a>
+                <a href="unidad5.html" class="hover:text-white transition">UNIDAD 5</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
