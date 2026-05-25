@@ -332,6 +332,136 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
                             </div>
                         </div>
                     </div>
+
+                    <!-- Ejemplo B: Complemento Binario -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-emerald-50 border-b border-emerald-100 p-5">
+                            <h4 class="font-bold text-emerald-900 text-lg">Ejemplo B: El Complemento Binario (Filtro Inteligente)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes una cadena binaria (ej. "1010"). La MT debe leerla de izquierda a derecha, invirtiendo cada bit (los 1 se hacen 0 y los 0 se hacen 1). Al terminar la cadena (cuando lea <code>'_'</code>), se detiene.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTComplemento</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// 1. Cinta con la cadena "1010"</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'1'</span>, <span class="text-green-400">'0'</span>, <span class="text-green-400">'1'</span>, <span class="text-green-400">'0'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>; <span class="text-slate-500">// Apunta al primer '1'</span>
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;
+        
+        <span class="text-slate-500">// 2. Máquina de Estados (Bucle)</span>
+        <span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">if</span> (estado == <span class="text-rose-400">0</span>) {
+                <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'0'</span>) {
+                    cinta[cabezal] = <span class="text-green-400">'1'</span>; <span class="text-slate-500">// Reescribe a 1</span>
+                    cabezal++;           <span class="text-slate-500">// Sigue a la derecha</span>
+                    estado = <span class="text-rose-400">0</span>;
+                } 
+                <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'1'</span>) {
+                    cinta[cabezal] = <span class="text-green-400">'0'</span>; <span class="text-slate-500">// Reescribe a 0</span>
+                    cabezal++;           <span class="text-slate-500">// Sigue a la derecha</span>
+                    estado = <span class="text-rose-400">0</span>;
+                }
+                <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) {
+                    <span class="text-slate-500">// Si lee blanco, ya no hay más cadena</span>
+                    estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Detener máquina</span>
+                }
+            }
+        }
+        
+        <span class="text-slate-500">// Imprime: _0101_</span>
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-emerald-50/50 p-4 rounded-lg border border-emerald-100 shadow-sm">
+                                    <h5 class="font-bold text-emerald-800 text-xs uppercase mb-1">El Poder de la Transformación *In Situ*</h5>
+                                    <p class="text-xs text-slate-600 mb-2">A diferencia de un arreglo tradicional en Java donde leeríamos y guardaríamos el resultado en <em>otro</em> String, la Máquina de Turing hace el trabajo en la misma cinta (memoria dinámica).</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>El bloque <code>if (leido == '0')</code> y <code>else if (leido == '1')</code> mantienen el estado en 0, lo que significa que la máquina <strong>repite la misma lógica</strong> una y otra vez para cada carácter de la palabra.</li>
+                                        <li>El cabezal avanza implacablemente a la derecha con <code>cabezal++</code>.</li>
+                                        <li>La condición de salida es elegantísima: Cuando la palabra física se acaba y el cabezal pisa un "hueco" (<code>'_'</code>), manda la señal <code>99</code> y apaga la máquina.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejemplo C: MT Cajero ATM -->
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+                        <div class="bg-amber-50 border-b border-amber-100 p-5">
+                            <h4 class="font-bold text-amber-900 text-lg">Ejemplo C: Máquina de Estados Estricta (Bloqueo de Cajero ATM)</h4>
+                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Simular el sistema de seguridad de un cajero. La cinta contiene un historial de intentos de PIN (<code>'C'</code> = Correcto, <code>'E'</code> = Error). El cajero tolerará hasta 2 errores. Al 3er error consecutivo, la máquina entra en estado de Bloqueo, escribe una marca <code>'B'</code> en la cinta y retiene la tarjeta.</p>
+                        </div>
+                        <div class="grid lg:grid-cols-2">
+                            <!-- Codigo Java -->
+                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTCajeroSeguridad</span> {
+    <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
+        <span class="text-slate-500">// Historial: 2 errores, 1 acierto, 3 errores seguidos</span>
+        <span class="text-purple-400">char</span>[] cinta = {<span class="text-green-400">'_'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'C'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'E'</span>, <span class="text-green-400">'_'</span>};
+        
+        <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">1</span>;
+        <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>; <span class="text-slate-500">// 0: Normal, 1: Un Error, 2: Dos Errores, 3: Bloqueado</span>
+        
+        <span class="text-slate-500">// Bucle de Transiciones (Motor Switch)</span>
+        <span class="text-purple-400">while</span> (estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+            <span class="text-purple-400">char</span> leido = cinta[cabezal];
+            
+            <span class="text-purple-400">switch</span> (estado) {
+                <span class="text-purple-400">case</span> <span class="text-rose-400">0</span>: <span class="text-slate-500">// ESTADO SEGURO</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) cabezal++; <span class="text-slate-500">// Todo bien</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) { estado = <span class="text-rose-400">1</span>; cabezal++; } <span class="text-slate-500">// 1er Error</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>; <span class="text-slate-500">// Terminó sin bloqueo</span>
+                    <span class="text-purple-400">break</span>;
+                    
+                <span class="text-purple-400">case</span> <span class="text-rose-400">1</span>: <span class="text-slate-500">// UN ERROR RECIENTE</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) { estado = <span class="text-rose-400">0</span>; cabezal++; } <span class="text-slate-500">// Se recupera a 0</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) { estado = <span class="text-rose-400">2</span>; cabezal++; } <span class="text-slate-500">// 2do Error</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>;
+                    <span class="text-purple-400">break</span>;
+
+                <span class="text-purple-400">case</span> <span class="text-rose-400">2</span>: <span class="text-slate-500">// DOS ERRORES (Alerta)</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'C'</span>) { estado = <span class="text-rose-400">0</span>; cabezal++; } <span class="text-slate-500">// Salvado</span>
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'E'</span>) {
+                        estado = <span class="text-rose-400">3</span>; <span class="text-slate-500">// 3er ERROR CONSECUTIVO</span>
+                        cinta[cabezal] = <span class="text-green-400">'B'</span>; <span class="text-slate-500">// Marca de Bloqueo en la cinta</span>
+                        cabezal++;
+                    }
+                    <span class="text-purple-400">else if</span> (leido == <span class="text-green-400">'_'</span>) estado = <span class="text-rose-400">99</span>;
+                    <span class="text-purple-400">break</span>;
+
+                <span class="text-purple-400">case</span> <span class="text-rose-400">3</span>: <span class="text-slate-500">// ESTADO POZO (Tarjeta Retenida)</span>
+                    <span class="text-slate-500">// Ignoramos todo hasta terminar el registro</span>
+                    <span class="text-purple-400">if</span> (leido == <span class="text-green-400">'_'</span>) estado = -<span class="text-rose-400">1</span>; <span class="text-slate-500">// Máquina Rechaza</span>
+                    <span class="text-purple-400">else</span> cabezal++;
+                    <span class="text-purple-400">break</span>;
+            }
+        }
+        
+        System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
+    }
+}</code></pre>
+                            </div>
+                            <!-- Explicacion -->
+                            <div class="p-5 flex flex-col justify-center space-y-4">
+                                <div class="bg-amber-50/50 p-4 rounded-lg border border-amber-200 shadow-sm">
+                                    <h5 class="font-bold text-amber-900 text-xs uppercase mb-1">Transiciones Clásicas (\(\delta\))</h5>
+                                    <p class="text-xs text-slate-600 mb-2">Usar un bloque <code>switch(estado)</code> es la forma más pura y profesional de representar la <strong>Función de Transición (\(\delta\))</strong> de una Máquina de Turing en Java.</p>
+                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+                                        <li>El <code>switch</code> controla en qué <strong>Estado de la máquina</strong> (Q) nos encontramos actualmente. Es la memoria del sistema.</li>
+                                        <li>Si ingresamos una 'C' (Correcto) estando en el Estado 1 o 2, la máquina se "resetea" regresando al Estado 0.</li>
+                                        <li>El <strong>Estado 3 es un Estado Pozo</strong>. Una vez que el sistema entra ahí (por 3 errores), ninguna combinación de caracteres lo dejará salir. Finalmente, detendrá el motor con un Rechazo Absoluto (-1).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- EJERCICIOS PRÁCTICOS PARA CLASE (NIVEL MEDIO) -->
@@ -467,7 +597,7 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
                     <div id="registro-u4" class="text-center py-6 max-w-lg mx-auto">
                         <i class="fas fa-microchip text-5xl text-indigo-500 mb-4"></i>
                         <h2 class="text-2xl md:text-3xl font-bold mb-2">Proyecto Final: Máquinas de Turing</h2>
-                        <p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 problemas reales para modelar como Máquina de Turing. <strong>Esta asignación es permanente.</strong></p>
+                        <p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 problemas reales (nivel intermedio) para modelar como Máquina de Turing. <strong>Esta asignación es permanente.</strong></p>
                         
                         <div class="flex flex-col gap-4">
                             <input type="text" id="nombreAlumno" class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none transition text-center" placeholder="Tu Nombre Completo...">
@@ -478,11 +608,6 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
 
                     <!-- TICKET DEL PROYECTO -->
                     <div id="resultado-u4" class="hidden">
-                        <div class="flex justify-end mb-4">
-                            <button onclick="imprimirTicket()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center shadow-lg">
-                                <i class="fas fa-print mr-2"></i> Imprimir Ticket
-                            </button>
-                        </div>
                         
                         <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
                             <div class="mb-4 md:mb-0">
@@ -506,7 +631,7 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
                             <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
                             <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm grid md:grid-cols-2 gap-4">
                                 <div>
-                                    <strong class="text-blue-400 block mb-1">Alfabeto de la Cinta (\(\Gamma\)):</strong> 
+                                    <strong class="text-blue-400 block mb-1">Alfabeto (\(\Gamma\)):</strong> 
                                     <span id="lblAlfabeto" class="text-slate-300 font-mono text-xs"></span>
                                 </div>
                                 <div>
@@ -699,42 +824,42 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
     <script>
         // --- SISTEMA DEL PROYECTO FINAL (UNIDAD 4) ---
 
-        // Base de Datos de 5 Problemas de Turing (Vida Real)
+        // Base de Datos de 5 Problemas de Turing (Vida Real - Nivel Intermedio)
         const acertijosTuring = [
             {
-                titulo: "Bioinformática: Transcriptor de ADN a ARN",
-                desc: "El código genético se procesa de manera lineal. Construye una Máquina de Turing que lea una cadena de ADN ('A','T','C','G') y la convierta in-situ en ARN, reemplazando únicamente las 'T' (Timina) por 'U' (Uracilo) sin afectar el resto de la cadena. Si encuentra una letra ajena al alfabeto genético, debe activar un estado de error visual en tu GUI.",
-                alfabeto: "{ 'A', 'T', 'C', 'G', 'U', '_' }",
-                aceptacion: "La máquina procesa toda la cinta de izquierda a derecha y se detiene correctamente en el primer hueco '_' que encuentre.",
-                solucion: "Estado 0: Si lee A, C o G, escribe lo mismo y mueve a R. Si lee T, escribe U y mueve a R. Si lee _, detiene (Acepta). Si lee cualquier otra cosa, Error (Rechaza)."
+                titulo: "Procesamiento de Texto: Compactador de Espacios",
+                desc: "Al procesar archivos de texto o código fuente, es común encontrar múltiples espacios en blanco seguidos que desperdician memoria. Modela una MT que reciba una cadena (ej. 'A_ _ _B_ _C') y la procese de izquierda a derecha. Cada vez que encuentre espacios consecutivos, debe compactarlos en un único espacio desplazando el resto de los caracteres hacia la izquierda (resultando en 'A_B_C').",
+                alfabeto: "{ 'A'-'Z', '_', 'X' }",
+                aceptacion: "La cinta debe quedar compactada, sin ceros o espacios múltiples consecutivos y la máquina se detiene al revisar todo el string.",
+                solucion: "Estado 0: Lee letra -> Mueve R. Si lee '_' -> pasa a Estado 1 (Mueve R). Estado 1: Si lee '_' -> Lo marca como 'borrar' y activa subrutina de desplazamiento hacia L. Si lee letra -> vuelve a Estado 0. Complejidad: Requiere estados para 'arrastrar' letras sobre los huecos."
             },
             {
-                titulo: "Sistemas Operativos: El Limpiador de Memoria (Trim)",
-                desc: "Los sistemas de bajo nivel a menudo reciben bloques de datos con 'ceros basura' a la izquierda que consumen espacio. Crea una Máquina de Turing que reciba un número binario (ej. '0001011') y borre (reescribiendo a '_') todos los ceros a la izquierda. Tan pronto como el cabezal lea el primer '1', la máquina debe detenerse asumiendo que ha llegado a los datos útiles.",
+                titulo: "Sistemas Digitales: Incrementador Binario (+1)",
+                desc: "En los microprocesadores, el contador de programa (PC) suma 1 en cada ciclo de reloj. Diseña una Máquina de Turing que reciba un número binario (ej. '1011') y lo incremente matemáticamente en 1 (resultando en '1100'), manejando correctamente el acarreo entre bits.",
                 alfabeto: "{ '0', '1', '_' }",
-                aceptacion: "La cinta debe quedar sin ceros a la izquierda (ej. '_ _ _ 1 0 1 1') y la máquina se detiene al leer el primer 1 real.",
-                solucion: "Estado 0: Si lee 0, escribe '_' y mueve a R. Si lee 1, escribe 1 y Detiene (Acepta). Si lee _, Detiene (Era todo ceros o vacía)."
+                aceptacion: "La cinta muestra el número incrementado correctamente y el cabezal se detiene en el extremo izquierdo o derecho del número.",
+                solucion: "Estado 0: Viaja a la derecha hasta leer '_'. Pasa a Estado 1 y mueve a Izquierda (L). Estado 1: Si lee '1', lo cambia a '0' (acarreo) y sigue a L. Si lee '0', lo cambia a '1' y Acepta. Si lee '_', escribe '1' y Acepta."
             },
             {
-                titulo: "Criptografía: El Cifrador César Lógico (Suma +1)",
-                desc: "Los mensajes antiguos se encriptaban rotando letras. Diseña una Máquina de Turing que lea un texto en la cinta y desplace el código ASCII de cada letra a la siguiente (ej. 'A' -> 'B', 'H' -> 'I'). La GUI debe mostrar cómo el cabezal va encriptando el texto letra por letra de izquierda a derecha hasta llegar al final.",
-                alfabeto: "{ Letras 'A'-'Z', '_' }",
-                aceptacion: "La máquina encripta toda la palabra y al toparse con el primer hueco '_' se detiene.",
-                solucion: "Estado 0: Si lee Letra (excepto Z), escribe (Letra+1) y mueve a R. Si lee Z, escribe A y mueve a R. Si lee _, Detiene (Acepta)."
+                titulo: "Compiladores: Validador de Paréntesis Balanceados",
+                desc: "Antes de compilar, los IDEs verifican que no falten signos de cierre. Modela una MT que determine si una expresión tiene sus paréntesis de apertura y cierre perfectamente balanceados y anidados (ej. '(())' o '()()'). Se ignoran las letras en medio.",
+                alfabeto: "{ '(', ')', 'X', '_' }",
+                aceptacion: "La cinta termina con todos los pares tachados con 'X' y el cabezal entra a estado de aceptación. Si sobra un paréntesis, la máquina rechaza.",
+                solucion: "Avanza hasta el primer ')'. Si no hay, verifica que no queden '('. Si halla ')', retrocede a L buscando el '(' más cercano, marcando ambos con 'X'. Repite el proceso iterativamente de adentro hacia afuera. Si halla un ')' sin pareja, Rechaza."
             },
             {
-                titulo: "Redes: El Validador de Bit de Paridad",
-                desc: "Para detectar errores en internet, a las tramas de bits se les añade un 'bit de paridad'. Construye una MT que recorra una cadena binaria para contar si el número de '1s' es par o impar. Al terminar de leer la cadena (llegar a '_'), debe escribir en ese hueco un '0' si los unos eran pares, o un '1' si eran impares, asegurando que la trama final tenga paridad par.",
-                alfabeto: "{ '0', '1', '_' }",
-                aceptacion: "Se debe haber añadido matemáticamente el bit correcto al final y la máquina se detiene un paso a la derecha de la cadena.",
-                solucion: "E0 (Par): Si 0 -> R (sigue E0). Si 1 -> R (pasa a E1). Si _ -> escribe 0 y Acepta. \n E1 (Impar): Si 0 -> R (sigue E1). Si 1 -> R (pasa a E0). Si _ -> escribe 1 y Acepta."
+                titulo: "Seguridad Informática: Máscara de Tarjeta de Crédito",
+                desc: "Por normativas de privacidad (PCI-DSS), los sistemas de pago deben ocultar los primeros dígitos de una tarjeta de crédito en los logs. Diseña una MT que lea un número de tarjeta (16 dígitos) y reemplace los dígitos iniciales con asteriscos '*', dejando intactos exclusivamente los últimos 4 dígitos.",
+                alfabeto: "{ '0'-'9', '*', '_' }",
+                aceptacion: "Los primeros N dígitos quedan como '*' y los 4 finales se mantienen. La máquina se detiene en el borde izquierdo.",
+                solucion: "Viaja al extremo derecho hasta '_'. Retrocede 4 veces a la izquierda pasando por 4 estados de conteo (E1, E2, E3, E4) sin borrar nada. A partir del E4, pasa a estado E_Censura, donde todo dígito leído hacia la izquierda se convierte en '*' hasta topar con '_'."
             },
             {
-                titulo: "Arquitectura CPU: El Sumador Unario Básico",
-                desc: "En el núcleo de una ALU, los números se suman físicamente. Simula una suma unaria donde la cinta tiene dos números separados por un hueco (ej. '111_11' representa 3+2). La Máquina de Turing debe viajar, encontrar el hueco separador '_', escribir un '1' para fusionarlos, viajar al extremo derecho del segundo bloque y borrar el último '1' (escribiendo '_'), resultando en '11111_ _'.",
-                alfabeto: "{ '1', '_' }",
-                aceptacion: "La cinta debe mostrar un solo bloque de '1s' equivalente a la suma exacta de los dos bloques originales.",
-                solucion: "E0: Ir derecha sobre 1s. Si _ -> escribir 1, pasar E1. \n E1: Ir derecha sobre 1s. Si _ -> ir a L (Izquierda), pasar E2. \n E2: Escribir _ y Aceptar."
+                titulo: "Arquitectura de Software: Duplicador de Memoria (Clonación)",
+                desc: "Para evitar la pérdida de datos, los sistemas realizan clonaciones de seguridad en bloques de memoria. Construye una MT que reciba una cadena binaria y genere una copia exacta a la derecha, separada por un espacio. Ej: '101' debe transformarse en '101_101'.",
+                alfabeto: "{ '0', '1', 'X', 'Y', '_' }",
+                aceptacion: "La cinta contiene la cadena original y su clon exacto, y el cabezal se detiene exitosamente.",
+                solucion: "Marca el primer bit con X (si es 0) o Y (si es 1). Viaja al final de la cinta hasta un hueco, viaja un espacio más, escribe el bit clonado. Regresa al inicio buscando el siguiente bit sin marcar. Repite. Al final restaura las X e Y a 0s y 1s originales."
             }
         ];
 
@@ -766,7 +891,6 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
             errorMsg.classList.add('hidden');
             const nombreKey = nombreRaw.toLowerCase();
             
-            // Usamos bd_proyectos_u4 para no interferir con la unidad 3
             let asignaciones = JSON.parse(localStorage.getItem('bd_proyectos_u4')) || {};
             let reto;
 
@@ -785,32 +909,14 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
                 localStorage.setItem('bd_proyectos_u4', JSON.stringify(asignaciones));
             }
 
-            // UI
             document.getElementById('lblNombreEstudiante').innerText = nombreRaw;
             document.getElementById('lblTituloAcertijo').innerText = reto.titulo;
             document.getElementById('lblDescAcertijo').innerText = reto.desc;
             document.getElementById('lblAlfabeto').innerText = reto.alfabeto;
             document.getElementById('lblAceptacion').innerText = reto.aceptacion;
             
-            // PDF Data
-            document.getElementById('pdfNombreEstudiante').innerText = nombreRaw;
-            document.getElementById('pdfTituloAcertijo').innerText = "Reto Asignado: " + reto.titulo;
-            document.getElementById('pdfDescAcertijo').innerText = reto.desc;
-            document.getElementById('pdfAlfabeto').innerText = reto.alfabeto;
-            document.getElementById('pdfAceptacion').innerText = reto.aceptacion;
-
             document.getElementById('registro-u4').classList.add('hidden');
             document.getElementById('resultado-u4').classList.remove('hidden');
-        }
-
-        // Nueva función de impresión nativa (Sin cuadros azules, layout perfecto)
-        function imprimirTicket() {
-            const ticket = document.getElementById('ticket-pdf-content');
-            // Hacerlo visible solo por un milisegundo para la cola de impresión
-            ticket.style.display = 'block';
-            window.print();
-            // Restaurarlo a oculto
-            ticket.style.display = 'none';
         }
 
         function loginDocente() {
