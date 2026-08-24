@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 3: Optimización de Código | Lenguajes y Autómatas II</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0891b2; background-color: #ecfeff; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+        .diff-hard { background-color: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #0891b2;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-cyan-100 selection:text-cyan-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-cyan-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800 font-mono text-[11px]">SCD-1016 • Unidad 3</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA II
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-cyan-100 text-cyan-700 text-xs flex items-center justify-center font-bold mr-2">U3</span>
+                        Optimización de Código
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
+                        <i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U2: Código Intermedio
+                    </a>
+                    <a href="unidad4.html" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition flex items-center shadow-sm">
+                        U4: Código Objeto <i class="fas fa-chevron-right ml-1.5 text-cyan-200"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-cyan-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Análisis Semántico</span>
+                            <span class="difficulty-badge diff-med">20h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Código Intermedio</span>
+                            <span class="difficulty-badge diff-med">20h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg bg-cyan-600 text-white font-bold shadow-sm">
+                            <span>3. Optimización</span>
+                            <span class="difficulty-badge bg-cyan-700 text-white border-0">20h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Código Objeto</span>
+                            <span class="difficulty-badge diff-hard">20h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 3 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 3</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <li><a href="#tema-3-1" class="hover:text-cyan-600 block py-1">3.1 Tipos de optimización</a></li>
+                            <li><a href="#tema-3-1-1" class="hover:text-cyan-600 block py-1 pl-3 text-[11px]">↳ 3.1.1 Locales y Bloques Básicos</a></li>
+                            <li><a href="#tema-3-1-2" class="hover:text-cyan-600 block py-1 pl-3 text-[11px]">↳ 3.1.2 Optimización de Ciclos</a></li>
+                            <li><a href="#tema-3-1-3" class="hover:text-cyan-600 block py-1 pl-3 text-[11px]">↳ 3.1.3 Globales y Flujo de Datos</a></li>
+                            <li><a href="#tema-3-1-4" class="hover:text-cyan-600 block py-1 pl-3 text-[11px] font-semibold text-cyan-700">↳ 3.1.4 Optimización de Mirilla</a></li>
+                            <li><a href="#tema-3-2" class="hover:text-cyan-600 block py-1">3.2 Costos y Grafo CFG</a></li>
+                            <li><a href="#laboratorio-peephole" class="hover:text-cyan-600 block py-1 text-emerald-600 font-bold">Optimizador Interactivo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-cyan-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Fase 5 del Compilador • Rendimiento y Eficiencia</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Unidad 3: Optimización de Código
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 20 Horas (Semanas 9-12)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-hard">Nivel Avanzado</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- Introducción -->
+                <section>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+                        La <strong>Optimización de Código</strong> consiste en transformar un programa intermedio en una versión equivalente que ejecute <strong>más rápido</strong>, consuma <strong>menos memoria</strong> o demande <strong>menor energía</strong> sin alterar el resultado semántico del programa original. Es una de las etapas de mayor impacto en el rendimiento de los compiladores modernos (GCC, Clang, Rustc, HotSpot JVM).
+                    </p>
+
+                    <div class="lll-box lll-info">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-cyan-600 mr-2"></i>Competencia Específica</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            <strong>Conocer, identificar y aplicar las técnicas de optimización</strong> locales, globales, en ciclos y de mirilla (*peephole*) para eficientar el código intermedio, analizando los grafos de flujo de control (CFG) y los costos de ejecución.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 3.1 Tipos de Optimización -->
+                <section id="tema-3-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-cyan-600 mr-2 font-mono text-xl">3.1</span> Tipos de Optimización
+                    </h2>
+                    
+                    <!-- 3.1.1 Locales -->
+                    <div id="tema-3-1-1" class="mb-6">
+                        <h3 class="text-base font-bold text-slate-800 mb-2">3.1.1 Optimizaciones Locales y Bloques Básicos</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3 text-justify">
+                            Un <strong>Bloque Básico</strong> es una secuencia de instrucciones consecutivas con un único punto de entrada (al inicio) y un único punto de salida (al final), sin saltos intermedios. Las optimizaciones locales operan exclusivamente dentro de un bloque básico.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-3">
+                            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                                <strong class="text-cyan-800 block mb-1">Propagación de Constantes</strong>
+                                <p class="text-slate-500">Si <code>a = 10</code> y luego <code>b = a + 5</code>, se transforma en <code>b = 15</code> en tiempo de compilación.</p>
+                            </div>
+                            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                                <strong class="text-cyan-800 block mb-1">Eliminación de Subexpresiones Comunes (CSE)</strong>
+                                <p class="text-slate-500">Evitar recalcular <code>a * b</code> si no han cambiado sus valores entre llamadas.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3.1.2 En Ciclos -->
+                    <div id="tema-3-1-2" class="mb-6">
+                        <h3 class="text-base font-bold text-slate-800 mb-2">3.1.2 Optimización en Ciclos (Bucles)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3 text-justify">
+                            El 90% del tiempo de ejecución de un programa se consume en el 10% del código (los bucles). Optimizar los ciclos produce los mayores beneficios:
+                        </p>
+
+                        <div class="space-y-3">
+                            <div class="step-item" data-step="1">
+                                <h4 class="font-bold text-slate-800 text-sm">Movimiento de Código Invariable (Code Motion)</h4>
+                                <p class="text-xs text-slate-600">Extraer fuera del bucle las expresiones cuyos operandos no cambian dentro del ciclo (ej. <code>x = limit * 2</code>).</p>
+                            </div>
+                            <div class="step-item" data-step="2">
+                                <h4 class="font-bold text-slate-800 text-sm">Reducción de Fuerza (Strength Reduction)</h4>
+                                <p class="text-xs text-slate-600">Reemplazar operaciones costosas (multiplicaciones dentro del ciclo) por sumas sucesivas más rápidas en variables de inducción.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3.1.3 Globales -->
+                    <div id="tema-3-1-3" class="mb-6">
+                        <h3 class="text-base font-bold text-slate-800 mb-2">3.1.3 Optimizaciones Globales y Análisis de Flujo</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3 text-justify">
+                            Operan a través de múltiples bloques básicos mediante el <strong>Análisis de Flujo de Datos</strong> (variables vivas, expresiones disponibles y definiciones alcanzables). Incluyen la <strong>eliminación de código muerto</strong> (instrucciones que calculan valores nunca leídos).
+                        </p>
+                    </div>
+
+                    <!-- 3.1.4 Mirilla / Peephole -->
+                    <div id="tema-3-1-4" class="mb-6">
+                        <h3 class="text-base font-bold text-slate-800 mb-2 text-cyan-800">3.1.4 Optimización de Mirilla (Peephole Optimization)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-3 text-justify">
+                            Inspecciona una ventana deslizante de pocas instrucciones consecutivas (2 a 5 instrucciones) y aplica patrones de transformación directos:
+                        </p>
+
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl mb-4">
+                            <table class="w-full text-left text-xs bg-white">
+                                <thead class="bg-cyan-50 text-cyan-900 font-bold border-b border-cyan-100">
+                                    <tr><th class="p-2.5">Patrón Detectado</th><th class="p-2.5">Código Original</th><th class="p-2.5">Código Optimizado</th><th class="p-2.5">Justificación</th></tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 font-mono text-slate-600">
+                                    <tr>
+                                        <td class="p-2 font-sans font-bold text-slate-700">Identidad Aritmética</td>
+                                        <td class="p-2">t1 = x + 0<br>t2 = y * 1</td>
+                                        <td class="p-2 text-emerald-700 font-bold">t1 = x<br>t2 = y</td>
+                                        <td class="p-2 font-sans text-[11px]">Elimina operaciones neutras.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-sans font-bold text-slate-700">Reducción de Fuerza</td>
+                                        <td class="p-2">t1 = x * 2</td>
+                                        <td class="p-2 text-emerald-700 font-bold">t1 = x &lt;&lt; 1</td>
+                                        <td class="p-2 font-sans text-[11px]">Desplazamiento binario en 1 ciclo.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-sans font-bold text-slate-700">Saltos Redundantes</td>
+                                        <td class="p-2">goto L1<br>L1: goto L2</td>
+                                        <td class="p-2 text-emerald-700 font-bold">goto L2</td>
+                                        <td class="p-2 font-sans text-[11px]">Elimina saltos intermedios.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2 font-sans font-bold text-slate-700">Cargas Redundantes</td>
+                                        <td class="p-2">MOV R0, a<br>MOV a, R0</td>
+                                        <td class="p-2 text-emerald-700 font-bold">MOV R0, a</td>
+                                        <td class="p-2 font-sans text-[11px]">Elimina re-almacenamiento innecesario.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3.2 Costos y Grafo CFG -->
+                <section id="tema-3-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-cyan-600 mr-2 font-mono text-xl">3.2</span> Costos de Ejecución y Grafo de Flujo de Control (CFG)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        El <strong>Grafo de Flujo de Control (CFG)</strong> es un grafo dirigido donde cada nodo representa un Bloque Básico y las aristas representan posibles transferencias de control (`goto`, saltos condicionales).
+                    </p>
+
+                    <div class="lll-box lll-tip">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-tachometer-alt text-emerald-600 mr-2"></i>Jerarquía de Costos de Hardware</h4>
+                        <p class="text-xs text-slate-600">
+                            1. <strong>Operación en Registro:</strong> 1 ciclo de reloj.<br>
+                            2. <strong>Acceso a Caché L1/L2:</strong> 3 a 10 ciclos.<br>
+                            3. <strong>Acceso a Memoria RAM:</strong> 100 a 300 ciclos.<br>
+                            <em>El objetivo principal del optimizador es mantener las variables vivas en registros de CPU y minimizar lecturas a RAM.</em>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- SIMULADOR INTERACTIVO DE OPTIMIZACIÓN DE MIRILLA -->
+                <section id="laboratorio-peephole" class="scroll-mt-24">
+                    <div class="border-2 border-cyan-200 rounded-2xl p-6 bg-gradient-to-b from-cyan-50/40 via-white to-white shadow-sm">
+                        <div class="flex items-center space-x-2 text-xs font-bold text-cyan-700 uppercase tracking-widest mb-1">
+                            <i class="fas fa-bolt"></i> Laboratorio Interactivo de Optimización
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Optimizador de Mirilla en Tiempo Real</h2>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+                            Ingresa instrucciones de código intermedio TAC no optimizado. El motor aplicará reglas de reducción de fuerza, simplificación algebraica y eliminación de código redundante.
+                        </p>
+
+                        <!-- Controles -->
+                        <div class="space-y-3 mb-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Código Intermedio de Entrada (TAC):</label>
+                                <textarea id="optSrcInput" rows="5" class="w-full p-3 border border-slate-300 rounded-xl font-mono text-xs focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">t1 = x + 0
+t2 = y * 1
+t3 = z * 2
+t4 = 10 + 20
+a = t1 + t4</textarea>
+                            </div>
+                            <button onclick="ejecutarOptimizacion()" class="px-5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-xl transition shadow-sm flex items-center">
+                                <i class="fas fa-magic mr-2"></i> Aplicar Optimizaciones de Mirilla
+                            </button>
+                        </div>
+
+                        <!-- Comparativa Antes y Después -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-900 p-4 rounded-xl font-mono text-xs text-slate-400 shadow-inner">
+                                <div class="text-[10px] text-slate-400 font-bold uppercase mb-2 border-b border-slate-800 pb-1">Original (Sin Optimizar):</div>
+                                <div id="optOriginalDisplay">t1 = x + 0<br>t2 = y * 1<br>t3 = z * 2<br>t4 = 10 + 20<br>a = t1 + t4</div>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl font-mono text-xs text-emerald-400 shadow-inner border border-cyan-800/40">
+                                <div class="text-[10px] text-cyan-400 font-bold uppercase mb-2 border-b border-slate-800 pb-1">Optimizado (Peephole):</div>
+                                <div id="optResultadoDisplay">// Resultado optimizado</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad2.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
+                        <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 2: Código Intermedio
+                    </a>
+                    <a href="unidad4.html" class="flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition shadow-sm font-bold">
+                        Unidad 4: Código Objeto <i class="fas fa-arrow-right ml-2 text-cyan-200"></i>
+                    </a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-cyan-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#tema-3-1" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">3.1 Tipos de optimización</a>
+                        <a href="#tema-3-1-1" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">↳ Locales & Bloques Básicos</a>
+                        <a href="#tema-3-1-2" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">↳ Optimización en Ciclos</a>
+                        <a href="#tema-3-1-3" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">↳ Globales y Flujo de Datos</a>
+                        <a href="#tema-3-1-4" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">↳ Optimización de Mirilla</a>
+                        <a href="#tema-3-2" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-cyan-500 pl-2 transition">3.2 Costos y Grafo CFG</a>
+                        <a href="#laboratorio-peephole" class="block py-1 text-cyan-600 font-bold border-l-2 border-cyan-500 pl-2 transition">Optimizador Interactivo</a>
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-cyan-50/60 p-3 rounded-xl border border-cyan-100">
+                        <div class="text-[11px] font-bold text-cyan-900 mb-1"><i class="fas fa-tachometer-alt mr-1"></i> Laboratorio Optimización</div>
+                        <p class="text-[11px] text-cyan-700 leading-tight">
+                            Prácticas 12 a 14: Medición de costos y optimización de mirilla en el compilador.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas II • SCD-1016 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container').querySelector('code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => { btn.innerText = orig; }, 1500);
+            });
+        }
+
+        function ejecutarOptimizacion() {
+            const raw = document.getElementById('optSrcInput').value;
+            document.getElementById('optOriginalDisplay').innerText = raw;
+            const resDisplay = document.getElementById('optResultadoDisplay');
+
+            const lines = raw.split('\n');
+            let optimized = [];
+
+            lines.forEach(line => {
+                let l = line.trim();
+                if (!l) return;
+
+                // 1. Identidad: x + 0 -> x
+                if (/\+\s*0$/.test(l)) {
+                    l = l.replace(/\+\s*0$/, '').trim();
+                }
+                // 2. Identidad: y * 1 -> y
+                else if (/\*\s*1$/.test(l)) {
+                    l = l.replace(/\*\s*1$/, '').trim();
+                }
+                // 3. Reducción de fuerza: z * 2 -> z << 1
+                else if (/\*\s*2$/.test(l)) {
+                    l = l.replace(/\*\s*2$/, '<< 1').trim();
+                }
+                // 4. Constant Folding: 10 + 20 -> 30
+                else if (/=\s*(\d+)\s*\+\s*(\d+)$/.test(l)) {
+                    const m = l.match(/=\s*(\d+)\s*\+\s*(\d+)$/);
+                    const sum = parseInt(m[1]) + parseInt(m[2]);
+                    l = l.replace(/=\s*\d+\s*\+\s*\d+$/, `= ${sum}`);
+                }
+
+                optimized.push(l);
+            });
+
+            resDisplay.innerHTML = optimized.map(o => `<div>${o}</div>`).join('') + `<div class="text-cyan-400 mt-2 text-[10px]">// Optimizaciones aplicadas: Const Folding + Strength Reduction + Neutral Elimination</div>`;
+        }
+        window.onload = ejecutarOptimizacion;
+    </script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 4: Generación de Código Objeto | Lenguajes y Autómatas II</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #e11d48; background-color: #fff1f2; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+        .diff-hard { background-color: #ffe4e6; color: #9f1239; border: 1px solid #fecdd3; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #e11d48;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-rose-100 selection:text-rose-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-rose-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-rose-950 text-rose-300 px-2 py-0.5 rounded border border-rose-800 font-mono text-[11px]">SCD-1016 • Unidad 4</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA II
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 text-xs flex items-center justify-center font-bold mr-2">U4</span>
+                        Código Objeto y Runtime
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
+                        <i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U3: Optimización
+                    </a>
+                    <a href="index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white transition flex items-center shadow-sm">
+                        <i class="fas fa-check-circle mr-1.5 text-emerald-400"></i> Finalizar Curso
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-rose-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Análisis Semántico</span>
+                            <span class="difficulty-badge diff-med">20h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Código Intermedio</span>
+                            <span class="difficulty-badge diff-med">20h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Optimización</span>
+                            <span class="difficulty-badge diff-hard">20h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg bg-rose-600 text-white font-bold shadow-sm">
+                            <span>4. Código Objeto</span>
+                            <span class="difficulty-badge bg-rose-700 text-white border-0">20h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 4 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 4</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <li><a href="#tema-4-1" class="hover:text-rose-600 block py-1">4.1 Registros y Descriptores</a></li>
+                            <li><a href="#tema-4-2" class="hover:text-rose-600 block py-1">4.2 Lenguaje Ensamblador (x86)</a></li>
+                            <li><a href="#tema-4-3" class="hover:text-rose-600 block py-1">4.3 Lenguaje Máquina y Binario</a></li>
+                            <li><a href="#tema-4-4" class="hover:text-rose-600 block py-1 font-semibold text-rose-700">4.4 Administración de Memoria (Stack Frame)</a></li>
+                            <li><a href="#laboratorio-stack" class="hover:text-rose-600 block py-1 text-emerald-600 font-bold">Simulador de Stack Frame</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-rose-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Fase 6 del Compilador • Síntesis y Código Máquina</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Unidad 4: Generación de Código Objeto y Administración de Memoria
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 20 Horas (Semanas 13-16)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-hard">Nivel Avanzado</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- Introducción -->
+                <section>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+                        La <strong>Generación de Código Objeto</strong> es la fase culminante del compilador. Transforma la representación intermedia (TAC) en código ejecutable en <strong>lenguaje ensamblador o código máquina</strong> para la arquitectura de procesador destino. Involucra decisiones críticas de hardware: selección óptima de instrucciones, asignación eficiente de registros de CPU y gestión de la memoria en tiempo de ejecución (*runtime environment*).
+                    </p>
+
+                    <div class="lll-box lll-info">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-rose-600 mr-2"></i>Competencia Específica</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            <strong>Diseñar, construir e integrar el generador de código objeto</strong> para traducir las instrucciones intermedias a lenguaje ensamblador x86/x64 o código máquina, gestionando adecuadamente los registros del microprocesador y el marco de pila (*stack frame*) en tiempo de ejecución.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 4.1 Registros y Descriptores -->
+                <section id="tema-4-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">4.1</span> Asignación de Registros y Descriptores
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Los registros son las unidades de almacenamiento más veloces de la CPU pero de capacidad limitada. Para administrar su asignación dinámica se utilizan dos estructuras:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Descriptor de Registros (`Register Descriptor`)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Rastrea en todo momento qué variables residen actualmente en cada registro de la CPU (ej. <code>EAX contiene: {x, t1}</code>).
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Descriptor de Direcciones (`Address Descriptor`)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Indica todas las ubicaciones donde se encuentra el valor actual de una variable (en su celda de memoria RAM, en el stack o en un registro <code>EDX</code>).
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4.2 Ensamblador y 4.3 Código Máquina -->
+                <section id="tema-4-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">4.2 - 4.3</span> Traducción a Lenguaje Ensamblador (x86)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Cada cuádruplo de código intermedio se mapea a una secuencia correspondiente de instrucciones de ensamblador:
+                    </p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Mapeo TAC a Ensamblador x86 (Sintaxis Intel)</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre class="p-4 text-slate-200 text-xs font-mono overflow-x-auto leading-relaxed"><code>; TAC: t1 = a + b
+MOV EAX, [ebp - 4]   ; Carga variable 'a' desde el stack en EAX
+ADD EAX, [ebp - 8]   ; Suma variable 'b' al acumulador EAX
+MOV [ebp - 12], EAX  ; Guarda el resultado en temporal 't1'
+
+; TAC: if (t1 &gt;= 100) goto L1
+CMP EAX, 100         ; Compara t1 con 100
+JGE L1               ; Salto condicional Jump-if-Greater-or-Equal</code></pre>
+                    </div>
+                </section>
+
+                <!-- 4.4 Administración de Memoria y Stack Frame -->
+                <section id="tema-4-4" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">4.4</span> Administración de Memoria y Marco de Activación (Stack Frame)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Durante la ejecución del programa compilado, la memoria RAM se divide en 4 áreas fundamentales:
+                    </p>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl mb-6">
+                        <div class="text-xs font-bold text-slate-700 uppercase mb-3 text-center">Organización de la Memoria en Tiempo de Ejecución (Runtime)</div>
+                        <div class="max-w-md mx-auto space-y-1 text-xs font-mono text-center">
+                            <div class="p-2 bg-slate-800 text-white rounded font-bold">Direcciones Altas (0xFFFFFFFF)</div>
+                            <div class="p-3 bg-rose-100 text-rose-900 border border-rose-200 rounded font-bold">
+                                ⬇ STACK (Pila de Llamadas y Variables Locales) ⬇
+                            </div>
+                            <div class="p-2 bg-slate-200 text-slate-600 italic rounded">Espacio Libre para Crecimiento</div>
+                            <div class="p-3 bg-indigo-100 text-indigo-900 border border-indigo-200 rounded font-bold">
+                                ⬆ HEAP (Memoria Dinámica malloc / new) ⬆
+                            </div>
+                            <div class="p-2 bg-emerald-100 text-emerald-900 border border-emerald-200 rounded font-bold">
+                                .DATA / .BSS (Variables Globales y Estáticas)
+                            </div>
+                            <div class="p-2 bg-purple-100 text-purple-900 border border-purple-200 rounded font-bold">
+                                .TEXT (Instrucciones de Código Máquina en Sólo Lectura)
+                            </div>
+                            <div class="p-2 bg-slate-800 text-white rounded font-bold">Direcciones Bajas (0x00000000)</div>
+                        </div>
+                    </div>
+
+                    <!-- Estructura del Stack Frame -->
+                    <h3 class="text-base font-bold text-slate-800 mb-2">Anatomía de un Registro de Activación (Stack Frame)</h3>
+                    <div class="space-y-3 mb-6">
+                        <div class="step-item" data-step="1">
+                            <h4 class="font-bold text-slate-800 text-sm">Paso de Parámetros Reales</h4>
+                            <p class="text-xs text-slate-600">Apilados por el llamador (*caller*) de derecha a izquierda antes de invocar la función.</p>
+                        </div>
+                        <div class="step-item" data-step="2">
+                            <h4 class="font-bold text-slate-800 text-sm">Dirección de Retorno (EIP)</h4>
+                            <p class="text-xs text-slate-600">La instrucción `CALL` apila la dirección de la siguiente instrucción para retornar.</p>
+                        </div>
+                        <div class="step-item" data-step="3">
+                            <h4 class="font-bold text-slate-800 text-sm">Puntero al Marco Anterior (EBP)</h4>
+                            <p class="text-xs text-slate-600">El prólogo ejecuta `PUSH EBP; MOV EBP, ESP` para establecer la base del nuevo frame.</p>
+                        </div>
+                        <div class="step-item" data-step="4">
+                            <h4 class="font-bold text-slate-800 text-sm">Variables Locales y Temporales</h4>
+                            <p class="text-xs text-slate-600">Se reserva espacio restando al puntero de pila: `SUB ESP, bytes_locales`.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SIMULADOR INTERACTIVO DE STACK FRAME -->
+                <section id="laboratorio-stack" class="scroll-mt-24">
+                    <div class="border-2 border-rose-200 rounded-2xl p-6 bg-gradient-to-b from-rose-50/40 via-white to-white shadow-sm">
+                        <div class="flex items-center space-x-2 text-xs font-bold text-rose-700 uppercase tracking-widest mb-1">
+                            <i class="fas fa-microchip"></i> Laboratorio Interactivo de Runtime
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Simulador Visual del Marco de Pila (Stack Frame)</h2>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+                            Simula la invocación y retorno de funciones anidadas (ej. `main()` llama a `calcular(a, b)`) y observa cómo se construye y destruye el marco de activación en la memoria de la CPU:
+                        </p>
+
+                        <!-- Botones de Acción -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <button onclick="simularCall()" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition shadow-sm flex items-center">
+                                <i class="fas fa-arrow-down mr-2"></i> Invocación de Función: CALL calcular(10, 20)
+                            </button>
+                            <button onclick="simularRet()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs rounded-xl transition flex items-center">
+                                <i class="fas fa-arrow-up mr-2"></i> Retorno: RET (Destruir Frame)
+                            </button>
+                            <button onclick="reiniciarStack()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs rounded-xl border border-slate-300 transition">
+                                Reiniciar
+                            </button>
+                        </div>
+
+                        <!-- Visualización del Stack -->
+                        <div class="bg-slate-900 p-5 rounded-2xl font-mono text-xs shadow-inner">
+                            <div class="flex justify-between text-[11px] text-slate-400 font-bold border-b border-slate-800 pb-2 mb-3">
+                                <span>Pila de Ejecución (Memoria RAM):</span>
+                                <span id="stackStatusText" class="text-emerald-400">Estado: main() Activo</span>
+                            </div>
+                            <div id="stackItemsContainer" class="space-y-1.5 max-w-md mx-auto">
+                                <!-- Elementos del Stack se inyectan aquí -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad3.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
+                        <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 3: Optimización
+                    </a>
+                    <a href="index.html" class="flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition shadow-sm font-bold">
+                        <i class="fas fa-home mr-2"></i> Volver a la Planeación de LyA II
+                    </a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-rose-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#tema-4-1" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">4.1 Registros y Descriptores</a>
+                        <a href="#tema-4-2" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">4.2 Lenguaje Ensamblador (x86)</a>
+                        <a href="#tema-4-3" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">4.3 Formato Binario</a>
+                        <a href="#tema-4-4" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">4.4 Administración de Memoria</a>
+                        <a href="#laboratorio-stack" class="block py-1 text-rose-600 font-bold border-l-2 border-rose-500 pl-2 transition">Simulador de Stack Frame</a>
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-rose-50/60 p-3 rounded-xl border border-rose-100">
+                        <div class="text-[11px] font-bold text-rose-900 mb-1"><i class="fas fa-trophy mr-1"></i> Proyecto Final</div>
+                        <p class="text-[11px] text-rose-700 leading-tight">
+                            Prácticas 15 y 16: Generación de código ensamblador ejecutable y entrega del compilador.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas II • SCD-1016 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container').querySelector('code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => { btn.innerText = orig; }, 1500);
+            });
+        }
+
+        let stackState = 1; // 1: main, 2: calcular() llamado
+
+        function renderStack() {
+            const container = document.getElementById('stackItemsContainer');
+            const status = document.getElementById('stackStatusText');
+
+            if (stackState === 1) {
+                status.innerText = "Estado: Ejecutando función main()";
+                status.className = "text-emerald-400";
+                container.innerHTML = `
+                    <div class="p-2 bg-rose-950/80 border border-rose-800 text-rose-200 rounded flex justify-between">
+                        <span>[EBP - 4] Variable local: total = 0</span><span class="text-slate-500">Local</span>
+                    </div>
+                    <div class="p-2 bg-indigo-950/80 border border-indigo-800 text-indigo-200 rounded flex justify-between">
+                        <span>[EBP] Guardado: Frame Pointer Anterior (EBP_OS)</span><span class="text-slate-500">Base Frame</span>
+                    </div>
+                    <div class="p-2 bg-purple-950/80 border border-purple-800 text-purple-200 rounded flex justify-between">
+                        <span>[EBP + 4] Dirección de Retorno a SO (EIP_main)</span><span class="text-slate-500">Retorno</span>
+                    </div>
+                `;
+            } else {
+                status.innerText = "Estado: Marco calcular(10, 20) Activo sobre la Pila";
+                status.className = "text-yellow-400 font-bold";
+                container.innerHTML = `
+                    <div class="p-2 bg-amber-950 border border-amber-500 text-amber-200 rounded flex justify-between animate-pulse">
+                        <span>[ESP ➔] Variable local: resultado_temp</span><span class="text-amber-400 font-bold">Tope Pila</span>
+                    </div>
+                    <div class="p-2 bg-rose-900 border border-rose-600 text-white rounded flex justify-between">
+                        <span>[EBP ➔] Guardado: Frame Pointer EBP_main</span><span class="text-rose-300">Base calcular()</span>
+                    </div>
+                    <div class="p-2 bg-purple-900 border border-purple-600 text-white rounded flex justify-between">
+                        <span>[EBP + 4] Dirección de Retorno a main+0x14</span><span class="text-purple-300">Retorno EIP</span>
+                    </div>
+                    <div class="p-2 bg-blue-900 border border-blue-600 text-white rounded flex justify-between">
+                        <span>[EBP + 8] Parámetro 'a' = 10</span><span class="text-blue-300">Param 1</span>
+                    </div>
+                    <div class="p-2 bg-blue-900 border border-blue-600 text-white rounded flex justify-between">
+                        <span>[EBP + 12] Parámetro 'b' = 20</span><span class="text-blue-300">Param 2</span>
+                    </div>
+                    <div class="p-1.5 text-center text-slate-600 text-[10px]">── Límites del Marco de la función main() ──</div>
+                    <div class="p-2 bg-rose-950/40 border border-rose-900/60 text-slate-400 rounded flex justify-between opacity-60">
+                        <span>[main Frame] Variable local: total</span><span>main()</span>
+                    </div>
+                `;
+            }
+        }
+
+        function simularCall() {
+            stackState = 2;
+            renderStack();
+        }
+
+        function simularRet() {
+            stackState = 1;
+            renderStack();
+        }
+
+        function reiniciarStack() {
+            stackState = 1;
+            renderStack();
+        }
+
+        window.onload = renderStack;
+    </script>
+</body>
+</html>

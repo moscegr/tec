@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenguajes y Autómatas II - Planeación Didáctica | IT Chilpancingo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Estilo Callouts Luis Llamas - White UI */
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #9333ea; background-color: #faf5ff; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
+
+        .course-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            transition: all 0.25s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .sticky-top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-purple-100 selection:text-purple-900">
+
+    <!-- Top Bar Institucional -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-purple-400 mr-1.5"></i> TecNM - Instituto Tecnológico de Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800/60 font-mono text-[11px]">SCD-1016 • SATCA 2-3-5</span>
+                <a href="../index.html" class="hover:text-white transition text-[11px]"><i class="fas fa-th-large mr-1 text-purple-400"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Principal -->
+    <nav class="sticky-top-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:shadow transition">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div>
+                            <span class="text-base font-bold text-slate-900 leading-tight block group-hover:text-purple-600 transition">Lenguajes y Autómatas II</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Back-End del Compilador con JFlex & CUP (5 hrs/sem)</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-600">
+                    <a href="#presentacion" class="hover:text-purple-600 transition">Presentación</a>
+                    <a href="#unidades" class="hover:text-purple-600 transition">4 Unidades</a>
+                    <a href="#planeacion-16-semanas" class="hover:text-purple-600 transition">Calendario 16 Semanas</a>
+                    <a href="#practicas" class="hover:text-purple-600 transition">16 Prácticas</a>
+                    <a href="#evaluacion" class="hover:text-purple-600 transition">Evaluación</a>
+                    <a href="unidad1.html" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold text-xs transition shadow-sm">Iniciar Curso <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Hero - White Style con Acentos Morados -->
+    <header class="border-b border-slate-200 bg-gradient-to-b from-slate-50 via-white to-white py-14 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-semibold uppercase tracking-wider mb-4">
+                <i class="fas fa-microchip"></i> Fases de Análisis y Síntesis • Compilador Completo
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Lenguajes y Autómatas II
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-normal leading-relaxed mb-8">
+                Construcción del <strong>Back-End del Compilador</strong>: análisis semántico, comprobación de tipos, generación de código intermedio (TAC), optimización de código y generación de código objeto con <strong>JFlex y CUP</strong>.
+            </p>
+
+            <!-- Metadata Cards Blancas -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-chalkboard-teacher text-purple-500 mr-1"></i> Catedrático</div>
+                    <div class="font-bold text-slate-800 text-sm">Cruz Enrique García</div>
+                    <div class="text-[11px] text-slate-500">IT Chilpancingo</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-clock text-purple-500 mr-1"></i> Carga Horaria</div>
+                    <div class="font-bold text-slate-800 text-sm">5 Horas / Semana</div>
+                    <div class="text-[11px] text-slate-500">2 Teóricas • 3 Prácticas (80h)</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-code-branch text-purple-500 mr-1"></i> Clave Asignatura</div>
+                    <div class="font-bold text-slate-800 text-sm">SCD-1016</div>
+                    <div class="text-[11px] text-slate-500">SATCA 2-3-5</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-tools text-purple-500 mr-1"></i> Herramientas</div>
+                    <div class="font-bold text-slate-800 text-sm">JFlex & CUP</div>
+                    <div class="text-[11px] text-slate-500">Java / Ensamblador</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- SECCIÓN 1: Caracterización y Competencias -->
+        <section id="presentacion" class="mb-16 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Sección 1</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Caracterización e Intención Didáctica</h2>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed text-justify">
+                        En esta asignatura se desarrolla el <strong>análisis semántico</strong>, la <strong>generación de código intermedio</strong>, la <strong>optimización</strong> y la <strong>generación del código objeto</strong> para obtener el funcionamiento integral de un compilador. Se provee al estudiante de las herramientas teóricas y prácticas para concretar un traductor completo iniciado en la asignatura previa (*Lenguajes y Autómatas I*), demostrando que es capaz de crear su propio lenguaje de programación funcional.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-justify">
+                        Es indispensable distinguir que la carrera de Ingeniería en Sistemas Computacionales se enfoca tanto en el software de aplicación como en el <strong>software de base y científico</strong>. Esta asignatura se ubica en el núcleo de la ingeniería de software de sistemas, dotando al estudiante de habilidades avanzadas en arquitectura de computadoras, gestión de memoria en runtime y compilación moderna.
+                    </p>
+
+                    <!-- Callout Info -->
+                    <div class="lll-box lll-info">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-bullseye text-purple-600 text-lg mt-0.5"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Competencia Específica del Curso</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+                                    <strong>Implementar un compilador funcional para un lenguaje específico</strong> considerando todas las etapas de la fase de síntesis: análisis semántico mediante esquemas de traducción con <strong>JFlex y CUP</strong>, generación de código intermedio (TAC), optimización de código y generación de código objeto ejecutable.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Lateral de Competencias Previas -->
+                <div class="space-y-4">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
+                            <i class="fas fa-key text-amber-500 mr-2"></i> Competencias Previas
+                        </h3>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Definir, diseñar y programar las fases del analizador léxico y sintáctico (LyA I).</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Dominio de estructuras de datos jerárquicas: árboles binarios, pilas y tablas hash.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Manejo de programación orientada a objetos en Java / C++ y uso de archivos.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Conocimientos de arquitectura de computadoras: registros de CPU y memoria.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
+                            <i class="fas fa-laptop-code text-purple-500 mr-2"></i> Entorno de Trabajo
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Se utilizarán generadores estándar de la industria: <strong>JFlex</strong> para el análisis léxico y <strong>CUP (Constructor of Useful Parsers)</strong> en Java para el análisis sintáctico-semántico y generación de código intermedio.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: Las 4 Unidades Temáticas Oficiales -->
+        <section id="unidades" class="mb-16 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-end mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Estructura Curricular</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Las 4 Unidades de Aprendizaje</h2>
+                    <p class="text-sm text-slate-500 mt-1">Programa oficial SCD-1016 (80 horas semestrales)</p>
+                </div>
+                <div class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
+                    <i class="fas fa-info-circle text-purple-500 mr-1"></i> Haz clic en "Ver Unidad" para explorar el contenido didáctico
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- UNIDAD 1 -->
+                <div class="course-card p-6 flex flex-col justify-between border-purple-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 font-bold text-sm flex items-center justify-center border border-purple-200">U1</span>
+                            <span class="difficulty-badge diff-med">Intermedio • 20h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-purple-600 transition">
+                            <a href="unidad1.html">1. Análisis Semántico y Pila Semántica</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Árboles de expresiones (AAS/AST), recorridos (Preorden, Inorden, Posorden), acciones semánticas dirigidas por sintaxis en CUP, comprobación de tipos, evaluación en pila semántica con recorridos IDR (SiVaVa) y RID (VaVaSi), tabla de símbolos y gestión de errores.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
+                            <li><i class="fas fa-angle-right text-purple-500 mr-1.5"></i> 1.1 Árboles de expresiones y representaciones (Venn, Dewey, Grafo)</li>
+                            <li><i class="fas fa-angle-right text-purple-500 mr-1.5"></i> 1.2 Acciones semánticas y 1.3 Comprobación de tipos</li>
+                            <li><i class="fas fa-angle-right text-purple-500 mr-1.5"></i> 1.4 Pila semántica: Criterios IDR (SiVaVa) y RID (VaVaSi)</li>
+                            <li><i class="fas fa-angle-right text-purple-500 mr-1.5"></i> 1.5 Esquemas de traducción con JFlex + CUP</li>
+                        </ul>
+                    </div>
+                    <a href="unidad1.html" class="w-full text-center py-2.5 px-3 bg-purple-50 hover:bg-purple-100 hover:text-purple-800 text-purple-700 font-bold text-xs rounded-xl border border-purple-200 transition">
+                        Ver Unidad 1: Análisis Semántico <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 2 -->
+                <div class="course-card p-6 flex flex-col justify-between border-indigo-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center border border-indigo-200">U2</span>
+                            <span class="difficulty-badge diff-med">Intermedio • 20h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-indigo-600 transition">
+                            <a href="unidad2.html">2. Generación de Código Intermedio</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Notaciones (Prefija, Infija, Postfija), representaciones intermedias (Código P, Triplos, Cuádruplos y Código de Tres Direcciones / TAC) y esquemas de traducción para expresiones, asignaciones, estructuras de control con backpatching, funciones y arreglos.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
+                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.1 Notación Polaca y Polaca Inversa</li>
+                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.2 Triplos, Cuádruplos y Código de 3 Direcciones (TAC)</li>
+                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.3 Generación para control de flujo (if/while/for) con saltos</li>
+                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> Cálculo de direcciones base y desplazamientos en arreglos</li>
+                        </ul>
+                    </div>
+                    <a href="unidad2.html" class="w-full text-center py-2.5 px-3 bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-800 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition">
+                        Ver Unidad 2: Código Intermedio <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 3 -->
+                <div class="course-card p-6 flex flex-col justify-between border-cyan-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 font-bold text-sm flex items-center justify-center border border-cyan-200">U3</span>
+                            <span class="difficulty-badge diff-hard">Avanzado • 20h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-cyan-600 transition">
+                            <a href="unidad3.html">3. Optimización de Código</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Estrategias de optimización locales, de ciclos (movimiento de código invariable, variables de inducción), globales (análisis de flujo de datos, propagación de constantes, eliminación de código muerto) y optimizaciones de mirilla (*peephole*), bloques básicos y grafos de flujo (CFG).
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.1 Optimizaciones locales y 3.1.2 En ciclos</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.3 Optimizaciones globales y análisis de flujo</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.4 Optimización de mirilla (Peephole)</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.2 Partición en Bloques Básicos y Grafo CFG</li>
+                        </ul>
+                    </div>
+                    <a href="unidad3.html" class="w-full text-center py-2.5 px-3 bg-cyan-50 hover:bg-cyan-100 hover:text-cyan-800 text-cyan-700 font-bold text-xs rounded-xl border border-cyan-200 transition">
+                        Ver Unidad 3: Optimización <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 4 -->
+                <div class="course-card p-6 flex flex-col justify-between border-rose-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center border border-rose-200">U4</span>
+                            <span class="difficulty-badge diff-hard">Avanzado • 20h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-rose-600 transition">
+                            <a href="unidad4.html">4. Generación de Código Objeto y Runtime</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Asignación y distribución óptima de registros de CPU, emisión de código en lenguaje ensamblador (x86/MIPS) y Bytecode, administración de memoria en tiempo de ejecución (Stack, Heap, Static Data, Registros de Activación / Frames) y compilador final integrado.
+                        </p>
+                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
+                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.1 Asignación de registros y descriptores</li>
+                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.2 Emisión a Lenguaje Ensamblador y 4.3 Código máquina</li>
+                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.4 Administración de memoria y Stack Frames</li>
+                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> Entrega del Compilador Funcional Completo</li>
+                        </ul>
+                    </div>
+                    <a href="unidad4.html" class="w-full text-center py-2.5 px-3 bg-rose-50 hover:bg-rose-100 hover:text-rose-800 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition">
+                        Ver Unidad 4: Código Objeto <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: Calendario de Planeación Didáctica Semanal (16 Semanas x 5 Horas = 80 Horas) -->
+        <section id="planeacion-16-semanas" class="mb-16 scroll-mt-24">
+            <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 pb-4 border-b border-slate-200 gap-4">
+                    <div>
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Calendarización Semestral</span>
+                        <h2 class="text-2xl font-bold text-slate-900">Planeación Docente Semana a Semana</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Distribución reglamentaria: 2 Horas Teóricas + 3 Horas Prácticas por Semana (Total: 80 Horas)</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg border border-slate-200">
+                            16 Semanas • 80 Horas
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tabla de Calendario 16 Semanas -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                                <th class="py-3 px-3 font-bold w-16 text-center">Sem.</th>
+                                <th class="py-3 px-3 font-bold w-20 text-center">Unidad</th>
+                                <th class="py-3 px-4 font-bold">Temas y Contenido Teórico (2 hrs)</th>
+                                <th class="py-3 px-4 font-bold">Actividades Prácticas y Laboratorio (3 hrs)</th>
+                                <th class="py-3 px-3 font-bold text-center w-28">Entregable</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S1</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">Evaluación diagnóstica. 1.1 Árboles de expresiones (AAS/AST), propiedades, representaciones (Venn, Dewey, Grafo) y recorridos (Preorden, Inorden, Posorden).</td>
+                                <td class="py-3 px-4"><strong>Práctica 1 & 2:</strong> Construcción de árboles sintácticos abstractos para expresiones algebraicas y evaluación de recorridos.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P1-P2</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S2</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">1.2 Acciones semánticas en el analizador sintáctico. 1.3 Comprobaciones de tipos en expresiones y reglas de coerción/casting.</td>
+                                <td class="py-3 px-4"><strong>Práctica 3 & 4:</strong> Implementación de tabla de tipos y verificador de compatibilidad de tipos en Java.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Módulo Tipos</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S3</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">1.4 Pila semántica en el parser: Estructura, operaciones Push/Pop, evaluación mediante IDR (SiVaVa) y RID (VaVaSi).</td>
+                                <td class="py-3 px-4"><strong>Práctica 5 & 6:</strong> Taller de resolución de pilas semánticas complejas con trazas paso a paso y detector de errores.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Taller Pilas</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S4</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">1.5 Esquemas de traducción con JFlex + CUP. 1.6 Tabla de símbolos con ámbitos y 1.7 Manejo de errores semánticos. Evaluación U1.</td>
+                                <td class="py-3 px-4">Laboratorio: Integración del analizador semántico en CUP para el lenguaje del proyecto. Evaluación U1.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-purple-600">Eval. U1</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S5</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.1 Notaciones intermedias: Prefija, Infija y Postfija. 2.2 Representaciones: Código P, Triplos y Cuádruplos.</td>
+                                <td class="py-3 px-4"><strong>Práctica 7 & 8:</strong> Conversión de expresiones infijas a postfijas y generación de matrices de cuádruplos.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P7-P8</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S6</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.2.4 Código de Tres Direcciones (TAC). 2.3.1 Generación para variables, constantes y expresiones aritméticas/lógicas.</td>
+                                <td class="py-3 px-4"><strong>Práctica 9 & 10:</strong> Implementación del generador de temporales ($t_1, t_2, \dots$) e instrucciones TAC en CUP.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Módulo TAC</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S7</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.3.4 Instrucciones de control de flujo (`if-else`, `while`, `for`) mediante saltos condicionales y técnica de Backpatching.</td>
+                                <td class="py-3 px-4"><strong>Práctica 11:</strong> Traducción de estructuras de control y bucles anidados a código intermedio con etiquetas.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Control TAC</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S8</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.3.5 Funciones/procedimientos y 2.3.6 Acceso a estructuras y arreglos (cálculo de offsets). Evaluación U2.</td>
+                                <td class="py-3 px-4">Laboratorio: Generador completo de código intermedio para el proyecto integrador. Evaluación U2.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-indigo-600">Eval. U2</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S9</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.1.1 Optimizaciones locales en bloques básicos y 3.1.4 Optimización de mirilla (Peephole): simplificaciones y saltos.</td>
+                                <td class="py-3 px-4"><strong>Práctica 12 & 13:</strong> Algoritmo de partición en bloques básicos e implementación de optimizador de mirilla.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Módulo Mirilla</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S10</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.1.2 Optimización de ciclos: movimiento de código invariable, variables de inducción y reducción de fuerza.</td>
+                                <td class="py-3 px-4">Taller de optimización de bucles: Detección y extracción de invariantes de ciclo en código TAC.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Taller Ciclos</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S11</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.1.3 Optimizaciones globales: Análisis de flujo de datos, propagación de constantes y eliminación de código muerto.</td>
+                                <td class="py-3 px-4"><strong>Práctica 14:</strong> Construcción de grafos de flujo de control (CFG) y análisis de variables vivas.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Grafo CFG</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S12</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.2 Costos de ejecución (memoria, registros, ciclos) y criterios de rendimiento en arquitecturas modernas. Evaluación U3.</td>
+                                <td class="py-3 px-4">Laboratorio: Medición de rendimiento y reducción de tamaño en el código intermedio optimizado. Evaluación U3.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-cyan-600">Eval. U3</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S13</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.1 Asignación y distribución de registros de CPU. Descriptores de registro y variables. Algoritmos de coloración de grafos.</td>
+                                <td class="py-3 px-4"><strong>Práctica 15:</strong> Implementación del algoritmo simple de asignación y liberación de registros para expresiones TAC.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Asignador Reg</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S14</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.2 Traducción a Lenguaje Ensamblador (x86/MIPS) y 4.3 Formatos de código máquina binario.</td>
+                                <td class="py-3 px-4"><strong>Práctica 16:</strong> Mapeo de cuádruplos a instrucciones de ensamblador (MOV, ADD, SUB, CMP, JMP, CALL).</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Mapeo ASM</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S15</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.4 Administración de memoria en tiempo de ejecución: Segmentos (.text, .data, Heap, Stack) y Registros de Activación (Stack Frames).</td>
+                                <td class="py-3 px-4">Laboratorio: Ensamblado y ejecución del código objeto generado mediante simulador / emulador.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Test Ejecución</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S16</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">Defensa y evaluación del Proyecto Integrador: Compilador completo (JFlex + CUP + Semántico + TAC + Optimizador + Ensamblador). Evaluación U4.</td>
+                                <td class="py-3 px-4">Demostración funcional en vivo con batería de programas de prueba en el lenguaje desarrollado.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-rose-600">Proyecto Final</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: Catálogo Oficial de las 16 Prácticas Propuestas (SCD-1016) -->
+        <section id="practicas" class="mb-16 scroll-mt-24">
+            <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
+                <div class="mb-6">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Trabajo de Laboratorio</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Catálogo de las 16 Prácticas Oficiales</h2>
+                    <p class="text-xs text-slate-500 mt-1">Actividades prácticas establecidas en el programa de estudios del TecNM (SCD-1016)</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- P1 a P6: U1 -->
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 1</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Diseñar y construir el generador de código semántico para el lenguaje del caso de estudio.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 2</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Realizar árboles de expresiones (AAS/AST) en casos de estudio con recorridos Pre, In y Posorden.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 3</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Realizar conversiones y comprobaciones de tipos (casting) en expresiones aritmético-lógicas.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 4</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Construir la tabla de símbolos y de direcciones con cálculo de desplazamientos para la gramática propuesta.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 5</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Detectar errores de semántica en expresiones dadas (variables no declaradas, tipos incompatibles).</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 6</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Modificar la GLC en CUP agregando las acciones semánticas y la pila semántica correspondiente.</p>
+                    </div>
+
+                    <!-- P7 a P11: U2 -->
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 7</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Convertir expresiones mediante el uso de notaciones prefijas, infijas y postfijas.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 8</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Definir e implementar la notación intermedia que más se ajuste a las estructuras de evaluación del lenguaje.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 9</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Proponer una estructura de código intermedio (Triplos/Cuádruplos/TAC) en base a las características del lenguaje.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 10</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Desarrollar esquemas de generación de código intermedio para expresiones y asignaciones.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 11</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Agregar acciones de representación intermedia y control de flujo (saltos y backpatching) a la gramática.</p>
+                    </div>
+
+                    <!-- P12 a P14: U3 -->
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 12</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Estimar y medir cuántos recursos y ciclos de reloj consume cada instrucción de código intermedio.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 13</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Evaluar el código intermedio generado para los programas de prueba y aplicar optimización de mirilla (Peephole).</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 14</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Construir grafos de flujo de control (CFG) para optimizaciones en ciclos y eliminación de código muerto.</p>
+                    </div>
+
+                    <!-- P15 y P16: U4 -->
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 15</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U4</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Establecer una equivalencia directa entre las instrucciones del lenguaje intermedio y las instrucciones en ensamblador.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 16</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U4</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Diseñar y construir el generador de código máquina u objeto final para el lenguaje del caso de estudio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: Sugerencias de Evaluación y Fuentes de Información -->
+        <section id="evaluacion" class="mb-16 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Criterios de Evaluación Oficiales -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Lineamientos Oficiales</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Criterios de Evaluación</h3>
+                    
+                    <div class="space-y-4">
+                        <!-- 40% Firmas -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-signature"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Firmas (Actividades y Tareas)</div>
+                                    <div class="text-[11px] text-slate-500">Ejercicios en clase, tareas, problemarios y reportes de prácticas</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-purple-600 text-base">40%</span>
+                        </div>
+
+                        <!-- 10% Asistencias -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Asistencias</div>
+                                    <div class="text-[11px] text-slate-500">Puntualidad, asistencia y permanencia reglamentaria en aula/laboratorio</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-indigo-600 text-base">10%</span>
+                        </div>
+
+                        <!-- 50% Proyecto Integrador -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Proyecto Integrador (Compilador)</div>
+                                    <div class="text-[11px] text-slate-500">Compilador completo funcional en JFlex + CUP con emisión de ensamblador</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-emerald-600 text-base">50%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuentes de Información Oficiales -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Bibliografía</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Fuentes de Información Oficiales</h3>
+                    <ul class="text-xs text-slate-600 space-y-3">
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">1.</span>
+                            <div><strong>Aho, Lam, Sethi, Ullman.</strong> <em>Compiladores: Principios, Técnicas y Herramientas</em> (El Libro del Dragón). 2da Ed., Pearson Educación.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">2.</span>
+                            <div><strong>Alfonseca Moreno, M.</strong> <em>Compiladores e Intérpretes: Teoría y Práctica</em>. Pearson / Prentice Hall.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">3.</span>
+                            <div><strong>Grune, Dick et al.</strong> <em>Diseño de Compiladores Modernos</em>. McGraw-Hill.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">4.</span>
+                            <div><strong>Gálvez Rojas, S. & Mora Mata, M. A.</strong> <em>Compiladores: Traductores y Compiladores con Lex/Yacc, JFlex/Cup y JavaCC</em>. Universidad de Málaga.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">5.</span>
+                            <div><strong>Ruíz, J.</strong> <em>Compiladores: Teoría e Implementación</em>. Alfaomega.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mini Laboratorio Pipeline de Compilación -->
+        <section class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-12">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="text-xs font-bold text-purple-600 uppercase tracking-widest"><i class="fas fa-flask"></i> Laboratorio Interactivo</span>
+                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1 mb-2">Simulador de Generación de Código de Tres Direcciones (TAC)</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mb-6">
+                    Escribe una expresión aritmética y observa cómo el compilador la traduce a instrucciones elementales de 3 direcciones ($t_1, t_2, \dots$):
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mb-4">
+                    <input type="text" id="tacInput" value="a = b * c + d / 2" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono text-sm bg-white">
+                    <button onclick="generarTACDemo()" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm rounded-xl transition shadow-sm">
+                        Generar TAC
+                    </button>
+                </div>
+                <div id="tacOutput" class="text-left font-mono text-xs max-w-xl mx-auto bg-slate-900 text-emerald-400 p-4 rounded-xl shadow-inner min-h-[60px]">
+                    // Resultado TAC se mostrará aquí
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <div>
+                <div class="font-bold text-slate-900 text-sm">Instituto Tecnológico de Chilpancingo (TecNM)</div>
+                <div class="text-slate-500">Departamento de Sistemas y Computación • Catedrático: Cruz Enrique García</div>
+            </div>
+            <div class="text-slate-500">
+                Programa Académico SCD-1016 • Lenguajes y Autómatas II (5 hrs/semana)<br>
+                <span>Todos los derechos académicos reservados</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function generarTACDemo() {
+            const val = document.getElementById('tacInput').value.trim();
+            const out = document.getElementById('tacOutput');
+            if (!val) {
+                out.innerHTML = '<span class="text-slate-400">Ingresa una expresión para generar TAC</span>';
+                return;
+            }
+            
+            // Simulación interactiva de parsing a TAC
+            out.innerHTML = `
+<span class="text-purple-300">// Código Fuente:</span> <span class="text-white">${val}</span>
+<span class="text-slate-500">// Pipeline de Síntesis: AST -> Cuádruplos TAC:</span>
+
+t1 = b * c
+t2 = d / 2
+t3 = t1 + t2
+a = t3
+
+<span class="text-emerald-400 font-bold">// 3 temporales generados | Asignación final completada exitosamente</span>`;
+        }
+        window.onload = generarTACDemo;
+    </script>
+</body>
+</html>

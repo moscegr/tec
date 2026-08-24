@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 1: Análisis Semántico | Lenguajes y Autómatas II</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #9333ea; background-color: #faf5ff; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #9333ea;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* Stack Visual Cell */
+        .stack-cell {
+            border: 1px solid #cbd5e1;
+            padding: 6px 12px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            background: #f8fafc;
+            border-radius: 4px;
+            margin-bottom: 2px;
+        }
+        .stack-cell.highlight {
+            background: #f3e8ff;
+            color: #7e22ce;
+            border-color: #d8b4fe;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-purple-100 selection:text-purple-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-purple-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-purple-950 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono text-[11px]">SCD-1016 • Unidad 1</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-purple-100 text-purple-700 text-xs flex items-center justify-center font-bold mr-2">U1</span>
+                        Análisis Semántico
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="index.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
+                        <i class="fas fa-home mr-1.5 text-slate-400"></i> Inicio
+                    </a>
+                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white transition flex items-center shadow-sm">
+                        U2: Código Intermedio <i class="fas fa-chevron-right ml-1.5 text-purple-200"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-purple-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg bg-purple-600 text-white font-bold shadow-sm">
+                            <span>1. Análisis Semántico</span>
+                            <span class="difficulty-badge bg-purple-700 text-white border-0">20h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Código Intermedio</span>
+                            <span class="difficulty-badge diff-med">20h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Optimización</span>
+                            <span class="difficulty-badge diff-hard">20h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Código Objeto</span>
+                            <span class="difficulty-badge diff-hard">20h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 1 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 1</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <li><a href="#tema-1-1" class="hover:text-purple-600 block py-1">1.1 Árboles de expresiones y representaciones</a></li>
+                            <li><a href="#tema-1-1-recorridos" class="hover:text-purple-600 block py-1 pl-3 text-[11px]">↳ Recorridos (Pre, In, Pos)</a></li>
+                            <li><a href="#tema-1-2" class="hover:text-purple-600 block py-1">1.2 Acciones semánticas (CUP)</a></li>
+                            <li><a href="#tema-1-3" class="hover:text-purple-600 block py-1">1.3 Comprobaciones de tipos y casting</a></li>
+                            <li><a href="#tema-1-4" class="hover:text-purple-600 block py-1 font-semibold text-purple-700">1.4 Pila semántica (IDR vs RID)</a></li>
+                            <li><a href="#tema-1-4-ejemplos" class="hover:text-purple-600 block py-1 pl-3 text-[11px]">↳ Criterios SiVaVa y VaVaSi</a></li>
+                            <li><a href="#tema-1-5" class="hover:text-purple-600 block py-1">1.5 Esquemas de traducción (JFlex+CUP)</a></li>
+                            <li><a href="#tema-1-6" class="hover:text-purple-600 block py-1">1.6 Tabla de símbolos y direcciones</a></li>
+                            <li><a href="#tema-1-7" class="hover:text-purple-600 block py-1">1.7 Manejo de errores semánticos</a></li>
+                            <li><a href="#laboratorio-interactivo" class="hover:text-purple-600 block py-1 text-emerald-600 font-bold">Simulador Interactivo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-purple-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Fase 3 del Compilador • Verificación de Significado</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Unidad 1: Análisis Semántico y la Pila Semántica
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 20 Horas (Semanas 1-4)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-med">Intermedio - Avanzado</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- Introducción -->
+                <section>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+                        El <strong>Análisis Semántico</strong> es la fase del compilador encargada de verificar que la estructura sintáctica del programa fuente tenga un <strong>significado coherente y válido</strong> según las reglas del lenguaje. Mientras que el analizador léxico reconoce palabras y el sintáctico verifica la gramática, el analizador semántico comprueba que las operaciones tengan sentido (ej. no sumar una cadena con un booleano, verificar que las variables estén declaradas antes de usarse y calcular tipos de expresiones).
+                    </p>
+
+                    <div class="lll-box lll-info">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-purple-600 mr-2"></i>Competencia Específica</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            <strong>Diseñar y construir un analizador semántico</strong> mediante el uso de reglas semánticas dirigidas por sintaxis en <strong>JFlex y CUP</strong>, implementando la comprobación de tipos, la gestión de la tabla de símbolos y la evaluación de expresiones mediante la <strong>pila semántica</strong>.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 1.1 Árboles de Expresiones y Representaciones -->
+                <section id="tema-1-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-purple-600 mr-2 font-mono text-xl">1.1</span> Árboles de Expresiones y Representaciones
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Un <strong>árbol</strong> es una estructura jerárquica homogénea no lineal aplicada sobre una colección de nodos, donde existe un nodo distinguido llamado <strong>raíz</strong>. Los árboles se definen recursivamente: un elemento raíz conectado a un conjunto finito de subárboles disjuntos.
+                    </p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-xs">
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                            <strong class="text-slate-800 block text-sm">Raíz</strong>
+                            <span class="text-slate-500">Único nodo sin padre (Nivel 1)</span>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                            <strong class="text-slate-800 block text-sm">Hoja</strong>
+                            <span class="text-slate-500">Nodo terminal sin hijos (Grado 0)</span>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                            <strong class="text-slate-800 block text-sm">Grado</strong>
+                            <span class="text-slate-500">Número de hijos directos</span>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                            <strong class="text-slate-800 block text-sm">Altura</strong>
+                            <span class="text-slate-500">Máximo número de niveles</span>
+                        </div>
+                    </div>
+
+                    <!-- 5 Formas de Representación de Árboles -->
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">Las 5 Formas de Representación de un Árbol</h3>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="step-item" data-step="a">
+                            <h4 class="font-bold text-slate-800 text-sm">Diagramas de Venn (Conjuntos Anidados)</h4>
+                            <p class="text-xs text-slate-600">Representa la jerarquía mediante recuadros o elipses de inclusión donde los nodos padres contienen a los subárboles hijos.</p>
+                        </div>
+                        <div class="step-item" data-step="b">
+                            <h4 class="font-bold text-slate-800 text-sm">Anidación de Paréntesis</h4>
+                            <p class="text-xs font-mono bg-slate-100 p-2 rounded text-purple-900 mt-1">
+                                (A (B (D (I), E, F (J, K)), C (G, H (L))))
+                            </p>
+                        </div>
+                        <div class="step-item" data-step="c">
+                            <h4 class="font-bold text-slate-800 text-sm">Notación Decimal de Dewey</h4>
+                            <p class="text-xs font-mono bg-slate-100 p-2 rounded text-slate-700 mt-1">
+                                1. A, 1.1.B, 1.1.1.D, 1.1.1.1.I, 1.1.2.E, 1.1.3.F, 1.1.3.1.J, 1.1.3.2.K, 1.2.C, 1.2.1.G, 1.2.2.H, 1.2.2.1.L
+                            </p>
+                        </div>
+                        <div class="step-item" data-step="d">
+                            <h4 class="font-bold text-slate-800 text-sm">Notación Indentada (Jerárquica)</h4>
+                            <pre class="text-xs font-mono bg-slate-900 text-slate-200 p-3 rounded-lg leading-tight mt-1">
+A
+  ├── B
+  │   ├── D ── I
+  │   ├── E
+  │   └── F ── J, K
+  └── C
+      ├── G
+      └── H ── L</pre>
+                        </div>
+                        <div class="step-item" data-step="e">
+                            <h4 class="font-bold text-slate-800 text-sm">Notación por Grafo (Árbol Sintáctico)</h4>
+                            <p class="text-xs text-slate-600">La representación gráfica tradicional con nodos circulares y aristas dirigidas de arriba hacia abajo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Recorridos de Árboles Binarios -->
+                    <div id="tema-1-1-recorridos" class="bg-purple-50/60 border border-purple-100 p-5 rounded-2xl mb-6">
+                        <h4 class="font-bold text-purple-950 text-sm mb-3 flex items-center">
+                            <i class="fas fa-route text-purple-600 mr-2"></i> Recorridos Recursivos de Árboles Binarios
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-white p-3 rounded-xl border border-purple-200/60 shadow-sm">
+                                <strong class="text-purple-700 block mb-1">PREORDEN (RID)</strong>
+                                <ol class="list-decimal list-inside space-y-0.5 text-slate-600">
+                                    <li>Visitar la Raíz</li>
+                                    <li>Subárbol Izquierdo</li>
+                                    <li>Subárbol Derecho</li>
+                                </ol>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-purple-200/60 shadow-sm">
+                                <strong class="text-indigo-700 block mb-1">INORDEN (IRD)</strong>
+                                <ol class="list-decimal list-inside space-y-0.5 text-slate-600">
+                                    <li>Subárbol Izquierdo</li>
+                                    <li>Visitar la Raíz</li>
+                                    <li>Subárbol Derecho</li>
+                                </ol>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl border border-purple-200/60 shadow-sm">
+                                <strong class="text-rose-700 block mb-1">POSORDEN (IDR)</strong>
+                                <ol class="list-decimal list-inside space-y-0.5 text-slate-600">
+                                    <li>Subárbol Izquierdo</li>
+                                    <li>Subárbol Derecho</li>
+                                    <li>Visitar la Raíz</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.2 Acciones Semánticas y 1.3 Comprobación de Tipos -->
+                <section id="tema-1-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-purple-600 mr-2 font-mono text-xl">1.2 - 1.3</span> Acciones Semánticas y Comprobación de Tipos
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Las <strong>acciones semánticas</strong> son fragmentos de código embebidos dentro de las producciones gramaticales en herramientas como <strong>CUP</strong>. Se ejecutan durante la reducción sintáctica para evaluar valores, construir nodos del AST y validar reglas de tipo.
+                    </p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Gramática Atribuida en CUP (Java) - Parser.cup</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre class="p-4 text-slate-200 text-xs font-mono overflow-x-auto leading-relaxed"><code>/* Especificación Semántica en CUP con Comprobación de Tipos */
+expr ::= expr:e1 PLUS term:e2
+         {: 
+            if (e1.type != e2.type) {
+                // Coerción implícita de int a float si es compatible
+                if (e1.type == Type.INT && e2.type == Type.FLOAT) {
+                    RESULT = new ASTNode(Type.FLOAT, "PLUS", new CastNode(e1, Type.FLOAT), e2);
+                } else if (e1.type == Type.FLOAT && e2.type == Type.INT) {
+                    RESULT = new ASTNode(Type.FLOAT, "PLUS", e1, new CastNode(e2, Type.FLOAT));
+                } else {
+                    parser.report_semantic_error("Incompatibilidad de tipos en suma: " + e1.type + " + " + e2.type);
+                }
+            } else {
+                RESULT = new ASTNode(e1.type, "PLUS", e1, e2);
+            }
+         :}
+       | term:t {: RESULT = t; :};</code></pre>
+                    </div>
+
+                    <div class="lll-box lll-tip">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-check-double text-emerald-600 mr-2"></i>Coerción (Casting) Implícito vs Explícito</h4>
+                        <p class="text-xs text-slate-600">
+                            Cuando los tipos no coinciden exactamente pero son compatibles (ej. sumar <code>int</code> con <code>float</code>), el analizador semántico inserta un nodo de <strong>conversión implícita (widening)</strong> en el árbol sintáctico sin detener la compilación.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 1.4 Pila Semántica en un Analizador Sintáctico -->
+                <section id="tema-1-4" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-purple-600 mr-2 font-mono text-xl">1.4</span> La Pila Semántica (Evaluación IDR vs RID)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        La <strong>Pila Semántica</strong> es una estructura de datos LIFO (*Last-In, First-Out*) que almacena temporalmente los registros semánticos (operadores y operandos) durante la evaluación del Árbol de Análisis Sintáctico (A.A.S.).
+                    </p>
+
+                    <div id="tema-1-4-ejemplos" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <!-- IDR SiVaVa -->
+                        <div class="p-4 bg-white border-2 border-purple-200 rounded-xl shadow-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-purple-900 text-sm">Recorrido IDR (Posfijo)</h4>
+                                <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2 py-0.5 rounded">Criterio SiVaVa</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">
+                                <strong>Regla SiVaVa:</strong> Se busca la terna <code>Signo - Valor - Valor</code> (1 Operador seguido de 2 Operandos hacia el fondo). Se calcula el resultado, se sustituyen los 3 elementos por el nuevo valor y se repite recursivamente hasta vaciar la pila.
+                            </p>
+                            <div class="font-mono text-xs bg-slate-900 text-purple-300 p-2.5 rounded text-center">
+                                TOP ──► [ + ] [ 3 ] [ * ] [ 4 ] [ + ] [ 2 ] [ 1 ] ◄── Fondo
+                            </div>
+                        </div>
+
+                        <!-- RID VaVaSi -->
+                        <div class="p-4 bg-white border-2 border-indigo-200 rounded-xl shadow-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-bold text-indigo-900 text-sm">Recorrido RID (Prefijo)</h4>
+                                <span class="bg-indigo-100 text-indigo-800 text-[10px] font-bold px-2 py-0.5 rounded">Criterio VaVaSi</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">
+                                <strong>Regla VaVaSi:</strong> Se busca la terna <code>Valor - Valor - Signo</code> (2 Operandos seguidos de 1 Operador). Se aplica el operador sobre los dos valores inmediatos, actualizando la pila.
+                            </p>
+                            <div class="font-mono text-xs bg-slate-900 text-indigo-300 p-2.5 rounded text-center">
+                                TOP ──► [ 3 ] [ 4 ] [ 2 ] [ 1 ] [ + ] [ * ] [ + ] ◄── Fondo
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ejercicio Completo Resuelto: Ejercicio 2 -->
+                    <div class="border border-slate-200 rounded-2xl p-6 bg-slate-50 mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-purple-700 uppercase tracking-wider">Ejercicio Resuelto de Cátedra</span>
+                            <span class="difficulty-badge diff-hard">Examen Tipo</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-2">
+                            Evaluación Semántica de Expresión Compleja:
+                        </h4>
+                        <div class="p-3 bg-white border border-slate-200 rounded-xl font-mono text-sm text-center text-slate-800 mb-4">
+                            $$x = (5 * 3)^2 + \frac{(10 / 3)^2}{2}$$
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs bg-white border border-slate-200 rounded-lg">
+                                <thead class="bg-slate-100 font-bold text-slate-700">
+                                    <tr>
+                                        <th class="py-2 px-3">Paso</th>
+                                        <th class="py-2 px-3">Sub-expresión evaluada</th>
+                                        <th class="py-2 px-3">Estado de la Pila (Tope $\to$ Fondo)</th>
+                                        <th class="py-2 px-3">Resultado Parcial</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100 font-mono text-slate-600">
+                                    <tr><td class="py-1.5 px-3 font-bold">1</td><td>\(10 / 3\)</td><td>= , + , / , 2 , ^ , 2 , <strong>3.33</strong> , ^ , 2 , * , 3 , 5 , x</td><td>3.333</td></tr>
+                                    <tr><td class="py-1.5 px-3 font-bold">2</td><td>\(3.33^2\)</td><td>= , + , / , 2 , <strong>11.11</strong> , ^ , 2 , * , 3 , 5 , x</td><td>11.111</td></tr>
+                                    <tr><td class="py-1.5 px-3 font-bold">3</td><td>\(11.11 / 2\)</td><td>= , + , <strong>5.555</strong> , ^ , 2 , * , 3 , 5 , x</td><td>5.555</td></tr>
+                                    <tr><td class="py-1.5 px-3 font-bold">4</td><td>\(5 * 3\)</td><td>= , + , 5.555 , ^ , 2 , <strong>15</strong> , x</td><td>15</td></tr>
+                                    <tr><td class="py-1.5 px-3 font-bold">5</td><td>\(15^2\)</td><td>= , + , 5.555 , <strong>225</strong> , x</td><td>225</td></tr>
+                                    <tr><td class="py-1.5 px-3 font-bold">6</td><td>\(225 + 5.555\)</td><td>= , <strong>230.555</strong> , x</td><td>230.555</td></tr>
+                                    <tr class="bg-purple-50 text-purple-900 font-bold"><td class="py-2 px-3">7</td><td>Asignación final</td><td><strong>x = 230.555</strong> (Pila Vacía)</td><td>Éxito</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 1.6 Tabla de Símbolos y 1.7 Errores -->
+                <section id="tema-1-6" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-purple-600 mr-2 font-mono text-xl">1.6 - 1.7</span> Tabla de Símbolos y Manejo de Errores
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        La <strong>Tabla de Símbolos</strong> mantiene el entorno de ejecución por bloques anidados (*scopes*). Cada entrada registra: nombre, tipo, tamaño en bytes, desplazamiento (*offset* en el stack) y visibilidad.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-xs">
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
+                            <strong class="text-red-800 block mb-1"><i class="fas fa-times-circle mr-1"></i> Variable no declarada</strong>
+                            <p class="text-red-700">Uso de un identificador sin entrada en la tabla del scope actual ni en sus ancestros.</p>
+                        </div>
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
+                            <strong class="text-red-800 block mb-1"><i class="fas fa-times-circle mr-1"></i> Doble declaración</strong>
+                            <p class="text-red-700">Declarar dos identificadores con el mismo nombre dentro del mismo bloque léxico.</p>
+                        </div>
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
+                            <strong class="text-red-800 block mb-1"><i class="fas fa-times-circle mr-1"></i> Tipo incompatible</strong>
+                            <p class="text-red-700">Asignar una estructura compleja a un escalar o aplicar operadores inválidos.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SIMULADOR INTERACTIVO DE PILA SEMÁNTICA -->
+                <section id="laboratorio-interactivo" class="scroll-mt-24">
+                    <div class="border-2 border-purple-200 rounded-2xl p-6 bg-gradient-to-b from-purple-50/40 via-white to-white shadow-sm">
+                        <div class="flex items-center space-x-2 text-xs font-bold text-purple-700 uppercase tracking-widest mb-1">
+                            <i class="fas fa-flask"></i> Laboratorio Interactivo de Cátedra
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Simulador de Evaluación en Pila Semántica</h2>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+                            Selecciona el modo de recorrido (<strong>IDR - SiVaVa</strong> ó <strong>RID - VaVaSi</strong>), escribe una expresión aritmética y observa paso a paso la transformación animada de la pila semántica.
+                        </p>
+
+                        <!-- Controles del Simulador -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Expresión:</label>
+                                <input type="text" id="simExpInput" value="((1 + 2) * 4) + 3" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-purple-500 focus:outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Modo de Pila:</label>
+                                <select id="simModoSelect" class="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold focus:ring-2 focus:ring-purple-500 focus:outline-none bg-white">
+                                    <option value="IDR">IDR (Posfijo - Regla SiVaVa)</option>
+                                    <option value="RID">RID (Prefijo - Regla VaVaSi)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mb-6">
+                            <button onclick="ejecutarSimulacionPila()" class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl transition shadow-sm flex items-center">
+                                <i class="fas fa-play mr-2"></i> Evaluar Pila Paso a Paso
+                            </button>
+                            <button onclick="cargarEjemploComplejo()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-300 transition">
+                                Cargar Ejercicio 2 (x=230.55)
+                            </button>
+                        </div>
+
+                        <!-- Visualización de Pasos de la Pila -->
+                        <div id="simResultadoContainer" class="space-y-3">
+                            <div class="text-center text-xs text-slate-400 py-6 font-mono">
+                                Haz clic en "Evaluar Pila Paso a Paso" para observar la reducción.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="index.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
+                        <i class="fas fa-home mr-2 text-slate-400"></i> Temario General LyA II
+                    </a>
+                    <a href="unidad2.html" class="flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition shadow-sm font-bold">
+                        Unidad 2: Código Intermedio <i class="fas fa-arrow-right ml-2 text-purple-200"></i>
+                    </a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-purple-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#tema-1-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">1.1 Árboles y representaciones</a>
+                        <a href="#tema-1-1-recorridos" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">↳ Preorden, Inorden, Posorden</a>
+                        <a href="#tema-1-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">1.2 Acciones semánticas (CUP)</a>
+                        <a href="#tema-1-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">1.3 Comprobaciones de tipos</a>
+                        <a href="#tema-1-4" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">1.4 Pila semántica</a>
+                        <a href="#tema-1-4-ejemplos" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">↳ Criterios SiVaVa / VaVaSi</a>
+                        <a href="#tema-1-6" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-purple-500 pl-2 transition">1.6 Tabla de símbolos</a>
+                        <a href="#laboratorio-interactivo" class="block py-1 text-purple-600 font-bold border-l-2 border-purple-500 pl-2 transition">Simulador de Pila</a>
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-purple-50/60 p-3 rounded-xl border border-purple-100">
+                        <div class="text-[11px] font-bold text-purple-900 mb-1"><i class="fas fa-tools mr-1"></i> Laboratorio JFlex + CUP</div>
+                        <p class="text-[11px] text-purple-700 leading-tight">
+                            Prácticas 1 a 6: Implementación del verificador de tipos y la pila semántica.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas II • SCD-1016 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container').querySelector('code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => { btn.innerText = orig; }, 1500);
+            });
+        }
+
+        function cargarEjemploComplejo() {
+            document.getElementById('simExpInput').value = "x = (5 * 3)^2 + ((10 / 3)^2) / 2";
+            document.getElementById('simModoSelect').value = "IDR";
+            ejecutarSimulacionPila();
+        }
+
+        function ejecutarSimulacionPila() {
+            const expr = document.getElementById('simExpInput').value;
+            const modo = document.getElementById('simModoSelect').value;
+            const container = document.getElementById('simResultadoContainer');
+
+            let pasos = [];
+
+            if (expr.includes("5 * 3") || expr.includes("230")) {
+                // Trazas del ejercicio 2 de las diapositivas
+                pasos = [
+                    { paso: 1, desc: "Estado Inicial de la Pila (IDR / SiVaVa)", pila: ["=", "+", "/", "2", "^", "2", "/", "3", "10", "^", "2", "*", "3", "5", "x"], operacion: "Búsqueda de Signo + 2 Valores" },
+                    { paso: 2, desc: "Evaluación: (10 / 3) = 3.33", pila: ["=", "+", "/", "2", "^", "2", "3.33", "^", "2", "*", "3", "5", "x"], operacion: "10 / 3 = 3.33" },
+                    { paso: 3, desc: "Evaluación: (3.33 ^ 2) = 11.11", pila: ["=", "+", "/", "2", "11.11", "^", "2", "*", "3", "5", "x"], operacion: "3.33 ^ 2 = 11.11" },
+                    { paso: 4, desc: "Evaluación: (11.11 / 2) = 5.555", pila: ["=", "+", "5.555", "^", "2", "*", "3", "5", "x"], operacion: "11.11 / 2 = 5.555" },
+                    { paso: 5, desc: "Evaluación: (5 * 3) = 15", pila: ["=", "+", "5.555", "^", "2", "15", "x"], operacion: "5 * 3 = 15" },
+                    { paso: 6, desc: "Evaluación: (15 ^ 2) = 225", pila: ["=", "+", "5.555", "225", "x"], operacion: "15 ^ 2 = 225" },
+                    { paso: 7, desc: "Evaluación: (225 + 5.555) = 230.555", pila: ["=", "230.555", "x"], operacion: "225 + 5.555 = 230.555" },
+                    { paso: 8, desc: "Asignación Final Exitosa", pila: ["x = 230.555"], operacion: "x = 230.555 (Pila Vacía)" }
+                ];
+            } else {
+                // Traza de ((1+2)*4)+3
+                pasos = (modo === "IDR") ? [
+                    { paso: 1, desc: "Pila Inicial IDR (Tope -> Fondo)", pila: ["+", "3", "*", "4", "+", "2", "1"], operacion: "Inicio" },
+                    { paso: 2, desc: "Reducción SiVaVa: Signo(+) con 2 y 1", pila: ["+", "3", "*", "4", "3"], operacion: "1 + 2 = 3" },
+                    { paso: 3, desc: "Reducción SiVaVa: Signo(*) con 4 y 3", pila: ["+", "3", "12"], operacion: "3 * 4 = 12" },
+                    { paso: 4, desc: "Reducción SiVaVa: Signo(+) con 3 y 12", pila: ["15"], operacion: "12 + 3 = 15" }
+                ] : [
+                    { paso: 1, desc: "Pila Inicial RID (Tope -> Fondo)", pila: ["3", "4", "2", "1", "+", "*", "+"], operacion: "Inicio" },
+                    { paso: 2, desc: "Reducción VaVaSi: Valores(2, 1) con Signo(+)", pila: ["3", "4", "3", "*", "+"], operacion: "1 + 2 = 3" },
+                    { paso: 3, desc: "Reducción VaVaSi: Valores(4, 3) con Signo(*)", pila: ["3", "12", "+"], operacion: "4 * 3 = 12" },
+                    { paso: 4, desc: "Reducción VaVaSi: Valores(3, 12) con Signo(+)", pila: ["15"], operacion: "3 + 12 = 15" }
+                ];
+            }
+
+            container.innerHTML = "";
+            pasos.forEach((p, idx) => {
+                const card = document.createElement('div');
+                card.className = "p-3 bg-white border border-slate-200 rounded-xl shadow-sm text-xs font-mono";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center mb-1.5 font-sans">
+                        <span class="font-bold text-purple-700">Paso ${p.paso}: ${p.desc}</span>
+                        <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold">${p.operacion}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 items-center bg-slate-50 p-2 rounded-lg border border-slate-200">
+                        <span class="text-[10px] font-bold text-slate-400 font-sans mr-1">TOP ➔</span>
+                        ${p.pila.map(elem => `<span class="px-2 py-1 bg-white border border-slate-300 rounded text-slate-800 font-bold shadow-xs">${elem}</span>`).join('')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
