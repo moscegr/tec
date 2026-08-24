@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemáticas Discretas - Planeación Didáctica | IT Chilpancingo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Estilo Callouts Luis Llamas - White UI */
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #059669; background-color: #f0fdf4; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #0284c7; background-color: #f0f9ff; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .course-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            transition: all 0.25s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
+        }
+
+        .sticky-top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+
+    <!-- Top Bar Institucional -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - Instituto Tecnológico de Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800/60 font-mono text-[11px]">AEF-1041 • SATCA 3-2-5</span>
+                <a href="../index.html" class="hover:text-white transition text-[11px]"><i class="fas fa-th-large mr-1 text-emerald-400"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Principal -->
+    <nav class="sticky-top-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:shadow transition">
+                            <i class="fas fa-square-root-alt"></i>
+                        </div>
+                        <div>
+                            <span class="text-base font-bold text-slate-900 leading-tight block group-hover:text-emerald-600 transition">Matemáticas Discretas</span>
+                            <span class="text-[11px] text-slate-500 font-medium">Fundamentos Matemáticos para Computación (5 hrs/sem)</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-600">
+                    <a href="#presentacion" class="hover:text-emerald-600 transition">Presentación</a>
+                    <a href="#unidades" class="hover:text-emerald-600 transition">6 Unidades</a>
+                    <a href="#planeacion-16-semanas" class="hover:text-emerald-600 transition">Calendario 16 Semanas</a>
+                    <a href="#practicas" class="hover:text-emerald-600 transition">15 Prácticas</a>
+                    <a href="#evaluacion" class="hover:text-emerald-600 transition">Evaluación</a>
+                    <a href="unidad1.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold text-xs transition shadow-sm">Iniciar Curso <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Hero - White Style con Acentos Verdes/Esmeralda -->
+    <header class="border-b border-slate-200 bg-gradient-to-b from-slate-50 via-white to-white py-14 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold uppercase tracking-wider mb-4">
+                <i class="fas fa-project-diagram"></i> Ciencias Computacionales • Modelado Matemático
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Matemáticas Discretas
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-normal leading-relaxed mb-8">
+                Estructuras discretas esenciales: <strong>sistemas numéricos y algoritmo de Booth</strong>, teoría de conjuntos, lógica proposicional y de predicados, <strong>álgebra booleana</strong>, relaciones y <strong>teoría de grafos y árboles</strong>.
+            </p>
+
+            <!-- Metadata Cards Blancas -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-chalkboard-teacher text-emerald-500 mr-1"></i> Catedrático</div>
+                    <div class="font-bold text-slate-800 text-sm">Cruz Enrique García</div>
+                    <div class="text-[11px] text-slate-500">IT Chilpancingo</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-clock text-emerald-500 mr-1"></i> Carga Horaria</div>
+                    <div class="font-bold text-slate-800 text-sm">5 Horas / Semana</div>
+                    <div class="text-[11px] text-slate-500">3 Teóricas • 2 Prácticas (80h)</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-code-branch text-emerald-500 mr-1"></i> Clave Asignatura</div>
+                    <div class="font-bold text-slate-800 text-sm">AEF-1041</div>
+                    <div class="text-[11px] text-slate-500">SATCA 3-2-5</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-laptop-code text-emerald-500 mr-1"></i> Enfoque</div>
+                    <div class="font-bold text-slate-800 text-sm">Ejercicios & Algoritmos</div>
+                    <div class="text-[11px] text-slate-500">Simuladores Interactivos</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- SECCIÓN 1: Caracterización y Competencias -->
+        <section id="presentacion" class="mb-16 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Sección 1</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Caracterización e Intención Didáctica</h2>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed text-justify">
+                        Esta asignatura aporta al perfil del egresado los <strong>conocimientos matemáticos fundamentales</strong> para entender, inferir, aplicar y desarrollar modelos matemáticos orientados a la solución de problemas en ciencias computacionales.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-justify">
+                        Las Matemáticas Discretas constituyen la base teórica directa para asignaturas críticas del plan de estudios, tales como <em>Estructura de Datos</em>, <em>Bases de Datos</em>, <em>Lenguajes y Autómatas</em>, <em>Redes de Computadoras</em> y <em>Sistemas Operativos</em>. En este curso se fomenta el pensamiento lógico-formal, el análisis riguroso de algoritmos y la implementación computacional de estructuras discretas.
+                    </p>
+
+                    <!-- Callout Info -->
+                    <div class="lll-box lll-info">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-bullseye text-emerald-600 text-lg mt-0.5"></i>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-sm">Competencia Específica del Curso</h4>
+                                <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+                                    <strong>Conocer, comprender y aplicar los conceptos fundamentales</strong> de sistemas numéricos posicionales, operaciones con conjuntos, lógica matemática y demostraciones, álgebra booleana y diseño lógico, relaciones y funciones, y teoría de grafos y árboles para resolver problemas complejos de computación.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Lateral de Competencias Previas -->
+                <div class="space-y-4">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
+                            <i class="fas fa-key text-emerald-500 mr-2"></i> Competencias Previas
+                        </h3>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Habilidades cognitivas de abstracción, análisis, síntesis y razonamiento numérico.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Aritmética elemental y nociones de álgebra básica.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Manejo básico de computadoras y hojas de cálculo para experimentación.</li>
+                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Disposición para el trabajo cooperativo y resolución metódica de problemarios.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
+                            <i class="fas fa-lightbulb text-amber-500 mr-2"></i> Dinámica Pedagógica
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            A través de ejercicios prácticos guiados, algoritmos de conversión, demostraciones inductivas y simuladores interactivos, la matemática discreta se transforma en una herramienta viva y aplicable al desarrollo de software y hardware.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: Las 6 Unidades Temáticas Oficiales -->
+        <section id="unidades" class="mb-16 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-end mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Estructura Curricular</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Las 6 Unidades de Aprendizaje</h2>
+                    <p class="text-sm text-slate-500 mt-1">Programa oficial AEF-1041 (80 horas semestrales)</p>
+                </div>
+                <div class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
+                    <i class="fas fa-info-circle text-emerald-500 mr-1"></i> Haz clic en "Ver Unidad" para explorar el contenido interactivo
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- UNIDAD 1 -->
+                <div class="course-card p-6 flex flex-col justify-between border-emerald-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold text-sm flex items-center justify-center border border-emerald-200">U1</span>
+                            <span class="difficulty-badge diff-easy">Básico • 12h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-emerald-600 transition">
+                            <a href="unidad1.html">1. Sistemas Numéricos y Booth</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Bases binaria, octal, decimal y hexadecimal. Algoritmos de conversión posicional, aritmética binaria, complemento a 2 y multiplicación/división con el Algoritmo de Booth.
+                        </p>
+                    </div>
+                    <a href="unidad1.html" class="w-full text-center py-2.5 px-3 bg-emerald-50 hover:bg-emerald-100 hover:text-emerald-800 text-emerald-700 font-bold text-xs rounded-xl border border-emerald-200 transition">
+                        Ver Unidad 1 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 2 -->
+                <div class="course-card p-6 flex flex-col justify-between border-teal-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 font-bold text-sm flex items-center justify-center border border-teal-200">U2</span>
+                            <span class="difficulty-badge diff-easy">Básico • 10h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-teal-600 transition">
+                            <a href="unidad2.html">2. Teoría de Conjuntos</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Conjunto universo, vacío, numéricos ($\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}$), potencia $\mathcal{P}(A)$, operaciones de unión, intersección, diferencia simétrica, leyes de De Morgan y diagramas de Venn.
+                        </p>
+                    </div>
+                    <a href="unidad2.html" class="w-full text-center py-2.5 px-3 bg-teal-50 hover:bg-teal-100 hover:text-teal-800 text-teal-700 font-bold text-xs rounded-xl border border-teal-200 transition">
+                        Ver Unidad 2 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 3 -->
+                <div class="course-card p-6 flex flex-col justify-between border-sky-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 font-bold text-sm flex items-center justify-center border border-sky-200">U3</span>
+                            <span class="difficulty-badge diff-med">Intermedio • 16h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-sky-600 transition">
+                            <a href="unidad3.html">3. Lógica Matemática</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Proposiciones, conectivos, tablas de verdad, tautologías, reglas de inferencia (Modus Ponens/Tollens), demostración directa y por contradicción, predicados y cuantificadores, e inducción matemática.
+                        </p>
+                    </div>
+                    <a href="unidad3.html" class="w-full text-center py-2.5 px-3 bg-sky-50 hover:bg-sky-100 hover:text-sky-800 text-sky-700 font-bold text-xs rounded-xl border border-sky-200 transition">
+                        Ver Unidad 3 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 4 -->
+                <div class="course-card p-6 flex flex-col justify-between border-indigo-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center border border-indigo-200">U4</span>
+                            <span class="difficulty-badge diff-med">Intermedio • 14h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-indigo-600 transition">
+                            <a href="unidad4.html">4. Álgebra Booleana</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Postulados de Huntington, simplificación de funciones booleanas, Mapas de Karnaugh de 2, 3 y 4 variables, minitérminos/maxitérminos y diseño de compuertas lógicas y sumadores.
+                        </p>
+                    </div>
+                    <a href="unidad4.html" class="w-full text-center py-2.5 px-3 bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-800 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition">
+                        Ver Unidad 4 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 5 -->
+                <div class="course-card p-6 flex flex-col justify-between border-purple-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 font-bold text-sm flex items-center justify-center border border-purple-200">U5</span>
+                            <span class="difficulty-badge diff-hard">Avanzado • 12h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-purple-600 transition">
+                            <a href="unidad5.html">5. Relaciones y Funciones</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Producto cartesiano, dígrafos, propiedades (reflexiva, simétrica, transitiva), cerraduras de Warshall, relaciones de equivalencia, orden parcial, diagramas de Hasse y funciones inyectivas/biyectivas.
+                        </p>
+                    </div>
+                    <a href="unidad5.html" class="w-full text-center py-2.5 px-3 bg-purple-50 hover:bg-purple-100 hover:text-purple-800 text-purple-700 font-bold text-xs rounded-xl border border-purple-200 transition">
+                        Ver Unidad 5 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- UNIDAD 6 -->
+                <div class="course-card p-6 flex flex-col justify-between border-rose-100 shadow-sm">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center border border-rose-200">U6</span>
+                            <span class="difficulty-badge diff-hard">Avanzado • 16h</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-rose-600 transition">
+                            <a href="unidad6.html">6. Teoría de Grafos y Árboles</a>
+                        </h3>
+                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                            Grafos simples, completos $K_n$, matrices de adyacencia, algoritmo de Dijkstra (camino más corto), BFS, DFS, árboles con peso, codificación de Huffman y redes de Petri.
+                        </p>
+                    </div>
+                    <a href="unidad6.html" class="w-full text-center py-2.5 px-3 bg-rose-50 hover:bg-rose-100 hover:text-rose-800 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition">
+                        Ver Unidad 6 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: Calendario de Planeación Didáctica Semanal (16 Semanas x 5 Horas = 80 Horas) -->
+        <section id="planeacion-16-semanas" class="mb-16 scroll-mt-24">
+            <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 pb-4 border-b border-slate-200 gap-4">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Calendarización Semestral</span>
+                        <h2 class="text-2xl font-bold text-slate-900">Planeación Docente Semana a Semana</h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Distribución reglamentaria: 3 Horas Teóricas + 2 Horas Prácticas por Semana (Total: 80 Horas)</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg border border-slate-200">
+                            16 Semanas • 80 Horas
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tabla de Calendario 16 Semanas -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                                <th class="py-3 px-3 font-bold w-16 text-center">Sem.</th>
+                                <th class="py-3 px-3 font-bold w-20 text-center">Unidad</th>
+                                <th class="py-3 px-4 font-bold">Temas y Contenido Teórico (3 hrs)</th>
+                                <th class="py-3 px-4 font-bold">Actividades Prácticas y Problemarios (2 hrs)</th>
+                                <th class="py-3 px-3 font-bold text-center w-28">Entregable</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S1</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">Evaluación diagnóstica. 1.1 Sistemas numéricos posicionales (Binario, Octal, Decimal, Hexadecimal) y 1.2 Métodos de conversión directa y por potencias.</td>
+                                <td class="py-3 px-4"><strong>Práctica 1:</strong> Elaboración de hoja de cálculo / software para conversiones entre bases numéricas.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P1</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S2</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">U1</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">1.3 Operaciones aritméticas binarias (Suma, Resta, Multiplicación, División). Representación en Complemento a 1 y Complemento a 2.</td>
+                                <td class="py-3 px-4"><strong>Práctica 2:</strong> Problemario de operaciones aritméticas en bases octal, binaria y hexadecimal con signo.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Problemario Aritm.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S3</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">U1/U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">1.4 Algoritmo de Booth para multiplicación binaria con signo. 1.5 Aplicaciones en ALU. Inicio U2: 2.1 Características de conjuntos y conjunto potencia.</td>
+                                <td class="py-3 px-4">Laboratorio U1: Traza paso a paso del Algoritmo de Booth. Evaluación U1.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U1</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S4</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-teal-100 text-teal-800 font-bold text-xs">U2</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.2 Operaciones con conjuntos (Unión, Intersección, Complemento, Diferencia y Diferencia Simétrica). 2.3 Propiedades y Leyes de De Morgan.</td>
+                                <td class="py-3 px-4"><strong>Práctica 3:</strong> Representación gráfica y resolución de problemas de conjuntos con diagramas de Venn.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P3</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S5</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U2/U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">2.4 Aplicaciones computacionales de conjuntos. Evaluación U2. Inicio U3: 3.1 Lógica proposicional, proposiciones simples y compuestas.</td>
+                                <td class="py-3 px-4"><strong>Práctica 4:</strong> Construcción de generador de tablas de verdad en hoja de cálculo o lenguaje de programación.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-teal-600">Eval. U2</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S6</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.1.3 Tablas de verdad, 3.1.4 Tautologías, contradicciones y contingencias. 3.1.5 Equivalencias lógicas fundamentales.</td>
+                                <td class="py-3 px-4"><strong>Práctica 5 & 6:</strong> Uso de simulador lógico para verificar equivalencias y razonamientos válidos con diagramas.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P5-P6</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S7</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.1.6 Reglas de inferencia (Modus Ponens, Modus Tollens, Silogismo Hipotético). 3.1.8 Demostración formal directa y por contradicción.</td>
+                                <td class="py-3 px-4">Taller de demostraciones lógicas formales y validación de argumentos deductivos.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Taller Inferencia</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S8</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U3</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">3.2 Lógica de predicados, cuantificadores universal y existencial. 3.4 Inducción matemática y demostración de sumatorias. Evaluación U3.</td>
+                                <td class="py-3 px-4">Problemario de demostraciones por inducción matemática sobre algoritmos de sumatorias. Evaluación U3.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-sky-600">Eval. U3</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S9</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.1 Postulados y teoremas del Álgebra Booleana. 4.2 Simplificación algebraica de funciones booleanas.</td>
+                                <td class="py-3 px-4"><strong>Práctica 7:</strong> Construcción y simulación de circuitos combinacionales con compuertas lógicas (Logisim / Multisim).</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P7</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S10</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U4</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.2 Mapas de Karnaugh de 2, 3 y 4 variables. Minitérminos (Suma de Productos) y Maxitérminos (Producto de Sumas).</td>
+                                <td class="py-3 px-4">Taller de optimización de funciones booleanas mediante Karnaugh y diseño de circuito sumador de 4 bits.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Taller Karnaugh</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S11</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U4/U5</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">4.3 Diseño de circuitos lógicos. Evaluación U4. Inicio U5: 5.1 Producto cartesiano, relaciones binarias y representación matricial y por dígrafos.</td>
+                                <td class="py-3 px-4"><strong>Práctica 8:</strong> Modelado relacional aplicado a bases de datos relacionales (claves primarias y foráneas).</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-indigo-600">Eval. U4</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S12</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 font-bold text-xs">U5</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">5.2 Propiedades de las relaciones (Reflexiva, Simétrica, Transitiva). 5.3 Relaciones de equivalencia, clases y particiones. 5.4 Funciones inyectivas, suprayectivas y biyectivas.</td>
+                                <td class="py-3 px-4"><strong>Práctica 9:</strong> Algoritmo de Warshall para cerradura transitiva y diagramas de Hasse para orden parcial. Evaluación U5.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-purple-600">Eval. U5</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S13</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U6</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">6.1 Elementos de un grafo (vértices, aristas, valencias), tipos de grafos (completos $K_n$, bipartidos $K_{m,n}$, planos, conexos, ponderados). 6.2 Matrices de adyacencia e incidencia.</td>
+                                <td class="py-3 px-4"><strong>Práctica 10 & 11:</strong> Representación matricial de grafos y cálculo de número de caminos de longitud $n$ mediante potencias $A^n$.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P10-P11</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S14</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U6</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">6.3 Algoritmos de recorrido y búsqueda: Búsqueda en anchura (BFS), Búsqueda en profundidad (DFS) y <strong>Algoritmo de Dijkstra</strong> (Camino más corto).</td>
+                                <td class="py-3 px-4"><strong>Práctica 12:</strong> Implementación en software del algoritmo de Dijkstra sobre redes de transporte o telecomunicaciones.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Módulo Dijkstra</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S15</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U6</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">6.4 Árboles: componentes, propiedades, recorridos (Preorden, Inorden, Postorden), árboles con peso, codificación de Huffman y 6.5 Redes de flujo y Petri.</td>
+                                <td class="py-3 px-4"><strong>Práctica 13, 14 & 15:</strong> Evaluación de expresiones mediante árboles de sintaxis, árbol binario de búsqueda y codificación de Huffman.</td>
+                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte Árboles</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition">
+                                <td class="py-3 px-3 text-center font-bold text-slate-900">S16</td>
+                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U6</span></td>
+                                <td class="py-3 px-4 font-medium text-slate-800">Presentación, defensa y evaluación del <strong>Proyecto Integrador</strong> de Matemáticas Discretas (Simulador o aplicación computacional funcional). Evaluación U6.</td>
+                                <td class="py-3 px-4">Exposición por equipos del software desarrollado y retroalimentación formativa de competencias.</td>
+                                <td class="py-3 px-3 text-center text-xs font-bold text-rose-600">Proyecto Final</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: Catálogo Oficial de las 15 Prácticas Propuestas (AEF-1041) -->
+        <section id="practicas" class="mb-16 scroll-mt-24">
+            <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
+                <div class="mb-6">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Trabajo de Laboratorio</span>
+                    <h2 class="text-2xl font-bold text-slate-900">Catálogo de las 15 Prácticas Oficiales</h2>
+                    <p class="text-xs text-slate-500 mt-1">Actividades de experimentación y software establecidas en el programa de estudios del TecNM (AEF-1041)</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Práctica 1</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Elaborar a través de hoja de cálculo / software un proceso para la conversión y operaciones aritméticas básicas entre diferentes bases numéricas.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Práctica 2</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Implementar y verificar ejercicios de operaciones con signo en complemento a 2 y algoritmo de multiplicación de Booth.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-teal-700 bg-teal-100 px-2 py-0.5 rounded">Práctica 3</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Representar el comportamiento de las operaciones con conjuntos (unión, intersección, diferencia simétrica) mediante diagramas de Venn interactivos.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 4</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Elaborar un proceso algorítmico para llevar a cabo la evaluación automática de proposiciones compuestas mediante tablas de verdad.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 5</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Utilizar un simulador lógico para verificar el comportamiento de tautologías, contradicciones y equivalencias lógicas.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 6</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Utilización de diagramas de Venn y silogismos para la determinación de validez en razonamientos lógicos.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 7</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U4</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Construir y simular circuitos combinacionales utilizando compuertas lógicas básicas (AND, OR, NOT, XOR, NAND) en software especializado.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 8</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Ejemplificar el modelo relacional utilizado en las bases de datos mediante relaciones binarias y matrices booleanas.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Práctica 9</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Determinar propiedades de relaciones, aplicar cerraduras de Warshall para relaciones de equivalencia y generar diagramas de Hasse.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 10</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Representar un grafo mediante matrices de adyacencia y calcular el número de caminos de longitud $n$ mediante potencias matriciales $A^n$.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 11</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Determinar características, conectividad, grados de valencia y recorridos en grafos ponderados y dirigidos.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 12</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Desarrollar e implementar el algoritmo de Dijkstra para encontrar la ruta de menor costo en un grafo ponderado.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 13</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Realizar el recorrido de un árbol que represente una expresión matemática y evaluar su valor con estructura de pila.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 14</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Construir un Árbol Binario de Búsqueda (ABB) a partir de datos y realizar ordenamientos y búsquedas eficientes.</p>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 15</span>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
+                        </div>
+                        <p class="text-xs text-slate-700">Implementar compresión y codificación de información mediante el método de árboles de Huffman.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: Criterios de Evaluación y Bibliografía -->
+        <section id="evaluacion" class="mb-16 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Criterios de Evaluación Oficiales -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Lineamientos Oficiales</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Criterios de Evaluación</h3>
+                    
+                    <div class="space-y-4">
+                        <!-- 40% Firmas -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-signature"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Firmas (Actividades y Problemarios)</div>
+                                    <div class="text-[11px] text-slate-500">Ejercicios en clase, tareas, problemarios y reportes de prácticas de laboratorio</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-emerald-600 text-base">40%</span>
+                        </div>
+
+                        <!-- 10% Asistencias -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Asistencias</div>
+                                    <div class="text-[11px] text-slate-500">Puntualidad, asistencia regular y permanencia reglamentaria en aula/taller</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-teal-600 text-base">10%</span>
+                        </div>
+
+                        <!-- 50% Proyecto Integrador -->
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-sm">
+                                    <i class="fas fa-project-diagram"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Proyecto Integrador (Software / Simulador)</div>
+                                    <div class="text-[11px] text-slate-500">Software interactivo para resolución de modelos discretos (Karnaugh, Grafos, Booth)</div>
+                                </div>
+                            </div>
+                            <span class="font-extrabold text-sky-600 text-base">50%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuentes de Información Oficiales -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest">Bibliografía</span>
+                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Fuentes de Información Oficiales</h3>
+                    <ul class="text-xs text-slate-600 space-y-3">
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">1.</span>
+                            <div><strong>Rosen, Kenneth H.</strong> <em>Matemática Discreta y sus Aplicaciones</em>. 5ta / 7ma Ed., McGraw-Hill.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">2.</span>
+                            <div><strong>Johnsonbaugh, Richard.</strong> <em>Matemáticas Discretas</em>. 6ta / 8va Ed., Pearson Educación.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">3.</span>
+                            <div><strong>Kolman, Bernard, Busby, R. & Ross, S.</strong> <em>Estructuras de Matemáticas Discretas para la Computación</em>. Prentice Hall.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">4.</span>
+                            <div><strong>Grimaldi, Ralph P.</strong> <em>Matemáticas Discreta y Combinatoria</em>. Pearson Educación.</div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="font-bold text-slate-400 mr-2">5.</span>
+                            <div><strong>Jiménez Murillo, José Alfredo.</strong> <em>Matemáticas para la Computación</em>. Alfaomega.</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mini Laboratorio Interactivo de Bases Numéricas -->
+        <section class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-12">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest"><i class="fas fa-calculator"></i> Laboratorio Interactivo</span>
+                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1 mb-2">Conversor Instantáneo de Sistemas Numéricos</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mb-6">
+                    Ingresa un número en cualquier base para ver su representación automática en Binario, Octal, Decimal y Hexadecimal:
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mb-4">
+                    <input type="number" id="baseDecInput" value="255" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono text-sm bg-white" placeholder="Número Decimal">
+                    <button onclick="convertirBaseDemo()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition shadow-sm">
+                        Convertir
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto font-mono text-xs text-left">
+                    <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                        <span class="text-[10px] text-slate-400 font-bold block font-sans">BINARIO (Base 2)</span>
+                        <strong id="outBin" class="text-emerald-600 text-sm">11111111</strong>
+                    </div>
+                    <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                        <span class="text-[10px] text-slate-400 font-bold block font-sans">OCTAL (Base 8)</span>
+                        <strong id="outOct" class="text-teal-600 text-sm">377</strong>
+                    </div>
+                    <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                        <span class="text-[10px] text-slate-400 font-bold block font-sans">DECIMAL (Base 10)</span>
+                        <strong id="outDec" class="text-slate-800 text-sm">255</strong>
+                    </div>
+                    <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                        <span class="text-[10px] text-slate-400 font-bold block font-sans">HEX (Base 16)</span>
+                        <strong id="outHex" class="text-indigo-600 text-sm">FF</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <div>
+                <div class="font-bold text-slate-900 text-sm">Instituto Tecnológico de Chilpancingo (TecNM)</div>
+                <div class="text-slate-500">Departamento de Sistemas y Computación • Catedrático: Cruz Enrique García</div>
+            </div>
+            <div class="text-slate-500">
+                Programa Académico AEF-1041 • Matemáticas Discretas (5 hrs/semana)<br>
+                <span>Todos los derechos académicos reservados</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function convertirBaseDemo() {
+            const raw = parseInt(document.getElementById('baseDecInput').value, 10);
+            if (isNaN(raw)) return;
+
+            document.getElementById('outBin').innerText = raw.toString(2);
+            document.getElementById('outOct').innerText = raw.toString(8);
+            document.getElementById('outDec').innerText = raw.toString(10);
+            document.getElementById('outHex').innerText = raw.toString(16).toUpperCase();
+        }
+        window.onload = convertirBaseDemo;
+    </script>
+</body>
+</html>

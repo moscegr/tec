@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 2: Teoría de Conjuntos | Matemáticas Discretas</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0d9488; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #0284c7; background-color: #f0f9ff; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #0d9488;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 2</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-teal-100 text-teal-800 text-xs flex items-center justify-center font-bold mr-2">U2</span>
+                        Teoría de Conjuntos
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad1.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 1: Sistemas Numéricos</a>
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white transition flex items-center shadow-sm">Unidad 3: Lógica Matemática <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-teal-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Sistemas Numéricos</span>
+                            <span class="difficulty-badge diff-easy">12h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg bg-teal-600 text-white font-bold shadow-sm">
+                            <span>2. Conjuntos</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">10h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Lógica Matemática</span>
+                            <span class="difficulty-badge diff-med">16h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Álgebra Booleana</span>
+                            <span class="difficulty-badge diff-med">14h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Relaciones y Funciones</span>
+                            <span class="difficulty-badge diff-hard">12h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Grafos y Árboles</span>
+                            <span class="difficulty-badge diff-hard">16h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 2 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 2</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <a href="#intro" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
+<a href="#tema-2-1" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">2.1 Conjunto Potencia</a>
+<a href="#tema-2-2" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">2.2 Operaciones & De Morgan</a>
+<a href="#laboratorio-conjuntos" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Calculadora de Conjuntos</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-teal-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Unidad 2 • Matemáticas Discretas</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Teoría de Conjuntos
+                    </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Conjunto potencia, operaciones booleanas de conjuntos y leyes de De Morgan.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 10 Horas (Semanas 3-5)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-easy">Nivel Didáctico</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- CONTENIDO TEMÁTICO EDUCATIVO -->
+                
+<section id="intro">
+    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+        La <strong>Teoría de Conjuntos</strong> es el lenguaje unificador de las matemáticas y la computación. Todo concepto en ciencias computacionales (tipos de datos, dominios de funciones, tablas relacionales en SQL, estados de autómatas) se define formalmente como un conjunto o una operación entre ellos.
+    </p>
+
+    <div class="lll-box lll-info">
+        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-teal-600 mr-2"></i>Competencia Específica</h4>
+        <p class="text-xs sm:text-sm text-slate-600">
+            <strong>Resolver problemas formales mediante operaciones y propiedades de conjuntos</strong>, aplicando las leyes del álgebra de conjuntos, el cálculo del conjunto potencia y diagramas de Venn.
+        </p>
+    </div>
+</section>
+
+<!-- 2.1 Características y Conjunto Potencia -->
+<section id="tema-2-1" class="scroll-mt-24">
+    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+        <span class="text-teal-600 mr-2 font-mono text-xl">2.1</span> Conjuntos Notables y Conjunto Potencia
+    </h2>
+
+    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+        Un conjunto es una colección bien definida de objetos llamados <em>elementos</em>.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+            <h4 class="font-bold text-slate-900 text-sm mb-2">Conjuntos Numéricos Universales</h4>
+            <ul class="text-xs text-slate-600 space-y-1.5 font-mono">
+                <li>\(\mathbb{N} = \{1, 2, 3, \dots\}\) (Naturales)</li>
+                <li>\(\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}\) (Enteros)</li>
+                <li>\(\mathbb{Q} = \{p/q \mid p, q \in \mathbb{Z}, q \neq 0\}\) (Racionales)</li>
+                <li>\(\mathbb{R}\) (Reales) y \(\mathbb{C}\) (Complejos)</li>
+            </ul>
+        </div>
+        <div class="p-4 bg-teal-50/50 border border-teal-100 rounded-xl">
+            <h4 class="font-bold text-teal-900 text-sm mb-2">El Conjunto Potencia (\(\mathcal{P}(A)\))</h4>
+            <p class="text-xs text-slate-600 mb-2 leading-relaxed">
+                Es el conjunto de todos los subconjuntos posibles de \(A\). Si \(|A| = n\), entonces su cardinalidad es:
+            </p>
+            <div class="bg-white p-2.5 rounded border border-teal-200 text-center font-mono text-xs font-bold text-teal-800">
+                \(|\mathcal{P}(A)| = 2^n\)
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2.2 Operaciones y Leyes de De Morgan -->
+<section id="tema-2-2" class="scroll-mt-24">
+    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+        <span class="text-teal-600 mr-2 font-mono text-xl">2.2 - 2.3</span> Operaciones y Leyes de De Morgan
+    </h2>
+
+    <div class="overflow-x-auto border border-slate-200 rounded-xl mb-6">
+        <table class="w-full text-left text-xs bg-white">
+            <thead class="bg-teal-50 text-teal-900 font-bold border-b border-teal-100">
+                <tr><th class="p-2.5">Operación</th><th class="p-2.5">Notación Formal</th><th class="p-2.5">Definición Lógica</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-600 font-mono">
+                <tr><td class="p-2 font-bold font-sans">Unión</td><td>\(A \cup B\)</td><td>\(\{x \mid x \in A \lor x \in B\}\)</td></tr>
+                <tr><td class="p-2 font-bold font-sans">Intersección</td><td>\(A \cap B\)</td><td>\(\{x \mid x \in A \land x \in B\}\)</td></tr>
+                <tr><td class="p-2 font-bold font-sans">Diferencia</td><td>\(A - B\)</td><td>\(\{x \mid x \in A \land x \notin B\}\)</td></tr>
+                <tr><td class="p-2 font-bold font-sans">Diferencia Simétrica</td><td>\(A \oplus B\)</td><td>\((A - B) \cup (B - A)\)</td></tr>
+                <tr><td class="p-2 font-bold font-sans">Complemento</td><td>\(A^c\) ó \(A'\)</td><td>\(\{x \in U \mid x \notin A\}\)</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="lll-box lll-tip">
+        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-balance-scale text-emerald-600 mr-2"></i>Leyes Fundamentales de De Morgan</h4>
+        <p class="text-xs text-slate-600 font-mono">
+            1) \((A \cup B)' = A' \cap B'\)<br>
+            2) \((A \cap B)' = A' \cup B'\)
+        </p>
+    </div>
+</section>
+
+<!-- SIMULADOR INTERACTIVO DE CONJUNTOS -->
+<section id="laboratorio-conjuntos" class="scroll-mt-24">
+    <div class="border-2 border-teal-200 rounded-2xl p-6 bg-gradient-to-b from-teal-50/40 via-white to-white shadow-sm">
+        <div class="flex items-center space-x-2 text-xs font-bold text-teal-700 uppercase tracking-widest mb-1">
+            <i class="fas fa-shapes"></i> Laboratorio Interactivo
+        </div>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">Calculadora Interactiva de Operaciones de Conjuntos</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mb-6">
+            Escribe los elementos separados por comas para los conjuntos \(A\) y \(B\) y visualiza al instante los resultados de las 5 operaciones fundamentales:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto mb-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Conjunto A:</label>
+                <input type="text" id="setAInput" value="1, 2, 3, 4, 5" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none bg-white">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Conjunto B:</label>
+                <input type="text" id="setBInput" value="3, 4, 5, 6, 7" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-teal-500 focus:outline-none bg-white">
+            </div>
+        </div>
+
+        <div class="text-center mb-6">
+            <button onclick="calcularConjuntos()" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl transition shadow-sm">
+                Calcular Operaciones
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto font-mono text-xs text-left">
+            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                <span class="font-sans font-bold text-slate-700 block mb-1">Unión (\(A \cup B\)):</span>
+                <span id="resUnion" class="text-teal-700 font-bold">{1, 2, 3, 4, 5, 6, 7}</span>
+            </div>
+            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                <span class="font-sans font-bold text-slate-700 block mb-1">Intersección (\(A \cap B\)):</span>
+                <span id="resInter" class="text-emerald-700 font-bold">{3, 4, 5}</span>
+            </div>
+            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                <span class="font-sans font-bold text-slate-700 block mb-1">Diferencia (\(A - B\)):</span>
+                <span id="resDiffAB" class="text-indigo-700 font-bold">{1, 2}</span>
+            </div>
+            <div class="p-3 bg-white border border-slate-200 rounded-xl">
+                <span class="font-sans font-bold text-slate-700 block mb-1">Diferencia Simétrica (\(A \oplus B\)):</span>
+                <span id="resSymDiff" class="text-rose-700 font-bold">{1, 2, 6, 7}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad1.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 1: Sistemas Numéricos</a>
+                    <a href="unidad3.html" class="flex items-center px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 3: Lógica Matemática <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-teal-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#intro" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
+<a href="#tema-2-1" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">2.1 Conjunto Potencia</a>
+<a href="#tema-2-2" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">2.2 Operaciones & De Morgan</a>
+<a href="#laboratorio-conjuntos" class="block py-1 hover:text-teal-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Calculadora de Conjuntos</a>
+
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-teal-50/60 p-3 rounded-xl border border-teal-100">
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio y Ejercicios</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Práctica 3: Diagramas de Venn y operaciones de conjuntos en software.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Matemáticas Discretas • AEF-1041 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
+            if (pre) {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    const orig = btn.innerText;
+                    btn.innerText = "¡Copiado!";
+                    setTimeout(() => { btn.innerText = orig; }, 1500);
+                });
+            }
+        }
+    </script>
+    
+<script>
+    function parseSet(str) {
+        return new Set(str.split(',').map(s => s.trim()).filter(s => s.length > 0));
+    }
+    function formatSet(setObj) {
+        const arr = Array.from(setObj);
+        return "{" + arr.join(", ") + "}";
+    }
+
+    function calcularConjuntos() {
+        const setA = parseSet(document.getElementById('setAInput').value);
+        const setB = parseSet(document.getElementById('setBInput').value);
+
+        // Union
+        const un = new Set([...setA, ...setB]);
+        document.getElementById('resUnion').innerText = formatSet(un);
+
+        // Intersection
+        const inter = new Set([...setA].filter(x => setB.has(x)));
+        document.getElementById('resInter').innerText = formatSet(inter);
+
+        // Difference A - B
+        const diff = new Set([...setA].filter(x => !setB.has(x)));
+        document.getElementById('resDiffAB').innerText = formatSet(diff);
+
+        // Symmetric Difference
+        const sym = new Set([...[...setA].filter(x => !setB.has(x)), ...[...setB].filter(x => !setA.has(x))]);
+        document.getElementById('resSymDiff').innerText = formatSet(sym);
+    }
+    window.onload = calcularConjuntos;
+</script>
+
+</body>
+</html>
