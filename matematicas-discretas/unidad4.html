@@ -134,6 +134,22 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
+    
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
+        }
+        .anim-flow {
+            stroke-dasharray: 6;
+            animation: dash 1.5s linear infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4)); }
+        }
+        .pulse-card {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
@@ -268,6 +284,70 @@
 
 <!-- 4.1 y 4.2 Postulados y Mapas de Karnaugh -->
 <section id="tema-4-1" class="scroll-mt-24">
+
+<!-- COMPUERTAS LÓGICAS SCHEMATIC SVG -->
+<div class="my-6 p-5 bg-slate-900 rounded-2xl text-white border border-slate-800 shadow-md">
+    <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-2">
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-widest"><i class="fas fa-microchip mr-1.5"></i> Esquema de Compuertas Lógicas Fundamentales</span>
+        <span class="text-[10px] bg-indigo-950 text-indigo-300 border border-indigo-700 px-2 py-0.5 rounded font-mono">Circuitos Combinacionales</span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono text-xs">
+        <!-- AND -->
+        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-14 mx-auto mb-1">
+                <!-- Inputs -->
+                <line x1="10" y1="20" x2="35" y2="20" stroke="#38bdf8" stroke-width="2"/>
+                <line x1="10" y1="50" x2="35" y2="50" stroke="#38bdf8" stroke-width="2"/>
+                <!-- AND Body -->
+                <path d="M 35,10 L 60,10 A 25,25 0 0,1 60,60 L 35,60 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <!-- Output -->
+                <line x1="85" y1="35" x2="110" y2="35" stroke="#38bdf8" stroke-width="2"/>
+            </svg>
+            <strong class="text-sky-300 block font-sans">Compuerta AND</strong>
+            <span class="text-slate-400 text-[11px]">\(F = A \cdot B\)</span>
+        </div>
+
+        <!-- OR -->
+        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-14 mx-auto mb-1">
+                <line x1="10" y1="20" x2="40" y2="20" stroke="#818cf8" stroke-width="2"/>
+                <line x1="10" y1="50" x2="40" y2="50" stroke="#818cf8" stroke-width="2"/>
+                <!-- OR Body -->
+                <path d="M 35,10 Q 50,35 35,60 Q 75,60 90,35 Q 75,10 35,10 Z" fill="#1e293b" stroke="#818cf8" stroke-width="2"/>
+                <line x1="90" y1="35" x2="110" y2="35" stroke="#818cf8" stroke-width="2"/>
+            </svg>
+            <strong class="text-indigo-300 block font-sans">Compuerta OR</strong>
+            <span class="text-slate-400 text-[11px]">\(F = A + B\)</span>
+        </div>
+
+        <!-- NOT -->
+        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-14 mx-auto mb-1">
+                <line x1="10" y1="35" x2="35" y2="35" stroke="#f43f5e" stroke-width="2"/>
+                <polygon points="35,15 75,35 35,55" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                <circle cx="80" cy="35" r="4" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                <line x1="84" y1="35" x2="110" y2="35" stroke="#f43f5e" stroke-width="2"/>
+            </svg>
+            <strong class="text-rose-300 block font-sans">Inversor NOT</strong>
+            <span class="text-slate-400 text-[11px]">\(F = A'\)</span>
+        </div>
+
+        <!-- XOR -->
+        <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-14 mx-auto mb-1">
+                <line x1="10" y1="20" x2="30" y2="20" stroke="#10b981" stroke-width="2"/>
+                <line x1="10" y1="50" x2="30" y2="50" stroke="#10b981" stroke-width="2"/>
+                <path d="M 25,10 Q 40,35 25,60" fill="none" stroke="#10b981" stroke-width="2"/>
+                <path d="M 35,10 Q 50,35 35,60 Q 75,60 90,35 Q 75,10 35,10 Z" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                <line x1="90" y1="35" x2="110" y2="35" stroke="#10b981" stroke-width="2"/>
+            </svg>
+            <strong class="text-emerald-300 block font-sans">Compuerta XOR</strong>
+            <span class="text-slate-400 text-[11px]">\(F = A \oplus B\)</span>
+        </div>
+    </div>
+</div>
+
     <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
         <span class="text-indigo-600 mr-2 font-mono text-xl">4.1 - 4.2</span> Postulados de Huntington y Mapas de Karnaugh
     </h2>

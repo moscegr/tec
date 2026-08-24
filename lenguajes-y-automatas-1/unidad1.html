@@ -153,6 +153,23 @@
             margin-top: 1rem;
             overflow-x: auto;
         }
+    
+        @keyframes flow-line {
+            0% { stroke-dashoffset: 20; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .anim-line {
+            stroke-dasharray: 5;
+            animation: flow-line 1.2s linear infinite;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .pulse-node {
+            animation: pulse-slow 3s ease-in-out infinite;
+        }
+
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">

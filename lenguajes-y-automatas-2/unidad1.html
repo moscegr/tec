@@ -151,6 +151,23 @@
             color: #7e22ce;
             border-color: #d8b4fe;
         }
+    
+        @keyframes flow-line {
+            0% { stroke-dashoffset: 20; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .anim-line {
+            stroke-dasharray: 5;
+            animation: flow-line 1.2s linear infinite;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .pulse-node {
+            animation: pulse-slow 3s ease-in-out infinite;
+        }
+
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-purple-100 selection:text-purple-900">
@@ -282,6 +299,75 @@
 
                 <!-- 1.1 Árboles de Expresiones y Representaciones -->
                 <section id="tema-1-1" class="scroll-mt-24">
+
+<!-- INFOGRAFÍA VECTORIAL: ÁRBOL SINTÁCTICO Y LAS 5 REPRESENTACIONES (DE DIAPOSITIVAS) -->
+<div class="my-6 p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 rounded-2xl text-white border border-slate-700 shadow-lg">
+    <div class="flex items-center justify-between mb-4 border-b border-slate-700 pb-2">
+        <span class="text-xs font-bold text-purple-400 uppercase tracking-widest"><i class="fas fa-tree mr-1.5"></i> Árbol Sintáctico Abstracto (AAS)</span>
+        <span class="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded font-mono">5 Formas de Representación</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <!-- SVG Árbol General con niveles -->
+        <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+            <div class="text-[10px] text-purple-300 font-bold uppercase mb-1 text-center">Representación por Grafo Jerárquico:</div>
+            <svg viewBox="0 0 280 180" class="w-full h-40 mx-auto block">
+                <!-- Aristas -->
+                <line x1="140" y1="25" x2="80" y2="70" stroke="#c084fc" stroke-width="2"/>
+                <line x1="140" y1="25" x2="200" y2="70" stroke="#c084fc" stroke-width="2"/>
+                <line x1="80" y1="70" x2="45" y2="125" stroke="#c084fc" stroke-width="2"/>
+                <line x1="80" y1="70" x2="80" y2="125" stroke="#c084fc" stroke-width="2"/>
+                <line x1="80" y1="70" x2="115" y2="125" stroke="#c084fc" stroke-width="2"/>
+                <line x1="200" y1="70" x2="175" y2="125" stroke="#c084fc" stroke-width="2"/>
+                <line x1="200" y1="70" x2="225" y2="125" stroke="#c084fc" stroke-width="2"/>
+
+                <!-- Nodos -->
+                <!-- Raiz A -->
+                <circle cx="140" cy="25" r="16" fill="#9333ea" stroke="#ffffff" stroke-width="2" class="pulse-node"/>
+                <text x="140" y="30" fill="#ffffff" font-size="12" font-weight="bold" font-family="Outfit" text-anchor="middle">A</text>
+
+                <!-- Nivel 2: B, C -->
+                <circle cx="80" cy="70" r="14" fill="#334155" stroke="#a855f7" stroke-width="2"/>
+                <text x="80" y="74" fill="#e9d5ff" font-size="11" font-weight="bold" font-family="Outfit" text-anchor="middle">B</text>
+                <circle cx="200" cy="70" r="14" fill="#334155" stroke="#a855f7" stroke-width="2"/>
+                <text x="200" y="74" fill="#e9d5ff" font-size="11" font-weight="bold" font-family="Outfit" text-anchor="middle">C</text>
+
+                <!-- Nivel 3: D, E, F, G, H -->
+                <circle cx="45" cy="125" r="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="45" y="129" fill="#ffffff" font-size="9" font-family="Outfit" text-anchor="middle">D</text>
+
+                <circle cx="80" cy="125" r="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="80" y="129" fill="#ffffff" font-size="9" font-family="Outfit" text-anchor="middle">E</text>
+
+                <circle cx="115" cy="125" r="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="115" y="129" fill="#ffffff" font-size="9" font-family="Outfit" text-anchor="middle">F</text>
+
+                <circle cx="175" cy="125" r="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="175" y="129" fill="#ffffff" font-size="9" font-family="Outfit" text-anchor="middle">G</text>
+
+                <circle cx="225" cy="125" r="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.5"/>
+                <text x="225" y="129" fill="#ffffff" font-size="9" font-family="Outfit" text-anchor="middle">H</text>
+            </svg>
+        </div>
+
+        <!-- Resumen de Equivalencias -->
+        <div class="space-y-2 text-xs font-mono">
+            <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+                <span class="text-purple-400 font-bold block font-sans text-[11px]">a) Anidación de Paréntesis:</span>
+                <span class="text-slate-300">(A (B (D, E, F), C (G, H)))</span>
+            </div>
+            <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+                <span class="text-indigo-400 font-bold block font-sans text-[11px]">b) Notación Decimal de Dewey:</span>
+                <span class="text-slate-300">1.A, 1.1.B, 1.1.1.D, 1.1.2.E, 1.1.3.F, 1.2.C, 1.2.1.G, 1.2.2.H</span>
+            </div>
+            <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+                <span class="text-emerald-400 font-bold block font-sans text-[11px]">c) Recorridos:</span>
+                <span class="text-slate-300">PRE: A B D E F C G H • POS: D E F B G H C A</span>
+            </div>
+        </div>
+    </div>
+</div>
+
                     <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
                         <span class="text-purple-600 mr-2 font-mono text-xl">1.1</span> Árboles de Expresiones y Representaciones
                     </h2>

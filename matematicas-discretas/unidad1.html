@@ -134,6 +134,22 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
+    
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
+        }
+        .anim-flow {
+            stroke-dasharray: 6;
+            animation: dash 1.5s linear infinite;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4)); }
+        }
+        .pulse-card {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
@@ -321,6 +337,79 @@
 
 <!-- 1.3 y 1.4 Operaciones y Algoritmo de Booth -->
 <section id="tema-1-3" class="scroll-mt-24">
+
+<!-- DIAGRAMA VISUAL DE ARQUITECTURA ALU Y ALGORITMO DE BOOTH -->
+<div class="my-6 p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl text-white border border-slate-700 shadow-lg">
+    <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
+        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fas fa-microchip mr-1.5"></i> Arquitectura de Hardware de la ALU</span>
+        <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded font-mono">Multiplicador Booth</span>
+    </div>
+    
+    <div class="w-full overflow-x-auto py-2">
+        <svg viewBox="0 0 700 240" class="w-full max-w-2xl mx-auto block" style="min-width: 500px;">
+            <!-- Background grids -->
+            <defs>
+                <linearGradient id="regGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#059669"/>
+                    <stop offset="100%" stop-color="#047857"/>
+                </linearGradient>
+                <linearGradient id="aluGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0284c7"/>
+                    <stop offset="100%" stop-color="#0369a1"/>
+                </linearGradient>
+            </defs>
+
+            <!-- Registros A, Q, Q-1 -->
+            <g transform="translate(40, 30)">
+                <!-- Registro M -->
+                <rect x="0" y="0" width="130" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <text x="65" y="24" fill="#38bdf8" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REGISTRO M</text>
+                <text x="65" y="38" fill="#94a3b8" font-size="9" font-family="Outfit" text-anchor="middle">Multiplicando (n bits)</text>
+
+                <!-- ALU Bloque -->
+                <polygon points="170,10 270,10 290,45 270,80 170,80 190,45" fill="url(#aluGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="230" y="48" fill="#ffffff" font-size="13" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">ALU (+ / -)</text>
+
+                <!-- Flechas M a ALU -->
+                <line x1="130" y1="22" x2="170" y2="22" stroke="#38bdf8" stroke-width="2" class="anim-flow"/>
+
+                <!-- Registro A -->
+                <rect x="320" y="10" width="100" height="50" rx="8" fill="url(#regGrad)" stroke="#10b981" stroke-width="2"/>
+                <text x="370" y="33" fill="#ffffff" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REG A (00..0)</text>
+                <text x="370" y="48" fill="#d1fae5" font-size="9" font-family="Outfit" text-anchor="middle">Acumulador</text>
+
+                <!-- Registro Q -->
+                <rect x="430" y="10" width="100" height="50" rx="8" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+                <text x="480" y="33" fill="#ffffff" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REG Q</text>
+                <text x="480" y="48" fill="#cbd5e1" font-size="9" font-family="Outfit" text-anchor="middle">Multiplicador</text>
+
+                <!-- Flip-Flop Q-1 -->
+                <rect x="540" y="10" width="60" height="50" rx="8" fill="#475569" stroke="#f59e0b" stroke-width="2"/>
+                <text x="570" y="33" fill="#fbbf24" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">Q-1</text>
+                <text x="570" y="48" fill="#fde68a" font-size="9" font-family="Outfit" text-anchor="middle">Bit Extra</text>
+
+                <!-- Flecha de Desplazamiento SAR -->
+                <path d="M 320,80 L 600,80" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4"/>
+                <polygon points="600,80 592,76 592,84" fill="#f59e0b"/>
+                <text x="460" y="96" fill="#fbbf24" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">➔ Desplazamiento Aritmético a la Derecha (SAR)</text>
+
+                <!-- Lógica de Control -->
+                <rect x="420" y="125" width="190" height="45" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="515" y="145" fill="#a5b4fc" font-size="11" font-weight="bold" font-family="Outfit" text-anchor="middle">LÓGICA DE CONTROL</text>
+                <text x="515" y="159" fill="#c7d2fe" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Inspecciona (Q0, Q-1)</text>
+
+                <!-- Líneas de control -->
+                <line x1="480" y1="60" x2="480" y2="125" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3"/>
+                <line x1="570" y1="60" x2="570" y2="125" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3"/>
+                <path d="M 420,147 L 230,147 L 230,80" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4"/>
+            </g>
+        </svg>
+    </div>
+    <div class="text-center text-[11px] text-slate-400 mt-1">
+        Flujo de datos durante la multiplicación binaria con signo: evaluación de pares de bits y desplazamientos aritméticos.
+    </div>
+</div>
+
     <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
         <span class="text-emerald-600 mr-2 font-mono text-xl">1.3 - 1.4</span> Complemento a 2 y el Algoritmo de Booth
     </h2>
