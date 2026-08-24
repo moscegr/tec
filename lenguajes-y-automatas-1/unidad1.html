@@ -3,755 +3,852 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 1: Teoría de Lenguajes - ITChilpancingo</title>
+    <title>Unidad 1: Introducción a la Teoría de Lenguajes Formales | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- MathJax para fórmulas matemáticas elegantes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-        
         body {
             font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
             scroll-behavior: smooth;
         }
 
-        /* Hero específico para Unidad 1 (Azul Profundo) */
-        .u1-header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            position: relative;
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0284c7; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
             overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
         }
 
-        .u1-header::before {
-            content: "";
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #0284c7;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
         }
 
         .sticky-sub-nav {
             position: sticky;
             top: 0;
-            z-index: 50;
-            background: rgba(255, 255, 255, 0.95);
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
 
         .concept-card {
             background: white;
-            border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
         }
-
-        .concept-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
         .math-box {
             background: #f8fafc;
-            border-left: 4px solid #3b82f6;
+            border-left: 4px solid #0284c7;
             padding: 1rem;
             border-radius: 0.5rem;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             color: #334155;
             margin-top: 1rem;
-        }
-
-        .example-badge {
-            background: #dbeafe;
-            color: #1e40af;
-            font-size: 0.7rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        /* Estilos para el diagrama de fases */
-        .phase-connector {
-            width: 2px;
-            height: 20px;
-            background: #cbd5e1;
-            margin: 0 auto;
-        }
-
-        .derivation-step {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: #f1f5f9;
-            border-radius: 0.25rem;
-            margin: 0 0.25rem;
-            font-family: monospace;
-            font-size: 0.9em;
+            overflow-x: auto;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
-    <!-- Navegación Principal Simplificada -->
-    <nav class="bg-white border-b border-gray-200">
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">SCD-1015 • Unidad 1</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition group">
-                    <div class="bg-slate-100 group-hover:bg-blue-100 p-2 rounded-lg transition">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <span class="font-bold text-sm">Volver al Temario</span>
-                </a>
+            <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Lenguajes y Autómatas I</span>
-                    <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold">Unidad 1</span>
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA I
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-sky-100 text-sky-800 text-xs flex items-center justify-center font-bold mr-2">U1</span>
+                        Introducción a la Teoría de Lenguajes Formales
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="index.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-home mr-1.5 text-slate-400"></i> Inicio</a>
+                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white transition flex items-center shadow-sm">Unidad 2: Expresiones Regulares <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header Unidad 1 -->
-    <header class="u1-header text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                <i class="fas fa-cubes text-3xl"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Introducción a la Teoría de Lenguajes Formales</h1>
-            <p class="text-blue-100 text-lg font-light max-w-2xl mx-auto">
-                Los cimientos matemáticos de la computación: desde los alfabetos básicos hasta la arquitectura compleja de un compilador moderno.
-            </p>
-        </div>
-    </header>
+    <!-- Contenedor Principal de 3 Columnas -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-    <!-- Sub-Navegación Sticky -->
-    <div class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
-            <div class="flex space-x-6 min-w-max py-4 text-sm font-medium text-slate-600">
-                <a href="#intro" class="hover:text-blue-600 transition">Intro</a>
-                <a href="#alfabeto" class="hover:text-blue-600 transition">1.1 Alfabeto</a>
-                <a href="#cadenas" class="hover:text-blue-600 transition">1.2 Cadenas</a>
-                <a href="#lenguajes" class="hover:text-blue-600 transition">1.3 Lenguajes</a>
-                <a href="#tipos" class="hover:text-blue-600 transition">1.4 Tipos</a>
-                <a href="#herramientas" class="hover:text-blue-600 transition">1.5 Herramientas</a>
-                <a href="#traductor" class="hover:text-blue-600 transition">1.6 Traductor</a>
-                <a href="#compilador" class="hover:text-blue-600 transition">1.7 Compiladores</a>
-                <a href="#proyecto-final" class="text-rose-600 font-bold"><i class="fas fa-lock mr-1"></i>Proyecto</a>
-            </div>
-        </div>
-    </div>
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-sky-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
 
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+                    <nav class="space-y-1 text-xs">
+                        
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg bg-sky-600 text-white font-bold shadow-sm">
+                            <span>1. Teoría de Lenguajes</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge diff-med">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge diff-med">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Autómatas de Pila</span>
+                            <span class="difficulty-badge diff-hard">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge diff-hard">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge diff-hard">18h</span>
+                        </a>
+                    </nav>
 
-        <!-- INTRO -->
-        <section id="intro" class="scroll-mt-32">
-            <div class="bg-blue-50 border border-blue-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
-                <div class="flex-1">
-                    <h3 class="text-xl font-bold text-blue-900 mb-2">¿Por qué "Formales"?</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                    <!-- Subtemas Unidad 1 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 1</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <a href="#intro" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#alfabeto" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.1 Alfabeto</a>
+<a href="#cadenas" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.2 Cadenas</a>
+<a href="#lenguajes" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.3 Lenguajes</a>
+<a href="#tipos" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.4 Tipos de Lenguajes</a>
+<a href="#herramientas" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.5 Herramientas</a>
+<a href="#traductor" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.6 Estructura de Traductor</a>
+<a href="#compilador" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.7 Fases del Compilador</a>
+<a href="#proyecto-final" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Proyecto Final</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-8">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-sky-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Unidad 1 • Lenguajes y Autómatas I</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Introducción a la Teoría de Lenguajes Formales
+                    </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Los cimientos matemáticos de la computación: alfabetos, cadenas, lenguajes formales y arquitectura del compilador.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 10 Horas (Semanas 1-2)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-easy">Nivel Didáctico</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- CONTENIDO ORIGINAL COMPLETO E INTACTO -->
+                <div class="space-y-8 text-slate-700 leading-relaxed">
+                    
+<!-- INTRO -->
+<section class="scroll-mt-32" id="intro">
+<div class="bg-blue-50 border border-blue-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
+<div class="flex-1">
+<h3 class="text-xl font-bold text-blue-900 mb-2">¿Por qué "Formales"?</h3>
+<p class="text-slate-700 text-sm leading-relaxed mb-4">
                         A diferencia de los lenguajes naturales (Español, Inglés) que son ambiguos y evolucionan socialmente, los <strong>Lenguajes Formales</strong> (Matemáticas, Java, C++) son construcciones artificiales con reglas estrictas. En esta materia, estudiamos cómo definir estas reglas matemáticamente para que una computadora pueda interpretarlas sin error.
                     </p>
-                    <div class="flex gap-4 text-xs font-bold uppercase tracking-wider">
-                        <div class="flex items-center text-red-500"><i class="fas fa-times-circle mr-2"></i> Ambigüedad</div>
-                        <div class="flex items-center text-green-600"><i class="fas fa-check-circle mr-2"></i> Precisión Exacta</div>
-                    </div>
-                </div>
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl text-blue-500 shadow-md">
-                    <i class="fas fa-brain"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.1 Alfabeto -->
-        <section id="alfabeto" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">1.1</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Alfabeto</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="text-slate-600 leading-relaxed mb-4">
+<div class="flex gap-4 text-xs font-bold uppercase tracking-wider">
+<div class="flex items-center text-red-500"><i class="fas fa-times-circle mr-2"></i> Ambigüedad</div>
+<div class="flex items-center text-green-600"><i class="fas fa-check-circle mr-2"></i> Precisión Exacta</div>
+</div>
+</div>
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl text-blue-500 shadow-md">
+<i class="fas fa-brain"></i>
+</div>
+</div>
+</section>
+<!-- 1.1 Alfabeto -->
+<section class="scroll-mt-32" id="alfabeto">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">1.1</span>
+<h2 class="text-2xl font-bold text-slate-800">Alfabeto</h2>
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<p class="text-slate-600 leading-relaxed mb-4">
                             Se llama alfabeto a un conjunto <strong>finito</strong> y <strong>no vacío</strong>, cuyos elementos se denominan <strong>"letras"</strong> o <strong>"símbolos"</strong>. Matemáticamente, se denota con la letra griega Sigma (\(\Sigma\)).
                         </p>
-                        <p class="text-slate-600 text-sm mb-4 border-l-4 border-blue-200 pl-3 italic">
+<p class="text-slate-600 text-sm mb-4 border-l-4 border-blue-200 pl-3 italic">
                             Se definen los alfabetos por la <strong>enumeración</strong> de los símbolos que contiene.
                         </p>
-                        <div class="math-box space-y-2">
-                            <p class="text-xs text-slate-400 font-sans mb-1 uppercase tracking-wider font-bold">Ejemplos:</p>
-                            <p>\(A1 = \{A, B, C, D, E, F, G, \dots, Z\}\)</p>
-                            <p>\(A2 = \{0, 1\}\) <span class="text-slate-400 text-xs ml-2">// Binario</span></p>
-                            <p>\(A3 = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}\) <span class="text-slate-400 text-xs ml-2">// Decimal</span></p>
-                            <p>\(A4 = \{(, )\}\) <span class="text-slate-400 text-xs ml-2">// Paréntesis</span></p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 flex flex-col items-center justify-center">
-                        <div class="text-center mb-6">
-                            <i class="fas fa-font text-4xl text-blue-400 mb-2"></i>
-                            <p class="text-xs text-slate-500 font-mono">Representación Visual</p>
-                        </div>
-                        <div class="flex flex-wrap gap-2 justify-center max-w-[200px]">
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">A</span>
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">B</span>
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">0</span>
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">1</span>
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">(</span>
-                            <span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS PARA ALUMNOS (MODIFICADO CON CONTEXTO REAL) -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    
-                    <!-- Contexto para Libreta -->
-                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.1: Alfabetos en el Mundo Real</h4>
-                                <p class="text-sm text-indigo-800 mt-1 leading-relaxed">
-                                    <strong>Instrucciones:</strong> Copia en tu libreta los siguientes problemas de aplicación.
-                                    <br>1. Para el caso de <strong>Bioinformática</strong>, investiga y escribe cuál es el alfabeto exacto que utiliza el ADN.
-                                    <br>2. Para el caso de <strong>Redes y Seguridad</strong>, define el alfabeto \(\Sigma_{HEX}\) utilizado para direcciones MAC y direcciones de memoria IPv6.
+<div class="math-box space-y-2">
+<p class="text-xs text-slate-400 font-sans mb-1 uppercase tracking-wider font-bold">Ejemplos:</p>
+<p>\(A1 = \{A, B, C, D, E, F, G, \dots, Z\}\)</p>
+<p>\(A2 = \{0, 1\}\) <span class="text-slate-400 text-xs ml-2">// Binario</span></p>
+<p>\(A3 = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}\) <span class="text-slate-400 text-xs ml-2">// Decimal</span></p>
+<p>\(A4 = \{(, )\}\) <span class="text-slate-400 text-xs ml-2">// Paréntesis</span></p>
+</div>
+</div>
+<div class="bg-slate-50 rounded-xl p-6 border border-slate-100 flex flex-col items-center justify-center">
+<div class="text-center mb-6">
+<i class="fas fa-font text-4xl text-blue-400 mb-2"></i>
+<p class="text-xs text-slate-500 font-mono">Representación Visual</p>
+</div>
+<div class="flex flex-wrap gap-2 justify-center max-w-[200px]">
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">A</span>
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">B</span>
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">0</span>
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">1</span>
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">(</span>
+<span class="px-3 py-2 rounded bg-white shadow border border-slate-100 font-bold text-slate-700">)</span>
+</div>
+</div>
+</div>
+<!-- EJERCICIOS PARA ALUMNOS (MODIFICADO CON CONTEXTO REAL) -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<!-- Contexto para Libreta -->
+<div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
+<div>
+<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.1: Alfabetos en el Mundo Real</h4>
+<p class="text-sm text-indigo-800 mt-1 leading-relaxed">
+<strong>Instrucciones:</strong> Copia en tu libreta los siguientes problemas de aplicación.
+                                    <br/>1. Para el caso de <strong>Bioinformática</strong>, investiga y escribe cuál es el alfabeto exacto que utiliza el ADN.
+                                    <br/>2. Para el caso de <strong>Redes y Seguridad</strong>, define el alfabeto \(\Sigma_{HEX}\) utilizado para direcciones MAC y direcciones de memoria IPv6.
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center">
-                        <i class="fas fa-globe-americas text-blue-500 mr-2"></i> Ejercicios de Aplicación
+</div>
+</div>
+</div>
+<h3 class="font-bold text-slate-800 mb-4 flex items-center">
+<i class="fas fa-globe-americas text-blue-500 mr-2"></i> Ejercicios de Aplicación
                     </h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Ejercicio 1: ADN -->
-                        <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
-                            <div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">1</div>
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-dna text-emerald-500 mr-2"></i>
-                                <p class="text-sm font-bold text-blue-900">Bioinformática: ADN</p>
-                            </div>
-                            <p class="text-xs text-slate-600 mb-3">Las cadenas de ADN codifican la vida. ¿Cuál es el alfabeto \(\Sigma_{ADN}\) correcto formado por las 4 bases nitrogenadas?</p>
-                            
-                            <div class="space-y-2 text-xs">
-                                <label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
-                                    <input type="radio" name="dna" class="mr-2 text-blue-600 focus:ring-blue-500">
-                                    <span class="font-mono text-slate-700">\(\Sigma = \{A, B, C, ... Z\}\)</span>
-                                </label>
-                                <label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
-                                    <input type="radio" name="dna" class="mr-2 text-blue-600 focus:ring-blue-500">
-                                    <span class="font-mono text-slate-700">\(\Sigma = \{A, C, G, T\}\)</span>
-                                </label>
-                                <label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
-                                    <input type="radio" name="dna" class="mr-2 text-blue-600 focus:ring-blue-500">
-                                    <span class="font-mono text-slate-700">\(\Sigma = \{0, 1\}\)</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Ejercicio 2: MAC/HEX -->
-                        <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
-                            <div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">2</div>
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-network-wired text-slate-700 mr-2"></i>
-                                <p class="text-sm font-bold text-blue-900">Redes: Direcciones MAC</p>
-                            </div>
-                            <p class="text-xs text-slate-600 mb-3">Las direcciones físicas (MAC) usan el sistema Hexadecimal. Define el alfabeto \(\Sigma_{HEX}\) necesario.</p>
-                            
-                            <div class="flex items-center bg-white border border-slate-300 rounded-lg px-3 py-2 shadow-sm">
-                                <span class="font-bold text-slate-500 mr-2 text-xs">\(\Sigma_{HEX} = \{ \)</span>
-                                <input type="text" class="flex-1 outline-none text-xs text-slate-700 font-mono placeholder-slate-300" placeholder="Ej: 0..9, A..F">
-                                <span class="font-bold text-slate-500 ml-2 text-xs">\(\}\)</span>
-                            </div>
-                            <p class="text-[9px] text-slate-400 mt-2 italic text-right">Nota: Incluye dígitos y letras específicas.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.2 Cadenas -->
-        <section id="cadenas" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">1.2</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Cadenas</h2>
-                </div>
-                
-                <!-- Definición Principal -->
-                <div class="mb-8 border-l-4 border-blue-500 pl-4 bg-blue-50/50 py-2 rounded-r-lg">
-                    <p class="text-slate-700 text-lg font-medium">
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Ejercicio 1: ADN -->
+<div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
+<div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">1</div>
+<div class="flex items-center mb-2">
+<i class="fas fa-dna text-emerald-500 mr-2"></i>
+<p class="text-sm font-bold text-blue-900">Bioinformática: ADN</p>
+</div>
+<p class="text-xs text-slate-600 mb-3">Las cadenas de ADN codifican la vida. ¿Cuál es el alfabeto \(\Sigma_{ADN}\) correcto formado por las 4 bases nitrogenadas?</p>
+<div class="space-y-2 text-xs">
+<label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
+<input class="mr-2 text-blue-600 focus:ring-blue-500" name="dna" type="radio"/>
+<span class="font-mono text-slate-700">\(\Sigma = \{A, B, C, ... Z\}\)</span>
+</label>
+<label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
+<input class="mr-2 text-blue-600 focus:ring-blue-500" name="dna" type="radio"/>
+<span class="font-mono text-slate-700">\(\Sigma = \{A, C, G, T\}\)</span>
+</label>
+<label class="flex items-center p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-blue-50">
+<input class="mr-2 text-blue-600 focus:ring-blue-500" name="dna" type="radio"/>
+<span class="font-mono text-slate-700">\(\Sigma = \{0, 1\}\)</span>
+</label>
+</div>
+</div>
+<!-- Ejercicio 2: MAC/HEX -->
+<div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
+<div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">2</div>
+<div class="flex items-center mb-2">
+<i class="fas fa-network-wired text-slate-700 mr-2"></i>
+<p class="text-sm font-bold text-blue-900">Redes: Direcciones MAC</p>
+</div>
+<p class="text-xs text-slate-600 mb-3">Las direcciones físicas (MAC) usan el sistema Hexadecimal. Define el alfabeto \(\Sigma_{HEX}\) necesario.</p>
+<div class="flex items-center bg-white border border-slate-300 rounded-lg px-3 py-2 shadow-sm">
+<span class="font-bold text-slate-500 mr-2 text-xs">\(\Sigma_{HEX} = \{ \)</span>
+<input class="flex-1 outline-none text-xs text-slate-700 font-mono placeholder-slate-300" placeholder="Ej: 0..9, A..F" type="text"/>
+<span class="font-bold text-slate-500 ml-2 text-xs">\(\}\)</span>
+</div>
+<p class="text-[9px] text-slate-400 mt-2 italic text-right">Nota: Incluye dígitos y letras específicas.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 1.2 Cadenas -->
+<section class="scroll-mt-32" id="cadenas">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">1.2</span>
+<h2 class="text-2xl font-bold text-slate-800">Cadenas</h2>
+</div>
+<!-- Definición Principal -->
+<div class="mb-8 border-l-4 border-blue-500 pl-4 bg-blue-50/50 py-2 rounded-r-lg">
+<p class="text-slate-700 text-lg font-medium">
                         Se denomina <strong>palabra</strong> (o cadena) a toda secuencia <strong>finita</strong> de letras formada con los símbolos de un alfabeto.
                     </p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <!-- Notación -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center">
-                            <i class="fas fa-pen-fancy text-blue-500 mr-2"></i> Notación
+</div>
+<div class="grid md:grid-cols-2 gap-8 mb-8">
+<!-- Notación -->
+<div>
+<h4 class="font-bold text-slate-800 mb-2 flex items-center">
+<i class="fas fa-pen-fancy text-blue-500 mr-2"></i> Notación
                         </h4>
-                        <p class="text-sm text-slate-600 mb-4">
+<p class="text-sm text-slate-600 mb-4">
                             Se usarán <strong>letras minúsculas</strong> para representar las palabras de un alfabeto (\(x, y, z, u, v, w\)).
                         </p>
-                        <div class="math-box space-y-3">
-                            <div>
-                                <p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A1 (LETRAS)</p>
-                                <p>\(x = \text{JOSE}\)</p>
-                                <p>Ejemplo: LUIS, DANIELA, ANA</p>
-                            </div>
-                            <div>
-                                <p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A2 (BINARIO)</p>
-                                <p>Ejemplo: \(10000011\)</p>
-                            </div>
-                            <div>
-                                <p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A4 (SIGNOS)</p>
-                                <p>\(y = (())\)</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Longitud -->
-                    <div>
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center">
-                            <i class="fas fa-ruler-horizontal text-rose-500 mr-2"></i> Longitud (|w|)
+<div class="math-box space-y-3">
+<div>
+<p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A1 (LETRAS)</p>
+<p>\(x = \text{JOSE}\)</p>
+<p>Ejemplo: LUIS, DANIELA, ANA</p>
+</div>
+<div>
+<p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A2 (BINARIO)</p>
+<p>Ejemplo: \(10000011\)</p>
+</div>
+<div>
+<p class="font-bold text-xs text-slate-400 mb-1">SOBRE ALFABETO A4 (SIGNOS)</p>
+<p>\(y = (())\)</p>
+</div>
+</div>
+</div>
+<!-- Longitud -->
+<div>
+<h4 class="font-bold text-slate-800 mb-2 flex items-center">
+<i class="fas fa-ruler-horizontal text-rose-500 mr-2"></i> Longitud (|w|)
                         </h4>
-                        <p class="text-sm text-slate-600 mb-4">
+<p class="text-sm text-slate-600 mb-4">
                             La longitud de una palabra es el <strong>número de símbolos</strong> (letras) que la componen.
                         </p>
-                        <div class="bg-rose-50 rounded-xl p-4 border border-rose-100 text-sm">
-                            <p class="mb-2 font-mono"><strong>Ejemplos:</strong></p>
-                            <ul class="space-y-2">
-                                <li class="flex justify-between border-b border-rose-200 pb-1">
-                                    <span>\(x = \text{JOSE}\)</span>
-                                    <span class="font-bold text-rose-700">\(|x| = 4\)</span>
-                                </li>
-                                <li class="flex justify-between border-b border-rose-200 pb-1">
-                                    <span>\(y = (())\)</span>
-                                    <span class="font-bold text-rose-700">\(|y| = 4\)</span>
-                                </li>
-                                <li class="flex justify-between">
-                                    <span>\(z = 123456\)</span>
-                                    <span class="font-bold text-rose-700">\(|z| = 6\)</span>
-                                </li>
-                            </ul>
+<div class="bg-rose-50 rounded-xl p-4 border border-rose-100 text-sm">
+<p class="mb-2 font-mono"><strong>Ejemplos:</strong></p>
+<ul class="space-y-2">
+<li class="flex justify-between border-b border-rose-200 pb-1">
+<span>\(x = \text{JOSE}\)</span>
+<span class="font-bold text-rose-700">\(|x| = 4\)</span>
+</li>
+<li class="flex justify-between border-b border-rose-200 pb-1">
+<span>\(y = (())\)</span>
+<span class="font-bold text-rose-700">\(|y| = 4\)</span>
+</li>
+<li class="flex justify-between">
+<span>\(z = 123456\)</span>
+<span class="font-bold text-rose-700">\(|z| = 6\)</span>
+</li>
+</ul>
+</div>
+<div class="mt-4 bg-slate-100 p-3 rounded-lg text-xs">
+<span class="font-bold text-slate-700">Cadena Vacía (\(\lambda\) o \(\epsilon\)):</span>
+<br/>Es la palabra que no tiene símbolos. Su longitud es \(0\).
                         </div>
-                        <div class="mt-4 bg-slate-100 p-3 rounded-lg text-xs">
-                            <span class="font-bold text-slate-700">Cadena Vacía (\(\lambda\) o \(\epsilon\)):</span>
-                            <br>Es la palabra que no tiene símbolos. Su longitud es \(0\).
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Operaciones Básicas (Cartas Pequeñas) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
-                        <h4 class="font-bold text-blue-900 mb-1 text-sm">Concatenación</h4>
-                        <p class="text-xs text-slate-500">Unir dos palabras. Si \(u=sol\) y \(v=ar\), entonces \(uv=solar\).</p>
-                    </div>
-                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
-                        <h4 class="font-bold text-blue-900 mb-1 text-sm">Potencia</h4>
-                        <p class="text-xs text-slate-500">Repetir una palabra \(n\) veces. \(w^2 = ww\).</p>
-                    </div>
-                </div>
-
-                <!-- Mini ejercicio interactivo -->
-                <div class="border-t border-slate-100 pt-6">
-                    <h3 class="text-sm font-bold text-slate-700 mb-3"><i class="fas fa-calculator mr-2 text-blue-500"></i>Calculadora de Longitud</h3>
-                    <div class="flex gap-4">
-                        <input type="text" id="stringInput" placeholder="Escribe una palabra (ej: Computadora)..." class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm outline-none focus:border-blue-500 transition">
-                        <div id="stringLengthDisplay" class="bg-slate-800 text-white px-4 py-2 rounded-lg font-mono text-sm flex items-center min-w-[80px] justify-center">
+</div>
+</div>
+<!-- Operaciones Básicas (Cartas Pequeñas) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+<h4 class="font-bold text-blue-900 mb-1 text-sm">Concatenación</h4>
+<p class="text-xs text-slate-500">Unir dos palabras. Si \(u=sol\) y \(v=ar\), entonces \(uv=solar\).</p>
+</div>
+<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+<h4 class="font-bold text-blue-900 mb-1 text-sm">Potencia</h4>
+<p class="text-xs text-slate-500">Repetir una palabra \(n\) veces. \(w^2 = ww\).</p>
+</div>
+</div>
+<!-- Mini ejercicio interactivo -->
+<div class="border-t border-slate-100 pt-6">
+<h3 class="text-sm font-bold text-slate-700 mb-3"><i class="fas fa-calculator mr-2 text-blue-500"></i>Calculadora de Longitud</h3>
+<div class="flex gap-4">
+<input class="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-sm outline-none focus:border-blue-500 transition" id="stringInput" placeholder="Escribe una palabra (ej: Computadora)..." type="text"/>
+<div class="bg-slate-800 text-white px-4 py-2 rounded-lg font-mono text-sm flex items-center min-w-[80px] justify-center" id="stringLengthDisplay">
                             |w| = 0
                         </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS PARA ALUMNOS 1.2 (NUEVO BLOQUE) -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    
-                    <!-- Contexto para Libreta -->
-                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.2: Operaciones con Cadenas</h4>
-                                <p class="text-sm text-indigo-800 mt-1 leading-relaxed">
-                                    <strong>Instrucciones:</strong> Transcribe y resuelve en tu libreta.
-                                    <br>1. Determina la longitud numérica exacta de cada cadena propuesta.
-                                    <br>2. Realiza las operaciones de concatenación y potencia para encontrar la cadena resultante.
+</div>
+</div>
+<!-- EJERCICIOS PARA ALUMNOS 1.2 (NUEVO BLOQUE) -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<!-- Contexto para Libreta -->
+<div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
+<div>
+<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.2: Operaciones con Cadenas</h4>
+<p class="text-sm text-indigo-800 mt-1 leading-relaxed">
+<strong>Instrucciones:</strong> Transcribe y resuelve en tu libreta.
+                                    <br/>1. Determina la longitud numérica exacta de cada cadena propuesta.
+                                    <br/>2. Realiza las operaciones de concatenación y potencia para encontrar la cadena resultante.
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center">
-                        <i class="fas fa-pencil-alt text-blue-500 mr-2"></i> Ejercicios de Práctica
+</div>
+</div>
+</div>
+<h3 class="font-bold text-slate-800 mb-4 flex items-center">
+<i class="fas fa-pencil-alt text-blue-500 mr-2"></i> Ejercicios de Práctica
                     </h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Ejercicio 1 -->
-                        <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
-                            <div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">1</div>
-                            <p class="text-sm font-bold text-blue-900 mb-2">Cálculo de Longitud (|w|)</p>
-                            <p class="text-xs text-slate-600 mb-3">Indica el valor numérico de la longitud:</p>
-                            
-                            <ul class="space-y-2 text-xs text-slate-700 font-mono">
-                                <li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
-                                    <span>a) \(w = \text{chilpancingo}\)</span>
-                                    <span class="text-slate-400">|w| = ?</span>
-                                </li>
-                                <li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
-                                    <span>b) \(w = \lambda\) (vacía)</span>
-                                    <span class="text-slate-400">|w| = ?</span>
-                                </li>
-                                <li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
-                                    <span>c) \(w = \text{2026}\)</span>
-                                    <span class="text-slate-400">|w| = ?</span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Ejercicio 2 -->
-                        <div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
-                            <div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">2</div>
-                            <p class="text-sm font-bold text-blue-900 mb-2">Operaciones con Palabras</p>
-                            <p class="text-xs text-slate-600 mb-3">Dadas \(u = \text{tic}\) y \(v = \text{tac}\), encuentra:</p>
-                            
-                            <ul class="space-y-2 text-xs text-slate-700 font-mono">
-                                <li class="bg-white p-2 rounded border border-slate-200">
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Ejercicio 1 -->
+<div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
+<div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">1</div>
+<p class="text-sm font-bold text-blue-900 mb-2">Cálculo de Longitud (|w|)</p>
+<p class="text-xs text-slate-600 mb-3">Indica el valor numérico de la longitud:</p>
+<ul class="space-y-2 text-xs text-slate-700 font-mono">
+<li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
+<span>a) \(w = \text{chilpancingo}\)</span>
+<span class="text-slate-400">|w| = ?</span>
+</li>
+<li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
+<span>b) \(w = \lambda\) (vacía)</span>
+<span class="text-slate-400">|w| = ?</span>
+</li>
+<li class="bg-white p-2 rounded border border-slate-200 flex justify-between">
+<span>c) \(w = \text{2026}\)</span>
+<span class="text-slate-400">|w| = ?</span>
+</li>
+</ul>
+</div>
+<!-- Ejercicio 2 -->
+<div class="bg-blue-50/50 p-5 rounded-xl border border-blue-100 relative group hover:border-blue-300 transition">
+<div class="absolute -top-3 -right-3 bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-blue-200">2</div>
+<p class="text-sm font-bold text-blue-900 mb-2">Operaciones con Palabras</p>
+<p class="text-xs text-slate-600 mb-3">Dadas \(u = \text{tic}\) y \(v = \text{tac}\), encuentra:</p>
+<ul class="space-y-2 text-xs text-slate-700 font-mono">
+<li class="bg-white p-2 rounded border border-slate-200">
                                     a) Concatenación \(uv\) = <span class="text-slate-400">_________</span>
-                                </li>
-                                <li class="bg-white p-2 rounded border border-slate-200">
+</li>
+<li class="bg-white p-2 rounded border border-slate-200">
                                     b) Potencia \(u^3\) = <span class="text-slate-400">_________</span>
-                                </li>
-                                <li class="bg-white p-2 rounded border border-slate-200">
+</li>
+<li class="bg-white p-2 rounded border border-slate-200">
                                     c) Concatenación mixta \(v u^2\) = <span class="text-slate-400">_________</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.3 Lenguajes -->
-        <section id="lenguajes" class="scroll-mt-32">
-            <div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">1.3</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Lenguajes</h2>
-                </div>
-
-                <!-- Nuevo Bloque: Universo del Discurso -->
-                <div class="mb-8 border-l-4 border-purple-500 pl-4 bg-purple-50/50 py-3 rounded-r-lg shadow-sm">
-                    <h3 class="text-lg font-bold text-purple-900 mb-2 flex items-center">
-                        <i class="fas fa-globe text-purple-600 mr-2"></i> Universo del Discurso
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 1.3 Lenguajes -->
+<section class="scroll-mt-32" id="lenguajes">
+<div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">1.3</span>
+<h2 class="text-2xl font-bold text-slate-800">Lenguajes</h2>
+</div>
+<!-- Nuevo Bloque: Universo del Discurso -->
+<div class="mb-8 border-l-4 border-purple-500 pl-4 bg-purple-50/50 py-3 rounded-r-lg shadow-sm">
+<h3 class="text-lg font-bold text-purple-900 mb-2 flex items-center">
+<i class="fas fa-globe text-purple-600 mr-2"></i> Universo del Discurso
                     </h3>
-                    <p class="text-slate-700 text-sm leading-relaxed">
+<p class="text-slate-700 text-sm leading-relaxed">
                         Se define como "universo del discurso" o "lenguaje universal" al conjunto de <strong>todas las palabras</strong> que se pueden formar con las letras de un alfabeto. Se suele denotar como \(W(\Sigma)\) o \(\Sigma^*\).
                     </p>
-                    <p class="text-slate-700 text-sm font-bold mt-2 flex items-center">
-                        <i class="fas fa-infinity text-purple-600 mr-2"></i> Es siempre un conjunto infinito.
+<p class="text-slate-700 text-sm font-bold mt-2 flex items-center">
+<i class="fas fa-infinity text-purple-600 mr-2"></i> Es siempre un conjunto infinito.
                     </p>
-                </div>
-
-                <!-- Ejemplo Alfabeto Mínimo -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-slate-100 rounded-bl-full z-0"></div>
-                        <h4 class="font-bold text-slate-800 mb-2 text-sm relative z-10">Ejemplo: Alfabeto Mínimo</h4>
-                        <p class="text-xs text-slate-600 mb-3 relative z-10">
+</div>
+<!-- Ejemplo Alfabeto Mínimo -->
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-slate-100 rounded-bl-full z-0"></div>
+<h4 class="font-bold text-slate-800 mb-2 text-sm relative z-10">Ejemplo: Alfabeto Mínimo</h4>
+<p class="text-xs text-slate-600 mb-3 relative z-10">
                             Considerando un alfabeto \(A\) con el menor número posible de letras (1):
                         </p>
-                        <div class="math-box text-xs relative z-10 text-center">
+<div class="math-box text-xs relative z-10 text-center">
                             $$A = \{ a \}$$
                         </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-bl-full z-0"></div>
-                        <h4 class="font-bold text-slate-800 mb-2 text-sm relative z-10">Lenguaje Generado \(W(A)\)</h4>
-                        <p class="text-xs text-slate-600 mb-3 relative z-10">
+</div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-purple-50 rounded-bl-full z-0"></div>
+<h4 class="font-bold text-slate-800 mb-2 text-sm relative z-10">Lenguaje Generado \(W(A)\)</h4>
+<p class="text-xs text-slate-600 mb-3 relative z-10">
                             El universo del discurso contiene todas las repeticiones posibles:
                         </p>
-                        <div class="math-box text-xs relative z-10 text-center">
+<div class="math-box text-xs relative z-10 text-center">
                             $$W(A) = \{ \lambda, a, aa, aaa, aaaa, ... \}$$
                         </div>
-                        <p class="text-[10px] text-slate-400 mt-2 text-right italic relative z-10">Contiene un número infinito de elementos.</p>
-                    </div>
-                </div>
-
-                <!-- Definición de Lenguaje Formal -->
-                <p class="text-slate-600 mb-6 border-b border-slate-200 pb-4">
+<p class="text-[10px] text-slate-400 mt-2 text-right italic relative z-10">Contiene un número infinito de elementos.</p>
+</div>
+</div>
+<!-- Definición de Lenguaje Formal -->
+<p class="text-slate-600 mb-6 border-b border-slate-200 pb-4">
                     Un <strong>Lenguaje formal</strong> \(L\) es, por tanto, cualquier subconjunto de este universo (\(L \subseteq W(\Sigma)\)). Puede ser finito o infinito.
                 </p>
-
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8">
-                    <h3 class="font-bold text-slate-800 mb-4">Operaciones sobre Lenguajes</h3>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="flex items-start">
-                            <div class="bg-orange-100 text-orange-600 p-2 rounded mr-3 text-xs font-mono">L1 ∪ L2</div>
-                            <div>
-                                <h4 class="text-sm font-bold">Unión</h4>
-                                <p class="text-xs text-slate-500">Cadenas que están en L1 <strong>O</strong> en L2.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-purple-100 text-purple-600 p-2 rounded mr-3 text-xs font-mono">L1 • L2</div>
-                            <div>
-                                <h4 class="text-sm font-bold">Concatenación</h4>
-                                <p class="text-xs text-slate-500">Formar cadenas juntando una de L1 con una de L2.</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-green-100 text-green-600 p-2 rounded mr-3 text-xs font-mono">L*</div>
-                            <div>
-                                <h4 class="text-sm font-bold">Cerradura de Kleene</h4>
-                                <p class="text-xs text-slate-500">Todas las combinaciones posibles. Incluye \(\lambda\).</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="bg-rose-100 text-rose-600 p-2 rounded mr-3 text-xs font-mono">L+</div>
-                            <div>
-                                <h4 class="text-sm font-bold">Cerradura Positiva</h4>
-                                <p class="text-xs text-slate-500">Todas las combinaciones posibles. Excluye \(\lambda\).</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJEMPLOS PRÁCTICOS DE OPERACIONES (NUEVO) -->
-                <div class="border-t border-slate-100 pt-6">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600">
-                            <i class="fas fa-layer-group"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-lg">Ejemplos Prácticos de Operaciones</h3>
-                    </div>
-                    
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-                        <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider font-bold">Dados los lenguajes:</p>
-                        <div class="flex gap-4 mb-4">
-                            <div class="bg-white px-3 py-2 rounded shadow-sm border border-slate-100 text-sm font-mono text-slate-700">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-8">
+<h3 class="font-bold text-slate-800 mb-4">Operaciones sobre Lenguajes</h3>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="flex items-start">
+<div class="bg-orange-100 text-orange-600 p-2 rounded mr-3 text-xs font-mono">L1 ∪ L2</div>
+<div>
+<h4 class="text-sm font-bold">Unión</h4>
+<p class="text-xs text-slate-500">Cadenas que están en L1 <strong>O</strong> en L2.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-purple-100 text-purple-600 p-2 rounded mr-3 text-xs font-mono">L1 • L2</div>
+<div>
+<h4 class="text-sm font-bold">Concatenación</h4>
+<p class="text-xs text-slate-500">Formar cadenas juntando una de L1 con una de L2.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-green-100 text-green-600 p-2 rounded mr-3 text-xs font-mono">L*</div>
+<div>
+<h4 class="text-sm font-bold">Cerradura de Kleene</h4>
+<p class="text-xs text-slate-500">Todas las combinaciones posibles. Incluye \(\lambda\).</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="bg-rose-100 text-rose-600 p-2 rounded mr-3 text-xs font-mono">L+</div>
+<div>
+<h4 class="text-sm font-bold">Cerradura Positiva</h4>
+<p class="text-xs text-slate-500">Todas las combinaciones posibles. Excluye \(\lambda\).</p>
+</div>
+</div>
+</div>
+</div>
+<!-- EJEMPLOS PRÁCTICOS DE OPERACIONES (NUEVO) -->
+<div class="border-t border-slate-100 pt-6">
+<div class="flex items-center mb-4">
+<div class="bg-blue-100 p-2 rounded-lg mr-3 text-blue-600">
+<i class="fas fa-layer-group"></i>
+</div>
+<h3 class="font-bold text-slate-800 text-lg">Ejemplos Prácticos de Operaciones</h3>
+</div>
+<div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+<p class="text-xs text-slate-500 mb-3 uppercase tracking-wider font-bold">Dados los lenguajes:</p>
+<div class="flex gap-4 mb-4">
+<div class="bg-white px-3 py-2 rounded shadow-sm border border-slate-100 text-sm font-mono text-slate-700">
                                 \(L_1 = \{ \text{foco}, \text{luz} \}\)
                             </div>
-                            <div class="bg-white px-3 py-2 rounded shadow-sm border border-slate-100 text-sm font-mono text-slate-700">
+<div class="bg-white px-3 py-2 rounded shadow-sm border border-slate-100 text-sm font-mono text-slate-700">
                                 \(L_2 = \{ \text{on}, \text{off} \}\)
                             </div>
-                        </div>
-
-                        <div class="space-y-3">
-                            <!-- Ejemplo Union -->
-                            <div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
-                                <span class="font-bold text-orange-600 w-24">1. Unión:</span>
-                                <span class="font-mono text-slate-600">\(L_1 \cup L_2 = \{ \text{foco}, \text{luz}, \text{on}, \text{off} \}\)</span>
-                            </div>
-                            <!-- Ejemplo Concatenación -->
-                            <div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
-                                <span class="font-bold text-purple-600 w-24">2. Concat:</span>
-                                <span class="font-mono text-slate-600">\(L_1 L_2 = \{ \text{focoon}, \text{focooff}, \text{luzon}, \text{luzoff} \}\)</span>
-                            </div>
-                            <!-- Ejemplo Potencia -->
-                            <div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
-                                <span class="font-bold text-green-600 w-24">3. Potencia:</span>
-                                <span class="font-mono text-slate-600">\(L_2^2 = \{ \text{onon}, \text{onoff}, \text{offon}, \text{offoff} \}\)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS PARA ALUMNOS 1.3 (NUEVO) -->
-                <div class="mt-8 pt-6">
-                    <!-- Contexto para Libreta -->
-                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.3: Operando Lenguajes</h4>
-                                <p class="text-sm text-indigo-800 mt-1 leading-relaxed">
-                                    <strong>Instrucciones:</strong> Copia y resuelve en tu libreta.
-                                    <br>Dados los lenguajes \(A=\{0, 1\}\) y \(B=\{x\}\), calcula y escribe por extensión los conjuntos resultantes para:
-                                    <br>a) \(A \cup B\)
-                                    <br>b) \(AB\) (Concatenación)
-                                    <br>c) \(B^3\)
+</div>
+<div class="space-y-3">
+<!-- Ejemplo Union -->
+<div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
+<span class="font-bold text-orange-600 w-24">1. Unión:</span>
+<span class="font-mono text-slate-600">\(L_1 \cup L_2 = \{ \text{foco}, \text{luz}, \text{on}, \text{off} \}\)</span>
+</div>
+<!-- Ejemplo Concatenación -->
+<div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
+<span class="font-bold text-purple-600 w-24">2. Concat:</span>
+<span class="font-mono text-slate-600">\(L_1 L_2 = \{ \text{focoon}, \text{focooff}, \text{luzon}, \text{luzoff} \}\)</span>
+</div>
+<!-- Ejemplo Potencia -->
+<div class="flex flex-col md:flex-row md:items-center gap-2 text-sm">
+<span class="font-bold text-green-600 w-24">3. Potencia:</span>
+<span class="font-mono text-slate-600">\(L_2^2 = \{ \text{onon}, \text{onoff}, \text{offon}, \text{offoff} \}\)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- EJERCICIOS PARA ALUMNOS 1.3 (NUEVO) -->
+<div class="mt-8 pt-6">
+<!-- Contexto para Libreta -->
+<div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
+<div>
+<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.3: Operando Lenguajes</h4>
+<p class="text-sm text-indigo-800 mt-1 leading-relaxed">
+<strong>Instrucciones:</strong> Copia y resuelve en tu libreta.
+                                    <br/>Dados los lenguajes \(A=\{0, 1\}\) y \(B=\{x\}\), calcula y escribe por extensión los conjuntos resultantes para:
+                                    <br/>a) \(A \cup B\)
+                                    <br/>b) \(AB\) (Concatenación)
+                                    <br/>c) \(B^3\)
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 1.4 Tipos de Lenguajes (Ajustado) -->
-        <section id="tipos" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">1.4</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Tipos de lenguajes</h2>
-                </div>
-                <p class="text-slate-600 mb-6 text-sm">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 1.4 Tipos de Lenguajes (Ajustado) -->
+<section class="scroll-mt-32" id="tipos">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">1.4</span>
+<h2 class="text-2xl font-bold text-slate-800">Tipos de lenguajes</h2>
+</div>
+<p class="text-slate-600 mb-6 text-sm">
                     Noam Chomsky clasificó los lenguajes en 4 tipos jerárquicos según la complejidad de sus gramáticas generadoras. Esta clasificación es fundamental para entender qué tipo de máquina (autómata) puede procesar cada lenguaje.
                 </p>
-
-                <!-- Visualización de Capas -->
-                <div class="relative max-w-md mx-auto py-4">
-                    <!-- Nivel 0 -->
-                    <div class="bg-slate-800 text-slate-300 p-4 rounded-t-2xl text-center text-xs border-b border-slate-700 relative z-10 transform scale-110">
-                        <span class="font-bold text-white block text-sm">Tipo 0: Recursivamente Enumerables</span>
+<!-- Visualización de Capas -->
+<div class="relative max-w-md mx-auto py-4">
+<!-- Nivel 0 -->
+<div class="bg-slate-800 text-slate-300 p-4 rounded-t-2xl text-center text-xs border-b border-slate-700 relative z-10 transform scale-110">
+<span class="font-bold text-white block text-sm">Tipo 0: Recursivamente Enumerables</span>
                         Sin restricciones. Reconocidos por Máquinas de Turing.
                     </div>
-                    <!-- Nivel 1 -->
-                    <div class="bg-slate-700 text-slate-200 p-4 text-center text-xs border-b border-slate-600 relative z-20 mx-4 shadow-lg">
-                        <span class="font-bold text-white block text-sm">Tipo 1: Dependientes del Contexto</span>
+<!-- Nivel 1 -->
+<div class="bg-slate-700 text-slate-200 p-4 text-center text-xs border-b border-slate-600 relative z-20 mx-4 shadow-lg">
+<span class="font-bold text-white block text-sm">Tipo 1: Dependientes del Contexto</span>
                         Prod: \(\alpha A \beta \rightarrow \alpha \gamma \beta\). Lenguaje natural sensible al contexto.
                     </div>
-                    <!-- Nivel 2 -->
-                    <div class="bg-blue-600 text-white p-4 text-center text-xs border-b border-blue-500 relative z-30 mx-8 shadow-lg">
-                        <span class="font-bold block text-sm">Tipo 2: Libres del Contexto (GLC)</span>
+<!-- Nivel 2 -->
+<div class="bg-blue-600 text-white p-4 text-center text-xs border-b border-blue-500 relative z-30 mx-8 shadow-lg">
+<span class="font-bold block text-sm">Tipo 2: Libres del Contexto (GLC)</span>
                         Fundamental para sintaxis de programación. (Autómata de Pila).
                     </div>
-                    <!-- Nivel 3 -->
-                    <div class="bg-green-500 text-white p-4 rounded-b-2xl text-center text-xs relative z-40 mx-12 shadow-lg">
-                        <span class="font-bold block text-sm">Tipo 3: Regulares</span>
+<!-- Nivel 3 -->
+<div class="bg-green-500 text-white p-4 rounded-b-2xl text-center text-xs relative z-40 mx-12 shadow-lg">
+<span class="font-bold block text-sm">Tipo 3: Regulares</span>
                         Tokens, palabras reservadas. (Autómatas Finitos).
                     </div>
-                </div>
-
-                <!-- CONEXIÓN: LENGUAJES NATURALES VS FORMALES (NUEVO BLOQUE BASADO EN EL PDF) -->
-                <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-200 mt-10 mb-8 shadow-sm relative overflow-hidden">
-                    <div class="absolute -right-4 -top-4 text-indigo-100 opacity-50 transform rotate-12">
-                        <i class="fas fa-comments text-9xl"></i>
-                    </div>
-                    <div class="relative z-10">
-                        <h3 class="font-bold text-indigo-900 mb-3 flex items-center text-lg">
-                            <i class="fas fa-link mr-2 text-indigo-600"></i> ¿Dónde encajan los Lenguajes Naturales y Formales aquí?
+</div>
+<!-- CONEXIÓN: LENGUAJES NATURALES VS FORMALES (NUEVO BLOQUE BASADO EN EL PDF) -->
+<div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-200 mt-10 mb-8 shadow-sm relative overflow-hidden">
+<div class="absolute -right-4 -top-4 text-indigo-100 opacity-50 transform rotate-12">
+<i class="fas fa-comments text-9xl"></i>
+</div>
+<div class="relative z-10">
+<h3 class="font-bold text-indigo-900 mb-3 flex items-center text-lg">
+<i class="fas fa-link mr-2 text-indigo-600"></i> ¿Dónde encajan los Lenguajes Naturales y Formales aquí?
                         </h3>
-                        <p class="text-sm text-slate-700 mb-4 leading-relaxed">
+<p class="text-sm text-slate-700 mb-4 leading-relaxed">
                             Según el texto de estudio, Chomsky desarrolló originalmente esta jerarquía intentando formalizar los <strong>Lenguajes Naturales</strong>. Sin embargo, su aplicación real divergió:
                         </p>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
-                                <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fas fa-users text-rose-500 mr-2"></i>Lenguajes Naturales (Difíciles de encajar)</h4>
-                                <p class="text-xs text-slate-600">
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+<h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fas fa-users text-rose-500 mr-2"></i>Lenguajes Naturales (Difíciles de encajar)</h4>
+<p class="text-xs text-slate-600">
                                     Los lenguajes como el español o inglés demostraron ser muy complejos. El Tipo 3 (Regular) es <em>demasiado débil</em> para explicar estructuras oracionales. El Tipo 2 (Libre de contexto) modela bien el árbol sintáctico (sujeto-verbo), pero falla con reglas de concordancia complejas (género/número), requiriendo reglas del Tipo 1 o 0 que son computacionalmente ineficientes de analizar.
                                 </p>
-                            </div>
-                            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
-                                <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fas fa-code text-green-600 mr-2"></i>Lenguajes Formales (Encaje perfecto)</h4>
-                                <p class="text-xs text-slate-600">
+</div>
+<div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm">
+<h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fas fa-code text-green-600 mr-2"></i>Lenguajes Formales (Encaje perfecto)</h4>
+<p class="text-xs text-slate-600">
                                     ¡Aquí es donde la jerarquía triunfó! En lugar de intentar que las computadoras entiendan el complejo lenguaje humano, <strong>diseñamos los lenguajes de programación (formales) restringiéndolos artificialmente para que encajaran exactamente en el Tipo 3 y Tipo 2</strong>. Esto garantiza que existan algoritmos rápidos para compilarlos.
                                 </p>
-                            </div>
-                        </div>
-                        <div class="mt-4 bg-indigo-900 text-indigo-100 text-xs p-3 rounded-lg text-center font-medium">
+</div>
+</div>
+<div class="mt-4 bg-indigo-900 text-indigo-100 text-xs p-3 rounded-lg text-center font-medium">
                             Conclusión: La jerarquía intentó domar los lenguajes naturales, pero terminó siendo la arquitectura fundamental para construir los lenguajes formales artificiales.
                         </div>
-                    </div>
-                </div>
-
-                <!-- TABLA FORMAL (Añadida basada en el PDF proporcionado) -->
-                <div class="mt-10 overflow-x-auto">
-                    <h3 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-200 pb-2">Clasificación Formal</h3>
-                    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                        <table class="w-full text-sm text-left text-slate-600">
-                            <thead class="text-xs text-slate-700 uppercase bg-slate-100">
-                                <tr>
-                                    <th scope="col" class="px-6 py-4">Gramáticas</th>
-                                    <th scope="col" class="px-6 py-4 border-l border-slate-200">Lenguajes</th>
-                                    <th scope="col" class="px-6 py-4 border-l border-slate-200">Máquinas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4">
-                                        <span class="font-bold text-slate-900">Tipo 0</span><br>
-                                        <span class="text-xs text-slate-500">Gramáticas estructura-frase<br>Gramáticas sin restricciones</span>
-                                    </td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Lenguajes recursivamente enumerables</td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Máquinas de Turing<br>Máquinas de Turing no deterministas</td>
-                                </tr>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4">
-                                        <span class="font-bold text-slate-900">Tipo 1</span><br>
-                                        <span class="text-xs text-slate-500">Gramáticas sensitivas al contexto<br>Gramáticas monótonas</span>
-                                    </td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Lenguajes sensitivos al contexto</td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Autómata linear-bounded</td>
-                                </tr>
-                                <tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4">
-                                        <span class="font-bold text-slate-900">Tipo 2</span><br>
-                                        <span class="text-xs text-slate-500">Gramáticas libres de contexto</span>
-                                    </td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Lenguajes libres de contexto</td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Autómata Pushdown (Autómata de Pila)</td>
-                                </tr>
-                                <tr class="bg-white hover:bg-slate-50 transition">
-                                    <td class="px-6 py-4">
-                                        <span class="font-bold text-slate-900">Tipo 3</span><br>
-                                        <span class="text-xs text-slate-500">Gramáticas regulares<br>Gramáticas lineales hacia la izquierda<br>Gramáticas lineales hacia la derecha</span>
-                                    </td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Lenguajes regulares</td>
-                                    <td class="px-6 py-4 border-l border-slate-100">Autómata finito determinista<br>Autómata finito no determinista</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="text-[11px] text-slate-400 mt-2 text-center italic">Tabla 2.1. Jerarquía de Chomsky y su relación con las máquinas abstractas.</p>
-                </div>
-
-                <!-- DETALLES Y EJEMPLOS -->
-                <div class="mt-10 grid md:grid-cols-2 gap-6">
-                    <div class="bg-white p-5 rounded-xl border border-green-200 shadow-sm">
-                        <h4 class="font-bold text-green-700 mb-2 flex items-center"><i class="fas fa-bolt mr-2"></i>Tipo 3: Lenguajes Regulares</h4>
-                        <p class="text-xs text-slate-600 mb-3">Son los más simples. No tienen "memoria", por lo que no pueden contar ni anidar estructuras. Se usan para el <strong>Análisis Léxico</strong> (encontrar tokens).</p>
-                        <div class="bg-green-50 p-3 rounded border border-green-100 text-xs font-mono text-slate-700">
-                            <strong>Ejemplo:</strong><br>
-                            \(L = \{a^n \mid n \ge 1\} = \{a, aa, aaa, \dots\}\)<br>
+</div>
+</div>
+<!-- TABLA FORMAL (Añadida basada en el PDF proporcionado) -->
+<div class="mt-10 overflow-x-auto">
+<h3 class="text-lg font-bold text-slate-800 mb-3 border-b border-slate-200 pb-2">Clasificación Formal</h3>
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-sm text-left text-slate-600">
+<thead class="text-xs text-slate-700 uppercase bg-slate-100">
+<tr>
+<th class="px-6 py-4" scope="col">Gramáticas</th>
+<th class="px-6 py-4 border-l border-slate-200" scope="col">Lenguajes</th>
+<th class="px-6 py-4 border-l border-slate-200" scope="col">Máquinas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
+<td class="px-6 py-4">
+<span class="font-bold text-slate-900">Tipo 0</span><br/>
+<span class="text-xs text-slate-500">Gramáticas estructura-frase<br/>Gramáticas sin restricciones</span>
+</td>
+<td class="px-6 py-4 border-l border-slate-100">Lenguajes recursivamente enumerables</td>
+<td class="px-6 py-4 border-l border-slate-100">Máquinas de Turing<br/>Máquinas de Turing no deterministas</td>
+</tr>
+<tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
+<td class="px-6 py-4">
+<span class="font-bold text-slate-900">Tipo 1</span><br/>
+<span class="text-xs text-slate-500">Gramáticas sensitivas al contexto<br/>Gramáticas monótonas</span>
+</td>
+<td class="px-6 py-4 border-l border-slate-100">Lenguajes sensitivos al contexto</td>
+<td class="px-6 py-4 border-l border-slate-100">Autómata linear-bounded</td>
+</tr>
+<tr class="bg-white border-b border-slate-100 hover:bg-slate-50 transition">
+<td class="px-6 py-4">
+<span class="font-bold text-slate-900">Tipo 2</span><br/>
+<span class="text-xs text-slate-500">Gramáticas libres de contexto</span>
+</td>
+<td class="px-6 py-4 border-l border-slate-100">Lenguajes libres de contexto</td>
+<td class="px-6 py-4 border-l border-slate-100">Autómata Pushdown (Autómata de Pila)</td>
+</tr>
+<tr class="bg-white hover:bg-slate-50 transition">
+<td class="px-6 py-4">
+<span class="font-bold text-slate-900">Tipo 3</span><br/>
+<span class="text-xs text-slate-500">Gramáticas regulares<br/>Gramáticas lineales hacia la izquierda<br/>Gramáticas lineales hacia la derecha</span>
+</td>
+<td class="px-6 py-4 border-l border-slate-100">Lenguajes regulares</td>
+<td class="px-6 py-4 border-l border-slate-100">Autómata finito determinista<br/>Autómata finito no determinista</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="text-[11px] text-slate-400 mt-2 text-center italic">Tabla 2.1. Jerarquía de Chomsky y su relación con las máquinas abstractas.</p>
+</div>
+<!-- DETALLES Y EJEMPLOS -->
+<div class="mt-10 grid md:grid-cols-2 gap-6">
+<div class="bg-white p-5 rounded-xl border border-green-200 shadow-sm">
+<h4 class="font-bold text-green-700 mb-2 flex items-center"><i class="fas fa-bolt mr-2"></i>Tipo 3: Lenguajes Regulares</h4>
+<p class="text-xs text-slate-600 mb-3">Son los más simples. No tienen "memoria", por lo que no pueden contar ni anidar estructuras. Se usan para el <strong>Análisis Léxico</strong> (encontrar tokens).</p>
+<div class="bg-green-50 p-3 rounded border border-green-100 text-xs font-mono text-slate-700">
+<strong>Ejemplo:</strong><br/>
+                            \(L = \{a^n \mid n \ge 1\} = \{a, aa, aaa, \dots\}\)<br/>
                             Validación de correos, números de teléfono o variables.
                         </div>
-                    </div>
-                    
-                    <div class="bg-white p-5 rounded-xl border border-blue-200 shadow-sm">
-                        <h4 class="font-bold text-blue-700 mb-2 flex items-center"><i class="fas fa-layer-group mr-2"></i>Tipo 2: Libres del Contexto</h4>
-                        <p class="text-xs text-slate-600 mb-3">Tienen memoria tipo "pila" (LIFO). Pueden recordar estructuras anidadas. Se usan para el <strong>Análisis Sintáctico</strong> de los lenguajes de programación.</p>
-                        <div class="bg-blue-50 p-3 rounded border border-blue-100 text-xs font-mono text-slate-700">
-                            <strong>Ejemplo:</strong><br>
-                            \(L = \{a^n b^n \mid n \ge 1\} = \{ab, aabb, aaabbb, \dots\}\)<br>
+</div>
+<div class="bg-white p-5 rounded-xl border border-blue-200 shadow-sm">
+<h4 class="font-bold text-blue-700 mb-2 flex items-center"><i class="fas fa-layer-group mr-2"></i>Tipo 2: Libres del Contexto</h4>
+<p class="text-xs text-slate-600 mb-3">Tienen memoria tipo "pila" (LIFO). Pueden recordar estructuras anidadas. Se usan para el <strong>Análisis Sintáctico</strong> de los lenguajes de programación.</p>
+<div class="bg-blue-50 p-3 rounded border border-blue-100 text-xs font-mono text-slate-700">
+<strong>Ejemplo:</strong><br/>
+                            \(L = \{a^n b^n \mid n \ge 1\} = \{ab, aabb, aaabbb, \dots\}\)<br/>
                             Paréntesis balanceados: <span class="text-blue-600">(( ))</span> o <span class="text-blue-600">if ( ) { }</span>.
                         </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS EN JAVA -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    
-                    <!-- Contexto para Libreta -->
-                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
-                            <div>
-                                <h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.4: Reconocedores de Lenguajes en Java</h4>
-                                <p class="text-sm text-indigo-800 mt-1 leading-relaxed">
-                                    <strong>Instrucciones:</strong> Copia en tu libreta los siguientes fragmentos de código en Java. 
-                                    <br>Analiza cómo la teoría se convierte en código: El Ejercicio 1 demuestra cómo validar un <strong>Lenguaje Tipo 3</strong> usando expresiones regulares integradas. El Ejercicio 2 implementa la lógica de un autómata de pila para reconocer un <strong>Lenguaje Tipo 2</strong>.
-                                    <br><strong>Reto:</strong> Describe qué imprimiría la consola para cada caso de prueba.
+</div>
+</div>
+<!-- EJERCICIOS EN JAVA -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<!-- Contexto para Libreta -->
+<div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-book-reader text-indigo-600 mt-1 mr-3 text-lg"></i>
+<div>
+<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide">Actividad 1.4: Reconocedores de Lenguajes en Java</h4>
+<p class="text-sm text-indigo-800 mt-1 leading-relaxed">
+<strong>Instrucciones:</strong> Copia en tu libreta los siguientes fragmentos de código en Java. 
+                                    <br/>Analiza cómo la teoría se convierte en código: El Ejercicio 1 demuestra cómo validar un <strong>Lenguaje Tipo 3</strong> usando expresiones regulares integradas. El Ejercicio 2 implementa la lógica de un autómata de pila para reconocer un <strong>Lenguaje Tipo 2</strong>.
+                                    <br/><strong>Reto:</strong> Describe qué imprimiría la consola para cada caso de prueba.
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-6">
-                        <!-- Código Java Ejercicio 1 -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
-                            <div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
-                                <span class="flex space-x-2 mr-4">
-                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                </span>
-                                <p class="text-xs font-mono text-slate-300">Ejercicio1_Tipo3.java</p>
-                            </div>
-                            <div class="p-4 text-sm font-mono overflow-x-auto text-slate-300">
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Código Java Ejercicio 1 -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+<div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
+<span class="flex space-x-2 mr-4">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</span>
+<p class="text-xs font-mono text-slate-300">Ejercicio1_Tipo3.java</p>
+</div>
+<div class="p-4 text-sm font-mono overflow-x-auto text-slate-300">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">ReconocedorTipo3</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Alfabeto: Binario {0, 1}</span>
@@ -765,20 +862,19 @@
         System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"w2 pertenece a L? "</span> + w2.<span class="text-blue-300">matches</span>(patron));
     }
 }</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Código Java Ejercicio 2 -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
-                            <div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
-                                <span class="flex space-x-2 mr-4">
-                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                </span>
-                                <p class="text-xs font-mono text-slate-300">Ejercicio2_Tipo2.java</p>
-                            </div>
-                            <div class="p-4 text-sm font-mono overflow-x-auto text-slate-300">
+</div>
+</div>
+<!-- Código Java Ejercicio 2 -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+<div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
+<span class="flex space-x-2 mr-4">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</span>
+<p class="text-xs font-mono text-slate-300">Ejercicio2_Tipo2.java</p>
+</div>
+<div class="p-4 text-sm font-mono overflow-x-auto text-slate-300">
 <pre><code><span class="text-purple-400">import</span> java.util.Stack;
 
 <span class="text-purple-400">public class</span> <span class="text-yellow-300">ReconocedorTipo2</span> {
@@ -802,557 +898,570 @@
         System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"(() pertenece? "</span> + <span class="text-blue-300">esValido</span>(<span class="text-green-400">"(()"</span>));
     }
 }</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- RETOS DE PROGRAMACIÓN PARA EL ALUMNO -->
-                    <div class="mt-8 pt-6 border-t border-slate-200">
-                        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 mb-6 rounded-r-lg shadow-sm">
-                            <div class="flex items-start">
-                                <i class="fas fa-keyboard text-emerald-600 mt-1 mr-3 text-lg"></i>
-                                <div>
-                                    <h4 class="text-sm font-bold text-emerald-900 uppercase tracking-wide">Retos de Programación (Práctica en IDE)</h4>
-                                    <p class="text-sm text-emerald-800 mt-1 leading-relaxed">
-                                        <strong>Instrucciones:</strong> Abre tu entorno de desarrollo (Eclipse, NetBeans, VS Code) e implementa las siguientes clases en Java para resolver estos problemas reales usando la teoría de la jerarquía de Chomsky.
+</div>
+</div>
+</div>
+<!-- RETOS DE PROGRAMACIÓN PARA EL ALUMNO -->
+<div class="mt-8 pt-6 border-t border-slate-200">
+<div class="bg-emerald-50 border-l-4 border-emerald-500 p-4 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-keyboard text-emerald-600 mt-1 mr-3 text-lg"></i>
+<div>
+<h4 class="text-sm font-bold text-emerald-900 uppercase tracking-wide">Retos de Programación (Práctica en IDE)</h4>
+<p class="text-sm text-emerald-800 mt-1 leading-relaxed">
+<strong>Instrucciones:</strong> Abre tu entorno de desarrollo (Eclipse, NetBeans, VS Code) e implementa las siguientes clases en Java para resolver estos problemas reales usando la teoría de la jerarquía de Chomsky.
                                     </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <!-- Reto 1 -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">1</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-car mr-2"></i>Reto Tipo 3: Matrículas (RegEx)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+</div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Reto 1 -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">1</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-car mr-2"></i>Reto Tipo 3: Matrículas (RegEx)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>ValidadorMatricula</code>. Utiliza expresiones regulares para aceptar cadenas que cumplan con el siguiente patrón (Lenguaje Regular):
-                                    <br><br>
-                                    <strong>Patrón:</strong> Exactamente 3 letras mayúsculas, seguidas de un guión medio, seguidas de 3 o 4 números.
+                                    <br/><br/>
+<strong>Patrón:</strong> Exactamente 3 letras mayúsculas, seguidas de un guión medio, seguidas de 3 o 4 números.
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "ABC-123"</span><br>
-                                    <span class="text-green-600">✔ "XYZ-9999"</span><br>
-                                    <span class="text-red-500">✘ "ab-12"</span>
-                                </div>
-                            </div>
-
-                            <!-- Reto 2 (ACTUALIZADO A LINTER SINTAXIS) -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">2</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-code mr-2"></i>Reto Tipo 2: Sintaxis de IDE (Pila)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "ABC-123"</span><br/>
+<span class="text-green-600">✔ "XYZ-9999"</span><br/>
+<span class="text-red-500">✘ "ab-12"</span>
+</div>
+</div>
+<!-- Reto 2 (ACTUALIZADO A LINTER SINTAXIS) -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">2</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-code mr-2"></i>Reto Tipo 2: Sintaxis de IDE (Pila)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>LinterSintaxis</code>. Usa la estructura de datos <code>Stack</code> para crear un validador estilo IDE que verifique si los símbolos de agrupación están correctamente cerrados y anidados.
-                                    <br><br>
-                                    <strong>Patrón:</strong> Cadenas balanceadas con <code>()</code>, <code>[]</code> y <code>{}</code>.
+                                    <br/><br/>
+<strong>Patrón:</strong> Cadenas balanceadas con <code>()</code>, <code>[]</code> y <code>{}</code>.
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "{ [ ( ) ] }"</span><br>
-                                    <span class="text-green-600">✔ "if (a[0] == 1) { }"</span><br>
-                                    <span class="text-red-500">✘ "{ [ ( ] ) }" (Error de anidación)</span>
-                                </div>
-                            </div>
-
-                            <!-- Reto 3 (NUEVO: REGEX) -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">3</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-envelope mr-2"></i>Reto Tipo 3: Correo Institucional (RegEx)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "{ [ ( ) ] }"</span><br/>
+<span class="text-green-600">✔ "if (a[0] == 1) { }"</span><br/>
+<span class="text-red-500">✘ "{ [ ( ] ) }" (Error de anidación)</span>
+</div>
+</div>
+<!-- Reto 3 (NUEVO: REGEX) -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">3</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-envelope mr-2"></i>Reto Tipo 3: Correo Institucional (RegEx)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>ValidadorCorreo</code>. Utiliza expresiones regulares para validar que un correo pertenezca al dominio del instituto (Lenguaje Regular).
-                                    <br><br>
-                                    <strong>Patrón:</strong> Letras minúsculas y números, seguidos exactamente por <code>@itchilpancingo.edu.mx</code>.
+                                    <br/><br/>
+<strong>Patrón:</strong> Letras minúsculas y números, seguidos exactamente por <code>@itchilpancingo.edu.mx</code>.
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "alumno123@itchilpancingo.edu.mx"</span><br>
-                                    <span class="text-green-600">✔ "sistemas@itchilpancingo.edu.mx"</span><br>
-                                    <span class="text-red-500">✘ "alumno@gmail.com"</span>
-                                </div>
-                            </div>
-
-                            <!-- Reto 4 (NUEVO: PILA) -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">4</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-file-code mr-2"></i>Reto Tipo 2: Etiquetas HTML (Pila)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "alumno123@itchilpancingo.edu.mx"</span><br/>
+<span class="text-green-600">✔ "sistemas@itchilpancingo.edu.mx"</span><br/>
+<span class="text-red-500">✘ "alumno@gmail.com"</span>
+</div>
+</div>
+<!-- Reto 4 (NUEVO: PILA) -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">4</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-file-code mr-2"></i>Reto Tipo 2: Etiquetas HTML (Pila)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>ValidadorHTML</code>. Usa un <code>Stack</code> para verificar que cada etiqueta de apertura tenga su etiqueta de cierre correspondiente y en el orden correcto.
-                                    <br><br>
-                                    <strong>Patrón:</strong> Etiquetas anidadas correctamente como <code>&lt;div&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</code>.
+                                    <br/><br/>
+<strong>Patrón:</strong> Etiquetas anidadas correctamente como <code>&lt;div&gt;&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</code>.
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"</span><br>
-                                    <span class="text-red-500">✘ "&lt;b&gt;&lt;i&gt;&lt;/b&gt;&lt;/i&gt;" (Cruce incorrecto)</span><br>
-                                    <span class="text-red-500">✘ "&lt;div&gt;&lt;p&gt;&lt;/div&gt;" (Falta cierre)</span>
-                                </div>
-                            </div>
-
-                            <!-- Reto 5 (NUEVO: REGEX) -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">5</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-palette mr-2"></i>Reto Tipo 3: Color Web (RegEx)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "&lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;"</span><br/>
+<span class="text-red-500">✘ "&lt;b&gt;&lt;i&gt;&lt;/b&gt;&lt;/i&gt;" (Cruce incorrecto)</span><br/>
+<span class="text-red-500">✘ "&lt;div&gt;&lt;p&gt;&lt;/div&gt;" (Falta cierre)</span>
+</div>
+</div>
+<!-- Reto 5 (NUEVO: REGEX) -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">5</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-palette mr-2"></i>Reto Tipo 3: Color Web (RegEx)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>ValidadorColor</code>. Usa expresiones regulares para verificar si una cadena representa un código de color Hexadecimal válido.
-                                    <br><br>
-                                    <strong>Patrón:</strong> Inicia con <code>#</code>, seguido exactamente por 6 caracteres que pueden ser números (0-9) o letras (A-F, a-f).
+                                    <br/><br/>
+<strong>Patrón:</strong> Inicia con <code>#</code>, seguido exactamente por 6 caracteres que pueden ser números (0-9) o letras (A-F, a-f).
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "#FF0055"</span><br>
-                                    <span class="text-green-600">✔ "#1a2b3c"</span><br>
-                                    <span class="text-red-500">✘ "#GG9900" (Letra G inválida)</span>
-                                </div>
-                            </div>
-
-                            <!-- Reto 6 (NUEVO: PILA) -->
-                            <div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
-                                <div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">6</div>
-                                <h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-project-diagram mr-2"></i>Reto Tipo 2: Bloques Lógicos (Pila)</h4>
-                                <p class="text-xs text-slate-600 mb-3">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "#FF0055"</span><br/>
+<span class="text-green-600">✔ "#1a2b3c"</span><br/>
+<span class="text-red-500">✘ "#GG9900" (Letra G inválida)</span>
+</div>
+</div>
+<!-- Reto 6 (NUEVO: PILA) -->
+<div class="bg-emerald-50/50 p-5 rounded-xl border border-emerald-100 relative group hover:border-emerald-300 transition shadow-sm">
+<div class="absolute -top-3 -right-3 bg-emerald-100 text-emerald-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs border border-emerald-200">6</div>
+<h4 class="text-sm font-bold text-emerald-900 mb-2"><i class="fas fa-project-diagram mr-2"></i>Reto Tipo 2: Bloques Lógicos (Pila)</h4>
+<p class="text-xs text-slate-600 mb-3">
                                     Crea una clase <code>ValidadorBloques</code>. Simula un compilador analizando un arreglo de strings. Usa un <code>Stack</code> para verificar que todo <code>IF</code> tenga su <code>ENDIF</code> correspondiente.
-                                    <br><br>
-                                    <strong>Patrón:</strong> Palabras reservadas anidadas sin huérfanos.
+                                    <br/><br/>
+<strong>Patrón:</strong> Palabras reservadas anidadas sin huérfanos.
                                 </p>
-                                <div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                                    <span class="text-green-600">✔ "IF, IF, ENDIF, ENDIF"</span><br>
-                                    <span class="text-red-500">✘ "IF, ENDIF, ENDIF" (Cierre extra)</span><br>
-                                    <span class="text-red-500">✘ "IF, IF, ENDIF" (Falta cerrar)</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.5 Herramientas Computacionales (NUEVA SECCIÓN) -->
-        <section id="herramientas" class="scroll-mt-32">
-            <div class="concept-card p-8 bg-indigo-50 border border-indigo-100">
-                <div class="flex flex-col md:flex-row items-start md:items-center mb-6">
-                    <span class="text-4xl font-black text-indigo-200 mr-4">1.5</span>
-                    <h2 class="text-2xl font-bold text-indigo-900 leading-tight">Herramientas computacionales ligadas con lenguajes</h2>
-                </div>
-                <p class="text-slate-600 text-sm mb-6">
+<div class="bg-white p-3 rounded border border-slate-200 text-xs font-mono text-slate-700">
+<span class="text-green-600">✔ "IF, IF, ENDIF, ENDIF"</span><br/>
+<span class="text-red-500">✘ "IF, ENDIF, ENDIF" (Cierre extra)</span><br/>
+<span class="text-red-500">✘ "IF, IF, ENDIF" (Falta cerrar)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 1.5 Herramientas Computacionales (NUEVA SECCIÓN) -->
+<section class="scroll-mt-32" id="herramientas">
+<div class="concept-card p-8 bg-indigo-50 border border-indigo-100">
+<div class="flex flex-col md:flex-row items-start md:items-center mb-6">
+<span class="text-4xl font-black text-indigo-200 mr-4">1.5</span>
+<h2 class="text-2xl font-bold text-indigo-900 leading-tight">Herramientas computacionales ligadas con lenguajes</h2>
+</div>
+<p class="text-slate-600 text-sm mb-6">
                     Existen diversas herramientas de software que aplican la teoría de lenguajes formales para procesar texto, código y datos estructurados.
                 </p>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Herramienta 1 -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
-                        <h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-edit mr-2"></i>Editores de Estructura</h4>
-                        <p class="text-xs text-slate-600">
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Herramienta 1 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
+<h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-edit mr-2"></i>Editores de Estructura</h4>
+<p class="text-xs text-slate-600">
                             Editores de texto que conocen la sintaxis del lenguaje. Realizan coloreado, indentación automática y validación básica mientras se escribe (ej. VS Code, IntelliJ).
                         </p>
-                    </div>
-                    <!-- Herramienta 2 -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
-                        <h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-file-code mr-2"></i>Verificadores Estáticos</h4>
-                        <p class="text-xs text-slate-600">
+</div>
+<!-- Herramienta 2 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
+<h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-file-code mr-2"></i>Verificadores Estáticos</h4>
+<p class="text-xs text-slate-600">
                             Herramientas que leen el código sin ejecutarlo para encontrar errores lógicos o de estilo (ej. ESLint, SonarQube).
                         </p>
-                    </div>
-                    <!-- Herramienta 3 -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
-                        <h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-print mr-2"></i>Formateadores (Pretty Printers)</h4>
-                        <p class="text-xs text-slate-600">
+</div>
+<!-- Herramienta 3 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
+<h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-print mr-2"></i>Formateadores (Pretty Printers)</h4>
+<p class="text-xs text-slate-600">
                             Analizan el programa y lo reescriben con una estructura visual limpia y estándar (ej. Prettier).
                         </p>
-                    </div>
-                    <!-- Herramienta 4 -->
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
-                        <h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-cogs mr-2"></i>Generadores de Analizadores</h4>
-                        <p class="text-xs text-slate-600">
+</div>
+<!-- Herramienta 4 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border border-indigo-100">
+<h4 class="font-bold text-indigo-700 mb-2 text-sm"><i class="fas fa-cogs mr-2"></i>Generadores de Analizadores</h4>
+<p class="text-xs text-slate-600">
                             Software que toma una gramática o expresiones regulares como entrada y genera automáticamente el código de un compilador (ej. Lex, Yacc, JFlex, JavaCC).
                         </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.6 Estructura de un Traductor (NUEVA SECCIÓN) -->
-        <section id="traductor" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">1.6</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Estructura de un traductor</h2>
-                </div>
-                
-                <div class="flex flex-col gap-6">
-                    <!-- Definición -->
-                    <div class="bg-slate-50 p-4 rounded-lg border-l-4 border-slate-400">
-                        <p class="text-sm text-slate-700 italic">
+</div>
+</div>
+</div>
+</section>
+<!-- 1.6 Estructura de un Traductor (NUEVA SECCIÓN) -->
+<section class="scroll-mt-32" id="traductor">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">1.6</span>
+<h2 class="text-2xl font-bold text-slate-800">Estructura de un traductor</h2>
+</div>
+<div class="flex flex-col gap-6">
+<!-- Definición -->
+<div class="bg-slate-50 p-4 rounded-lg border-l-4 border-slate-400">
+<p class="text-sm text-slate-700 italic">
                             "Un <strong>traductor</strong> es un programa que toma como entrada un texto escrito en un lenguaje fuente y produce como salida un texto equivalente en un lenguaje objeto."
                         </p>
-                    </div>
-
-                    <!-- Diagrama de Flujo Básico -->
-                    <div class="flex items-center justify-center space-x-2 md:space-x-4 py-4 font-mono text-xs md:text-sm">
-                        <div class="bg-white border border-slate-300 px-3 py-2 rounded shadow text-center">
-                            Programa<br>Fuente
+</div>
+<!-- Diagrama de Flujo Básico -->
+<div class="flex items-center justify-center space-x-2 md:space-x-4 py-4 font-mono text-xs md:text-sm">
+<div class="bg-white border border-slate-300 px-3 py-2 rounded shadow text-center">
+                            Programa<br/>Fuente
                         </div>
-                        <i class="fas fa-arrow-right text-slate-400"></i>
-                        <div class="bg-slate-800 text-white px-4 py-3 rounded shadow-lg text-center">
+<i class="fas fa-arrow-right text-slate-400"></i>
+<div class="bg-slate-800 text-white px-4 py-3 rounded shadow-lg text-center">
                             TRADUCTOR
                         </div>
-                        <i class="fas fa-arrow-right text-slate-400"></i>
-                        <div class="bg-white border border-slate-300 px-3 py-2 rounded shadow text-center">
-                            Programa<br>Objeto
+<i class="fas fa-arrow-right text-slate-400"></i>
+<div class="bg-white border border-slate-300 px-3 py-2 rounded shadow text-center">
+                            Programa<br/>Objeto
                         </div>
-                    </div>
-
-                    <!-- Tipos de Traductores -->
-                    <div class="grid md:grid-cols-2 gap-4 mt-4">
-                        <div class="border border-green-200 bg-green-50 p-4 rounded-xl">
-                            <h4 class="font-bold text-green-800 mb-2">Compilador</h4>
-                            <p class="text-xs text-slate-700">Traduce todo el programa fuente a lenguaje máquina de una sola vez. Genera un ejecutable independiente.</p>
-                        </div>
-                        <div class="border border-orange-200 bg-orange-50 p-4 rounded-xl">
-                            <h4 class="font-bold text-orange-800 mb-2">Intérprete</h4>
-                            <p class="text-xs text-slate-700">Traduce y ejecuta el programa línea por línea. No genera un archivo objeto guardable.</p>
-                        </div>
-                        <div class="border border-blue-200 bg-blue-50 p-4 rounded-xl">
-                            <h4 class="font-bold text-blue-800 mb-2">Ensamblador</h4>
-                            <p class="text-xs text-slate-700">Traduce lenguaje ensamblador (mnemónicos de bajo nivel) a código máquina binario.</p>
-                        </div>
-                        <div class="border border-purple-200 bg-purple-50 p-4 rounded-xl">
-                            <h4 class="font-bold text-purple-800 mb-2">Preprocesador</h4>
-                            <p class="text-xs text-slate-700">Transforma el programa fuente antes de la compilación (ej. expansión de macros en C).</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 1.7 Fases de un Compilador -->
-        <section id="compilador" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex flex-col md:flex-row justify-between md:items-center mb-6">
-                    <div class="flex items-center">
-                        <span class="text-4xl font-black text-slate-200 mr-4">1.7</span>
-                        <h2 class="text-2xl font-bold text-slate-800">Fases de un compilador</h2>
-                    </div>
-                    <span class="example-badge mt-2 md:mt-0">Core de la materia</span>
-                </div>
-                
-                <div class="grid lg:grid-cols-2 gap-10">
-                    <div class="space-y-4">
-                        <p class="text-slate-600 text-sm mb-4">El proceso de compilación se divide en dos grandes etapas: <strong>Análisis</strong> (Frontend) y <strong>Síntesis</strong> (Backend).</p>
-                        
-                        <div class="space-y-2">
-                            <div class="group p-3 rounded-lg hover:bg-rose-50 border border-transparent hover:border-rose-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 group-hover:text-rose-600 text-sm flex justify-between">
+</div>
+<!-- Tipos de Traductores -->
+<div class="grid md:grid-cols-2 gap-4 mt-4">
+<div class="border border-green-200 bg-green-50 p-4 rounded-xl">
+<h4 class="font-bold text-green-800 mb-2">Compilador</h4>
+<p class="text-xs text-slate-700">Traduce todo el programa fuente a lenguaje máquina de una sola vez. Genera un ejecutable independiente.</p>
+</div>
+<div class="border border-orange-200 bg-orange-50 p-4 rounded-xl">
+<h4 class="font-bold text-orange-800 mb-2">Intérprete</h4>
+<p class="text-xs text-slate-700">Traduce y ejecuta el programa línea por línea. No genera un archivo objeto guardable.</p>
+</div>
+<div class="border border-blue-200 bg-blue-50 p-4 rounded-xl">
+<h4 class="font-bold text-blue-800 mb-2">Ensamblador</h4>
+<p class="text-xs text-slate-700">Traduce lenguaje ensamblador (mnemónicos de bajo nivel) a código máquina binario.</p>
+</div>
+<div class="border border-purple-200 bg-purple-50 p-4 rounded-xl">
+<h4 class="font-bold text-purple-800 mb-2">Preprocesador</h4>
+<p class="text-xs text-slate-700">Transforma el programa fuente antes de la compilación (ej. expansión de macros en C).</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 1.7 Fases de un Compilador -->
+<section class="scroll-mt-32" id="compilador">
+<div class="concept-card p-8">
+<div class="flex flex-col md:flex-row justify-between md:items-center mb-6">
+<div class="flex items-center">
+<span class="text-4xl font-black text-slate-200 mr-4">1.7</span>
+<h2 class="text-2xl font-bold text-slate-800">Fases de un compilador</h2>
+</div>
+<span class="example-badge mt-2 md:mt-0">Core de la materia</span>
+</div>
+<div class="grid lg:grid-cols-2 gap-10">
+<div class="space-y-4">
+<p class="text-slate-600 text-sm mb-4">El proceso de compilación se divide en dos grandes etapas: <strong>Análisis</strong> (Frontend) y <strong>Síntesis</strong> (Backend).</p>
+<div class="space-y-2">
+<div class="group p-3 rounded-lg hover:bg-rose-50 border border-transparent hover:border-rose-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 group-hover:text-rose-600 text-sm flex justify-between">
                                     1. Análisis Léxico (Scanner)
                                     <i class="fas fa-search opacity-0 group-hover:opacity-100 transition"></i>
-                                </h4>
-                                <p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Lee el flujo de caracteres y los agrupa en tokens significativos (palabras reservadas, ids, símbolos).</p>
-                            </div>
-                            <div class="group p-3 rounded-lg hover:bg-amber-50 border border-transparent hover:border-amber-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 group-hover:text-amber-600 text-sm flex justify-between">
+</h4>
+<p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Lee el flujo de caracteres y los agrupa en tokens significativos (palabras reservadas, ids, símbolos).</p>
+</div>
+<div class="group p-3 rounded-lg hover:bg-amber-50 border border-transparent hover:border-amber-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 group-hover:text-amber-600 text-sm flex justify-between">
                                     2. Análisis Sintáctico (Parser)
                                     <i class="fas fa-tree opacity-0 group-hover:opacity-100 transition"></i>
-                                </h4>
-                                <p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Verifica la structure gramatical y genera el Árbol de Derivación.</p>
-                            </div>
-                            <div class="group p-3 rounded-lg hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 group-hover:text-emerald-600 text-sm flex justify-between">
+</h4>
+<p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Verifica la structure gramatical y genera el Árbol de Derivación.</p>
+</div>
+<div class="group p-3 rounded-lg hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 group-hover:text-emerald-600 text-sm flex justify-between">
                                     3. Análisis Semántico
                                     <i class="fas fa-check-double opacity-0 group-hover:opacity-100 transition"></i>
-                                </h4>
-                                <p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Revisa la consistencia lógica: tipos de datos, variables declaradas, scopes.</p>
-                            </div>
-                            <div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 text-sm">4. Generación de Código Intermedio</h4>
-                            </div>
-                            <div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 text-sm">5. Optimización</h4>
-                            </div>
-                            <div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
-                                <h4 class="font-bold text-slate-700 text-sm">6. Generación de Código Objeto</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNjYmQ1ZTEiLz48L3N2Zz4=')] opacity-30"></div>
-                        <div class="bg-white px-4 py-2 rounded border border-slate-300 shadow-sm text-xs font-mono mb-2 relative z-10">Código Fuente</div>
-                        <div class="phase-connector relative z-10"></div>
-                        <div class="bg-blue-600 text-white p-4 rounded-xl shadow-lg w-full max-w-[200px] text-center relative z-10">
-                            <i class="fas fa-cogs text-2xl mb-2 animate-spin-slow" style="animation-duration: 10s;"></i>
-                            <h5 class="font-bold text-sm">Compilador</h5>
-                            <div class="w-full h-px bg-blue-400 my-2"></div>
-                            <div class="text-[10px] space-y-1">
-                                <div class="bg-blue-700 rounded py-1">Scanner</div>
-                                <div class="bg-blue-700 rounded py-1">Parser</div>
-                                <div class="bg-blue-700 rounded py-1">Semántico</div>
-                            </div>
-                        </div>
-                        <div class="phase-connector relative z-10"></div>
-                        <div class="bg-slate-800 text-white px-4 py-2 rounded border border-slate-600 shadow-sm text-xs font-mono mt-2 relative z-10">Código Máquina (0101)</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN DE PROYECTO FINAL (PROTEGIDA) -->
-        <section id="proyecto-final" class="scroll-mt-32 pb-20">
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-                <!-- Decoración -->
-                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
-                
-                <!-- Pantalla de Bloqueo -->
-                <div id="lock-screen" class="text-center py-10 relative z-10">
-                    <i class="fas fa-lock text-5xl text-rose-500 mb-4"></i>
-                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Proyecto Final - Unidad 1</h2>
-                    <p class="text-slate-400 mb-8 max-w-lg mx-auto">Esta sección contiene los requerimientos para el proyecto final y está protegida. Ingresa la contraseña proporcionada por el docente.</p>
-                    <div class="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
-                        <input type="password" id="projectPassword" class="flex-1 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center sm:text-left" placeholder="Contraseña...">
-                        <button onclick="unlockProjects()" class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-rose-900/50">
+</h4>
+<p class="text-xs text-slate-500 mt-1 hidden group-hover:block">Revisa la consistencia lógica: tipos de datos, variables declaradas, scopes.</p>
+</div>
+<div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 text-sm">4. Generación de Código Intermedio</h4>
+</div>
+<div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 text-sm">5. Optimización</h4>
+</div>
+<div class="group p-3 rounded-lg hover:bg-slate-100 border border-transparent hover:border-slate-200 transition cursor-default">
+<h4 class="font-bold text-slate-700 text-sm">6. Generación de Código Objeto</h4>
+</div>
+</div>
+</div>
+<div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNjYmQ1ZTEiLz48L3N2Zz4=')] opacity-30"></div>
+<div class="bg-white px-4 py-2 rounded border border-slate-300 shadow-sm text-xs font-mono mb-2 relative z-10">Código Fuente</div>
+<div class="phase-connector relative z-10"></div>
+<div class="bg-blue-600 text-white p-4 rounded-xl shadow-lg w-full max-w-[200px] text-center relative z-10">
+<i class="fas fa-cogs text-2xl mb-2 animate-spin-slow" style="animation-duration: 10s;"></i>
+<h5 class="font-bold text-sm">Compilador</h5>
+<div class="w-full h-px bg-blue-400 my-2"></div>
+<div class="text-[10px] space-y-1">
+<div class="bg-blue-700 rounded py-1">Scanner</div>
+<div class="bg-blue-700 rounded py-1">Parser</div>
+<div class="bg-blue-700 rounded py-1">Semántico</div>
+</div>
+</div>
+<div class="phase-connector relative z-10"></div>
+<div class="bg-slate-800 text-white px-4 py-2 rounded border border-slate-600 shadow-sm text-xs font-mono mt-2 relative z-10">Código Máquina (0101)</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECCIÓN DE PROYECTO FINAL (PROTEGIDA) -->
+<section class="scroll-mt-32 pb-20" id="proyecto-final">
+<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+<!-- Decoración -->
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+<!-- Pantalla de Bloqueo -->
+<div class="text-center py-10 relative z-10" id="lock-screen">
+<i class="fas fa-lock text-5xl text-rose-500 mb-4"></i>
+<h2 class="text-2xl md:text-3xl font-bold mb-2">Proyecto Final - Unidad 1</h2>
+<p class="text-slate-400 mb-8 max-w-lg mx-auto">Esta sección contiene los requerimientos para el proyecto final y está protegida. Ingresa la contraseña proporcionada por el docente.</p>
+<div class="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
+<input class="flex-1 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center sm:text-left" id="projectPassword" placeholder="Contraseña..." type="password"/>
+<button class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-rose-900/50" onclick="unlockProjects()">
                             Desbloquear
                         </button>
-                    </div>
-                    <p id="passwordError" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
-                </div>
-
-                <!-- Contenido Desbloqueado (Oculto por defecto) -->
-                <div id="unlocked-content" class="hidden relative z-10">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
-                        <div>
-                            <h2 class="text-2xl md:text-3xl font-bold flex items-center">
-                                <i class="fas fa-award text-rose-500 mr-3"></i> Proyectos Finales
+</div>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="passwordError"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
+</div>
+<!-- Contenido Desbloqueado (Oculto por defecto) -->
+<div class="hidden relative z-10" id="unlocked-content">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
+<div>
+<h2 class="text-2xl md:text-3xl font-bold flex items-center">
+<i class="fas fa-award text-rose-500 mr-3"></i> Proyectos Finales
                             </h2>
-                            <p class="text-slate-400 mt-2 text-sm">Objetivo: Desarrollar un programa que combine la teoría de Lenguajes Regulares (Tipo 3) y Libres de Contexto (Tipo 2).</p>
-                        </div>
+<p class="text-slate-400 mt-2 text-sm">Objetivo: Desarrollar un programa que combine la teoría de Lenguajes Regulares (Tipo 3) y Libres de Contexto (Tipo 2).</p>
+</div>
+</div>
+<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
+<h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Instrucciones Generales</h4>
+<p class="text-sm text-slate-300 leading-relaxed mb-2">El programa debe recibir una cadena de texto (String) ingresada por el usuario.</p>
+<ol class="list-decimal pl-5 text-sm text-slate-300 space-y-1">
+<li>Validar que los "tokens" de la cadena sean válidos usando <strong>Expresiones Regulares (Tipo 3)</strong>.</li>
+<li>Validar que el anidamiento de la cadena sea correcto utilizando una <strong>Pila / Stack (Tipo 2)</strong>.</li>
+</ol>
+<p class="text-sm text-slate-300 mt-4 font-bold">Elige UNO de los siguientes problemas (según el formato asignado):</p>
+</div>
+<!-- FORMATO 1 -->
+<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato A (Set 1)</h3>
+<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
+<!-- Opcion 1.1 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-rose-300">1. Fórmulas Químicas</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">En química, las moléculas se representan con letras mayúsculas, minúsculas, números y signos de agrupación. El objetivo es crear un validador que determine si una fórmula está bien escrita.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar elementos. Empiezan con Mayúscula, seguida de cero o una minúscula, y opcionalmente un número (ej. H, Na, O2). No se permiten caracteres especiales sueltos.</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Debes usar una <strong>Pila (Stack)</strong> para validar que los paréntesis () y corchetes [] estén perfectamente balanceados y cerrados en el orden LIFO correcto.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ K4[Fe(CN)6]</span>
+<span class="text-red-400 block truncate">✘ [Na(Cl)]] <span class="text-slate-500 text-[9px] font-sans">(Corchete extra)</span></span>
+</div>
+</div>
+</div>
+<!-- Opcion 1.2 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-rose-300">2. Linter XML/HTML</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">Los lenguajes de marcado utilizan etiquetas que envuelven contenido. El objetivo es crear un validador que analice una versión simplificada de un lenguaje de marcado como HTML.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed">Validar el contenido interno con <strong>Regex</strong>. Si hay una etiqueta &lt;email&gt; o &lt;tel&gt;, garantiza que el texto dentro sea un correo válido o un número de 10 dígitos.</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Usar una <strong>Pila</strong> para leer etiquetas y verificar que cada etiqueta de apertura tenga exactamente su etiqueta de cierre correspondiente en el orden correcto.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ &lt;user&gt;&lt;email&gt;a@edu.mx&lt;/email&gt;&lt;/user&gt;</span>
+<span class="text-red-400 block truncate">✘ &lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt; <span class="text-slate-500 text-[9px] font-sans">(Cruce de etiquetas)</span></span>
+</div>
+</div>
+</div>
+<!-- Opcion 1.3 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-rose-300">3. Cláusulas WHERE (SQL)</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">Las consultas a bases de datos requieren lógica booleana fuertemente estructurada y variables específicas. Valida la sintaxis de una condición WHERE de SQL.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed">Usar <strong>Regex</strong> para nombres de columnas (letras, números y guión bajo, sin empezar con números) y validar operadores estrictamente como &gt;, &lt;, =, AND, OR.</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Las condiciones lógicas se agrupan. Usar una <strong>Pila</strong> para garantizar que todos los paréntesis de la sentencia estén cerrados y balanceados.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ (edad &gt; 18 AND (saldo &gt; 0))</span>
+<span class="text-red-400 block truncate">✘ (1edad &gt; 18) <span class="text-slate-500 text-[9px] font-sans">(Variable inválida)</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- FORMATO 2 -->
+<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato B (Set 2)</h3>
+<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
+<!-- Opcion 2.1 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-purple-300">1. Sintaxis JSON</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">El formato JSON es el estándar mundial para el intercambio de datos en la web, basado en arreglos y objetos anidados. Crea un analizador que valide su estructura.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar los tipos de datos primitivos: Las claves deben ser texto entre comillas dobles, y los valores números o booleanos (true, false).</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Los objetos se encierran en llaves {} y arreglos en corchetes []. Usa una <strong>Pila</strong> para validar que se abran y cierren sin cruzarse.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ { "id": [1, 2] }</span>
+<span class="text-red-400 block truncate">✘ { "id": [1, 2} ] <span class="text-slate-500 text-[9px] font-sans">(Cruce)</span></span>
+</div>
+</div>
+</div>
+<!-- Opcion 2.2 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-purple-300">2. Fórmulas de Excel</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">Las hojas de cálculo utilizan un lenguaje específico para realizar cálculos anidados usando referencias a celdas específicas y llamadas a funciones predefinidas.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed"><strong>Regex</strong> para celdas: 1-3 letras mayúsculas seguidas de un número mayor a cero. Además, validar que las funciones existan en una lista (SUMA, PROMEDIO).</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Las fórmulas complejas evalúan funciones dentro de funciones. Debes usar una <strong>Pila</strong> para validar que los paréntesis de agrupación estén balanceados.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ SUMA(A1, MAX(B1))</span>
+<span class="text-red-400 block truncate">✘ SUMA(1A, B1) <span class="text-slate-500 text-[9px] font-sans">(Referencia mala)</span></span>
+</div>
+</div>
+</div>
+<!-- Opcion 2.3 -->
+<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
+<h4 class="font-bold text-white mb-2 text-md text-purple-300">3. Árboles de Carpetas</h4>
+<p class="text-xs text-slate-400 mb-4 leading-relaxed">Los sistemas operativos utilizan lenguajes de texto para definir la estructura de carpetas y archivos. Valida que el árbol cumpla reglas de nomenclatura y agrupamiento.</p>
+<div class="space-y-3 flex-1">
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
+<span class="text-slate-300 leading-relaxed"><strong>Regex</strong>: Carpetas inician con Mayúscula, sin caracteres especiales. Archivos en minúsculas terminando con punto y extensión (2-4 letras).</span>
+</div>
+<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
+<span class="text-slate-300 leading-relaxed">Las carpetas usan llaves { }. Usa una <strong>Pila</strong> para asegurar que abran y cierren correctamente sin subcarpetas mal cerradas.</span>
+</div>
+<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
+<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
+<span class="text-green-400 block truncate">✔ Raiz { Carpeta { a.txt } b.png }</span>
+<span class="text-red-400 block truncate">✘ Sistema { a.txt } } <span class="text-slate-500 text-[9px] font-sans">(Llave extra)</span></span>
+<span class="text-red-400 block truncate" title="Carpeta en minúscula y archivo con mayúscula">✘ raiz { Archivo.txt } <span class="text-slate-500 text-[9px] font-sans">(Regex falla)</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- RÚBRICA -->
+<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Rúbrica de Calificación (100 Puntos)</h3>
+<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700">
+<table class="w-full text-sm text-left text-slate-300">
+<thead class="text-xs uppercase bg-slate-900 text-slate-400">
+<tr>
+<th class="px-6 py-4">Criterio</th>
+<th class="px-6 py-4 border-l border-slate-700">Excelente (100%)</th>
+<th class="px-6 py-4 border-l border-slate-700">Suficiente (70%)</th>
+<th class="px-6 py-4 border-l border-slate-700">Deficiente (0%)</th>
+<th class="px-6 py-4 border-l border-slate-700 text-center">Pts</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700">
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-6 py-4 font-bold">1. Léxico (Tipo 3)</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Define Regex correctas y eficientes para extraer tokens.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Regex con fallos menores o falsos positivos.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No utiliza Regex.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-6 py-4 font-bold">2. Sintaxis (Tipo 2)</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Implementa Pila (Stack) perfecta para anidamiento.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Pila, falla en casos cruzados o sobrantes.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Usa contadores simples o colapsa.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-6 py-4 font-bold">3. Lógica Total</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Funciona como "todo". Distingue error léxico de sintáctico.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Valida, pero da errores genéricos.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Solo valida una parte.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">20</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-6 py-4 font-bold">4. Pruebas/Reporte</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Demostración matemática clara (Regex formal y dibujo de pila).</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Incompleto o poco claro.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No presenta.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-6 py-4 font-bold">5. Interfaz/UX</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Código comentado, admite múltiples pruebas.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs">Cadenas hardcodeadas, sin comentarios.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No compila.</td>
+<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- Navegación Inferior entre Unidades -->
+<div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold mt-12 mb-8">
+<a class="flex items-center text-slate-600 hover:text-slate-900 transition" href="index.html">
+<i class="fas fa-home mr-2 text-slate-400"></i> Planeación General
+            </a>
+<a class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold" href="unidad2.html">
+                Unidad 2: Expresiones Regulares <i class="fas fa-arrow-right ml-2 text-indigo-200"></i>
+</a>
+</div>
+
+                </div>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="index.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-home mr-2 text-slate-400"></i> Temario General</a>
+                    <a href="unidad2.html" class="flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 2: Expresiones Regulares <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-sky-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
                     </div>
 
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
-                        <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Instrucciones Generales</h4>
-                        <p class="text-sm text-slate-300 leading-relaxed mb-2">El programa debe recibir una cadena de texto (String) ingresada por el usuario.</p>
-                        <ol class="list-decimal pl-5 text-sm text-slate-300 space-y-1">
-                            <li>Validar que los "tokens" de la cadena sean válidos usando <strong>Expresiones Regulares (Tipo 3)</strong>.</li>
-                            <li>Validar que el anidamiento de la cadena sea correcto utilizando una <strong>Pila / Stack (Tipo 2)</strong>.</li>
-                        </ol>
-                        <p class="text-sm text-slate-300 mt-4 font-bold">Elige UNO de los siguientes problemas (según el formato asignado):</p>
-                    </div>
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#intro" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#alfabeto" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.1 Alfabeto</a>
+<a href="#cadenas" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.2 Cadenas</a>
+<a href="#lenguajes" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.3 Lenguajes</a>
+<a href="#tipos" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.4 Tipos de Lenguajes</a>
+<a href="#herramientas" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.5 Herramientas</a>
+<a href="#traductor" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.6 Estructura de Traductor</a>
+<a href="#compilador" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">1.7 Fases del Compilador</a>
+<a href="#proyecto-final" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Proyecto Final</a>
 
-                    <!-- FORMATO 1 -->
-                    <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato A (Set 1)</h3>
-                    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
-                        <!-- Opcion 1.1 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-rose-300">1. Fórmulas Químicas</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">En química, las moléculas se representan con letras mayúsculas, minúsculas, números y signos de agrupación. El objetivo es crear un validador que determine si una fórmula está bien escrita.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar elementos. Empiezan con Mayúscula, seguida de cero o una minúscula, y opcionalmente un número (ej. H, Na, O2). No se permiten caracteres especiales sueltos.</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Debes usar una <strong>Pila (Stack)</strong> para validar que los paréntesis () y corchetes [] estén perfectamente balanceados y cerrados en el orden LIFO correcto.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ K4[Fe(CN)6]</span>
-                                    <span class="text-red-400 block truncate">✘ [Na(Cl)]] <span class="text-slate-500 text-[9px] font-sans">(Corchete extra)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Opcion 1.2 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-rose-300">2. Linter XML/HTML</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">Los lenguajes de marcado utilizan etiquetas que envuelven contenido. El objetivo es crear un validador que analice una versión simplificada de un lenguaje de marcado como HTML.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed">Validar el contenido interno con <strong>Regex</strong>. Si hay una etiqueta &lt;email&gt; o &lt;tel&gt;, garantiza que el texto dentro sea un correo válido o un número de 10 dígitos.</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Usar una <strong>Pila</strong> para leer etiquetas y verificar que cada etiqueta de apertura tenga exactamente su etiqueta de cierre correspondiente en el orden correcto.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ &lt;user&gt;&lt;email&gt;a@edu.mx&lt;/email&gt;&lt;/user&gt;</span>
-                                    <span class="text-red-400 block truncate">✘ &lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt; <span class="text-slate-500 text-[9px] font-sans">(Cruce de etiquetas)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Opcion 1.3 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-rose-300">3. Cláusulas WHERE (SQL)</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">Las consultas a bases de datos requieren lógica booleana fuertemente estructurada y variables específicas. Valida la sintaxis de una condición WHERE de SQL.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed">Usar <strong>Regex</strong> para nombres de columnas (letras, números y guión bajo, sin empezar con números) y validar operadores estrictamente como >, <, =, AND, OR.</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Las condiciones lógicas se agrupan. Usar una <strong>Pila</strong> para garantizar que todos los paréntesis de la sentencia estén cerrados y balanceados.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ (edad > 18 AND (saldo > 0))</span>
-                                    <span class="text-red-400 block truncate">✘ (1edad > 18) <span class="text-slate-500 text-[9px] font-sans">(Variable inválida)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </nav>
 
-                    <!-- FORMATO 2 -->
-                    <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato B (Set 2)</h3>
-                    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
-                        <!-- Opcion 2.1 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-purple-300">1. Sintaxis JSON</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">El formato JSON es el estándar mundial para el intercambio de datos en la web, basado en arreglos y objetos anidados. Crea un analizador que valide su estructura.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar los tipos de datos primitivos: Las claves deben ser texto entre comillas dobles, y los valores números o booleanos (true, false).</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Los objetos se encierran en llaves {} y arreglos en corchetes []. Usa una <strong>Pila</strong> para validar que se abran y cierren sin cruzarse.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ { "id": [1, 2] }</span>
-                                    <span class="text-red-400 block truncate">✘ { "id": [1, 2} ] <span class="text-slate-500 text-[9px] font-sans">(Cruce)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Opcion 2.2 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-purple-300">2. Fórmulas de Excel</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">Las hojas de cálculo utilizan un lenguaje específico para realizar cálculos anidados usando referencias a celdas específicas y llamadas a funciones predefinidas.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed"><strong>Regex</strong> para celdas: 1-3 letras mayúsculas seguidas de un número mayor a cero. Además, validar que las funciones existan en una lista (SUMA, PROMEDIO).</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Las fórmulas complejas evalúan funciones dentro de funciones. Debes usar una <strong>Pila</strong> para validar que los paréntesis de agrupación estén balanceados.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ SUMA(A1, MAX(B1))</span>
-                                    <span class="text-red-400 block truncate">✘ SUMA(1A, B1) <span class="text-slate-500 text-[9px] font-sans">(Referencia mala)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Opcion 2.3 -->
-                        <div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-                            <h4 class="font-bold text-white mb-2 text-md text-purple-300">3. Árboles de Carpetas</h4>
-                            <p class="text-xs text-slate-400 mb-4 leading-relaxed">Los sistemas operativos utilizan lenguajes de texto para definir la estructura de carpetas y archivos. Valida que el árbol cumpla reglas de nomenclatura y agrupamiento.</p>
-                            <div class="space-y-3 flex-1">
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-                                    <span class="text-slate-300 leading-relaxed"><strong>Regex</strong>: Carpetas inician con Mayúscula, sin caracteres especiales. Archivos en minúsculas terminando con punto y extensión (2-4 letras).</span>
-                                </div>
-                                <div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-                                    <span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-                                    <span class="text-slate-300 leading-relaxed">Las carpetas usan llaves { }. Usa una <strong>Pila</strong> para asegurar que abran y cierren correctamente sin subcarpetas mal cerradas.</span>
-                                </div>
-                                <div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-                                    <span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-                                    <span class="text-green-400 block truncate">✔ Raiz { Carpeta { a.txt } b.png }</span>
-                                    <span class="text-red-400 block truncate">✘ Sistema { a.txt } } <span class="text-slate-500 text-[9px] font-sans">(Llave extra)</span></span>
-                                    <span class="text-red-400 block truncate" title="Carpeta en minúscula y archivo con mayúscula">✘ raiz { Archivo.txt } <span class="text-slate-500 text-[9px] font-sans">(Regex falla)</span></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- RÚBRICA -->
-                    <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Rúbrica de Calificación (100 Puntos)</h3>
-                    <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700">
-                        <table class="w-full text-sm text-left text-slate-300">
-                            <thead class="text-xs uppercase bg-slate-900 text-slate-400">
-                                <tr>
-                                    <th class="px-6 py-4">Criterio</th>
-                                    <th class="px-6 py-4 border-l border-slate-700">Excelente (100%)</th>
-                                    <th class="px-6 py-4 border-l border-slate-700">Suficiente (70%)</th>
-                                    <th class="px-6 py-4 border-l border-slate-700">Deficiente (0%)</th>
-                                    <th class="px-6 py-4 border-l border-slate-700 text-center">Pts</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-700">
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-6 py-4 font-bold">1. Léxico (Tipo 3)</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Define Regex correctas y eficientes para extraer tokens.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Regex con fallos menores o falsos positivos.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No utiliza Regex.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-6 py-4 font-bold">2. Sintaxis (Tipo 2)</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Implementa Pila (Stack) perfecta para anidamiento.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Pila, falla en casos cruzados o sobrantes.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Usa contadores simples o colapsa.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-6 py-4 font-bold">3. Lógica Total</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Funciona como "todo". Distingue error léxico de sintáctico.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Valida, pero da errores genéricos.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Solo valida una parte.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">20</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-6 py-4 font-bold">4. Pruebas/Reporte</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Demostración matemática clara (Regex formal y dibujo de pila).</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Incompleto o poco claro.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No presenta.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-6 py-4 font-bold">5. Interfaz/UX</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Código comentado, admite múltiples pruebas.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs">Cadenas hardcodeadas, sin comentarios.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No compila.</td>
-                                    <td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio LyA I</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Prácticas 1 a 4: Operaciones de cadenas, lenguajes formales y tabla de fases del compilador.
+                        </p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </aside>
 
-    
-        <!-- Navegación Inferior entre Unidades -->
-        <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold mt-12 mb-8">
-            <a href="index.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
-                <i class="fas fa-home mr-2 text-slate-400"></i> Planeación General
-            </a>
-            <a href="unidad2.html" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold">
-                Unidad 2: Expresiones Regulares <i class="fas fa-arrow-right ml-2 text-indigo-200"></i>
-            </a>
         </div>
-    
-    </main>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 text-white py-12 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <div class="flex items-center space-x-3">
-                <div class="bg-blue-600 p-2 rounded-lg">
-                    <i class="fas fa-university text-white text-sm"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold tracking-tight leading-none">IT Chilpancingo</h3>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 italic">Lenguajes y Autómatas I</p>
-                </div>
-            </div>
-            
-            <div class="flex space-x-6">
-                <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white transition">INICIO</a>
-                <a href="#" class="text-xs font-bold text-white transition border-b border-blue-500">UNIDAD 1</a>
-                <a href="#" class="text-xs font-bold text-slate-600 cursor-not-allowed">UNIDAD 2</a>
-            </div>
-        </div>
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
     </footer>
 
     <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
+            if (pre) {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    const orig = btn.innerText;
+                    btn.innerText = "¡Copiado!";
+                    setTimeout(() => { btn.innerText = orig; }, 1500);
+                });
+            }
+        }
+    </script>
+    
+<script>
         const stringInput = document.getElementById('stringInput');
         const lengthDisplay = document.getElementById('stringLengthDisplay');
 
@@ -1380,5 +1489,6 @@
             }
         }
     </script>
+
 </body>
 </html>

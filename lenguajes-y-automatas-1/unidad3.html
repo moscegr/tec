@@ -3,697 +3,813 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 3: Autómatas Finitos - ITChilpancingo</title>
+    <title>Unidad 3: Autómatas Finitos (AFD y AFND) | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- Script para exportar a PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-        
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; }
-
-        .u3-header {
-            background: linear-gradient(135deg, #083344 0%, #0891b2 100%);
-            position: relative;
-            overflow: hidden;
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
         }
 
-        .u3-header::before {
-            content: "";
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0891b2; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%);
-            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #0891b2;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
         }
 
         .sticky-sub-nav {
-            position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
 
         .concept-card {
-            background: white; border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
         }
-        .concept-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
         .math-box {
-            background: #f8fafc; border-left: 4px solid #0891b2;
-            padding: 1rem; border-radius: 0.5rem;
-            font-family: 'Courier New', monospace; color: #334155; margin-top: 1rem;
+            background: #f8fafc;
+            border-left: 4px solid #0891b2;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #334155;
+            margin-top: 1rem;
+            overflow-x: auto;
         }
-        
-        table.automata-table th, table.automata-table td {
-            border: 1px solid #cbd5e1; padding: 0.75rem; text-align: center;
-        }
-        table.automata-table th { background-color: #ecfeff; color: #164e63; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
-    <!-- Navegación Principal -->
-    <nav class="bg-white border-b border-gray-200">
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">SCD-1015 • Unidad 3</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center space-x-2 text-slate-600 hover:text-cyan-600 transition group">
-                    <div class="bg-slate-100 group-hover:bg-cyan-100 p-2 rounded-lg transition">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <span class="font-bold text-sm">Volver al Temario</span>
-                </a>
+            <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Lenguajes y Autómatas I</span>
-                    <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-xs font-bold">Unidad 3</span>
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA I
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-cyan-100 text-cyan-800 text-xs flex items-center justify-center font-bold mr-2">U3</span>
+                        Autómatas Finitos (AFD y AFND)
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 2: Expresiones Regulares</a>
+                    <a href="unidad4.html" class="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition flex items-center shadow-sm">Unidad 4: Autómatas de Pila <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header Unidad 3 -->
-    <header class="u3-header text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                <i class="fas fa-project-diagram text-3xl"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Autómatas Finitos (AF)</h1>
-            <p class="text-cyan-100 text-lg font-light max-w-2xl mx-auto">
-                Las máquinas abstractas que procesan los lenguajes regulares. Descubre cómo las computadoras "leen" y transitan de estado en estado.
-            </p>
-        </div>
-    </header>
+    <!-- Contenedor Principal de 3 Columnas -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-    <!-- Sub-Navegación Sticky -->
-    <div class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
-            <div class="flex space-x-6 min-w-max py-4 text-sm font-medium text-slate-600">
-                <a href="#intro" class="hover:text-cyan-600 transition">Intro</a>
-                <a href="#formal" class="hover:text-cyan-600 transition">3.1 Definición</a>
-                <a href="#clasificacion" class="hover:text-cyan-600 transition">3.2 AFD vs AFND</a>
-                <a href="#transformacion" class="hover:text-cyan-600 transition">3.3 al 3.5 Transformaciones</a>
-                <a href="#java-af" class="hover:text-cyan-600 transition">3.6 Implementación Java</a>
-                <a href="#laboratorio" class="text-cyan-600 font-bold"><i class="fas fa-flask mr-1"></i>Simulador</a>
-                <a href="#proyecto" class="text-rose-600 font-bold"><i class="fas fa-gamepad mr-1"></i>Proyecto Final</a>
-            </div>
-        </div>
-    </div>
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-cyan-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
 
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+                    <nav class="space-y-1 text-xs">
+                        
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Teoría de Lenguajes</span>
+                            <span class="difficulty-badge diff-easy">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge diff-med">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg bg-cyan-600 text-white font-bold shadow-sm">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Autómatas de Pila</span>
+                            <span class="difficulty-badge diff-hard">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge diff-hard">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge diff-hard">18h</span>
+                        </a>
+                    </nav>
 
-        <!-- INTRODUCCIÓN Y ANALOGÍA -->
-        <section id="intro" class="scroll-mt-32">
-            <div class="bg-cyan-50 border border-cyan-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
-                <div class="flex-1">
-                    <h3 class="text-xl font-bold text-cyan-900 mb-2"><i class="fas fa-lightbulb text-amber-500 mr-2"></i>Analogía: La Máquina Expendedora</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                    <!-- Subtemas Unidad 3 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 3</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <a href="#intro" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#afd" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.1 Autómata Finito Determinista (AFD)</a>
+<a href="#afnd" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.2 Autómata Finito No Determinista (AFND)</a>
+<a href="#thompson" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.3 Algoritmo de Thompson (ER -> AFND)</a>
+<a href="#subconjuntos" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.4 Construcción de Subconjuntos</a>
+<a href="#minimizacion" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.5 Minimización de Estados (Hopcroft)</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-8">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-cyan-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Unidad 3 • Lenguajes y Autómatas I</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Autómatas Finitos (AFD y AFND)
+                    </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Autómatas Deterministas y No Deterministas, Algoritmo de Thompson, Construcción de Subconjuntos y Minimización de Estados.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 15 Horas (Semanas 6-8)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-med">Nivel Didáctico</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- CONTENIDO ORIGINAL COMPLETO E INTACTO -->
+                <div class="space-y-8 text-slate-700 leading-relaxed">
+                    
+<!-- INTRODUCCIÓN Y ANALOGÍA -->
+<section class="scroll-mt-32" id="intro">
+<div class="bg-cyan-50 border border-cyan-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
+<div class="flex-1">
+<h3 class="text-xl font-bold text-cyan-900 mb-2"><i class="fas fa-lightbulb text-amber-500 mr-2"></i>Analogía: La Máquina Expendedora</h3>
+<p class="text-slate-700 text-sm leading-relaxed mb-4">
                         Imagina una máquina expendedora de refrescos que cobra exactamente $15 pesos. La máquina tiene un <strong>"estado"</strong> interno: sabe cuánto dinero le has metido. Si metes una moneda de $5, "transita" al estado "$5 acumulados". Si metes otra de $10, transita al estado "$15 acumulados" (que es el <strong>estado de aceptación</strong>, donde te da el refresco).
-                        <br><br>
+                        <br/><br/>
                         Un <strong>Autómata Finito</strong> es exactamente esto: un modelo matemático con una cantidad <em>finita</em> de estados que lee entradas (caracteres) y decide si aprueba o rechaza la información.
                     </p>
-                </div>
-                <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-cyan-500 shadow-lg">
-                    <i class="fas fa-cash-register"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.1 Definición Formal -->
-        <section id="formal" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">3.1</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Definición Formal (La 5-tupla)</h2>
-                </div>
-                
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
+</div>
+<div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl text-cyan-500 shadow-lg">
+<i class="fas fa-cash-register"></i>
+</div>
+</div>
+</section>
+<!-- 3.1 Definición Formal -->
+<section class="scroll-mt-32" id="formal">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">3.1</span>
+<h2 class="text-2xl font-bold text-slate-800">Definición Formal (La 5-tupla)</h2>
+</div>
+<p class="text-slate-600 text-sm leading-relaxed mb-6">
                     En matemáticas y programación, no podemos programar "con dibujos". Necesitamos definir al autómata formalmente como un conjunto de 5 elementos (una 5-tupla): \( M = (Q, \Sigma, \delta, q_0, F) \).
                 </p>
-
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <div class="space-y-4">
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
-                            <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">Q</span>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Conjunto de Estados</h4>
-                                <p class="text-xs text-slate-500">Ej: \( Q = \{q_0, q_1, q_2\} \). Son todos los "momentos" de la máquina.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
-                            <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">\(\Sigma\)</span>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Alfabeto</h4>
-                                <p class="text-xs text-slate-500">Ej: \( \Sigma = \{0, 1\} \). Lo que la máquina puede leer.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
-                            <span class="font-bold text-rose-500 text-xl font-mono mr-3 w-8 text-center">\(\delta\)</span>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Función de Transición</h4>
-                                <p class="text-xs text-slate-500">Las "reglas del juego" o la tabla que indica: <em>Si estoy en \(q_0\) y leo un '1', me voy a \(q_1\)</em>.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
-                            <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">\(q_0\)</span>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Estado Inicial</h4>
-                                <p class="text-xs text-slate-500">\( q_0 \in Q \). Donde inicia la máquina siempre.</p>
-                            </div>
-                        </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
-                            <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">F</span>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Estados Finales (Aceptación)</h4>
-                                <p class="text-xs text-slate-500">\( F \subseteq Q \). Si la cadena termina de leerse y estamos en un estado de este conjunto, la palabra es válida.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJEMPLO GUIADO -->
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner">
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-chalkboard-teacher mr-2 text-cyan-600"></i> Ejemplo Guiado: Reconocedor de "01"</h3>
-                    <p class="text-sm text-slate-600 mb-4">Diseñemos un autómata que acepte cadenas binarias que terminen en "01".</p>
-                    
-                    <!-- Representación Gráfica (Grafo de Transiciones) -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 mb-6 shadow-sm overflow-x-auto flex flex-col items-center">
-                        <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">1. Diagrama de Transiciones (Grafo)</h4>
-                        <div class="min-w-[550px]">
-                            <svg width="600" height="230" viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2" />
-                                    </marker>
-                                </defs>
-                                
-                                <!-- Enlaces (Aristas) -->
-                                <!-- Start -> q0 -->
-                                <path d="M 30 100 L 65 100" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <!-- q0 -> q1 (0) -->
-                                <path d="M 130 100 L 265 100" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="195" y="90" fill="#0891b2" font-weight="bold" text-anchor="middle">0</text>
-                                <!-- q1 -> q2 (1) -->
-                                <path d="M 330 100 L 465 100" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="395" y="90" fill="#0891b2" font-weight="bold" text-anchor="middle">1</text>
-                                
-                                <!-- q0 Loop (1) -->
-                                <path d="M 85 74 C 70 15, 130 15, 115 74" fill="none" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="100" y="35" fill="#0891b2" font-weight="bold" text-anchor="middle">1</text>
-                                
-                                <!-- q1 Loop (0) -->
-                                <path d="M 285 74 C 270 15, 330 15, 315 74" fill="none" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="300" y="35" fill="#0891b2" font-weight="bold" text-anchor="middle">0</text>
-                                
-                                <!-- q2 -> q1 (0) -->
-                                <path d="M 474 115 Q 400 160 330 118" fill="none" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="400" y="155" fill="#0891b2" font-weight="bold" text-anchor="middle">0</text>
-                                
-                                <!-- q2 -> q0 (1) -->
-                                <path d="M 490 128 Q 300 240 114 128" fill="none" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow)"/>
-                                <text x="300" y="210" fill="#0891b2" font-weight="bold" text-anchor="middle">1</text>
-                                
-                                <!-- Nodos (Estados) -->
-                                <!-- q0 -->
-                                <circle cx="100" cy="100" r="30" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                <text x="100" y="105" text-anchor="middle" fill="#0f172a" font-weight="bold">q0</text>
-                                <!-- q1 -->
-                                <circle cx="300" cy="100" r="30" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                <text x="300" y="105" text-anchor="middle" fill="#0f172a" font-weight="bold">q1</text>
-                                <!-- q2 (Aceptación - Doble círculo) -->
-                                <circle cx="500" cy="100" r="30" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
-                                <circle cx="500" cy="100" r="24" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
-                                <text x="500" y="105" text-anchor="middle" fill="#065f46" font-weight="bold">q2</text>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 text-center">2. Tabla de Transiciones (\(\delta\))</h4>
-                    <div class="overflow-x-auto">
-                        <table class="automata-table w-full text-sm bg-white mb-6">
-                            <thead>
-                                <tr>
-                                    <th>Estado Actual</th>
-                                    <th>Lee '0'</th>
-                                    <th>Lee '1'</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>\(\rightarrow q_0\) (Inicio)</td>
-                                    <td class="text-cyan-700 font-bold">\(q_1\) (Encontré un 0)</td>
-                                    <td>\(q_0\) (Reseteo)</td>
-                                </tr>
-                                <tr>
-                                    <td>\(q_1\) (Tengo un 0)</td>
-                                    <td>\(q_1\) (Me mantengo)</td>
-                                    <td class="text-green-600 font-bold">\(q_2\) (¡Encontré 01!)</td>
-                                </tr>
-                                <tr class="bg-green-50">
-                                    <td>\(*q_2\) (Aceptación)</td>
-                                    <td>\(q_1\) (Encontré un 0)</td>
-                                    <td>\(q_0\) (Reseteo total)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Explicación de cómo leer -->
-                    <div class="bg-white p-5 rounded-xl border-l-4 border-cyan-500 shadow-sm mt-4">
-                        <h4 class="font-bold text-cyan-900 mb-3"><i class="fas fa-book-reader mr-2"></i>¿Cómo leer este Autómata? (Prueba de Escritorio)</h4>
-                        <p class="text-sm text-slate-600 mb-3">Las cadenas <strong>siempre se leen de izquierda a derecha</strong>, un carácter a la vez. Imagina que evaluamos la cadena <code class="bg-slate-100 px-1 font-bold text-cyan-700 rounded">101</code>:</p>
-                        <ol class="list-decimal pl-5 text-sm text-slate-700 space-y-3">
-                            <li><strong>El Inicio:</strong> Siempre arrancamos en el estado inicial <code class="font-bold text-slate-800">q0</code> (marcado con la flecha de entrada en el grafo).</li>
-                            <li><strong>Lee '1':</strong> (Primer carácter). Estando en <code class="font-bold text-slate-800">q0</code>, el diagrama (flecha circular superior) o la tabla nos indica que el autómata <strong>se queda en q0</strong>.</li>
-                            <li><strong>Lee '0':</strong> (Segundo carácter). Estando en <code class="font-bold text-slate-800">q0</code>, el grafo y la tabla nos indican que debemos <strong>viajar al estado q1</strong>.</li>
-                            <li><strong>Lee '1':</strong> (Tercer carácter). Estando en <code class="font-bold text-slate-800">q1</code>, el grafo nos manda a través de la flecha hacia <strong>el estado q2</strong>.</li>
-                            <li><strong>El Veredicto:</strong> La cadena se acabó. Miramos dónde nos quedamos parados. Como estamos en <code class="font-bold text-green-600">q2</code> (círculo doble / estado de aceptación), el autómata dice: <strong>¡CADENA ACEPTADA!</strong>.</li>
-                        </ol>
-                        <p class="text-xs text-slate-500 italic mt-3 border-t border-slate-100 pt-2">
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
+<span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">Q</span>
+<div>
+<h4 class="font-bold text-slate-800 text-sm">Conjunto de Estados</h4>
+<p class="text-xs text-slate-500">Ej: \( Q = \{q_0, q_1, q_2\} \). Son todos los "momentos" de la máquina.</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
+<span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">\(\Sigma\)</span>
+<div>
+<h4 class="font-bold text-slate-800 text-sm">Alfabeto</h4>
+<p class="text-xs text-slate-500">Ej: \( \Sigma = \{0, 1\} \). Lo que la máquina puede leer.</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
+<span class="font-bold text-rose-500 text-xl font-mono mr-3 w-8 text-center">\(\delta\)</span>
+<div>
+<h4 class="font-bold text-slate-800 text-sm">Función de Transición</h4>
+<p class="text-xs text-slate-500">Las "reglas del juego" o la tabla que indica: <em>Si estoy en \(q_0\) y leo un '1', me voy a \(q_1\)</em>.</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
+<span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">\(q_0\)</span>
+<div>
+<h4 class="font-bold text-slate-800 text-sm">Estado Inicial</h4>
+<p class="text-xs text-slate-500">\( q_0 \in Q \). Donde inicia la máquina siempre.</p>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
+<span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">F</span>
+<div>
+<h4 class="font-bold text-slate-800 text-sm">Estados Finales (Aceptación)</h4>
+<p class="text-xs text-slate-500">\( F \subseteq Q \). Si la cadena termina de leerse y estamos en un estado de este conjunto, la palabra es válida.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- EJEMPLO GUIADO -->
+<div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner">
+<h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-chalkboard-teacher mr-2 text-cyan-600"></i> Ejemplo Guiado: Reconocedor de "01"</h3>
+<p class="text-sm text-slate-600 mb-4">Diseñemos un autómata que acepte cadenas binarias que terminen en "01".</p>
+<!-- Representación Gráfica (Grafo de Transiciones) -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 mb-6 shadow-sm overflow-x-auto flex flex-col items-center">
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">1. Diagrama de Transiciones (Grafo)</h4>
+<div class="min-w-[550px]">
+<svg height="230" viewbox="0 0 600 230" width="600" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2"></path>
+</marker>
+</defs>
+<!-- Enlaces (Aristas) -->
+<!-- Start -> q0 -->
+<path d="M 30 100 L 65 100" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<!-- q0 -> q1 (0) -->
+<path d="M 130 100 L 265 100" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="195" y="90">0</text>
+<!-- q1 -> q2 (1) -->
+<path d="M 330 100 L 465 100" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="395" y="90">1</text>
+<!-- q0 Loop (1) -->
+<path d="M 85 74 C 70 15, 130 15, 115 74" fill="none" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="100" y="35">1</text>
+<!-- q1 Loop (0) -->
+<path d="M 285 74 C 270 15, 330 15, 315 74" fill="none" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="300" y="35">0</text>
+<!-- q2 -> q1 (0) -->
+<path d="M 474 115 Q 400 160 330 118" fill="none" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="400" y="155">0</text>
+<!-- q2 -> q0 (1) -->
+<path d="M 490 128 Q 300 240 114 128" fill="none" marker-end="url(#arrow)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-weight="bold" text-anchor="middle" x="300" y="210">1</text>
+<!-- Nodos (Estados) -->
+<!-- q0 -->
+<circle cx="100" cy="100" fill="#ecfeff" r="30" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-weight="bold" text-anchor="middle" x="100" y="105">q0</text>
+<!-- q1 -->
+<circle cx="300" cy="100" fill="#ecfeff" r="30" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-weight="bold" text-anchor="middle" x="300" y="105">q1</text>
+<!-- q2 (Aceptación - Doble círculo) -->
+<circle cx="500" cy="100" fill="#d1fae5" r="30" stroke="#10b981" stroke-width="2"></circle>
+<circle cx="500" cy="100" fill="#d1fae5" r="24" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#065f46" font-weight="bold" text-anchor="middle" x="500" y="105">q2</text>
+</svg>
+</div>
+</div>
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 text-center">2. Tabla de Transiciones (\(\delta\))</h4>
+<div class="overflow-x-auto">
+<table class="automata-table w-full text-sm bg-white mb-6">
+<thead>
+<tr>
+<th>Estado Actual</th>
+<th>Lee '0'</th>
+<th>Lee '1'</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\(\rightarrow q_0\) (Inicio)</td>
+<td class="text-cyan-700 font-bold">\(q_1\) (Encontré un 0)</td>
+<td>\(q_0\) (Reseteo)</td>
+</tr>
+<tr>
+<td>\(q_1\) (Tengo un 0)</td>
+<td>\(q_1\) (Me mantengo)</td>
+<td class="text-green-600 font-bold">\(q_2\) (¡Encontré 01!)</td>
+</tr>
+<tr class="bg-green-50">
+<td>\(*q_2\) (Aceptación)</td>
+<td>\(q_1\) (Encontré un 0)</td>
+<td>\(q_0\) (Reseteo total)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Explicación de cómo leer -->
+<div class="bg-white p-5 rounded-xl border-l-4 border-cyan-500 shadow-sm mt-4">
+<h4 class="font-bold text-cyan-900 mb-3"><i class="fas fa-book-reader mr-2"></i>¿Cómo leer este Autómata? (Prueba de Escritorio)</h4>
+<p class="text-sm text-slate-600 mb-3">Las cadenas <strong>siempre se leen de izquierda a derecha</strong>, un carácter a la vez. Imagina que evaluamos la cadena <code class="bg-slate-100 px-1 font-bold text-cyan-700 rounded">101</code>:</p>
+<ol class="list-decimal pl-5 text-sm text-slate-700 space-y-3">
+<li><strong>El Inicio:</strong> Siempre arrancamos en el estado inicial <code class="font-bold text-slate-800">q0</code> (marcado con la flecha de entrada en el grafo).</li>
+<li><strong>Lee '1':</strong> (Primer carácter). Estando en <code class="font-bold text-slate-800">q0</code>, el diagrama (flecha circular superior) o la tabla nos indica que el autómata <strong>se queda en q0</strong>.</li>
+<li><strong>Lee '0':</strong> (Segundo carácter). Estando en <code class="font-bold text-slate-800">q0</code>, el grafo y la tabla nos indican que debemos <strong>viajar al estado q1</strong>.</li>
+<li><strong>Lee '1':</strong> (Tercer carácter). Estando en <code class="font-bold text-slate-800">q1</code>, el grafo nos manda a través de la flecha hacia <strong>el estado q2</strong>.</li>
+<li><strong>El Veredicto:</strong> La cadena se acabó. Miramos dónde nos quedamos parados. Como estamos en <code class="font-bold text-green-600">q2</code> (círculo doble / estado de aceptación), el autómata dice: <strong>¡CADENA ACEPTADA!</strong>.</li>
+</ol>
+<p class="text-xs text-slate-500 italic mt-3 border-t border-slate-100 pt-2">
                             *Nota sobre las flechas inferiores: Si ya estás en q2 y llega otro carácter, se leen las flechas de retroceso. Si llega un '0', se va a q1 (porque ese 0 puede iniciar un nuevo "01"). Si llega un '1', se resetea hasta q0.
                         </p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.2 AFD vs AFND -->
-        <section id="clasificacion" class="scroll-mt-32">
-            <div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">3.2</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Clasificación: AFD vs AFND</h2>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
-                    <!-- AFD -->
-                    <div class="bg-white p-6 rounded-xl border-t-4 border-cyan-500 shadow-sm">
-                        <h3 class="font-bold text-cyan-900 text-lg mb-2">Autómata Finito Determinista (AFD)</h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            <strong>"Certeza Absoluta".</strong> Por cada estado y cada letra leída, existe <strong>exactamente un único camino</strong> a seguir. Es muy fácil de programar en un lenguaje como Java (un simple <code>switch</code> o tabla bidimensional).
+</div>
+</div>
+</div>
+</section>
+<!-- 3.2 AFD vs AFND -->
+<section class="scroll-mt-32" id="clasificacion">
+<div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">3.2</span>
+<h2 class="text-2xl font-bold text-slate-800">Clasificación: AFD vs AFND</h2>
+</div>
+<div class="grid md:grid-cols-2 gap-6 mb-8">
+<!-- AFD -->
+<div class="bg-white p-6 rounded-xl border-t-4 border-cyan-500 shadow-sm">
+<h3 class="font-bold text-cyan-900 text-lg mb-2">Autómata Finito Determinista (AFD)</h3>
+<p class="text-xs text-slate-600 mb-4 leading-relaxed">
+<strong>"Certeza Absoluta".</strong> Por cada estado y cada letra leída, existe <strong>exactamente un único camino</strong> a seguir. Es muy fácil de programar en un lenguaje como Java (un simple <code>switch</code> o tabla bidimensional).
                         </p>
-                        <ul class="text-xs text-slate-500 space-y-2">
-                            <li><i class="fas fa-check text-green-500 mr-1"></i> Predecible y rápido en ejecución.</li>
-                            <li><i class="fas fa-times text-red-500 mr-1"></i> Difícil de diseñar mentalmente para patrones complejos.</li>
-                        </ul>
-                    </div>
-
-                    <!-- AFND -->
-                    <div class="bg-white p-6 rounded-xl border-t-4 border-purple-500 shadow-sm">
-                        <h3 class="font-bold text-purple-900 text-lg mb-2">Autómata Finito No Determinista (AFND)</h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            <strong>"Multiverso".</strong> Ante un mismo estado y letra, la máquina puede <em>clonarse</em> e ir a <strong>múltiples estados a la vez</strong>. Además, puede hacer "Transiciones \(\epsilon\)" (moverse sin leer nada).
+<ul class="text-xs text-slate-500 space-y-2">
+<li><i class="fas fa-check text-green-500 mr-1"></i> Predecible y rápido en ejecución.</li>
+<li><i class="fas fa-times text-red-500 mr-1"></i> Difícil de diseñar mentalmente para patrones complejos.</li>
+</ul>
+</div>
+<!-- AFND -->
+<div class="bg-white p-6 rounded-xl border-t-4 border-purple-500 shadow-sm">
+<h3 class="font-bold text-purple-900 text-lg mb-2">Autómata Finito No Determinista (AFND)</h3>
+<p class="text-xs text-slate-600 mb-4 leading-relaxed">
+<strong>"Multiverso".</strong> Ante un mismo estado y letra, la máquina puede <em>clonarse</em> e ir a <strong>múltiples estados a la vez</strong>. Además, puede hacer "Transiciones \(\epsilon\)" (moverse sin leer nada).
                         </p>
-                        <ul class="text-xs text-slate-500 space-y-2">
-                            <li><i class="fas fa-check text-green-500 mr-1"></i> Facilísimo de diseñar desde una Expresión Regular.</li>
-                            <li><i class="fas fa-times text-red-500 mr-1"></i> Computacionalmente más pesado de simular en código.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- ACTIVIDAD PARA LIBRETA -->
-                <div class="border-t border-slate-200 pt-6">
-                    <div class="bg-cyan-100 border-l-4 border-cyan-600 p-5 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-edit text-cyan-700 mt-1 mr-3 text-xl"></i>
-                            <div class="flex-1">
-                                <h4 class="text-md font-bold text-cyan-900 uppercase tracking-wide border-b border-cyan-200 pb-2 mb-3">Actividad 3.1 y 3.2: Tablas de Transición</h4>
-                                <p class="text-sm text-cyan-800 mt-1 leading-relaxed mb-4">
-                                    <strong>Instrucciones:</strong> Analiza y responde en tu libreta.
+<ul class="text-xs text-slate-500 space-y-2">
+<li><i class="fas fa-check text-green-500 mr-1"></i> Facilísimo de diseñar desde una Expresión Regular.</li>
+<li><i class="fas fa-times text-red-500 mr-1"></i> Computacionalmente más pesado de simular en código.</li>
+</ul>
+</div>
+</div>
+<!-- ACTIVIDAD PARA LIBRETA -->
+<div class="border-t border-slate-200 pt-6">
+<div class="bg-cyan-100 border-l-4 border-cyan-600 p-5 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-edit text-cyan-700 mt-1 mr-3 text-xl"></i>
+<div class="flex-1">
+<h4 class="text-md font-bold text-cyan-900 uppercase tracking-wide border-b border-cyan-200 pb-2 mb-3">Actividad 3.1 y 3.2: Tablas de Transición</h4>
+<p class="text-sm text-cyan-800 mt-1 leading-relaxed mb-4">
+<strong>Instrucciones:</strong> Analiza y responde en tu libreta.
                                 </p>
-                                <ul class="space-y-3 text-sm text-slate-700">
-                                    <li class="bg-white/60 p-3 rounded border border-cyan-200">
-                                        <span class="font-bold text-cyan-700">1.</span> Observa la tabla y el grafo del "Ejemplo Guiado" anterior. Haz la prueba de escritorio de la cadena <code>0100</code> indicando por qué estados viaja en cada paso. ¿Termina en estado de aceptación o rechazo?
+<ul class="space-y-3 text-sm text-slate-700">
+<li class="bg-white/60 p-3 rounded border border-cyan-200">
+<span class="font-bold text-cyan-700">1.</span> Observa la tabla y el grafo del "Ejemplo Guiado" anterior. Haz la prueba de escritorio de la cadena <code>0100</code> indicando por qué estados viaja en cada paso. ¿Termina en estado de aceptación o rechazo?
                                     </li>
-                                    <li class="bg-white/60 p-3 rounded border border-cyan-200">
-                                        <span class="font-bold text-cyan-700">2.</span> Dibuja la tabla de transiciones para un AFD que lea el alfabeto \(\Sigma = \{a, b\}\) y acepte TODAS las cadenas que empiecen con 'a' (ej. a, ab, aba, abb). Necesitarás crear un "estado de error" (pozo) si la primera letra que llega es una 'b'.
+<li class="bg-white/60 p-3 rounded border border-cyan-200">
+<span class="font-bold text-cyan-700">2.</span> Dibuja la tabla de transiciones para un AFD que lea el alfabeto \(\Sigma = \{a, b\}\) y acepte TODAS las cadenas que empiecen con 'a' (ej. a, ab, aba, abb). Necesitarás crear un "estado de error" (pozo) si la primera letra que llega es una 'b'.
                                     </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.3 al 3.5: EL CICLO DE VIDA (EXPANDIDO CON DIAGRAMAS) -->
-        <section id="transformacion" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <h2 class="text-2xl font-bold text-slate-800">El Ciclo de Vida en un Compilador (3.3 - 3.5)</h2>
-                </div>
-                
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3.3 al 3.5: EL CICLO DE VIDA (EXPANDIDO CON DIAGRAMAS) -->
+<section class="scroll-mt-32" id="transformacion">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<h2 class="text-2xl font-bold text-slate-800">El Ciclo de Vida en un Compilador (3.3 - 3.5)</h2>
+</div>
+<p class="text-slate-600 text-sm leading-relaxed mb-6">
                     En la vida real, un programador de compiladores no hace dibujos de autómatas a mano. El proceso lógico que sigue el software para generar un Analizador Léxico rápido (como cuando usas <code>Pattern.compile</code> en Java) es una "tubería" matemática estructurada en 3 grandes pasos:
                 </p>
-
-                <!-- El Pipeline Visual -->
-                <div class="relative py-4 mb-10">
-                    <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-cyan-200 transform -translate-x-1/2 hidden md:block"></div>
-                    
-                    <div class="space-y-8 relative">
-                        <!-- Paso 1 -->
-                        <div class="flex flex-col md:flex-row items-center justify-between w-full">
-                            <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
-                                <h3 class="font-bold text-indigo-700 text-lg">1. ER \(\rightarrow\) AFND</h3>
-                                <p class="text-xs text-slate-500">Se usa el algoritmo de <strong>Construcción de Thompson</strong>. Por cada símbolo de la Regex se generan fragmentos pequeños de autómatas unidos por transiciones \(\epsilon\).</p>
-                            </div>
-                            <div class="w-10 h-10 bg-indigo-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative">1</div>
-                            <div class="md:w-5/12 md:pl-8 text-left">
-                                <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-xs font-mono text-indigo-800 text-center shadow-sm">Expresión Regular:<br><span class="font-bold text-sm">(a|b)*abb</span></div>
-                            </div>
-                        </div>
-
-                        <!-- Paso 2 -->
-                        <div class="flex flex-col md:flex-row items-center justify-between w-full">
-                            <div class="md:w-5/12 md:pr-8 text-right mb-4 md:mb-0 order-3 md:order-1">
-                                <div class="bg-cyan-50 p-3 rounded-lg border border-cyan-100 text-xs font-mono text-cyan-800 text-center shadow-sm">Un autómata gigante, con múltiples caminos pero fácil de derivar.</div>
-                            </div>
-                            <div class="w-10 h-10 bg-cyan-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative order-2">2</div>
-                            <div class="md:w-5/12 text-left md:pl-8 order-1 md:order-3">
-                                <h3 class="font-bold text-cyan-700 text-lg">2. AFND \(\rightarrow\) AFD</h3>
-                                <p class="text-xs text-slate-500">Se usa la <strong>Construcción de Subconjuntos</strong>. Como el AFND no se puede programar directo, se eliminan los caminos dobles creando "macro-estados" (conjuntos de estados).</p>
-                            </div>
-                        </div>
-
-                        <!-- Paso 3 -->
-                        <div class="flex flex-col md:flex-row items-center justify-between w-full">
-                            <div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
-                                <h3 class="font-bold text-emerald-700 text-lg">3. Minimización</h3>
-                                <p class="text-xs text-slate-500">Se usa el algoritmo de <strong>Hopcroft</strong>. Se eliminan estados inalcanzables y se fusionan estados equivalentes para que el código sea lo más pequeño y rápido posible.</p>
-                            </div>
-                            <div class="w-10 h-10 bg-emerald-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative">3</div>
-                            <div class="md:w-5/12 md:pl-8 text-left">
-                                <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 text-xs font-mono text-emerald-800 text-center shadow-sm">El AFD final que programarás usando un switch-case en Java.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- DESGLOSE DETALLADO Y DIGERIBLE (CON GRAFOS) -->
-                <div class="space-y-8">
-                    <!-- Tema 3.3 y 3.4: Thompson -->
-                    <div class="bg-indigo-50/40 p-6 rounded-2xl border border-indigo-100">
-                        <h3 class="text-lg font-bold text-indigo-900 mb-2"><i class="fas fa-cubes text-indigo-500 mr-2"></i> 3.3 y 3.4 Representar ER usando AFND (Construcción de Thompson)</h3>
-                        <p class="text-sm text-slate-700 mb-4">
-                            <strong>¿De qué trata?</strong> Imagina que es como armar un set de Legos. Cada operación matemática de las expresiones regulares (Unión, Concatenación, Cerradura) tiene un "bloque de Lego" (un mini-autómata) ya predefinido. Simplemente tomamos la ER y conectamos las piezas usando transiciones "mágicas" o vacías (\(\epsilon\)) que no consumen caracteres.
+<!-- El Pipeline Visual -->
+<div class="relative py-4 mb-10">
+<div class="absolute left-1/2 top-0 bottom-0 w-1 bg-cyan-200 transform -translate-x-1/2 hidden md:block"></div>
+<div class="space-y-8 relative">
+<!-- Paso 1 -->
+<div class="flex flex-col md:flex-row items-center justify-between w-full">
+<div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+<h3 class="font-bold text-indigo-700 text-lg">1. ER \(\rightarrow\) AFND</h3>
+<p class="text-xs text-slate-500">Se usa el algoritmo de <strong>Construcción de Thompson</strong>. Por cada símbolo de la Regex se generan fragmentos pequeños de autómatas unidos por transiciones \(\epsilon\).</p>
+</div>
+<div class="w-10 h-10 bg-indigo-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative">1</div>
+<div class="md:w-5/12 md:pl-8 text-left">
+<div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 text-xs font-mono text-indigo-800 text-center shadow-sm">Expresión Regular:<br/><span class="font-bold text-sm">(a|b)*abb</span></div>
+</div>
+</div>
+<!-- Paso 2 -->
+<div class="flex flex-col md:flex-row items-center justify-between w-full">
+<div class="md:w-5/12 md:pr-8 text-right mb-4 md:mb-0 order-3 md:order-1">
+<div class="bg-cyan-50 p-3 rounded-lg border border-cyan-100 text-xs font-mono text-cyan-800 text-center shadow-sm">Un autómata gigante, con múltiples caminos pero fácil de derivar.</div>
+</div>
+<div class="w-10 h-10 bg-cyan-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative order-2">2</div>
+<div class="md:w-5/12 text-left md:pl-8 order-1 md:order-3">
+<h3 class="font-bold text-cyan-700 text-lg">2. AFND \(\rightarrow\) AFD</h3>
+<p class="text-xs text-slate-500">Se usa la <strong>Construcción de Subconjuntos</strong>. Como el AFND no se puede programar directo, se eliminan los caminos dobles creando "macro-estados" (conjuntos de estados).</p>
+</div>
+</div>
+<!-- Paso 3 -->
+<div class="flex flex-col md:flex-row items-center justify-between w-full">
+<div class="md:w-5/12 text-right md:pr-8 mb-4 md:mb-0">
+<h3 class="font-bold text-emerald-700 text-lg">3. Minimización</h3>
+<p class="text-xs text-slate-500">Se usa el algoritmo de <strong>Hopcroft</strong>. Se eliminan estados inalcanzables y se fusionan estados equivalentes para que el código sea lo más pequeño y rápido posible.</p>
+</div>
+<div class="w-10 h-10 bg-emerald-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white font-bold z-10 relative">3</div>
+<div class="md:w-5/12 md:pl-8 text-left">
+<div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 text-xs font-mono text-emerald-800 text-center shadow-sm">El AFD final que programarás usando un switch-case en Java.</div>
+</div>
+</div>
+</div>
+</div>
+<!-- DESGLOSE DETALLADO Y DIGERIBLE (CON GRAFOS) -->
+<div class="space-y-8">
+<!-- Tema 3.3 y 3.4: Thompson -->
+<div class="bg-indigo-50/40 p-6 rounded-2xl border border-indigo-100">
+<h3 class="text-lg font-bold text-indigo-900 mb-2"><i class="fas fa-cubes text-indigo-500 mr-2"></i> 3.3 y 3.4 Representar ER usando AFND (Construcción de Thompson)</h3>
+<p class="text-sm text-slate-700 mb-4">
+<strong>¿De qué trata?</strong> Imagina que es como armar un set de Legos. Cada operación matemática de las expresiones regulares (Unión, Concatenación, Cerradura) tiene un "bloque de Lego" (un mini-autómata) ya predefinido. Simplemente tomamos la ER y conectamos las piezas usando transiciones "mágicas" o vacías (\(\epsilon\)) que no consumen caracteres.
                         </p>
-                        
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <!-- SVG Thompson Concatenacion -->
-                            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
-                                <span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Concatenación ( a · b )</span>
-                                <p class="text-[10px] text-slate-500 mb-3 text-center">Conectas el final de "a" directamente con el inicio de "b".</p>
-                                <div class="w-full overflow-x-auto min-w-[200px] flex justify-center">
-                                    <svg viewBox="0 0 300 80" class="w-full h-auto max-w-[300px]" xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <marker id="arrow-ind" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#4f46e5" />
-                                            </marker>
-                                        </defs>
-                                        <!-- Enlaces -->
-                                        <path d="M 10 40 L 40 40" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <path d="M 80 40 L 130 40" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="105" y="32" fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle">a</text>
-                                        <path d="M 170 40 L 220 40" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="195" y="32" fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle">b</text>
-                                        <!-- Nodos -->
-                                        <circle cx="60" cy="40" r="18" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="150" cy="40" r="18" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="240" cy="40" r="18" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="240" cy="40" r="13" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            
-                            <!-- SVG Thompson Union -->
-                            <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
-                                <span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Unión ( a | b )</span>
-                                <p class="text-[10px] text-slate-500 mb-3 text-center">Creas dos caminos paralelos usando \(\epsilon\) (épsilon).</p>
-                                <div class="w-full overflow-x-auto min-w-[250px] flex justify-center">
-                                    <svg viewBox="0 0 350 150" class="w-full h-auto max-w-[350px]" xmlns="http://www.w3.org/2000/svg">
-                                        <!-- Enlaces -->
-                                        <path d="M 10 75 L 35 75" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <!-- Upper branch -->
-                                        <path d="M 68 62 L 95 30" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="75" y="40" fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle">&epsilon;</text>
-                                        <path d="M 130 30 L 190 30" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="160" y="22" fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle">a</text>
-                                        <path d="M 225 30 L 255 62" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="245" y="40" fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle">&epsilon;</text>
-                                        <!-- Lower branch -->
-                                        <path d="M 68 88 L 95 120" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="75" y="115" fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle">&epsilon;</text>
-                                        <path d="M 130 120 L 190 120" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="160" y="112" fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle">b</text>
-                                        <path d="M 225 120 L 255 88" stroke="#4f46e5" stroke-width="2" marker-end="url(#arrow-ind)"/>
-                                        <text x="245" y="115" fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle">&epsilon;</text>
-                                        
-                                        <!-- Nodos -->
-                                        <circle cx="55" cy="75" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="110" cy="30" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="210" cy="30" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="110" cy="120" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="210" cy="120" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="270" cy="75" r="16" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                        <circle cx="270" cy="75" r="11" fill="#eef2ff" stroke="#4f46e5" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tema 3.3: AFND a AFD -->
-                    <div class="bg-cyan-50/40 p-6 rounded-2xl border border-cyan-100">
-                        <h3 class="text-lg font-bold text-cyan-900 mb-2"><i class="fas fa-compress-arrows-alt text-cyan-500 mr-2"></i> 3.3 Convertir AFND a AFD (Subconjuntos)</h3>
-                        <p class="text-sm text-slate-700 mb-4">
-                            <strong>¿Por qué lo hacemos?</strong> El AFND que armamos arriba es genial en papel, pero <em>imposible</em> de programar en un <code>switch</code> de Java porque un estado puede ir a múltiples lugares con la misma letra, ¡y la computadora no puede dividirse en dos!
-                            <br><br>
-                            <strong>La solución:</strong> Creamos <em>Macro-Estados</em>. Si en el AFND al leer un '0' puedes ir al estado <code>q1</code> o al estado <code>q2</code>, en tu nuevo AFD creas un súper-estado llamado <code>{q1, q2}</code>. ¡Así recuperas la certeza absoluta!
+<div class="grid md:grid-cols-2 gap-4">
+<!-- SVG Thompson Concatenacion -->
+<div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
+<span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Concatenación ( a · b )</span>
+<p class="text-[10px] text-slate-500 mb-3 text-center">Conectas el final de "a" directamente con el inicio de "b".</p>
+<div class="w-full overflow-x-auto min-w-[200px] flex justify-center">
+<svg class="w-full h-auto max-w-[300px]" viewbox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow-ind" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#4f46e5"></path>
+</marker>
+</defs>
+<!-- Enlaces -->
+<path d="M 10 40 L 40 40" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<path d="M 80 40 L 130 40" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle" x="105" y="32">a</text>
+<path d="M 170 40 L 220 40" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle" x="195" y="32">b</text>
+<!-- Nodos -->
+<circle cx="60" cy="40" fill="#eef2ff" r="18" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="150" cy="40" fill="#eef2ff" r="18" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="240" cy="40" fill="#eef2ff" r="18" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="240" cy="40" fill="#eef2ff" r="13" stroke="#4f46e5" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+<!-- SVG Thompson Union -->
+<div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
+<span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Unión ( a | b )</span>
+<p class="text-[10px] text-slate-500 mb-3 text-center">Creas dos caminos paralelos usando \(\epsilon\) (épsilon).</p>
+<div class="w-full overflow-x-auto min-w-[250px] flex justify-center">
+<svg class="w-full h-auto max-w-[350px]" viewbox="0 0 350 150" xmlns="http://www.w3.org/2000/svg">
+<!-- Enlaces -->
+<path d="M 10 75 L 35 75" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<!-- Upper branch -->
+<path d="M 68 62 L 95 30" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle" x="75" y="40">ε</text>
+<path d="M 130 30 L 190 30" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle" x="160" y="22">a</text>
+<path d="M 225 30 L 255 62" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle" x="245" y="40">ε</text>
+<!-- Lower branch -->
+<path d="M 68 88 L 95 120" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle" x="75" y="115">ε</text>
+<path d="M 130 120 L 190 120" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="12" font-weight="bold" text-anchor="middle" x="160" y="112">b</text>
+<path d="M 225 120 L 255 88" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
+<text fill="#4f46e5" font-size="10" font-weight="bold" text-anchor="middle" x="245" y="115">ε</text>
+<!-- Nodos -->
+<circle cx="55" cy="75" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="110" cy="30" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="210" cy="30" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="110" cy="120" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="210" cy="120" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="270" cy="75" fill="#eef2ff" r="16" stroke="#4f46e5" stroke-width="2"></circle>
+<circle cx="270" cy="75" fill="#eef2ff" r="11" stroke="#4f46e5" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Tema 3.3: AFND a AFD -->
+<div class="bg-cyan-50/40 p-6 rounded-2xl border border-cyan-100">
+<h3 class="text-lg font-bold text-cyan-900 mb-2"><i class="fas fa-compress-arrows-alt text-cyan-500 mr-2"></i> 3.3 Convertir AFND a AFD (Subconjuntos)</h3>
+<p class="text-sm text-slate-700 mb-4">
+<strong>¿Por qué lo hacemos?</strong> El AFND que armamos arriba es genial en papel, pero <em>imposible</em> de programar en un <code>switch</code> de Java porque un estado puede ir a múltiples lugares con la misma letra, ¡y la computadora no puede dividirse en dos!
+                            <br/><br/>
+<strong>La solución:</strong> Creamos <em>Macro-Estados</em>. Si en el AFND al leer un '0' puedes ir al estado <code>q1</code> o al estado <code>q2</code>, en tu nuevo AFD creas un súper-estado llamado <code>{q1, q2}</code>. ¡Así recuperas la certeza absoluta!
                         </p>
-                        
-                        <!-- SVG Subconjuntos -->
-                        <div class="bg-white p-4 rounded-xl border border-cyan-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
-                            <!-- AFND -->
-                            <div class="text-center min-w-[150px]">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase">Antes (AFND - Ambigüedad)</span>
-                                <svg viewBox="0 0 160 120" class="w-full max-w-[160px] mx-auto mt-2" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <marker id="arrow-cyn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2" />
-                                        </marker>
-                                    </defs>
-                                    <path d="M 45 45 L 105 25" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow-cyn)"/>
-                                    <text x="80" y="25" fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle">0</text>
-                                    <path d="M 45 75 L 105 95" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow-cyn)"/>
-                                    <text x="80" y="105" fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle">0</text>
-                                    
-                                    <circle cx="30" cy="60" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                    <text x="30" y="64" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q0</text>
-                                    <circle cx="125" cy="20" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                    <text x="125" y="24" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q1</text>
-                                    <circle cx="125" cy="100" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                    <text x="125" y="104" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q2</text>
-                                </svg>
-                            </div>
-                            
-                            <i class="fas fa-arrow-right text-3xl text-cyan-300 hidden md:block"></i>
-                            <i class="fas fa-arrow-down text-3xl text-cyan-300 block md:hidden my-2"></i>
-
-                            <!-- AFD -->
-                            <div class="text-center min-w-[200px]">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase">Después (AFD - Macroestado)</span>
-                                <svg viewBox="0 0 200 120" class="w-full max-w-[200px] mx-auto mt-2" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M 50 60 L 120 60" stroke="#0891b2" stroke-width="2" marker-end="url(#arrow-cyn)"/>
-                                    <text x="90" y="52" fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle">0</text>
-                                    
-                                    <circle cx="30" cy="60" r="16" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                    <text x="30" y="64" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">[q0]</text>
-                                    <rect x="135" y="45" width="45" height="30" rx="8" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
-                                    <text x="157" y="64" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">[q1,q2]</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tema 3.5: Minimización -->
-                    <div class="bg-emerald-50/40 p-6 rounded-2xl border border-emerald-100">
-                        <h3 class="text-lg font-bold text-emerald-900 mb-2"><i class="fas fa-compress text-emerald-500 mr-2"></i> 3.5 Minimización de Estados</h3>
-                        <p class="text-sm text-slate-700 mb-4">
-                            <strong>Nadie quiere código redundante.</strong> Después de crear los macro-estados, tu autómata puede ser gigante y tener "estados basura" que hacen exactamente lo mismo. El algoritmo de minimización (Hopcroft) busca dos cosas:
+<!-- SVG Subconjuntos -->
+<div class="bg-white p-4 rounded-xl border border-cyan-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
+<!-- AFND -->
+<div class="text-center min-w-[150px]">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Antes (AFND - Ambigüedad)</span>
+<svg class="w-full max-w-[160px] mx-auto mt-2" viewbox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow-cyn" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2"></path>
+</marker>
+</defs>
+<path d="M 45 45 L 105 25" marker-end="url(#arrow-cyn)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="25">0</text>
+<path d="M 45 75 L 105 95" marker-end="url(#arrow-cyn)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle" x="80" y="105">0</text>
+<circle cx="30" cy="60" fill="#ecfeff" r="16" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="30" y="64">q0</text>
+<circle cx="125" cy="20" fill="#ecfeff" r="16" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="125" y="24">q1</text>
+<circle cx="125" cy="100" fill="#ecfeff" r="16" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="125" y="104">q2</text>
+</svg>
+</div>
+<i class="fas fa-arrow-right text-3xl text-cyan-300 hidden md:block"></i>
+<i class="fas fa-arrow-down text-3xl text-cyan-300 block md:hidden my-2"></i>
+<!-- AFD -->
+<div class="text-center min-w-[200px]">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Después (AFD - Macroestado)</span>
+<svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+<path d="M 50 60 L 120 60" marker-end="url(#arrow-cyn)" stroke="#0891b2" stroke-width="2"></path>
+<text fill="#0891b2" font-size="12" font-weight="bold" text-anchor="middle" x="90" y="52">0</text>
+<circle cx="30" cy="60" fill="#ecfeff" r="16" stroke="#0891b2" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="30" y="64">[q0]</text>
+<rect fill="#ecfeff" height="30" rx="8" stroke="#0891b2" stroke-width="2" width="45" x="135" y="45"></rect>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="157" y="64">[q1,q2]</text>
+</svg>
+</div>
+</div>
+</div>
+<!-- Tema 3.5: Minimización -->
+<div class="bg-emerald-50/40 p-6 rounded-2xl border border-emerald-100">
+<h3 class="text-lg font-bold text-emerald-900 mb-2"><i class="fas fa-compress text-emerald-500 mr-2"></i> 3.5 Minimización de Estados</h3>
+<p class="text-sm text-slate-700 mb-4">
+<strong>Nadie quiere código redundante.</strong> Después de crear los macro-estados, tu autómata puede ser gigante y tener "estados basura" que hacen exactamente lo mismo. El algoritmo de minimización (Hopcroft) busca dos cosas:
                         </p>
-                        <ul class="list-disc pl-5 text-sm text-slate-700 space-y-2 mb-6">
-                            <li><strong>Eliminar lo inalcanzable:</strong> Si hay un estado al que es imposible llegar desde el inicio (código muerto), simplemente bórralo.</li>
-                            <li><strong>Fusionar gemelos:</strong> Si dos estados van exactamente a los mismos lugares leyendo las mismas letras, y ambos son de aceptación (o ambos de rechazo), entonces son redundantes. ¡Fusiónalos en un solo estado!</li>
-                        </ul>
-                        
-                        <!-- SVG Minimizacion -->
-                        <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
-                            <!-- Antes -->
-                            <div class="text-center min-w-[200px]">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Redundante</span>
-                                <svg viewBox="0 0 200 140" class="w-full max-w-[200px] mx-auto mt-2" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <marker id="arrow-em" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
-                                        </marker>
-                                        <marker id="arrow-em-fade" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1" />
-                                        </marker>
-                                    </defs>
-                                    <path d="M 65 70 L 125 40" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-em)"/>
-                                    <text x="100" y="45" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">a</text>
-                                    <path d="M 65 70 L 125 100" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-em)"/>
-                                    <text x="100" y="105" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">b</text>
-                                    
-                                    <!-- Inalcanzable -->
-                                    <circle cx="50" cy="20" r="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4"/>
-                                    <text x="50" y="24" fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle">q3</text>
-                                    
-                                    <circle cx="50" cy="70" r="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <text x="50" y="74" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q0</text>
-                                    
-                                    <circle cx="145" cy="30" r="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <circle cx="145" cy="30" r="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <text x="145" y="34" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q1</text>
-                                    
-                                    <circle cx="145" cy="110" r="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <circle cx="145" cy="110" r="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <text x="145" y="114" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q2</text>
-                                </svg>
-                            </div>
-                            
-                            <i class="fas fa-arrow-right text-3xl text-emerald-300 hidden md:block"></i>
-                            <i class="fas fa-arrow-down text-3xl text-emerald-300 block md:hidden my-2"></i>
-
-                            <!-- Despues -->
-                            <div class="text-center min-w-[200px]">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Optimizado</span>
-                                <svg viewBox="0 0 200 140" class="w-full max-w-[200px] mx-auto mt-2" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M 65 70 L 125 70" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-em)"/>
-                                    <text x="95" y="62" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle">a, b</text>
-                                    
-                                    <circle cx="50" cy="70" r="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <text x="50" y="74" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q0</text>
-                                    
-                                    <rect x="135" y="55" width="40" height="30" rx="15" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <rect x="138" y="58" width="34" height="24" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
-                                    <text x="155" y="74" fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle">q1,2</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ACTIVIDAD 3.3 PARA LIBRETA (EVALUACIÓN) -->
-                <div class="mt-10 border-t border-slate-200 pt-8">
-                    <div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
-                        <div class="flex items-center mb-4">
-                            <div class="bg-amber-500 w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold mr-3 shadow-md">
-                                <i class="fas fa-pencil-ruler"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white tracking-wide">Actividad 3.3: La Tubería de Transformación</h3>
-                        </div>
-                        <p class="text-sm text-slate-300 mb-6">
-                            <strong>Instrucciones:</strong> Aplica la teoría vista en clase resolviendo los siguientes retos en tu libreta. Tu objetivo es hacer la traza de cómo una Expresión Regular se convierte en código optimizado.
+<ul class="list-disc pl-5 text-sm text-slate-700 space-y-2 mb-6">
+<li><strong>Eliminar lo inalcanzable:</strong> Si hay un estado al que es imposible llegar desde el inicio (código muerto), simplemente bórralo.</li>
+<li><strong>Fusionar gemelos:</strong> Si dos estados van exactamente a los mismos lugares leyendo las mismas letras, y ambos son de aceptación (o ambos de rechazo), entonces son redundantes. ¡Fusiónalos en un solo estado!</li>
+</ul>
+<!-- SVG Minimizacion -->
+<div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
+<!-- Antes -->
+<div class="text-center min-w-[200px]">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Redundante</span>
+<svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow-em" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981"></path>
+</marker>
+<marker id="arrow-em-fade" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#cbd5e1"></path>
+</marker>
+</defs>
+<path d="M 65 70 L 125 40" marker-end="url(#arrow-em)" stroke="#10b981" stroke-width="2"></path>
+<text fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle" x="100" y="45">a</text>
+<path d="M 65 70 L 125 100" marker-end="url(#arrow-em)" stroke="#10b981" stroke-width="2"></path>
+<text fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle" x="100" y="105">b</text>
+<!-- Inalcanzable -->
+<circle cx="50" cy="20" fill="#f8fafc" r="14" stroke="#cbd5e1" stroke-dasharray="4" stroke-width="2"></circle>
+<text fill="#94a3b8" font-size="10" font-weight="bold" text-anchor="middle" x="50" y="24">q3</text>
+<circle cx="50" cy="70" fill="#ecfdf5" r="16" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="50" y="74">q0</text>
+<circle cx="145" cy="30" fill="#ecfdf5" r="16" stroke="#10b981" stroke-width="2"></circle>
+<circle cx="145" cy="30" fill="#ecfdf5" r="12" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="145" y="34">q1</text>
+<circle cx="145" cy="110" fill="#ecfdf5" r="16" stroke="#10b981" stroke-width="2"></circle>
+<circle cx="145" cy="110" fill="#ecfdf5" r="12" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="145" y="114">q2</text>
+</svg>
+</div>
+<i class="fas fa-arrow-right text-3xl text-emerald-300 hidden md:block"></i>
+<i class="fas fa-arrow-down text-3xl text-emerald-300 block md:hidden my-2"></i>
+<!-- Despues -->
+<div class="text-center min-w-[200px]">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Optimizado</span>
+<svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+<path d="M 65 70 L 125 70" marker-end="url(#arrow-em)" stroke="#10b981" stroke-width="2"></path>
+<text fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle" x="95" y="62">a, b</text>
+<circle cx="50" cy="70" fill="#ecfdf5" r="16" stroke="#10b981" stroke-width="2"></circle>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="50" y="74">q0</text>
+<rect fill="#ecfdf5" height="30" rx="15" stroke="#10b981" stroke-width="2" width="40" x="135" y="55"></rect>
+<rect fill="#ecfdf5" height="24" rx="12" stroke="#10b981" stroke-width="2" width="34" x="138" y="58"></rect>
+<text fill="#0f172a" font-size="10" font-weight="bold" text-anchor="middle" x="155" y="74">q1,2</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- ACTIVIDAD 3.3 PARA LIBRETA (EVALUACIÓN) -->
+<div class="mt-10 border-t border-slate-200 pt-8">
+<div class="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700">
+<div class="flex items-center mb-4">
+<div class="bg-amber-500 w-10 h-10 rounded-full flex items-center justify-center text-white text-lg font-bold mr-3 shadow-md">
+<i class="fas fa-pencil-ruler"></i>
+</div>
+<h3 class="text-xl font-bold text-white tracking-wide">Actividad 3.3: La Tubería de Transformación</h3>
+</div>
+<p class="text-sm text-slate-300 mb-6">
+<strong>Instrucciones:</strong> Aplica la teoría vista en clase resolviendo los siguientes retos en tu libreta. Tu objetivo es hacer la traza de cómo una Expresión Regular se convierte en código optimizado.
                         </p>
-                        
-                        <div class="space-y-4">
-                            <!-- Reto 1 -->
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
-                                <h4 class="font-bold text-cyan-400 text-sm mb-2">Reto 1: Construcción (ER \(\rightarrow\) AFND)</h4>
-                                <p class="text-xs text-slate-300 leading-relaxed">
+<div class="space-y-4">
+<!-- Reto 1 -->
+<div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
+<h4 class="font-bold text-cyan-400 text-sm mb-2">Reto 1: Construcción (ER \(\rightarrow\) AFND)</h4>
+<p class="text-xs text-slate-300 leading-relaxed">
                                     Utilizando los bloques básicos del algoritmo de Thompson, <strong>dibuja</strong> el Autómata Finito No Determinista para la expresión regular: <code class="bg-slate-800 px-1 rounded text-white font-bold">a(a|b)</code>.
-                                    <br><span class="italic text-slate-500">Pista: Primero dibuja el bloque de 'a', y luego conéctalo con el bloque paralelo de 'a|b'.</span>
-                                </p>
-                            </div>
-                            
-                            <!-- Reto 2 -->
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
-                                <h4 class="font-bold text-indigo-400 text-sm mb-2">Reto 2: Subconjuntos (AFND \(\rightarrow\) AFD)</h4>
-                                <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                    <br/><span class="italic text-slate-500">Pista: Primero dibuja el bloque de 'a', y luego conéctalo con el bloque paralelo de 'a|b'.</span>
+</p>
+</div>
+<!-- Reto 2 -->
+<div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
+<h4 class="font-bold text-indigo-400 text-sm mb-2">Reto 2: Subconjuntos (AFND \(\rightarrow\) AFD)</h4>
+<p class="text-xs text-slate-300 leading-relaxed mb-3">
                                     Observa la siguiente tabla de un AFND. Tiene el problema de los "clones" (multiples destinos para la misma letra). <strong>Construye la nueva tabla del AFD</strong> creando los Macro-Estados necesarios.
                                 </p>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full text-xs text-center text-slate-200 border border-slate-600 mb-2">
-                                        <thead class="bg-slate-800">
-                                            <tr><th class="p-2 border border-slate-600">AFND (Estado)</th><th class="p-2 border border-slate-600">Lee '0'</th><th class="p-2 border border-slate-600">Lee '1'</th></tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr><td class="p-2 border border-slate-600">\(\rightarrow q_0\)</td><td class="p-2 border border-slate-600 text-amber-400 font-bold">{ q0, q1 }</td><td class="p-2 border border-slate-600">{ q0 }</td></tr>
-                                            <tr><td class="p-2 border border-slate-600">q1</td><td class="p-2 border border-slate-600">\(\emptyset\) (Vacío)</td><td class="p-2 border border-slate-600">{ q2 }</td></tr>
-                                            <tr><td class="p-2 border border-slate-600 text-green-400 font-bold">*q2</td><td class="p-2 border border-slate-600">{ q2 }</td><td class="p-2 border border-slate-600">{ q2 }</td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <p class="text-[10px] text-slate-400 italic">Pista: Tu nuevo AFD iniciará en el macro-estado [q0]. Al leer '0' irá al nuevo macro-estado [q0, q1]. ¿A dónde va [q0, q1] cuando lee '1'?</p>
-                            </div>
-
-                            <!-- Reto 3 -->
-                            <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
-                                <h4 class="font-bold text-emerald-400 text-sm mb-2">Reto 3: Minimización</h4>
-                                <p class="text-xs text-slate-300 leading-relaxed">
+<div class="overflow-x-auto">
+<table class="w-full text-xs text-center text-slate-200 border border-slate-600 mb-2">
+<thead class="bg-slate-800">
+<tr><th class="p-2 border border-slate-600">AFND (Estado)</th><th class="p-2 border border-slate-600">Lee '0'</th><th class="p-2 border border-slate-600">Lee '1'</th></tr>
+</thead>
+<tbody>
+<tr><td class="p-2 border border-slate-600">\(\rightarrow q_0\)</td><td class="p-2 border border-slate-600 text-amber-400 font-bold">{ q0, q1 }</td><td class="p-2 border border-slate-600">{ q0 }</td></tr>
+<tr><td class="p-2 border border-slate-600">q1</td><td class="p-2 border border-slate-600">\(\emptyset\) (Vacío)</td><td class="p-2 border border-slate-600">{ q2 }</td></tr>
+<tr><td class="p-2 border border-slate-600 text-green-400 font-bold">*q2</td><td class="p-2 border border-slate-600">{ q2 }</td><td class="p-2 border border-slate-600">{ q2 }</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-[10px] text-slate-400 italic">Pista: Tu nuevo AFD iniciará en el macro-estado [q0]. Al leer '0' irá al nuevo macro-estado [q0, q1]. ¿A dónde va [q0, q1] cuando lee '1'?</p>
+</div>
+<!-- Reto 3 -->
+<div class="bg-slate-900/80 p-4 rounded-xl border border-slate-600">
+<h4 class="font-bold text-emerald-400 text-sm mb-2">Reto 3: Minimización</h4>
+<p class="text-xs text-slate-300 leading-relaxed">
                                     Observando los grafos del tema de Minimización (3.5) que están arriba, responde: ¿Por qué fue correcto y seguro fusionar los estados <code>q1</code> y <code>q2</code> en un solo estado <code>q1,2</code>? ¿Qué condición cumplían ambos para ser "gemelos"?
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 3.6 IMPLEMENTACIÓN EN JAVA -->
-        <section id="java-af" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">3.6</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Implementación en Java</h2>
-                </div>
-                <p class="text-slate-600 text-sm mb-8 leading-relaxed">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3.6 IMPLEMENTACIÓN EN JAVA -->
+<section class="scroll-mt-32" id="java-af">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">3.6</span>
+<h2 class="text-2xl font-bold text-slate-800">Implementación en Java</h2>
+</div>
+<p class="text-slate-600 text-sm mb-8 leading-relaxed">
                     Un Autómata Finito Determinista (AFD) es muy fácil de codificar. Se requiere una variable para llevar el control del <strong>estado actual</strong> y un bucle que analice los caracteres de entrada. Las transiciones se programan usando bloques <code>switch-case</code>.
                 </p>
-
-                <!-- Ejemplo Paso a Paso Java -->
-                <div class="mt-8 bg-white p-8 rounded-2xl border-2 border-cyan-100 shadow-lg relative overflow-hidden mb-12">
-                    <div class="absolute top-0 right-0 bg-cyan-100 w-32 h-32 rounded-bl-full opacity-50"></div>
-                    <h3 class="text-xl font-bold text-cyan-900 mb-4 relative z-10"><i class="fas fa-shoe-prints mr-2"></i> Paso a Paso: Programando el Detector de "01"</h3>
-                    <p class="text-sm text-slate-600 mb-6 relative z-10">Vamos a traducir la tabla de transiciones de la sección 3.1 a código Java ejecutable.</p>
-                    
-                    <div class="space-y-6 relative z-10">
-                        <!-- Paso 1 -->
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">1</div>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
-                                <h4 class="font-bold text-slate-800 text-sm">Estado Inicial y el Bucle de Lectura</h4>
-                                <p class="text-xs text-slate-600 mt-1 mb-2">Empezamos en el estado 0 y recorremos la cadena carácter por carácter.</p>
-                                <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+<!-- Ejemplo Paso a Paso Java -->
+<div class="mt-8 bg-white p-8 rounded-2xl border-2 border-cyan-100 shadow-lg relative overflow-hidden mb-12">
+<div class="absolute top-0 right-0 bg-cyan-100 w-32 h-32 rounded-bl-full opacity-50"></div>
+<h3 class="text-xl font-bold text-cyan-900 mb-4 relative z-10"><i class="fas fa-shoe-prints mr-2"></i> Paso a Paso: Programando el Detector de "01"</h3>
+<p class="text-sm text-slate-600 mb-6 relative z-10">Vamos a traducir la tabla de transiciones de la sección 3.1 a código Java ejecutable.</p>
+<div class="space-y-6 relative z-10">
+<!-- Paso 1 -->
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">1</div>
+<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<h4 class="font-bold text-slate-800 text-sm">Estado Inicial y el Bucle de Lectura</h4>
+<p class="text-xs text-slate-600 mt-1 mb-2">Empezamos en el estado 0 y recorremos la cadena carácter por carácter.</p>
+<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
 <pre><code class="text-xs font-mono text-slate-300"><span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>; <span class="text-slate-500">// q0</span>
 String cadena = <span class="text-green-400">"10101"</span>;
 
-<span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i = <span class="text-rose-400">0</span>; i < cadena.<span class="text-blue-300">length</span>(); i++) {
+<span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i = <span class="text-rose-400">0</span>; i &lt; cadena.<span class="text-blue-300">length</span>(); i++) {
     <span class="text-purple-400">char</span> c = cadena.<span class="text-blue-300">charAt</span>(i);
     <span class="text-slate-500">// Aquí irá la lógica (Paso 2)</span>
 }</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Paso 2 -->
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">2</div>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
-                                <h4 class="font-bold text-slate-800 text-sm">El Switch de Transiciones</h4>
-                                <p class="text-xs text-slate-600 mt-1 mb-2">Construimos la matriz lógica. Dependiendo de dónde estemos y qué letra llegue, cambiamos el valor de la variable <code>estado</code>.</p>
-                                <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+</div>
+</div>
+</div>
+<!-- Paso 2 -->
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">2</div>
+<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<h4 class="font-bold text-slate-800 text-sm">El Switch de Transiciones</h4>
+<p class="text-xs text-slate-600 mt-1 mb-2">Construimos la matriz lógica. Dependiendo de dónde estemos y qué letra llegue, cambiamos el valor de la variable <code>estado</code>.</p>
+<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
 <pre><code class="text-xs font-mono text-slate-300"><span class="text-purple-400">switch</span>(estado) {
     <span class="text-purple-400">case</span> <span class="text-rose-400">0</span>: <span class="text-slate-500">// Estado q0</span>
         <span class="text-purple-400">if</span>(c == <span class="text-green-400">'0'</span>) estado = <span class="text-rose-400">1</span>;
@@ -708,40 +824,38 @@ String cadena = <span class="text-green-400">"10101"</span>;
         <span class="text-purple-400">else if</span>(c == <span class="text-green-400">'1'</span>) estado = <span class="text-rose-400">0</span>;
         <span class="text-purple-400">break</span>;
 }</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Paso 3 -->
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">3</div>
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
-                                <h4 class="font-bold text-slate-800 text-sm">Verificar Aceptación</h4>
-                                <p class="text-xs text-slate-600 mt-1 mb-2">Una vez que termina el bucle <code>for</code>, verificamos si el autómata se detuvo en un estado de aceptación (el estado 2 en este caso).</p>
-                                <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+</div>
+</div>
+</div>
+<!-- Paso 3 -->
+<div class="flex gap-4 items-start">
+<div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">3</div>
+<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<h4 class="font-bold text-slate-800 text-sm">Verificar Aceptación</h4>
+<p class="text-xs text-slate-600 mt-1 mb-2">Una vez que termina el bucle <code>for</code>, verificamos si el autómata se detuvo en un estado de aceptación (el estado 2 en este caso).</p>
+<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
 <pre><code class="text-xs font-mono text-slate-300"><span class="text-purple-400">if</span>(estado == <span class="text-rose-400">2</span>) {
     System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"Cadena Aceptada"</span>);
 } <span class="text-purple-400">else</span> {
     System.out.<span class="text-blue-300">println</span>(<span class="text-red-400">"Cadena Rechazada"</span>);
 }</code></pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS PRÁCTICOS PARA CLASE -->
-                <div class="mt-8 border-t border-slate-200 pt-8">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-cyan-500"></i> Ejercicios Prácticos (Java)</h3>
-                    <p class="text-sm text-slate-600 mb-6">Completa estos "esqueletos" de código en tu IDE para construir y evaluar autómatas sin expresiones regulares.</p>
-
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Ejercicio 1 -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto1_IniciaConA.java</span>
-                                <span class="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded font-bold uppercase">Básico</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- EJERCICIOS PRÁCTICOS PARA CLASE -->
+<div class="mt-8 border-t border-slate-200 pt-8">
+<h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-cyan-500"></i> Ejercicios Prácticos (Java)</h3>
+<p class="text-sm text-slate-600 mb-6">Completa estos "esqueletos" de código en tu IDE para construir y evaluar autómatas sin expresiones regulares.</p>
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Ejercicio 1 -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto1_IniciaConA.java</span>
+<span class="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded font-bold uppercase">Básico</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">AFD_IniciaA</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         String cad = <span class="text-green-400">"abba"</span>;
@@ -750,24 +864,23 @@ String cadena = <span class="text-green-400">"10101"</span>;
         <span class="text-slate-500">// TAREA: Programa las transiciones 
         // para aceptar cadenas de 'a' y 'b' 
         // que OBLIGATORIAMENTE empiecen con 'a'</span>
-        <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i=0; i<cad.<span class="text-blue-300">length</span>(); i++) {
+        <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i=0; i<cad.<span class="text-blue-300">length(); i++) {
             <span class="text-purple-400">char</span> c = cad.<span class="text-blue-300">charAt</span>(i);
             <span class="text-slate-500">// ESCRIBE_TU_SWITCH_AQUÍ</span>
         }
         
         <span class="text-slate-500">// Evalúa e imprime aceptación</span>
     }
-}</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Ejercicio 2 -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto2_Matriz.java</span>
-                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+}</cad.<span></code></pre>
+</div>
+</div>
+<!-- Ejercicio 2 -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto2_Matriz.java</span>
+<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">AFD_Matriz</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// En vez de un switch, usa un arreglo 2D</span>
@@ -786,290 +899,301 @@ String cadena = <span class="text-green-400">"10101"</span>;
         // estado consultando la matriz 'delta'</span>
     }
 }</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Laboratorio Interactivo -->
-        <section id="laboratorio" class="scroll-mt-32">
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-                <div class="absolute -top-20 -right-20 w-80 h-80 bg-cyan-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-                <div class="relative z-10">
-                    <h2 class="text-2xl md:text-3xl font-bold flex items-center mb-4">
-                        <i class="fas fa-microchip text-cyan-400 mr-3"></i> Simulador: Motor AFD en JS
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Laboratorio Interactivo -->
+<section class="scroll-mt-32" id="laboratorio">
+<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+<div class="absolute -top-20 -right-20 w-80 h-80 bg-cyan-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+<div class="relative z-10">
+<h2 class="text-2xl md:text-3xl font-bold flex items-center mb-4">
+<i class="fas fa-microchip text-cyan-400 mr-3"></i> Simulador: Motor AFD en JS
                     </h2>
-                    <p class="text-slate-300 text-sm mb-8 leading-relaxed">
+<p class="text-slate-300 text-sm mb-8 leading-relaxed">
                         Este laboratorio ejecuta en tiempo real el <strong>Autómata del Ejemplo Guiado (sección 3.1)</strong>, cuyo objetivo es detectar si una cadena binaria termina estrictamente en <code>01</code>.
                     </p>
-
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="space-y-4">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-cyan-300">Ingresa Cadena Binaria (0s y 1s)</label>
-                            <input type="text" id="afdInput" class="w-full bg-slate-800 border border-slate-600 text-white px-4 py-3 rounded-xl focus:border-cyan-400 outline-none transition font-mono" placeholder="Ej: 101001">
-                            <button onclick="simularAFD()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg">
+<div class="grid md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<label class="block text-xs font-bold uppercase tracking-wider text-cyan-300">Ingresa Cadena Binaria (0s y 1s)</label>
+<input class="w-full bg-slate-800 border border-slate-600 text-white px-4 py-3 rounded-xl focus:border-cyan-400 outline-none transition font-mono" id="afdInput" placeholder="Ej: 101001" type="text"/>
+<button class="w-full bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg" onclick="simularAFD()">
                                 Simular Transiciones
                             </button>
-                        </div>
-                        
-                        <div class="bg-slate-950 rounded-2xl p-6 border border-slate-800 font-mono text-sm relative overflow-hidden">
-                            <h4 class="text-xs text-slate-500 uppercase tracking-wider font-bold mb-3 border-b border-slate-800 pb-2">Log de Ejecución</h4>
-                            <div id="afdLog" class="space-y-2 h-40 overflow-y-auto text-xs">
-                                <p class="text-slate-600 italic">Esperando cadena para procesar...</p>
-                            </div>
-                            <div id="afdResult" class="mt-4 pt-3 border-t border-slate-800 text-center font-bold text-lg"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN DE PROYECTO (RANDOM ASSIGNMENT CON EXCEL Y SOLUCIONES) -->
-        <section id="proyecto" class="scroll-mt-32 pb-20">
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
-                
-                <!-- TABS NAVEGACIÓN PROYECTO -->
-                <div class="flex justify-center mb-8 relative z-10 border-b border-slate-700">
-                    <button onclick="switchTab('alumno')" id="tabAlumno" class="px-6 py-3 text-sm font-bold text-rose-400 border-b-2 border-rose-500 uppercase tracking-wider transition">Panel Alumno</button>
-                    <button onclick="switchTab('docente')" id="tabDocente" class="px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider">Acceso Docente</button>
-                </div>
-
-                <!-- 1. PANEL ALUMNO -->
-                <div id="panel-alumno" class="relative z-10">
-                    <!-- REGISTRO DEL ESTUDIANTE -->
-                    <div id="registro-u3" class="text-center py-6 max-w-lg mx-auto">
-                        <i class="fas fa-gamepad text-5xl text-rose-500 mb-4"></i>
-                        <h2 class="text-2xl md:text-3xl font-bold mb-2">Asignación de Proyecto Final</h2>
-                        <p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 acertijos lógicos. <strong>Importante:</strong> Esta asignación se registrará y no podrás cambiarla después.</p>
-                        
-                        <div class="flex flex-col gap-4">
-                            <input type="text" id="nombreAlumno" class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center" placeholder="Tu Nombre Completo...">
-                            <button onclick="asignarProyecto()" class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg w-full">Obtener Proyecto</button>
-                        </div>
-                        <p id="errorNombre" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Debes ingresar tu nombre.</p>
-                    </div>
-
-                    <!-- TICKET DEL PROYECTO -->
-                    <div id="resultado-u3" class="hidden">
-                        <div class="flex justify-end mb-4">
-                            <button onclick="descargarPDF()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center">
-                                <i class="fas fa-file-pdf mr-2"></i> Descargar Ticket en PDF
+</div>
+<div class="bg-slate-950 rounded-2xl p-6 border border-slate-800 font-mono text-sm relative overflow-hidden">
+<h4 class="text-xs text-slate-500 uppercase tracking-wider font-bold mb-3 border-b border-slate-800 pb-2">Log de Ejecución</h4>
+<div class="space-y-2 h-40 overflow-y-auto text-xs" id="afdLog">
+<p class="text-slate-600 italic">Esperando cadena para procesar...</p>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-800 text-center font-bold text-lg" id="afdResult"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECCIÓN DE PROYECTO (RANDOM ASSIGNMENT CON EXCEL Y SOLUCIONES) -->
+<section class="scroll-mt-32 pb-20" id="proyecto">
+<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+<!-- TABS NAVEGACIÓN PROYECTO -->
+<div class="flex justify-center mb-8 relative z-10 border-b border-slate-700">
+<button class="px-6 py-3 text-sm font-bold text-rose-400 border-b-2 border-rose-500 uppercase tracking-wider transition" id="tabAlumno" onclick="switchTab('alumno')">Panel Alumno</button>
+<button class="px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider" id="tabDocente" onclick="switchTab('docente')">Acceso Docente</button>
+</div>
+<!-- 1. PANEL ALUMNO -->
+<div class="relative z-10" id="panel-alumno">
+<!-- REGISTRO DEL ESTUDIANTE -->
+<div class="text-center py-6 max-w-lg mx-auto" id="registro-u3">
+<i class="fas fa-gamepad text-5xl text-rose-500 mb-4"></i>
+<h2 class="text-2xl md:text-3xl font-bold mb-2">Asignación de Proyecto Final</h2>
+<p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 acertijos lógicos. <strong>Importante:</strong> Esta asignación se registrará y no podrás cambiarla después.</p>
+<div class="flex flex-col gap-4">
+<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center" id="nombreAlumno" placeholder="Tu Nombre Completo..." type="text"/>
+<button class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg w-full" onclick="asignarProyecto()">Obtener Proyecto</button>
+</div>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorNombre"><i class="fas fa-exclamation-triangle mr-2"></i>Debes ingresar tu nombre.</p>
+</div>
+<!-- TICKET DEL PROYECTO -->
+<div class="hidden" id="resultado-u3">
+<div class="flex justify-end mb-4">
+<button class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center" onclick="descargarPDF()">
+<i class="fas fa-file-pdf mr-2"></i> Descargar Ticket en PDF
                             </button>
-                        </div>
-                        
-                        <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
-                            <div class="mb-4 md:mb-0">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
-                                    <i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
+</div>
+<div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
+<div class="mb-4 md:mb-0">
+<h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
+<i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
                                 </h2>
-                                <p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
-                            </div>
-                            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                                <div class="text-left md:text-right">
-                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
-                                    <span id="lblNombreEstudiante" class="text-cyan-400 font-bold text-lg"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ACERTIJO ASIGNADO -->
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
-                            <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
-                            <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
-                            <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
-                            <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
-                                <strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span id="lblAlfabeto" class="text-slate-300 font-mono"></span><br>
-                                <strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span id="lblAceptacion" class="text-slate-300"></span>
-                            </div>
-                        </div>
-
-                        <!-- REQUERIMIENTOS TÉCNICOS -->
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
-                            <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
-                            <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
-                                <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
-                                <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
-                                <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
-                                <li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -> Se presionó [Boton_A] -> Nuevo Estado [q2]"</code>.</li>
-                            </ol>
-                        </div>
-
-                        <!-- RÚBRICA -->
-                        <h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-                        <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-                            <table class="w-full text-left">
-                                <thead class="text-xs uppercase bg-slate-900 text-slate-400">
-                                    <tr>
-                                        <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
-                                        <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ENVOLTURA PARA EL PDF (Oculta visualmente en la UI, solo para render html2pdf) -->
-                <div id="ticket-pdf-content" style="display: none; padding: 40px; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; width: 800px;">
-                    <div style="border-bottom: 3px solid #0891b2; padding-bottom: 15px; margin-bottom: 25px;">
-                        <h1 style="color: #0891b2; margin: 0; font-size: 26px; font-weight: bold;">Ticket de Proyecto: Autómatas Finitos</h1>
-                        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Lenguajes y Autómatas I - IT Chilpancingo</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 30px;">
-                        <p style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin: 0 0 5px 0;">Estudiante Asignado:</p>
-                        <h2 id="pdfNombreEstudiante" style="margin: 0; font-size: 22px; color: #0f172a; font-weight: bold;"></h2>
-                    </div>
-
-                    <div style="background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
-                        <h3 id="pdfTituloAcertijo" style="color: #e11d48; margin: 0 0 15px 0; font-size: 20px; font-weight: bold;"></h3>
-                        <p id="pdfDescAcertijo" style="font-size: 15px; line-height: 1.6; color: #334155; margin-bottom: 20px;"></p>
-                        
-                        <div style="background-color: #ffffff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px;">
-                            <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Alfabeto (&Sigma;):</strong> <span id="pdfAlfabeto" style="font-family: monospace; color: #0891b2; font-weight: bold;"></span></p>
-                            <p style="margin: 0; font-size: 14px;"><strong>Condición de Aceptación:</strong> <span id="pdfAceptacion"></span></p>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Requerimientos Técnicos Obligatorios</h3>
-                        <ul style="font-size: 14px; line-height: 1.6; color: #334155; padding-left: 20px;">
-                            <li style="margin-bottom: 8px;"><strong>Interfaz Gráfica (GUI):</strong> Programar en Java utilizando Swing o JavaFX. No se acepta terminal pura.</li>
-                            <li style="margin-bottom: 8px;"><strong>Cero Regex y Cero Switch-Case:</strong> Prohibido usar <code>java.util.regex</code> y sentencias <code>switch-case</code>. La lógica debe programarse usando una <strong>Matriz de Transiciones</strong> (arreglo 2D) o el <strong>Patrón 'State'</strong>.</li>
-                            <li style="margin-bottom: 8px;"><strong>Interfaz Completa:</strong> Mostrar visiblemente el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata como imágenes o tablas dentro de la propia ventana de la App.</li>
-                            <li style="margin-bottom: 8px;"><strong>Traza de Cambios:</strong> Etiqueta en tiempo real que muestre explícitamente: <br><code>"Estado actual -> Botón Presionado -> Nuevo Estado"</code>.</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Rúbrica de Evaluación (100 pts)</h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                            <thead>
-                                <tr style="background-color: #f1f5f9;">
-                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: left;">Criterio Evaluado</th>
-                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; width: 80px;">Puntaje</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Lógica (Motor AFD):</strong> Modelado exacto de estados con Matriz 2D/Patrón State. Frena/resetea adecuadamente al recibir un comando incorrecto.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">40 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Interfaz y UX:</strong> Diseño usable de la GUI y botones correspondientes exactos a las letras del alfabeto del problema.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Integración Teórica:</strong> Grafo y Tabla de transiciones visibles dentro del aplicativo.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Traza de Estados:</strong> "Log" visible en la interfaz mostrando los saltos de transición en tiempo real.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 2. PANEL DOCENTE -->
-                <div id="panel-docente" class="hidden relative z-10">
-                    <div id="login-docente" class="text-center py-6 max-w-md mx-auto">
-                        <i class="fas fa-lock text-4xl text-slate-500 mb-4"></i>
-                        <h2 class="text-2xl font-bold mb-4">Área del Docente</h2>
-                        <input type="password" id="passDocente" class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-cyan-500 outline-none transition text-center mb-4" placeholder="Contraseña...">
-                        <button onclick="loginDocente()" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition w-full">Ingresar</button>
-                        <p id="errorPassDocente" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
-                    </div>
-
-                    <div id="dashboard-docente" class="hidden">
-                        <div class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
-                            <div>
-                                <h2 class="text-2xl font-bold text-white"><i class="fas fa-database text-cyan-400 mr-2"></i> Dashboard de Asignaciones</h2>
-                                <p class="text-slate-400 text-sm">Control de proyectos asignados a los alumnos.</p>
-                            </div>
-                            <button onclick="exportarExcel()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold transition shadow-lg text-sm flex items-center">
-                                <i class="fas fa-file-excel mr-2"></i> Descargar Excel (CSV)
+<p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+<div class="text-left md:text-right">
+<span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
+<span class="text-cyan-400 font-bold text-lg" id="lblNombreEstudiante"></span>
+</div>
+</div>
+</div>
+<!-- ACERTIJO ASIGNADO -->
+<div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
+<h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
+<h3 class="text-xl font-bold text-white mb-4" id="lblTituloAcertijo"></h3>
+<p class="text-sm text-slate-300 leading-relaxed mb-4" id="lblDescAcertijo"></p>
+<div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
+<strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span class="text-slate-300 font-mono" id="lblAlfabeto"></span><br/>
+<strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span class="text-slate-300" id="lblAceptacion"></span>
+</div>
+</div>
+<!-- REQUERIMIENTOS TÉCNICOS -->
+<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
+<h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
+<ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+<li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
+<li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
+<li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
+<li><strong>Visualización de Cambios:</strong> La interfaz debe tener una etiqueta (Label) o área de texto que muestre en tiempo real las transiciones. Ejemplo: <code>"Estado actual [q1] -&gt; Se presionó [Boton_A] -&gt; Nuevo Estado [q2]"</code>.</li>
+</ol>
+</div>
+<!-- RÚBRICA -->
+<h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
+<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+<table class="w-full text-left">
+<thead class="text-xs uppercase bg-slate-900 text-slate-400">
+<tr>
+<th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
+<th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700">
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ENVOLTURA PARA EL PDF (Oculta visualmente en la UI, solo para render html2pdf) -->
+<div id="ticket-pdf-content" style="display: none; padding: 40px; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; width: 800px;">
+<div style="border-bottom: 3px solid #0891b2; padding-bottom: 15px; margin-bottom: 25px;">
+<h1 style="color: #0891b2; margin: 0; font-size: 26px; font-weight: bold;">Ticket de Proyecto: Autómatas Finitos</h1>
+<p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Lenguajes y Autómatas I - IT Chilpancingo</p>
+</div>
+<div style="margin-bottom: 30px;">
+<p style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin: 0 0 5px 0;">Estudiante Asignado:</p>
+<h2 id="pdfNombreEstudiante" style="margin: 0; font-size: 22px; color: #0f172a; font-weight: bold;"></h2>
+</div>
+<div style="background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
+<h3 id="pdfTituloAcertijo" style="color: #e11d48; margin: 0 0 15px 0; font-size: 20px; font-weight: bold;"></h3>
+<p id="pdfDescAcertijo" style="font-size: 15px; line-height: 1.6; color: #334155; margin-bottom: 20px;"></p>
+<div style="background-color: #ffffff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px;">
+<p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Alfabeto (Σ):</strong> <span id="pdfAlfabeto" style="font-family: monospace; color: #0891b2; font-weight: bold;"></span></p>
+<p style="margin: 0; font-size: 14px;"><strong>Condición de Aceptación:</strong> <span id="pdfAceptacion"></span></p>
+</div>
+</div>
+<div style="margin-bottom: 30px;">
+<h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Requerimientos Técnicos Obligatorios</h3>
+<ul style="font-size: 14px; line-height: 1.6; color: #334155; padding-left: 20px;">
+<li style="margin-bottom: 8px;"><strong>Interfaz Gráfica (GUI):</strong> Programar en Java utilizando Swing o JavaFX. No se acepta terminal pura.</li>
+<li style="margin-bottom: 8px;"><strong>Cero Regex y Cero Switch-Case:</strong> Prohibido usar <code>java.util.regex</code> y sentencias <code>switch-case</code>. La lógica debe programarse usando una <strong>Matriz de Transiciones</strong> (arreglo 2D) o el <strong>Patrón 'State'</strong>.</li>
+<li style="margin-bottom: 8px;"><strong>Interfaz Completa:</strong> Mostrar visiblemente el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata como imágenes o tablas dentro de la propia ventana de la App.</li>
+<li style="margin-bottom: 8px;"><strong>Traza de Cambios:</strong> Etiqueta en tiempo real que muestre explícitamente: <br/><code>"Estado actual -&gt; Botón Presionado -&gt; Nuevo Estado"</code>.</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #e11d48; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Rúbrica de Evaluación (100 pts)</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+<thead>
+<tr style="background-color: #f1f5f9;">
+<th style="padding: 10px; border: 1px solid #cbd5e1; text-align: left;">Criterio Evaluado</th>
+<th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; width: 80px;">Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Lógica (Motor AFD):</strong> Modelado exacto de estados con Matriz 2D/Patrón State. Frena/resetea adecuadamente al recibir un comando incorrecto.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">40 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Interfaz y UX:</strong> Diseño usable de la GUI y botones correspondientes exactos a las letras del alfabeto del problema.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Integración Teórica:</strong> Grafo y Tabla de transiciones visibles dentro del aplicativo.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Traza de Estados:</strong> "Log" visible en la interfaz mostrando los saltos de transición en tiempo real.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48; font-weight: bold;">20 pts</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 2. PANEL DOCENTE -->
+<div class="hidden relative z-10" id="panel-docente">
+<div class="text-center py-6 max-w-md mx-auto" id="login-docente">
+<i class="fas fa-lock text-4xl text-slate-500 mb-4"></i>
+<h2 class="text-2xl font-bold mb-4">Área del Docente</h2>
+<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-cyan-500 outline-none transition text-center mb-4" id="passDocente" placeholder="Contraseña..." type="password"/>
+<button class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition w-full" onclick="loginDocente()">Ingresar</button>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorPassDocente"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
+</div>
+<div class="hidden" id="dashboard-docente">
+<div class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
+<div>
+<h2 class="text-2xl font-bold text-white"><i class="fas fa-database text-cyan-400 mr-2"></i> Dashboard de Asignaciones</h2>
+<p class="text-slate-400 text-sm">Control de proyectos asignados a los alumnos.</p>
+</div>
+<button class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold transition shadow-lg text-sm flex items-center" onclick="exportarExcel()">
+<i class="fas fa-file-excel mr-2"></i> Descargar Excel (CSV)
                             </button>
-                        </div>
+</div>
+<!-- Tabla de asignaciones -->
+<div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg mb-8">
+<div class="max-h-60 overflow-y-auto">
+<table class="w-full text-left text-sm text-slate-300">
+<thead class="bg-slate-900 text-slate-400 text-xs uppercase sticky top-0">
+<tr>
+<th class="px-4 py-3">Nombre del Alumno</th>
+<th class="px-4 py-3 border-l border-slate-700">Acertijo Asignado</th>
+<th class="px-4 py-3 border-l border-slate-700">Fecha/Hora</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700" id="tablaAsignacionesBody">
+<!-- Llenado por JS -->
+</tbody>
+</table>
+</div>
+<div class="p-4 text-center text-slate-500 text-sm hidden" id="emptyTableMsg">Aún no hay alumnos registrados.</div>
+</div>
+<!-- Ver todos los acertijos -->
+<h4 class="font-bold text-white mb-3"><i class="fas fa-list text-cyan-400 mr-2"></i> Catálogo de Acertijos y Soluciones</h4>
+<div class="grid md:grid-cols-2 gap-4 text-sm" id="catalogoAcertijos">
+<!-- Llenado por JS -->
+</div>
+</div>
+</div>
+</div>
+</section>
 
-                        <!-- Tabla de asignaciones -->
-                        <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg mb-8">
-                            <div class="max-h-60 overflow-y-auto">
-                                <table class="w-full text-left text-sm text-slate-300">
-                                    <thead class="bg-slate-900 text-slate-400 text-xs uppercase sticky top-0">
-                                        <tr>
-                                            <th class="px-4 py-3">Nombre del Alumno</th>
-                                            <th class="px-4 py-3 border-l border-slate-700">Acertijo Asignado</th>
-                                            <th class="px-4 py-3 border-l border-slate-700">Fecha/Hora</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaAsignacionesBody" class="divide-y divide-slate-700">
-                                        <!-- Llenado por JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="emptyTableMsg" class="p-4 text-center text-slate-500 text-sm hidden">Aún no hay alumnos registrados.</div>
-                        </div>
+                </div>
 
-                        <!-- Ver todos los acertijos -->
-                        <h4 class="font-bold text-white mb-3"><i class="fas fa-list text-cyan-400 mr-2"></i> Catálogo de Acertijos y Soluciones</h4>
-                        <div id="catalogoAcertijos" class="grid md:grid-cols-2 gap-4 text-sm">
-                            <!-- Llenado por JS -->
-                        </div>
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad2.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 2: Expresiones Regulares</a>
+                    <a href="unidad4.html" class="flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 4: Autómatas de Pila <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-cyan-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#intro" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#afd" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.1 Autómata Finito Determinista (AFD)</a>
+<a href="#afnd" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.2 Autómata Finito No Determinista (AFND)</a>
+<a href="#thompson" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.3 Algoritmo de Thompson (ER -> AFND)</a>
+<a href="#subconjuntos" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.4 Construcción de Subconjuntos</a>
+<a href="#minimizacion" class="block py-1 hover:text-cyan-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">3.5 Minimización de Estados (Hopcroft)</a>
+
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-cyan-50/60 p-3 rounded-xl border border-cyan-100">
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio LyA I</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Prácticas 9 a 13: Simulador de autómatas, tablas de transición y minimizador de estados.
+                        </p>
                     </div>
                 </div>
+            </aside>
 
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer Minimalista -->
-    <footer class="bg-slate-950 text-white py-12 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <div class="flex items-center space-x-3">
-                <div class="bg-cyan-600 p-2 rounded-lg">
-                    <i class="fas fa-university text-white text-sm"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold tracking-tight leading-none">IT Chilpancingo</h3>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 italic">Lenguajes y Autómatas I</p>
-                </div>
-            </div>
-            
-            <div class="flex space-x-6 text-xs font-bold text-slate-400">
-                <a href="index.html" class="hover:text-white transition">INICIO</a>
-                <a href="unidad2.html" class="hover:text-white transition">UNIDAD 2</a>
-                <a href="#" class="text-white border-b border-cyan-500">UNIDAD 3</a>
-                <a href="unidad4.html" class="hover:text-white transition">UNIDAD 4</a>
-            </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
     </footer>
 
     <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
+            if (pre) {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    const orig = btn.innerText;
+                    btn.innerText = "¡Copiado!";
+                    setTimeout(() => { btn.innerText = orig; }, 1500);
+                });
+            }
+        }
+    </script>
+    
+<script>
         // Simulador de AFD (Sección 3)
         function simularAFD() {
             const input = document.getElementById('afdInput').value;
@@ -1345,5 +1469,6 @@ String cadena = <span class="text-green-400">"10101"</span>;
             document.body.removeChild(link);
         }
     </script>
+
 </body>
 </html>

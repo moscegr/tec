@@ -3,285 +3,433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 4: Máquinas de Turing - ITChilpancingo</title>
+    <title>Unidad 4: Autómatas de Pila y Gramáticas Libres de Contexto | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-        
-        body { font-family: 'Outfit', sans-serif; scroll-behavior: smooth; }
-
-        .u4-header {
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-            position: relative;
-            overflow: hidden;
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
         }
 
-        .u4-header::before {
-            content: "";
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #d97706; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #d97706;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
         }
 
         .sticky-sub-nav {
-            position: sticky; top: 0; z-index: 50;
-            background: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
 
         .concept-card {
-            background: white; border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
         }
-
-        .tape-cell {
-            display: inline-block; width: 40px; height: 40px;
-            border: 2px solid #475569; text-align: center; line-height: 36px;
-            font-family: monospace; font-size: 1.2rem; font-weight: bold;
-            background: white; margin-right: -2px;
-        }
-
-        /* Estilos específicos para la impresión nativa del Ticket */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #ticket-pdf-content, #ticket-pdf-content * {
-                visibility: visible;
-            }
-            #ticket-pdf-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-            /* Ocultar elementos de UI no necesarios en impresión */
-            nav, header, footer, .sticky-sub-nav {
-                display: none !important;
-            }
+        .math-box {
+            background: #f8fafc;
+            border-left: 4px solid #d97706;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #334155;
+            margin-top: 1rem;
+            overflow-x: auto;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
-    <nav class="bg-white border-b border-gray-200">
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">SCD-1015 • Unidad 4</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center space-x-2 text-slate-600 hover:text-slate-900 transition group">
-                    <div class="bg-slate-100 group-hover:bg-slate-200 p-2 rounded-lg transition">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <span class="font-bold text-sm">Volver al Temario</span>
-                </a>
+            <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Lenguajes y Autómatas I</span>
-                    <span class="bg-slate-800 text-white px-3 py-1 rounded-full text-xs font-bold">Unidad 4</span>
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA I
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-amber-100 text-amber-800 text-xs flex items-center justify-center font-bold mr-2">U4</span>
+                        Autómatas de Pila y Gramáticas Libres de Contexto
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 3: Autómatas Finitos</a>
+                    <a href="unidad5.html" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition flex items-center shadow-sm">Unidad 5: Análisis Léxico <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <header class="u4-header text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                <i class="fas fa-cogs text-3xl"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Máquinas de Turing</h1>
-            <p class="text-slate-300 text-lg font-light max-w-2xl mx-auto">
-                El modelo computacional absoluto propuesto por Alan Turing. Si un problema puede resolverse computacionalmente, una Máquina de Turing puede hacerlo.
-            </p>
-        </div>
-    </header>
+    <!-- Contenedor Principal de 3 Columnas -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-    <div class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
-            <div class="flex space-x-6 min-w-max py-4 text-sm font-medium text-slate-600">
-                <a href="#intro" class="hover:text-slate-900 transition">Intro</a>
-                <a href="#formal" class="hover:text-slate-900 transition">4.1 Definición</a>
-                <a href="#construccion" class="hover:text-slate-900 transition">4.2 Construcción Modular</a>
-                <a href="#lenguajes" class="hover:text-slate-900 transition">4.3 Lenguajes Aceptados</a>
-                <a href="#java-mt" class="hover:text-slate-900 transition">4.4 Implementación Java</a>
-                <a href="#proyecto-final" class="text-indigo-600 font-bold"><i class="fas fa-award mr-1"></i>Proyecto Final</a>
-            </div>
-        </div>
-    </div>
-
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
-
-        <!-- INTRO -->
-        <section id="intro" class="scroll-mt-32">
-            <div class="bg-slate-100 border border-slate-200 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
-                <div class="flex-1">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2"><i class="fas fa-tape mr-2 text-slate-500"></i>Analogía: La Cinta Infinita</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
-                        En la Unidad 3 vimos que los AFD no tienen memoria. Solo avanzan leyendo caracteres hacia adelante y no pueden volver atrás ni escribir.<br><br>
-                        Turing imaginó una máquina que tiene un <strong>cabezal lector/escritor</strong> montado sobre una <strong>cinta infinita</strong>. La máquina puede leer un símbolo, borrarlo, escribir uno nuevo y mover el cabezal hacia la Izquierda (L) o Derecha (R). Esto le da el poder de la <em>memoria infinita</em>.
-                    </p>
-                </div>
-                <div class="w-24 flex-shrink-0 text-center text-4xl text-slate-400">
-                    <i class="fas fa-infinity"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.1 Definición Formal -->
-        <section id="formal" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-300 mr-4">4.1</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Definición Formal de la MT</h2>
-                </div>
-                
-                <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                    Formalmente, la Máquina de Turing (MT) se define como una 7-tupla matemática: \( M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) \).
-                </p>
-
-                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6 shadow-sm">
-                    <p class="text-indigo-800 text-sm font-medium flex items-start">
-                        <i class="fas fa-code mt-1 mr-3 text-indigo-500"></i>
-                        <span>Para no confundirnos con los símbolos griegos, en programación la leeremos con estas "variables" más amigables:<br>
-                        <code class="block mt-2 bg-white px-3 py-2 rounded border border-indigo-200 text-slate-800 font-bold">MT = (Estados, Alfabeto_Entrada, Alfabeto_Cinta, Reglas, Inicio, Acepta, Rechaza)</code></span>
-                    </p>
-                </div>
-
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <div class="space-y-3 text-sm text-slate-700">
-                        <p><strong class="font-mono text-slate-900">Q <span class="text-indigo-500 ml-1">(Estados)</span> :</strong> Conjunto finito de estados.</p>
-                        <p><strong class="font-mono text-slate-900">\(\Sigma\) <span class="text-indigo-500 ml-1">(Alfabeto_Entrada)</span> :</strong> Alfabeto de entrada (sin el símbolo blanco \(\sqcup\)).</p>
-                        <p><strong class="font-mono text-slate-900">\(\Gamma\) <span class="text-indigo-500 ml-1">(Alfabeto_Cinta)</span> :</strong> Alfabeto de la cinta (incluye a \(\Sigma\) y al espacio en blanco \(\sqcup\)).</p>
-                        <p class="border-l-4 border-indigo-500 pl-3 py-1 my-2 bg-indigo-50"><strong class="font-mono text-indigo-900">\(\delta\) <span class="text-indigo-500 ml-1">(Reglas)</span> :</strong> Función de transición. Su formato es: <code>(EstadoActual, SímboloLeído) -> (NuevoEstado, SímboloEscrito, Dirección[L/R])</code></p>
-                        <p><strong class="font-mono text-slate-900">q_0 <span class="text-indigo-500 ml-1">(Inicio)</span> :</strong> Estado inicial.</p>
-                        <p><strong class="font-mono text-slate-900">q_accept <span class="text-indigo-500 ml-1">(Acepta)</span> :</strong> Estado de aceptación (Si la máquina llega aquí, se detiene y aprueba).</p>
-                        <p><strong class="font-mono text-slate-900">q_reject <span class="text-indigo-500 ml-1">(Rechaza)</span> :</strong> Estado de rechazo (Si la máquina llega aquí, se detiene y falla).</p>
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-amber-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
                     </div>
-                </div>
 
-                <!-- Ejemplo Visual -->
-                <div class="mt-8 text-center">
-                    <h4 class="font-bold text-slate-700 mb-4">Ejemplo Visual de la Cinta \(\Gamma\)</h4>
-                    <div class="flex justify-center mb-2">
-                        <div class="tape-cell">\(\sqcup\)</div>
-                        <div class="tape-cell bg-indigo-100">0</div>
-                        <div class="tape-cell">1</div>
-                        <div class="tape-cell">1</div>
-                        <div class="tape-cell">\(\sqcup\)</div>
-                    </div>
-                    <div class="text-xs font-bold text-indigo-600"><i class="fas fa-caret-up text-lg block"></i>Cabezal Lector en el índice 1</div>
-                </div>
-            </div>
-        </section>
+                    <nav class="space-y-1 text-xs">
+                        
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Teoría de Lenguajes</span>
+                            <span class="difficulty-badge diff-easy">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge diff-med">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge diff-med">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg bg-amber-600 text-white font-bold shadow-sm">
+                            <span>4. Autómatas de Pila</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge diff-hard">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge diff-hard">18h</span>
+                        </a>
+                    </nav>
 
-        <!-- 4.2 Construcción Modular -->
-        <section id="construccion" class="scroll-mt-32">
-            <div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-300 mr-4">4.2</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Construcción Modular</h2>
-                </div>
+                    <!-- Subtemas Unidad 4 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 4</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <a href="#intro" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#glc" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.1 Gramáticas Libres de Contexto</a>
+<a href="#arboles" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.2 Árboles de Derivación</a>
+<a href="#ambiguedad" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.3 Eliminación de Ambigüedad</a>
+<a href="#ap" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.4 Autómatas de Pila (AP)</a>
 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                            Al igual que en programación no escribimos un bloque gigante de código (usamos funciones), las MT complejas se construyen combinando "sub-máquinas".
-                        </p>
-                        <ul class="space-y-2 text-xs text-slate-700">
-                            <li><i class="fas fa-arrow-circle-right text-slate-400 mr-2"></i> <strong>MT de desplazamiento:</strong> Va a la derecha hasta encontrar un espacio en blanco.</li>
-                            <li><i class="fas fa-eraser text-slate-400 mr-2"></i> <strong>MT de borrado:</strong> Cambia símbolos por espacios.</li>
-                            <li><i class="fas fa-copy text-slate-400 mr-2"></i> <strong>MT copiadora:</strong> Duplica una cadena en otra parte de la cinta.</li>
                         </ul>
                     </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                        <h4 class="font-bold text-slate-800 text-sm mb-3 uppercase tracking-wide">Actividad 4.1: Diseño Modular</h4>
-                        <p class="text-xs text-slate-600 mb-3 italic">"Piensa como Turing". Responde en libreta:</p>
-                        <p class="text-xs text-slate-700 bg-slate-50 p-2 rounded">
-                            Imagina que tienes una cinta con `1011`. Quieres invertir los bits para que diga `0100`. Escribe la lógica modular de la transición.
-                            <br><strong>Ayuda:</strong> "Si leo un 1, escribo un 0 y me muevo a R (derecha). Si leo un 0, escribo un 1 y me muevo a R. Si leo blanco (\(\sqcup\)), me detengo."
-                        </p>
-                    </div>
                 </div>
-            </div>
-        </section>
+            </aside>
 
-        <!-- 4.3 Lenguajes aceptados -->
-        <section id="lenguajes" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-300 mr-4">4.3</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Lenguajes Recursivamente Enumerables</h2>
-                </div>
-                <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-8">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-amber-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Unidad 4 • Lenguajes y Autómatas I</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Autómatas de Pila y Gramáticas Libres de Contexto
+                    </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Gramáticas Libres de Contexto (GLC), árboles de derivación, ambigüedad y Autómatas de Pila (AP) para análisis sintáctico.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 10 Horas (Semanas 9-10)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-hard">Nivel Didáctico</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- CONTENIDO ORIGINAL COMPLETO E INTACTO -->
+                <div class="space-y-8 text-slate-700 leading-relaxed">
+                    
+<!-- INTRO -->
+<section class="scroll-mt-32" id="intro">
+<div class="bg-slate-100 border border-slate-200 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
+<div class="flex-1">
+<h3 class="text-xl font-bold text-slate-800 mb-2"><i class="fas fa-tape mr-2 text-slate-500"></i>Analogía: La Cinta Infinita</h3>
+<p class="text-slate-700 text-sm leading-relaxed mb-4">
+                        En la Unidad 3 vimos que los AFD no tienen memoria. Solo avanzan leyendo caracteres hacia adelante y no pueden volver atrás ni escribir.<br/><br/>
+                        Turing imaginó una máquina que tiene un <strong>cabezal lector/escritor</strong> montado sobre una <strong>cinta infinita</strong>. La máquina puede leer un símbolo, borrarlo, escribir uno nuevo y mover el cabezal hacia la Izquierda (L) o Derecha (R). Esto le da el poder de la <em>memoria infinita</em>.
+                    </p>
+</div>
+<div class="w-24 flex-shrink-0 text-center text-4xl text-slate-400">
+<i class="fas fa-infinity"></i>
+</div>
+</div>
+</section>
+<!-- 4.1 Definición Formal -->
+<section class="scroll-mt-32" id="formal">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-300 mr-4">4.1</span>
+<h2 class="text-2xl font-bold text-slate-800">Definición Formal de la MT</h2>
+</div>
+<p class="text-slate-600 text-sm leading-relaxed mb-4">
+                    Formalmente, la Máquina de Turing (MT) se define como una 7-tupla matemática: \( M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) \).
+                </p>
+<div class="bg-indigo-50 border border-indigo-100 p-4 rounded-xl mb-6 shadow-sm">
+<p class="text-indigo-800 text-sm font-medium flex items-start">
+<i class="fas fa-code mt-1 mr-3 text-indigo-500"></i>
+<span>Para no confundirnos con los símbolos griegos, en programación la leeremos con estas "variables" más amigables:<br/>
+<code class="block mt-2 bg-white px-3 py-2 rounded border border-indigo-200 text-slate-800 font-bold">MT = (Estados, Alfabeto_Entrada, Alfabeto_Cinta, Reglas, Inicio, Acepta, Rechaza)</code></span>
+</p>
+</div>
+<div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+<div class="space-y-3 text-sm text-slate-700">
+<p><strong class="font-mono text-slate-900">Q <span class="text-indigo-500 ml-1">(Estados)</span> :</strong> Conjunto finito de estados.</p>
+<p><strong class="font-mono text-slate-900">\(\Sigma\) <span class="text-indigo-500 ml-1">(Alfabeto_Entrada)</span> :</strong> Alfabeto de entrada (sin el símbolo blanco \(\sqcup\)).</p>
+<p><strong class="font-mono text-slate-900">\(\Gamma\) <span class="text-indigo-500 ml-1">(Alfabeto_Cinta)</span> :</strong> Alfabeto de la cinta (incluye a \(\Sigma\) y al espacio en blanco \(\sqcup\)).</p>
+<p class="border-l-4 border-indigo-500 pl-3 py-1 my-2 bg-indigo-50"><strong class="font-mono text-indigo-900">\(\delta\) <span class="text-indigo-500 ml-1">(Reglas)</span> :</strong> Función de transición. Su formato es: <code>(EstadoActual, SímboloLeído) -&gt; (NuevoEstado, SímboloEscrito, Dirección[L/R])</code></p>
+<p><strong class="font-mono text-slate-900">q_0 <span class="text-indigo-500 ml-1">(Inicio)</span> :</strong> Estado inicial.</p>
+<p><strong class="font-mono text-slate-900">q_accept <span class="text-indigo-500 ml-1">(Acepta)</span> :</strong> Estado de aceptación (Si la máquina llega aquí, se detiene y aprueba).</p>
+<p><strong class="font-mono text-slate-900">q_reject <span class="text-indigo-500 ml-1">(Rechaza)</span> :</strong> Estado de rechazo (Si la máquina llega aquí, se detiene y falla).</p>
+</div>
+</div>
+<!-- Ejemplo Visual -->
+<div class="mt-8 text-center">
+<h4 class="font-bold text-slate-700 mb-4">Ejemplo Visual de la Cinta \(\Gamma\)</h4>
+<div class="flex justify-center mb-2">
+<div class="tape-cell">\(\sqcup\)</div>
+<div class="tape-cell bg-indigo-100">0</div>
+<div class="tape-cell">1</div>
+<div class="tape-cell">1</div>
+<div class="tape-cell">\(\sqcup\)</div>
+</div>
+<div class="text-xs font-bold text-indigo-600"><i class="fas fa-caret-up text-lg block"></i>Cabezal Lector en el índice 1</div>
+</div>
+</div>
+</section>
+<!-- 4.2 Construcción Modular -->
+<section class="scroll-mt-32" id="construccion">
+<div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-300 mr-4">4.2</span>
+<h2 class="text-2xl font-bold text-slate-800">Construcción Modular</h2>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Al igual que en programación no escribimos un bloque gigante de código (usamos funciones), las MT complejas se construyen combinando "sub-máquinas".
+                        </p>
+<ul class="space-y-2 text-xs text-slate-700">
+<li><i class="fas fa-arrow-circle-right text-slate-400 mr-2"></i> <strong>MT de desplazamiento:</strong> Va a la derecha hasta encontrar un espacio en blanco.</li>
+<li><i class="fas fa-eraser text-slate-400 mr-2"></i> <strong>MT de borrado:</strong> Cambia símbolos por espacios.</li>
+<li><i class="fas fa-copy text-slate-400 mr-2"></i> <strong>MT copiadora:</strong> Duplica una cadena en otra parte de la cinta.</li>
+</ul>
+</div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+<h4 class="font-bold text-slate-800 text-sm mb-3 uppercase tracking-wide">Actividad 4.1: Diseño Modular</h4>
+<p class="text-xs text-slate-600 mb-3 italic">"Piensa como Turing". Responde en libreta:</p>
+<p class="text-xs text-slate-700 bg-slate-50 p-2 rounded">
+                            Imagina que tienes una cinta con `1011`. Quieres invertir los bits para que diga `0100`. Escribe la lógica modular de la transición.
+                            <br/><strong>Ayuda:</strong> "Si leo un 1, escribo un 0 y me muevo a R (derecha). Si leo un 0, escribo un 1 y me muevo a R. Si leo blanco (\(\sqcup\)), me detengo."
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4.3 Lenguajes aceptados -->
+<section class="scroll-mt-32" id="lenguajes">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-300 mr-4">4.3</span>
+<h2 class="text-2xl font-bold text-slate-800">Lenguajes Recursivamente Enumerables</h2>
+</div>
+<p class="text-slate-600 text-sm leading-relaxed mb-4">
                     La MT reconoce la cúspide de la jerarquía de Chomsky (Tipo 0). Cualquier lenguaje que pueda ser reconocido o generado por un algoritmo computacional es "Recursivamente Enumerable".
                 </p>
-                <div class="bg-red-50 p-4 rounded-lg border border-red-200 text-sm text-red-900 flex items-start">
-                    <i class="fas fa-exclamation-triangle mt-1 mr-3"></i>
-                    <div>
-                        <strong>El Problema de la Parada (Halting Problem):</strong> 
+<div class="bg-red-50 p-4 rounded-lg border border-red-200 text-sm text-red-900 flex items-start">
+<i class="fas fa-exclamation-triangle mt-1 mr-3"></i>
+<div>
+<strong>El Problema de la Parada (Halting Problem):</strong> 
                         Alan Turing demostró que existen lenguajes/problemas que la MT NO puede resolver. Es imposible escribir un programa general que tome otro código fuente y sepa con certeza absoluta si ese programa terminará algún día o se quedará colgado en un ciclo infinito.
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.4 IMPLEMENTACIÓN EN JAVA -->
-        <section id="java-mt" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-300 mr-4">4.4</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Implementación en Java</h2>
-                </div>
-                <p class="text-slate-600 text-sm mb-8 leading-relaxed">
+</div>
+</div>
+</section>
+<!-- 4.4 IMPLEMENTACIÓN EN JAVA -->
+<section class="scroll-mt-32" id="java-mt">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-300 mr-4">4.4</span>
+<h2 class="text-2xl font-bold text-slate-800">Implementación en Java</h2>
+</div>
+<p class="text-slate-600 text-sm mb-8 leading-relaxed">
                     Programar una Máquina de Turing te ayudará a entender las bases de la computación. En Java, simularemos la <strong>Cinta Infinita</strong> usando un arreglo (<code>char[]</code>) muy grande y el <strong>Cabezal</strong> será simplemente un índice (<code>int</code>) apuntando a esa memoria.
                 </p>
-
-                <!-- Explicación base Estructura -->
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-10 shadow-sm">
-                    <h3 class="font-bold text-slate-800 mb-4 text-lg"><i class="fas fa-building mr-2 text-indigo-500"></i> La Arquitectura Base</h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-bold text-slate-700 text-sm">1. La Memoria y el Cabezal</h4>
-                            <p class="text-xs text-slate-600 mt-1 mb-2">Creamos una cinta ficticia con espacios en blanco (<code>'_'</code>) y situamos el cabezal al medio para que pueda ir a la izquierda o derecha libremente.</p>
-                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+<!-- Explicación base Estructura -->
+<div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-10 shadow-sm">
+<h3 class="font-bold text-slate-800 mb-4 text-lg"><i class="fas fa-building mr-2 text-indigo-500"></i> La Arquitectura Base</h3>
+<div class="grid md:grid-cols-2 gap-6">
+<div>
+<h4 class="font-bold text-slate-700 text-sm">1. La Memoria y el Cabezal</h4>
+<p class="text-xs text-slate-600 mt-1 mb-2">Creamos una cinta ficticia con espacios en blanco (<code>'_'</code>) y situamos el cabezal al medio para que pueda ir a la izquierda o derecha libremente.</p>
+<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
 <pre><code class="text-[11px] font-mono text-slate-300"><span class="text-purple-400">char</span>[] cinta = <span class="text-purple-400">new char</span>[<span class="text-rose-400">1000</span>];
 java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="text-green-400">'_'</span>); <span class="text-slate-500">// Llenar de blancos</span>
 
 <span class="text-purple-400">int</span> cabezal = <span class="text-rose-400">500</span>; <span class="text-slate-500">// Inicio (Centro)</span>
 <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>;    <span class="text-slate-500">// q0</span></code></pre>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-slate-700 text-sm">2. El Bucle de Estados</h4>
-                            <p class="text-xs text-slate-600 mt-1 mb-2">La MT no usa un bucle <code>for</code> porque puede retroceder. Se usa un bucle infinito <code>while</code> atado a los estados de <code>aceptación (99)</code> o <code>rechazo (-1)</code>.</p>
-                            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
-<pre><code class="text-[11px] font-mono text-slate-300"><span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+</div>
+</div>
+<div>
+<h4 class="font-bold text-slate-700 text-sm">2. El Bucle de Estados</h4>
+<p class="text-xs text-slate-600 mt-1 mb-2">La MT no usa un bucle <code>for</code> porque puede retroceder. Se usa un bucle infinito <code>while</code> atado a los estados de <code>aceptación (99)</code> o <code>rechazo (-1)</code>.</p>
+<div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
+<pre><code class="text-[11px] font-mono text-slate-300"><span class="text-purple-400">while</span>(estado != <span class="text-rose-400">99</span> &amp;&amp; estado != -<span class="text-rose-400">1</span>) {
     <span class="text-purple-400">char</span> leido = cinta[cabezal];
     <span class="text-slate-500">// Lógica de transiciones (switch/if)</span>
-    <span class="text-slate-500">// Escribe -> Mueve (++, --) -> Cambia Estado</span>
+    <span class="text-slate-500">// Escribe -&gt; Mueve (++, --) -&gt; Cambia Estado</span>
 }</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJEMPLOS DETALLADOS COMPLETOS -->
-                <div class="mt-12 border-t border-slate-200 pt-8">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-4"><i class="fas fa-laptop-code mr-2 text-indigo-600"></i> Ejemplos Completos (Paso a Paso)</h3>
-                    <p class="text-sm text-slate-600 mb-8">Para comprender mejor cómo funciona la máquina, analizaremos programas en Java completos. Observa cómo la combinación de <strong>Estado Actual</strong> y <strong>Símbolo Leído</strong> decide el futuro de la transición.</p>
-
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
-                        <div class="bg-indigo-50 border-b border-indigo-100 p-5">
-                            <h4 class="font-bold text-indigo-900 text-lg">Ejemplo A: El Sumador Unario (+1)</h4>
-                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes un número unario (ej. "11" que representa el número 2). La máquina debe leer la cadena, viajar hacia la derecha hasta encontrar un hueco vacío <code>'_'</code>, escribir un <code>'1'</code> (sumando así +1), y detenerse en el estado de aceptación.</p>
-                        </div>
-                        <div class="grid lg:grid-cols-2">
-                            <!-- Codigo Java -->
-                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+</div>
+</div>
+</div>
+</div>
+<!-- EJEMPLOS DETALLADOS COMPLETOS -->
+<div class="mt-12 border-t border-slate-200 pt-8">
+<h3 class="text-2xl font-bold text-slate-800 mb-4"><i class="fas fa-laptop-code mr-2 text-indigo-600"></i> Ejemplos Completos (Paso a Paso)</h3>
+<p class="text-sm text-slate-600 mb-8">Para comprender mejor cómo funciona la máquina, analizaremos programas en Java completos. Observa cómo la combinación de <strong>Estado Actual</strong> y <strong>Símbolo Leído</strong> decide el futuro de la transición.</p>
+<div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+<div class="bg-indigo-50 border-b border-indigo-100 p-5">
+<h4 class="font-bold text-indigo-900 text-lg">Ejemplo A: El Sumador Unario (+1)</h4>
+<p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes un número unario (ej. "11" que representa el número 2). La máquina debe leer la cadena, viajar hacia la derecha hasta encontrar un hueco vacío <code>'_'</code>, escribir un <code>'1'</code> (sumando así +1), y detenerse en el estado de aceptación.</p>
+</div>
+<div class="grid lg:grid-cols-2">
+<!-- Codigo Java -->
+<div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTSumador</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// 1. Preparamos la cinta</span>
@@ -317,30 +465,29 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta));
     }
 }</code></pre>
-                            </div>
-                            <div class="p-5 flex flex-col justify-center space-y-4">
-                                <div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100 shadow-sm">
-                                    <h5 class="font-bold text-indigo-800 text-xs uppercase mb-1">¿Cómo lo procesa?</h5>
-                                    <ul class="text-xs text-slate-600 space-y-2 list-decimal pl-4">
-                                        <li>El cabezal inicia en el índice <code>5</code>, donde hay un <code>'1'</code>.</li>
-                                        <li>La regla le dice: <strong>"Deja el 1 como está, avanza a la derecha y sigue en estado 0"</strong>.</li>
-                                        <li>Avanza hasta el índice <code>7</code> y lee un <code>'_'</code>.</li>
-                                        <li>La regla para <code>'_'</code> en el estado 0 se activa: <strong>"Escribe un '1' y cambia a estado 99"</strong>. ¡Fin!</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ejemplo B: Complemento Binario -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
-                        <div class="bg-emerald-50 border-b border-emerald-100 p-5">
-                            <h4 class="font-bold text-emerald-900 text-lg">Ejemplo B: El Complemento Binario (Filtro Inteligente)</h4>
-                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes una cadena binaria (ej. "1010"). La MT debe leerla de izquierda a derecha, invirtiendo cada bit (los 1 se hacen 0 y los 0 se hacen 1). Al terminar la cadena (cuando lea <code>'_'</code>), se detiene.</p>
-                        </div>
-                        <div class="grid lg:grid-cols-2">
-                            <!-- Codigo Java -->
-                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+</div>
+<div class="p-5 flex flex-col justify-center space-y-4">
+<div class="bg-indigo-50/50 p-4 rounded-lg border border-indigo-100 shadow-sm">
+<h5 class="font-bold text-indigo-800 text-xs uppercase mb-1">¿Cómo lo procesa?</h5>
+<ul class="text-xs text-slate-600 space-y-2 list-decimal pl-4">
+<li>El cabezal inicia en el índice <code>5</code>, donde hay un <code>'1'</code>.</li>
+<li>La regla le dice: <strong>"Deja el 1 como está, avanza a la derecha y sigue en estado 0"</strong>.</li>
+<li>Avanza hasta el índice <code>7</code> y lee un <code>'_'</code>.</li>
+<li>La regla para <code>'_'</code> en el estado 0 se activa: <strong>"Escribe un '1' y cambia a estado 99"</strong>. ¡Fin!</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Ejemplo B: Complemento Binario -->
+<div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+<div class="bg-emerald-50 border-b border-emerald-100 p-5">
+<h4 class="font-bold text-emerald-900 text-lg">Ejemplo B: El Complemento Binario (Filtro Inteligente)</h4>
+<p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Tienes una cadena binaria (ej. "1010"). La MT debe leerla de izquierda a derecha, invirtiendo cada bit (los 1 se hacen 0 y los 0 se hacen 1). Al terminar la cadena (cuando lea <code>'_'</code>), se detiene.</p>
+</div>
+<div class="grid lg:grid-cols-2">
+<!-- Codigo Java -->
+<div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTComplemento</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// 1. Cinta con la cadena "1010"</span>
@@ -375,31 +522,30 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
     }
 }</code></pre>
-                            </div>
-                            <!-- Explicacion -->
-                            <div class="p-5 flex flex-col justify-center space-y-4">
-                                <div class="bg-emerald-50/50 p-4 rounded-lg border border-emerald-100 shadow-sm">
-                                    <h5 class="font-bold text-emerald-800 text-xs uppercase mb-1">El Poder de la Transformación *In Situ*</h5>
-                                    <p class="text-xs text-slate-600 mb-2">A diferencia de un arreglo tradicional en Java donde leeríamos y guardaríamos el resultado en <em>otro</em> String, la Máquina de Turing hace el trabajo en la misma cinta (memoria dinámica).</p>
-                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-                                        <li>El bloque <code>if (leido == '0')</code> y <code>else if (leido == '1')</code> mantienen el estado en 0, lo que significa que la máquina <strong>repite la misma lógica</strong> una y otra vez para cada carácter de la palabra.</li>
-                                        <li>El cabezal avanza implacablemente a la derecha con <code>cabezal++</code>.</li>
-                                        <li>La condición de salida es elegantísima: Cuando la palabra física se acaba y el cabezal pisa un "hueco" (<code>'_'</code>), manda la señal <code>99</code> y apaga la máquina.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ejemplo C: MT Cajero ATM -->
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
-                        <div class="bg-amber-50 border-b border-amber-100 p-5">
-                            <h4 class="font-bold text-amber-900 text-lg">Ejemplo C: Máquina de Estados Estricta (Bloqueo de Cajero ATM)</h4>
-                            <p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Simular el sistema de seguridad de un cajero. La cinta contiene un historial de intentos de PIN (<code>'C'</code> = Correcto, <code>'E'</code> = Error). El cajero tolerará hasta 2 errores. Al 3er error consecutivo, la máquina entra en estado de Bloqueo, escribe una marca <code>'B'</code> en la cinta y retiene la tarjeta.</p>
-                        </div>
-                        <div class="grid lg:grid-cols-2">
-                            <!-- Codigo Java -->
-                            <div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
+</div>
+<!-- Explicacion -->
+<div class="p-5 flex flex-col justify-center space-y-4">
+<div class="bg-emerald-50/50 p-4 rounded-lg border border-emerald-100 shadow-sm">
+<h5 class="font-bold text-emerald-800 text-xs uppercase mb-1">El Poder de la Transformación *In Situ*</h5>
+<p class="text-xs text-slate-600 mb-2">A diferencia de un arreglo tradicional en Java donde leeríamos y guardaríamos el resultado en <em>otro</em> String, la Máquina de Turing hace el trabajo en la misma cinta (memoria dinámica).</p>
+<ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+<li>El bloque <code>if (leido == '0')</code> y <code>else if (leido == '1')</code> mantienen el estado en 0, lo que significa que la máquina <strong>repite la misma lógica</strong> una y otra vez para cada carácter de la palabra.</li>
+<li>El cabezal avanza implacablemente a la derecha con <code>cabezal++</code>.</li>
+<li>La condición de salida es elegantísima: Cuando la palabra física se acaba y el cabezal pisa un "hueco" (<code>'_'</code>), manda la señal <code>99</code> y apaga la máquina.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Ejemplo C: MT Cajero ATM -->
+<div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden mb-10">
+<div class="bg-amber-50 border-b border-amber-100 p-5">
+<h4 class="font-bold text-amber-900 text-lg">Ejemplo C: Máquina de Estados Estricta (Bloqueo de Cajero ATM)</h4>
+<p class="text-xs text-slate-600 mt-1"><strong>Objetivo:</strong> Simular el sistema de seguridad de un cajero. La cinta contiene un historial de intentos de PIN (<code>'C'</code> = Correcto, <code>'E'</code> = Error). El cajero tolerará hasta 2 errores. Al 3er error consecutivo, la máquina entra en estado de Bloqueo, escribe una marca <code>'B'</code> en la cinta y retiene la tarjeta.</p>
+</div>
+<div class="grid lg:grid-cols-2">
+<!-- Codigo Java -->
+<div class="bg-slate-900 p-5 overflow-x-auto text-xs font-mono text-slate-300">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MTCajeroSeguridad</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Historial: 2 errores, 1 acierto, 3 errores seguidos</span>
@@ -409,7 +555,7 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         <span class="text-purple-400">int</span> estado = <span class="text-rose-400">0</span>; <span class="text-slate-500">// 0: Normal, 1: Un Error, 2: Dos Errores, 3: Bloqueado</span>
         
         <span class="text-slate-500">// Bucle de Transiciones (Motor Switch)</span>
-        <span class="text-purple-400">while</span> (estado != <span class="text-rose-400">99</span> && estado != -<span class="text-rose-400">1</span>) {
+        <span class="text-purple-400">while</span> (estado != <span class="text-rose-400">99</span> &amp;&amp; estado != -<span class="text-rose-400">1</span>) {
             <span class="text-purple-400">char</span> leido = cinta[cabezal];
             
             <span class="text-purple-400">switch</span> (estado) {
@@ -446,36 +592,34 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(String.<span class="text-blue-300">valueOf</span>(cinta)); 
     }
 }</code></pre>
-                            </div>
-                            <!-- Explicacion -->
-                            <div class="p-5 flex flex-col justify-center space-y-4">
-                                <div class="bg-amber-50/50 p-4 rounded-lg border border-amber-200 shadow-sm">
-                                    <h5 class="font-bold text-amber-900 text-xs uppercase mb-1">Transiciones Clásicas (\(\delta\))</h5>
-                                    <p class="text-xs text-slate-600 mb-2">Usar un bloque <code>switch(estado)</code> es la forma más pura y profesional de representar la <strong>Función de Transición (\(\delta\))</strong> de una Máquina de Turing en Java.</p>
-                                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-                                        <li>El <code>switch</code> controla en qué <strong>Estado de la máquina</strong> (Q) nos encontramos actualmente. Es la memoria del sistema.</li>
-                                        <li>Si ingresamos una 'C' (Correcto) estando en el Estado 1 o 2, la máquina se "resetea" regresando al Estado 0.</li>
-                                        <li>El <strong>Estado 3 es un Estado Pozo</strong>. Una vez que el sistema entra ahí (por 3 errores), ninguna combinación de caracteres lo dejará salir. Finalmente, detendrá el motor con un Rechazo Absoluto (-1).</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS PRÁCTICOS PARA CLASE (NIVEL MEDIO) -->
-                <div class="mt-8 border-t border-slate-200 pt-8">
-                    <h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-indigo-500"></i> Ejercicios Prácticos (Nivel Medio)</h3>
-                    <p class="text-sm text-slate-600 mb-6">Completa estos retos en tu entorno de desarrollo (IDE). Practicaremos manipulación in-situ, búsqueda de patrones lógicos y aritmética básica con el cabezal de Turing.</p>
-
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Ejercicio 1 (Binarizador por Umbral) -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto1_Binarizador.java</span>
-                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+</div>
+<!-- Explicacion -->
+<div class="p-5 flex flex-col justify-center space-y-4">
+<div class="bg-amber-50/50 p-4 rounded-lg border border-amber-200 shadow-sm">
+<h5 class="font-bold text-amber-900 text-xs uppercase mb-1">Transiciones Clásicas (\(\delta\))</h5>
+<p class="text-xs text-slate-600 mb-2">Usar un bloque <code>switch(estado)</code> es la forma más pura y profesional de representar la <strong>Función de Transición (\(\delta\))</strong> de una Máquina de Turing en Java.</p>
+<ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+<li>El <code>switch</code> controla en qué <strong>Estado de la máquina</strong> (Q) nos encontramos actualmente. Es la memoria del sistema.</li>
+<li>Si ingresamos una 'C' (Correcto) estando en el Estado 1 o 2, la máquina se "resetea" regresando al Estado 0.</li>
+<li>El <strong>Estado 3 es un Estado Pozo</strong>. Una vez que el sistema entra ahí (por 3 errores), ninguna combinación de caracteres lo dejará salir. Finalmente, detendrá el motor con un Rechazo Absoluto (-1).</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- EJERCICIOS PRÁCTICOS PARA CLASE (NIVEL MEDIO) -->
+<div class="mt-8 border-t border-slate-200 pt-8">
+<h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-indigo-500"></i> Ejercicios Prácticos (Nivel Medio)</h3>
+<p class="text-sm text-slate-600 mb-6">Completa estos retos en tu entorno de desarrollo (IDE). Practicaremos manipulación in-situ, búsqueda de patrones lógicos y aritmética básica con el cabezal de Turing.</p>
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Ejercicio 1 (Binarizador por Umbral) -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto1_Binarizador.java</span>
+<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_Binarizador</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Cinta con números aleatorios del 0 al 9</span>
@@ -492,16 +636,15 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(cinta); <span class="text-slate-500">// Resultado: 01010_</span>
     }
 }</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Ejercicio 2 (Detector Secuencia) -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto2_Detector101.java</span>
-                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+</div>
+</div>
+<!-- Ejercicio 2 (Detector Secuencia) -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto2_Detector101.java</span>
+<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_Detector101</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Cinta binaria cualquiera</span>
@@ -510,25 +653,24 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         
         <span class="text-slate-500">// TAREA (Buscador de Subcadena):</span>
         <span class="text-slate-500">// Usa switch(estado) para encontrar el patrón "101".</span>
-        <span class="text-slate-500">// Estado 0: Si lee 1 -> pasa a E1. Si lee 0 -> sigue E0.</span>
-        <span class="text-slate-500">// Estado 1: Si lee 0 -> pasa a E2. Si lee 1 -> sigue E1.</span>
-        <span class="text-slate-500">// Estado 2: Si lee 1 -> ACEPTA (99). Si lee 0 -> vuelve E0.</span>
+        <span class="text-slate-500">// Estado 0: Si lee 1 -&gt; pasa a E1. Si lee 0 -&gt; sigue E0.</span>
+        <span class="text-slate-500">// Estado 1: Si lee 0 -&gt; pasa a E2. Si lee 1 -&gt; sigue E1.</span>
+        <span class="text-slate-500">// Estado 2: Si lee 1 -&gt; ACEPTA (99). Si lee 0 -&gt; vuelve E0.</span>
         
         <span class="text-slate-500">// ESCRIBE_TU_WHILE_AQUÍ</span>
         
         <span class="text-purple-400">if</span>(estado == <span class="text-rose-400">99</span>) System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"¡Patrón 101 Detectado!"</span>);
     }
 }</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Ejercicio 3 (Cifrado ASCII) -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto3_CifradoBasico.java</span>
-                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+</div>
+</div>
+<!-- Ejercicio 3 (Cifrado ASCII) -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto3_CifradoBasico.java</span>
+<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_CifradoBasico</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Mensaje oculto (Solo letras A-X para evitar desbordes)</span>
@@ -545,16 +687,15 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(cinta); <span class="text-slate-500">// Resultado: L C X C _</span>
     }
 }</code></pre>
-                            </div>
-                        </div>
-
-                        <!-- Ejercicio 4 (Filtro de Caracteres Múltiples) -->
-                        <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-                            <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-                                <span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto4_FiltroVocales.java</span>
-                                <span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
-                            </div>
-                            <div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+</div>
+</div>
+<!-- Ejercicio 4 (Filtro de Caracteres Múltiples) -->
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
+<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-indigo-400 mr-2"></i>Reto4_FiltroVocales.java</span>
+<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+</div>
+<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">MT_FiltroVocales</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// Texto simple</span>
@@ -571,256 +712,270 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
         System.out.<span class="text-blue-300">println</span>(cinta); <span class="text-slate-500">// Resultado: h*l*_</span>
     }
 }</code></pre>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN DE PROYECTO FINAL MÁQUINAS DE TURING -->
-        <section id="proyecto-final" class="scroll-mt-32 pb-20">
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-                
-                <!-- TABS NAVEGACIÓN PROYECTO -->
-                <div class="flex justify-center mb-8 relative z-10 border-b border-slate-700">
-                    <button onclick="switchTab('alumno')" id="tabAlumno" class="px-6 py-3 text-sm font-bold text-indigo-400 border-b-2 border-indigo-500 uppercase tracking-wider transition">Panel Alumno</button>
-                    <button onclick="switchTab('docente')" id="tabDocente" class="px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider">Acceso Docente</button>
-                </div>
-
-                <!-- 1. PANEL ALUMNO -->
-                <div id="panel-alumno" class="relative z-10">
-                    <!-- REGISTRO DEL ESTUDIANTE -->
-                    <div id="registro-u4" class="text-center py-6 max-w-lg mx-auto">
-                        <i class="fas fa-microchip text-5xl text-indigo-500 mb-4"></i>
-                        <h2 class="text-2xl md:text-3xl font-bold mb-2">Proyecto Final: Máquinas de Turing</h2>
-                        <p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 problemas reales (nivel intermedio) para modelar como Máquina de Turing. <strong>Esta asignación es permanente.</strong></p>
-                        
-                        <div class="flex flex-col gap-4">
-                            <input type="text" id="nombreAlumno" class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none transition text-center" placeholder="Tu Nombre Completo...">
-                            <button onclick="asignarProyecto()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg w-full">Obtener Proyecto</button>
-                        </div>
-                        <p id="errorNombre" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Debes ingresar tu nombre.</p>
-                    </div>
-
-                    <!-- TICKET DEL PROYECTO -->
-                    <div id="resultado-u4" class="hidden">
-                        
-                        <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
-                            <div class="mb-4 md:mb-0">
-                                <h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
-                                    <i class="fas fa-award text-indigo-500 mr-3"></i> Asignación Oficial
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECCIÓN DE PROYECTO FINAL MÁQUINAS DE TURING -->
+<section class="scroll-mt-32 pb-20" id="proyecto-final">
+<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
+<!-- TABS NAVEGACIÓN PROYECTO -->
+<div class="flex justify-center mb-8 relative z-10 border-b border-slate-700">
+<button class="px-6 py-3 text-sm font-bold text-indigo-400 border-b-2 border-indigo-500 uppercase tracking-wider transition" id="tabAlumno" onclick="switchTab('alumno')">Panel Alumno</button>
+<button class="px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider" id="tabDocente" onclick="switchTab('docente')">Acceso Docente</button>
+</div>
+<!-- 1. PANEL ALUMNO -->
+<div class="relative z-10" id="panel-alumno">
+<!-- REGISTRO DEL ESTUDIANTE -->
+<div class="text-center py-6 max-w-lg mx-auto" id="registro-u4">
+<i class="fas fa-microchip text-5xl text-indigo-500 mb-4"></i>
+<h2 class="text-2xl md:text-3xl font-bold mb-2">Proyecto Final: Máquinas de Turing</h2>
+<p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 problemas reales (nivel intermedio) para modelar como Máquina de Turing. <strong>Esta asignación es permanente.</strong></p>
+<div class="flex flex-col gap-4">
+<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none transition text-center" id="nombreAlumno" placeholder="Tu Nombre Completo..." type="text"/>
+<button class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg w-full" onclick="asignarProyecto()">Obtener Proyecto</button>
+</div>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorNombre"><i class="fas fa-exclamation-triangle mr-2"></i>Debes ingresar tu nombre.</p>
+</div>
+<!-- TICKET DEL PROYECTO -->
+<div class="hidden" id="resultado-u4">
+<div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
+<div class="mb-4 md:mb-0">
+<h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
+<i class="fas fa-award text-indigo-500 mr-3"></i> Asignación Oficial
                                 </h2>
-                                <p class="text-slate-400 mt-2 text-sm">Simulación Gráfica de una Máquina de Turing en Java.</p>
-                            </div>
-                            <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                                <div class="text-left md:text-right">
-                                    <span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
-                                    <span id="lblNombreEstudiante" class="text-indigo-400 font-bold text-lg"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ACERTIJO ASIGNADO -->
-                        <div class="bg-slate-800/80 p-6 rounded-xl border border-indigo-500/50 mb-8 shadow-lg">
-                            <h4 class="font-bold text-indigo-400 mb-2 uppercase tracking-wide text-xs">Problema Asignado</h4>
-                            <h3 id="lblTituloAcertijo" class="text-xl font-bold text-white mb-4"></h3>
-                            <p id="lblDescAcertijo" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
-                            <div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <strong class="text-blue-400 block mb-1">Alfabeto (\(\Gamma\)):</strong> 
-                                    <span id="lblAlfabeto" class="text-slate-300 font-mono text-xs"></span>
-                                </div>
-                                <div>
-                                    <strong class="text-emerald-400 block mb-1">Condición de Parada:</strong> 
-                                    <span id="lblAceptacion" class="text-slate-300 text-xs"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- REQUERIMIENTOS TÉCNICOS -->
-                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
-                            <h4 class="font-bold text-indigo-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos</h4>
-                            <ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
-                                <li><strong>Interfaz Gráfica Visual (GUI):</strong> Obligatorio programar en Java (Swing o JavaFX). La GUI debe mostrar visualmente un "arreglo" que represente la <strong>Cinta</strong> y un indicador o flecha que represente la posición actual del <strong>Cabezal</strong>.</li>
-                                <li><strong>Motor de Turing:</strong> No se pueden usar funciones rápidas como <code>String.replace()</code>. Debes implementar el ciclo lógico que lea el índice actual de la cinta, escriba el nuevo valor (o lo deje igual) y mueva explícitamente el índice del cabezal <code>+1</code> (R) o <code>-1</code> (L).</li>
-                                <li><strong>Simulación Animada o Paso a Paso:</strong> El usuario debe poder ver cómo la máquina trabaja. Agrega un botón "Paso a paso" que ejecute una sola transición a la vez, o un botón "Automático" que use un <code>Timer</code> para animar el movimiento del cabezal sobre la cinta visual.</li>
-                                <li><strong>Tabla de Transiciones:</strong> Tu reporte debe incluir la tabla formal \(\delta\) especificando los estados utilizados.</li>
-                            </ol>
-                        </div>
-
-                        <!-- RÚBRICA -->
-                        <h4 class="font-bold text-indigo-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-                        <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-                            <table class="w-full text-left">
-                                <thead class="text-xs uppercase bg-slate-900 text-slate-400">
-                                    <tr>
-                                        <th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
-                                        <th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-700">
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Lógica de Máquina de Turing:</strong> Usa un arreglo para la cinta y una variable índice para el cabezal. La lógica resuelve matemáticamente el problema sin usar trampas de Java.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">40 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Animación de la Interfaz (GUI):</strong> La ventana gráfica dibuja la cinta correctamente y el cabezal se mueve visualmente mostrando las reescrituras de caracteres.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">30 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>Reporte Formal (\(\delta\)):</strong> El alumno entrega el diseño formal de la función de transición de su máquina (Tabla o Grafo).</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">20 pts</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-700/50">
-                                        <td class="px-5 py-3"><strong>UX y Entradas Dúctiles:</strong> Permite ingresar diferentes cadenas de prueba al iniciar sin que el programa colapse.</td>
-                                        <td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">10 pts</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ENVOLTURA PARA IMPRIMIR PDF (NATIVA) -->
-                <div id="ticket-pdf-content" style="display: none; padding: 40px; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; width: 100%; box-sizing: border-box;">
-                    <div style="border-bottom: 3px solid #4f46e5; padding-bottom: 15px; margin-bottom: 25px;">
-                        <h1 style="color: #4f46e5; margin: 0; font-size: 26px; font-weight: bold;">Ticket de Proyecto: Máquinas de Turing (GUI)</h1>
-                        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Lenguajes y Autómatas I - IT Chilpancingo</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 30px;">
-                        <p style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin: 0 0 5px 0;">Estudiante Asignado:</p>
-                        <h2 id="pdfNombreEstudiante" style="margin: 0; font-size: 22px; color: #0f172a; font-weight: bold;"></h2>
-                    </div>
-
-                    <div style="background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
-                        <h3 id="pdfTituloAcertijo" style="color: #4338ca; margin: 0 0 15px 0; font-size: 20px; font-weight: bold;"></h3>
-                        <p id="pdfDescAcertijo" style="font-size: 15px; line-height: 1.6; color: #334155; margin-bottom: 20px;"></p>
-                        
-                        <div style="background-color: #ffffff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px;">
-                            <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Alfabeto de la Cinta (&Gamma;):</strong> <span id="pdfAlfabeto" style="font-family: monospace; color: #4f46e5; font-weight: bold;"></span></p>
-                            <p style="margin: 0; font-size: 14px;"><strong>Condición de Parada:</strong> <span id="pdfAceptacion" style="color: #059669; font-weight: bold;"></span></p>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 30px;">
-                        <h3 style="color: #4338ca; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Requerimientos Técnicos Obligatorios</h3>
-                        <ul style="font-size: 14px; line-height: 1.6; color: #334155; padding-left: 20px;">
-                            <li style="margin-bottom: 8px;"><strong>Interfaz Visual (GUI):</strong> Programar en Java (Swing/JavaFX). Dibujar un arreglo tipo "Cinta" y un elemento que represente el "Cabezal".</li>
-                            <li style="margin-bottom: 8px;"><strong>Motor de Turing Puro:</strong> Prohibido usar métodos de String como <code>replace</code>. La lógica debe leer la posición actual del arreglo, modificarla in-situ y sumar/restar <code>+1</code> al índice del cabezal.</li>
-                            <li style="margin-bottom: 8px;"><strong>Animación:</strong> El programa debe tener un modo "Paso a paso" (botón) o una animación por Timer donde se vea visualmente el viaje del cabezal por la cinta.</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 style="color: #4338ca; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Rúbrica de Evaluación (100 pts)</h3>
-                        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                            <thead>
-                                <tr style="background-color: #f1f5f9;">
-                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: left;">Criterio Evaluado</th>
-                                    <th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; width: 80px;">Puntaje</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Lógica Matemática:</strong> Respeta estrictamente la arquitectura de la MT (Arreglo + Cabezal L/R) para resolver el problema asignado.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">40 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>GUI y Animación:</strong> La ventana muestra gráficamente la cinta y simula el movimiento del cabezal y la reescritura.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">30 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Reporte Teórico:</strong> Entrega del diseño formal (Tabla de Transiciones \(\delta\) o Grafo de Estados) de la máquina.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">20 pts</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Entradas Dinámicas:</strong> Interfaz permite probar distintas cadenas iniciales sin romper el programa.</td>
-                                    <td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">10 pts</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 2. PANEL DOCENTE -->
-                <div id="panel-docente" class="hidden relative z-10">
-                    <div id="login-docente" class="text-center py-6 max-w-md mx-auto">
-                        <i class="fas fa-lock text-4xl text-slate-500 mb-4"></i>
-                        <h2 class="text-2xl font-bold mb-4">Área del Docente</h2>
-                        <input type="password" id="passDocente" class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none transition text-center mb-4" placeholder="Contraseña...">
-                        <button onclick="loginDocente()" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition w-full">Ingresar</button>
-                        <p id="errorPassDocente" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
-                    </div>
-
-                    <div id="dashboard-docente" class="hidden">
-                        <div class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
-                            <div>
-                                <h2 class="text-2xl font-bold text-white"><i class="fas fa-database text-indigo-400 mr-2"></i> Asignaciones (Unidad 4)</h2>
-                                <p class="text-slate-400 text-sm">Control de proyectos MT de los alumnos.</p>
-                            </div>
-                            <button onclick="exportarExcel()" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold transition shadow-lg text-sm flex items-center">
-                                <i class="fas fa-file-excel mr-2"></i> Exportar CSV
+<p class="text-slate-400 mt-2 text-sm">Simulación Gráfica de una Máquina de Turing en Java.</p>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+<div class="text-left md:text-right">
+<span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
+<span class="text-indigo-400 font-bold text-lg" id="lblNombreEstudiante"></span>
+</div>
+</div>
+</div>
+<!-- ACERTIJO ASIGNADO -->
+<div class="bg-slate-800/80 p-6 rounded-xl border border-indigo-500/50 mb-8 shadow-lg">
+<h4 class="font-bold text-indigo-400 mb-2 uppercase tracking-wide text-xs">Problema Asignado</h4>
+<h3 class="text-xl font-bold text-white mb-4" id="lblTituloAcertijo"></h3>
+<p class="text-sm text-slate-300 leading-relaxed mb-4" id="lblDescAcertijo"></p>
+<div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm grid md:grid-cols-2 gap-4">
+<div>
+<strong class="text-blue-400 block mb-1">Alfabeto (\(\Gamma\)):</strong>
+<span class="text-slate-300 font-mono text-xs" id="lblAlfabeto"></span>
+</div>
+<div>
+<strong class="text-emerald-400 block mb-1">Condición de Parada:</strong>
+<span class="text-slate-300 text-xs" id="lblAceptacion"></span>
+</div>
+</div>
+</div>
+<!-- REQUERIMIENTOS TÉCNICOS -->
+<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
+<h4 class="font-bold text-indigo-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos</h4>
+<ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+<li><strong>Interfaz Gráfica Visual (GUI):</strong> Obligatorio programar en Java (Swing o JavaFX). La GUI debe mostrar visualmente un "arreglo" que represente la <strong>Cinta</strong> y un indicador o flecha que represente la posición actual del <strong>Cabezal</strong>.</li>
+<li><strong>Motor de Turing:</strong> No se pueden usar funciones rápidas como <code>String.replace()</code>. Debes implementar el ciclo lógico que lea el índice actual de la cinta, escriba el nuevo valor (o lo deje igual) y mueva explícitamente el índice del cabezal <code>+1</code> (R) o <code>-1</code> (L).</li>
+<li><strong>Simulación Animada o Paso a Paso:</strong> El usuario debe poder ver cómo la máquina trabaja. Agrega un botón "Paso a paso" que ejecute una sola transición a la vez, o un botón "Automático" que use un <code>Timer</code> para animar el movimiento del cabezal sobre la cinta visual.</li>
+<li><strong>Tabla de Transiciones:</strong> Tu reporte debe incluir la tabla formal \(\delta\) especificando los estados utilizados.</li>
+</ol>
+</div>
+<!-- RÚBRICA -->
+<h4 class="font-bold text-indigo-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
+<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+<table class="w-full text-left">
+<thead class="text-xs uppercase bg-slate-900 text-slate-400">
+<tr>
+<th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
+<th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700">
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Lógica de Máquina de Turing:</strong> Usa un arreglo para la cinta y una variable índice para el cabezal. La lógica resuelve matemáticamente el problema sin usar trampas de Java.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">40 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Animación de la Interfaz (GUI):</strong> La ventana gráfica dibuja la cinta correctamente y el cabezal se mueve visualmente mostrando las reescrituras de caracteres.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">30 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>Reporte Formal (\(\delta\)):</strong> El alumno entrega el diseño formal de la función de transición de su máquina (Tabla o Grafo).</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">20 pts</td>
+</tr>
+<tr class="hover:bg-slate-700/50">
+<td class="px-5 py-3"><strong>UX y Entradas Dúctiles:</strong> Permite ingresar diferentes cadenas de prueba al iniciar sin que el programa colapse.</td>
+<td class="px-5 py-3 border-l border-slate-700 font-bold text-indigo-400 text-center">10 pts</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- ENVOLTURA PARA IMPRIMIR PDF (NATIVA) -->
+<div id="ticket-pdf-content" style="display: none; padding: 40px; font-family: Arial, sans-serif; color: #333; background-color: #ffffff; width: 100%; box-sizing: border-box;">
+<div style="border-bottom: 3px solid #4f46e5; padding-bottom: 15px; margin-bottom: 25px;">
+<h1 style="color: #4f46e5; margin: 0; font-size: 26px; font-weight: bold;">Ticket de Proyecto: Máquinas de Turing (GUI)</h1>
+<p style="margin: 5px 0 0 0; color: #64748b; font-size: 14px;">Lenguajes y Autómatas I - IT Chilpancingo</p>
+</div>
+<div style="margin-bottom: 30px;">
+<p style="color: #64748b; font-size: 12px; text-transform: uppercase; font-weight: bold; margin: 0 0 5px 0;">Estudiante Asignado:</p>
+<h2 id="pdfNombreEstudiante" style="margin: 0; font-size: 22px; color: #0f172a; font-weight: bold;"></h2>
+</div>
+<div style="background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
+<h3 id="pdfTituloAcertijo" style="color: #4338ca; margin: 0 0 15px 0; font-size: 20px; font-weight: bold;"></h3>
+<p id="pdfDescAcertijo" style="font-size: 15px; line-height: 1.6; color: #334155; margin-bottom: 20px;"></p>
+<div style="background-color: #ffffff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 8px;">
+<p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Alfabeto de la Cinta (Γ):</strong> <span id="pdfAlfabeto" style="font-family: monospace; color: #4f46e5; font-weight: bold;"></span></p>
+<p style="margin: 0; font-size: 14px;"><strong>Condición de Parada:</strong> <span id="pdfAceptacion" style="color: #059669; font-weight: bold;"></span></p>
+</div>
+</div>
+<div style="margin-bottom: 30px;">
+<h3 style="color: #4338ca; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Requerimientos Técnicos Obligatorios</h3>
+<ul style="font-size: 14px; line-height: 1.6; color: #334155; padding-left: 20px;">
+<li style="margin-bottom: 8px;"><strong>Interfaz Visual (GUI):</strong> Programar en Java (Swing/JavaFX). Dibujar un arreglo tipo "Cinta" y un elemento que represente el "Cabezal".</li>
+<li style="margin-bottom: 8px;"><strong>Motor de Turing Puro:</strong> Prohibido usar métodos de String como <code>replace</code>. La lógica debe leer la posición actual del arreglo, modificarla in-situ y sumar/restar <code>+1</code> al índice del cabezal.</li>
+<li style="margin-bottom: 8px;"><strong>Animación:</strong> El programa debe tener un modo "Paso a paso" (botón) o una animación por Timer donde se vea visualmente el viaje del cabezal por la cinta.</li>
+</ul>
+</div>
+<div>
+<h3 style="color: #4338ca; margin: 0 0 15px 0; font-size: 18px; font-weight: bold;">Rúbrica de Evaluación (100 pts)</h3>
+<table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+<thead>
+<tr style="background-color: #f1f5f9;">
+<th style="padding: 10px; border: 1px solid #cbd5e1; text-align: left;">Criterio Evaluado</th>
+<th style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; width: 80px;">Puntaje</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Lógica Matemática:</strong> Respeta estrictamente la arquitectura de la MT (Arreglo + Cabezal L/R) para resolver el problema asignado.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">40 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>GUI y Animación:</strong> La ventana muestra gráficamente la cinta y simula el movimiento del cabezal y la reescritura.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">30 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Reporte Teórico:</strong> Entrega del diseño formal (Tabla de Transiciones \(\delta\) o Grafo de Estados) de la máquina.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">20 pts</td>
+</tr>
+<tr>
+<td style="padding: 10px; border: 1px solid #cbd5e1; color: #334155;"><strong>Entradas Dinámicas:</strong> Interfaz permite probar distintas cadenas iniciales sin romper el programa.</td>
+<td style="padding: 10px; border: 1px solid #cbd5e1; text-align: center; color: #4338ca; font-weight: bold;">10 pts</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- 2. PANEL DOCENTE -->
+<div class="hidden relative z-10" id="panel-docente">
+<div class="text-center py-6 max-w-md mx-auto" id="login-docente">
+<i class="fas fa-lock text-4xl text-slate-500 mb-4"></i>
+<h2 class="text-2xl font-bold mb-4">Área del Docente</h2>
+<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none transition text-center mb-4" id="passDocente" placeholder="Contraseña..." type="password"/>
+<button class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition w-full" onclick="loginDocente()">Ingresar</button>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorPassDocente"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
+</div>
+<div class="hidden" id="dashboard-docente">
+<div class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
+<div>
+<h2 class="text-2xl font-bold text-white"><i class="fas fa-database text-indigo-400 mr-2"></i> Asignaciones (Unidad 4)</h2>
+<p class="text-slate-400 text-sm">Control de proyectos MT de los alumnos.</p>
+</div>
+<button class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold transition shadow-lg text-sm flex items-center" onclick="exportarExcel()">
+<i class="fas fa-file-excel mr-2"></i> Exportar CSV
                             </button>
-                        </div>
+</div>
+<!-- Tabla de asignaciones -->
+<div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg mb-8">
+<div class="max-h-60 overflow-y-auto">
+<table class="w-full text-left text-sm text-slate-300">
+<thead class="bg-slate-900 text-slate-400 text-xs uppercase sticky top-0">
+<tr>
+<th class="px-4 py-3">Nombre del Alumno</th>
+<th class="px-4 py-3 border-l border-slate-700">Problema Asignado</th>
+<th class="px-4 py-3 border-l border-slate-700">Fecha</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700" id="tablaAsignacionesBody">
+<!-- Llenado por JS -->
+</tbody>
+</table>
+</div>
+<div class="p-4 text-center text-slate-500 text-sm hidden" id="emptyTableMsg">Aún no hay alumnos registrados.</div>
+</div>
+<!-- Ver todos los acertijos -->
+<h4 class="font-bold text-white mb-3"><i class="fas fa-list text-indigo-400 mr-2"></i> Banco de Problemas (MT) y Soluciones</h4>
+<div class="grid md:grid-cols-2 gap-4 text-sm" id="catalogoAcertijos">
+<!-- Llenado por JS -->
+</div>
+</div>
+</div>
+</div>
+</section>
 
-                        <!-- Tabla de asignaciones -->
-                        <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg mb-8">
-                            <div class="max-h-60 overflow-y-auto">
-                                <table class="w-full text-left text-sm text-slate-300">
-                                    <thead class="bg-slate-900 text-slate-400 text-xs uppercase sticky top-0">
-                                        <tr>
-                                            <th class="px-4 py-3">Nombre del Alumno</th>
-                                            <th class="px-4 py-3 border-l border-slate-700">Problema Asignado</th>
-                                            <th class="px-4 py-3 border-l border-slate-700">Fecha</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaAsignacionesBody" class="divide-y divide-slate-700">
-                                        <!-- Llenado por JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="emptyTableMsg" class="p-4 text-center text-slate-500 text-sm hidden">Aún no hay alumnos registrados.</div>
-                        </div>
+                </div>
 
-                        <!-- Ver todos los acertijos -->
-                        <h4 class="font-bold text-white mb-3"><i class="fas fa-list text-indigo-400 mr-2"></i> Banco de Problemas (MT) y Soluciones</h4>
-                        <div id="catalogoAcertijos" class="grid md:grid-cols-2 gap-4 text-sm">
-                            <!-- Llenado por JS -->
-                        </div>
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad3.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 3: Autómatas Finitos</a>
+                    <a href="unidad5.html" class="flex items-center px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 5: Análisis Léxico <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-amber-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#intro" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#glc" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.1 Gramáticas Libres de Contexto</a>
+<a href="#arboles" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.2 Árboles de Derivación</a>
+<a href="#ambiguedad" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.3 Eliminación de Ambigüedad</a>
+<a href="#ap" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">4.4 Autómatas de Pila (AP)</a>
+
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-amber-50/60 p-3 rounded-xl border border-amber-100">
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio LyA I</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Prácticas 14 a 17: Gramáticas para expresiones aritméticas y simulador de autómata de pila.
+                        </p>
                     </div>
                 </div>
+            </aside>
 
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer Minimalista -->
-    <footer class="bg-slate-950 text-white py-12 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <div class="flex items-center space-x-3">
-                <div class="bg-slate-700 p-2 rounded-lg">
-                    <i class="fas fa-university text-white text-sm"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold tracking-tight leading-none">IT Chilpancingo</h3>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 italic">Lenguajes y Autómatas I</p>
-                </div>
-            </div>
-            <div class="flex space-x-6 text-xs font-bold text-slate-400">
-                <a href="index.html" class="hover:text-white transition">INICIO</a>
-                <a href="unidad3.html" class="hover:text-white transition">UNIDAD 3</a>
-                <a href="#" class="text-white border-b border-slate-500">UNIDAD 4</a>
-                <a href="unidad5.html" class="hover:text-white transition">UNIDAD 5</a>
-            </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
     </footer>
 
     <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
+            if (pre) {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    const orig = btn.innerText;
+                    btn.innerText = "¡Copiado!";
+                    setTimeout(() => { btn.innerText = orig; }, 1500);
+                });
+            }
+        }
+    </script>
+    
+<script>
         // --- SISTEMA DEL PROYECTO FINAL (UNIDAD 4) ---
 
         // Base de Datos de 5 Problemas de Turing (Vida Real - Nivel Intermedio)
@@ -1002,5 +1157,6 @@ java.util.Arrays.<span class="text-blue-300">fill</span>(cinta, <span class="tex
             document.body.removeChild(link);
         }
     </script>
+
 </body>
 </html>

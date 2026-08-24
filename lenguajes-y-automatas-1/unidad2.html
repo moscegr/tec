@@ -3,454 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 2: Expresiones Regulares - ITChilpancingo</title>
+    <title>Unidad 2: Expresiones Regulares | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- MathJax para fórmulas matemáticas elegantes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
-        
         body {
             font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
             scroll-behavior: smooth;
         }
 
-        /* Hero específico para Unidad 2 (Índigo Profundo) */
-        .u2-header {
-            background: linear-gradient(135deg, #312e81 0%, #6366f1 100%);
-            position: relative;
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #4f46e5; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
             overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
         }
 
-        .u2-header::before {
-            content: "";
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
-            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #4f46e5;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        .step-item:last-child::after {
+            display: none;
         }
 
         .sticky-sub-nav {
             position: sticky;
             top: 0;
-            z-index: 50;
-            background: rgba(255, 255, 255, 0.95);
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
 
         .concept-card {
             background: white;
-            border-radius: 1.5rem;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 1.5rem;
         }
-
-        .concept-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
         .math-box {
             background: #f8fafc;
-            border-left: 4px solid #6366f1;
+            border-left: 4px solid #4f46e5;
             padding: 1rem;
             border-radius: 0.5rem;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             color: #334155;
             margin-top: 1rem;
+            overflow-x: auto;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
-    <!-- Navegación Principal -->
-    <nav class="bg-white border-b border-gray-200">
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">SCD-1015 • Unidad 2</span>
+                <a href="../index.html" class="hover:text-white transition"><i class="fas fa-th-large mr-1"></i> Portal Docente</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center space-x-2 text-slate-600 hover:text-indigo-600 transition group">
-                    <div class="bg-slate-100 group-hover:bg-indigo-100 p-2 rounded-lg transition">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                    <span class="font-bold text-sm">Volver al Temario</span>
-                </a>
+            <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold text-slate-400 uppercase tracking-widest hidden sm:block">Lenguajes y Autómatas I</span>
-                    <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold">Unidad 2</span>
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA I
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-800 text-xs flex items-center justify-center font-bold mr-2">U2</span>
+                        Expresiones Regulares
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad1.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 1: Teoría de Lenguajes</a>
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center shadow-sm">Unidad 3: Autómatas Finitos <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header Unidad 2 -->
-    <header class="u2-header text-white py-16 px-4">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block mb-4 p-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
-                <i class="fas fa-project-diagram text-3xl"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Expresiones Regulares (ER)</h1>
-            <p class="text-indigo-100 text-lg font-light max-w-2xl mx-auto">
-                El motor matemático detrás del análisis léxico. Aprende a definir y reconocer patrones complejos de texto utilizando la notación formal.
-            </p>
-        </div>
-    </header>
+    <!-- Contenedor Principal de 3 Columnas -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-    <!-- Sub-Navegación Sticky -->
-    <div class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 overflow-x-auto">
-            <div class="flex space-x-6 min-w-max py-4 text-sm font-medium text-slate-600">
-                <a href="#intro" class="hover:text-indigo-600 transition">Intro</a>
-                <a href="#definicion" class="hover:text-indigo-600 transition">2.1 Definición</a>
-                <a href="#operaciones" class="hover:text-indigo-600 transition">2.2 Operaciones</a>
-                <a href="#aplicaciones" class="hover:text-indigo-600 transition">2.3 Aplicaciones</a>
-                <a href="#proyecto-final" class="text-rose-600 font-bold"><i class="fas fa-lock mr-1"></i>Proyecto</a>
-            </div>
-        </div>
-    </div>
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-indigo-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
 
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-16">
+                    <nav class="space-y-1 text-xs">
+                        
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Teoría de Lenguajes</span>
+                            <span class="difficulty-badge diff-easy">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg bg-indigo-600 text-white font-bold shadow-sm">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge diff-med">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Autómatas de Pila</span>
+                            <span class="difficulty-badge diff-hard">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge diff-hard">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge diff-hard">18h</span>
+                        </a>
+                    </nav>
 
-        <!-- INTRO -->
-        <section id="intro" class="scroll-mt-32">
-            <div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
-                <div class="flex-1">
-                    <h3 class="text-xl font-bold text-indigo-900 mb-2">De Lenguajes Regulares a ER</h3>
-                    <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                    <!-- Subtemas Unidad 2 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 2</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <a href="#intro" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#definicion" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.1 Definición Formal</a>
+<a href="#operaciones" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.2 Operaciones Regulares</a>
+<a href="#aplicaciones" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.3 Aplicaciones Léxicas</a>
+<a href="#ejercicios" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.4 Ejercicios Resueltos</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
+            <main class="lg:col-span-6 space-y-8">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-indigo-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Unidad 2 • Lenguajes y Autómatas I</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Expresiones Regulares
+                    </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Definición formal, operadores regulares, equivalencias algebraicas y aplicaciones en reconocimiento léxico.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 12 Horas (Semanas 3-5)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-med">Nivel Didáctico</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- CONTENIDO ORIGINAL COMPLETO E INTACTO -->
+                <div class="space-y-8 text-slate-700 leading-relaxed">
+                    
+<!-- INTRO -->
+<section class="scroll-mt-32" id="intro">
+<div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6">
+<div class="flex-1">
+<h3 class="text-xl font-bold text-indigo-900 mb-2">De Lenguajes Regulares a ER</h3>
+<p class="text-slate-700 text-sm leading-relaxed mb-4">
                         En la Unidad 1 vimos que los <strong>Lenguajes Regulares (Tipo 3)</strong> son aquellos que pueden ser procesados sin necesidad de memoria (sin pilas). Las <strong>Expresiones Regulares</strong> son la herramienta matemática y notacional exacta que utilizamos para describir estos lenguajes. Son el estándar industrial para buscar, extraer y validar información en programación.
                     </p>
-                </div>
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl text-indigo-500 shadow-md">
-                    <i class="fas fa-search-dollar"></i>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2.1 Definición -->
-        <section id="definicion" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">2.1</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Definición Formal de una ER</h2>
-                </div>
-                
-                <!-- Analogía Didáctica -->
-                <div class="mb-8 border-l-4 border-indigo-400 pl-4 bg-indigo-50/50 py-3 pr-4 rounded-r-lg shadow-sm">
-                    <p class="text-slate-700 text-sm leading-relaxed">
-                        <strong class="text-indigo-900"><i class="fas fa-lightbulb text-amber-500 mr-2"></i>Analogía para programadores:</strong> Imagina que una Expresión Regular (ER) es como la declaración de un tipo de dato o un "filtro de seguridad". La ER <strong>NO</strong> es el texto; la ER es la regla que el programa usa para decir: <em>"¿Este String cumple con mis condiciones de seguridad? ¿Sí o no?"</em>.
+</div>
+<div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl text-indigo-500 shadow-md">
+<i class="fas fa-search-dollar"></i>
+</div>
+</div>
+</section>
+<!-- 2.1 Definición -->
+<section class="scroll-mt-32" id="definicion">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">2.1</span>
+<h2 class="text-2xl font-bold text-slate-800">Definición Formal de una ER</h2>
+</div>
+<!-- Analogía Didáctica -->
+<div class="mb-8 border-l-4 border-indigo-400 pl-4 bg-indigo-50/50 py-3 pr-4 rounded-r-lg shadow-sm">
+<p class="text-slate-700 text-sm leading-relaxed">
+<strong class="text-indigo-900"><i class="fas fa-lightbulb text-amber-500 mr-2"></i>Analogía para programadores:</strong> Imagina que una Expresión Regular (ER) es como la declaración de un tipo de dato o un "filtro de seguridad". La ER <strong>NO</strong> es el texto; la ER es la regla que el programa usa para decir: <em>"¿Este String cumple con mis condiciones de seguridad? ¿Sí o no?"</em>.
                     </p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+</div>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<p class="text-slate-600 text-sm leading-relaxed mb-4">
                             Matemáticamente, para construir cualquier filtro complejo, siempre empezamos con los "ladrillos más pequeños" posibles. A esto se le llama casos base:
                         </p>
-                        
-                        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-                            <div class="bg-slate-50 px-4 py-2 border-b border-slate-200">
-                                <h4 class="font-bold text-slate-700 text-sm">Los 3 ladrillos fundamentales</h4>
-                            </div>
-                            <div class="p-4 space-y-4">
-                                <div class="flex items-start">
-                                    <div class="w-10 text-center font-bold text-rose-500 text-lg mt-1">\(\emptyset\)</div>
-                                    <div class="text-sm text-slate-600 ml-2">
-                                        <strong class="text-slate-800">Conjunto Vacío:</strong> Es un filtro imposible de pasar. 
-                                        <br><span class="text-xs text-slate-400 italic">En Java: Equivale a una regla rota donde ninguna palabra, nunca, hará "match".</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-10 text-center font-bold text-blue-500 text-lg mt-1">\(\lambda\)</div>
-                                    <div class="text-sm text-slate-600 ml-2">
-                                        <strong class="text-slate-800">Cadena Vacía:</strong> Es un filtro que se pasa "sin escribir nada". 
-                                        <br><span class="text-xs text-slate-400 italic">En Java: Equivale a darle "Enter" a un input vacío <code>String s = "";</code>.</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-start">
-                                    <div class="w-10 text-center font-bold text-indigo-600 text-lg mt-1">\(a\)</div>
-                                    <div class="text-sm text-slate-600 ml-2">
-                                        <strong class="text-slate-800">Símbolo Terminal:</strong> Cualquier letra individual.
-                                        <br><span class="text-xs text-slate-400 italic">En Java: Equivale a exigir explícitamente que te tecleen ese carácter exacto, ej: <code>"a"</code>.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-indigo-900 rounded-xl p-6 text-white flex flex-col justify-center relative overflow-hidden">
-                        <div class="absolute -right-10 -bottom-10 opacity-10">
-                            <i class="fas fa-superscript text-9xl"></i>
-                        </div>
-                        <h4 class="font-bold text-indigo-200 mb-2 uppercase tracking-widest text-xs z-10">¿Qué es L(r)?</h4>
-                        <p class="text-sm text-slate-300 mb-4 z-10 leading-relaxed">
+<div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+<div class="bg-slate-50 px-4 py-2 border-b border-slate-200">
+<h4 class="font-bold text-slate-700 text-sm">Los 3 ladrillos fundamentales</h4>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex items-start">
+<div class="w-10 text-center font-bold text-rose-500 text-lg mt-1">\(\emptyset\)</div>
+<div class="text-sm text-slate-600 ml-2">
+<strong class="text-slate-800">Conjunto Vacío:</strong> Es un filtro imposible de pasar. 
+                                        <br/><span class="text-xs text-slate-400 italic">En Java: Equivale a una regla rota donde ninguna palabra, nunca, hará "match".</span>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 text-center font-bold text-blue-500 text-lg mt-1">\(\lambda\)</div>
+<div class="text-sm text-slate-600 ml-2">
+<strong class="text-slate-800">Cadena Vacía:</strong> Es un filtro que se pasa "sin escribir nada". 
+                                        <br/><span class="text-xs text-slate-400 italic">En Java: Equivale a darle "Enter" a un input vacío <code>String s = "";</code>.</span>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 text-center font-bold text-indigo-600 text-lg mt-1">\(a\)</div>
+<div class="text-sm text-slate-600 ml-2">
+<strong class="text-slate-800">Símbolo Terminal:</strong> Cualquier letra individual.
+                                        <br/><span class="text-xs text-slate-400 italic">En Java: Equivale a exigir explícitamente que te tecleen ese carácter exacto, ej: <code>"a"</code>.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-indigo-900 rounded-xl p-6 text-white flex flex-col justify-center relative overflow-hidden">
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<i class="fas fa-superscript text-9xl"></i>
+</div>
+<h4 class="font-bold text-indigo-200 mb-2 uppercase tracking-widest text-xs z-10">¿Qué es L(r)?</h4>
+<p class="text-sm text-slate-300 mb-4 z-10 leading-relaxed">
                             En los libros de texto verás mucho la expresión <strong>\(L(r)\)</strong>. 
-                            <br><br>
+                            <br/><br/>
                             Esto simplemente significa "El Lenguaje generado por la regla 'r'". Es decir, es <strong>la lista completa de todas las palabras en el universo que logran pasar el filtro</strong>.
                         </p>
-                        <div class="text-center bg-black/30 py-3 rounded-lg z-10 font-mono text-sm shadow-inner text-indigo-300">
-                            Filtro: r = a<br>
-                            <span class="text-lg text-white">L(a) = { "a" }</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJERCICIOS BASICOS 2.1 -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-pencil-alt text-indigo-600 mt-1 mr-3 text-lg"></i>
-                            <div class="flex-1">
-                                <h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide border-b border-indigo-200 pb-2 mb-3">Actividad 2.1: Lógica de Ladrillos Base</h4>
-                                <p class="text-sm text-indigo-800 leading-relaxed mb-4">
-                                    <strong>Instrucciones:</strong> Analiza y responde en tu libreta pensando como programador.
+<div class="text-center bg-black/30 py-3 rounded-lg z-10 font-mono text-sm shadow-inner text-indigo-300">
+                            Filtro: r = a<br/>
+<span class="text-lg text-white">L(a) = { "a" }</span>
+</div>
+</div>
+</div>
+<!-- EJERCICIOS BASICOS 2.1 -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<div class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-pencil-alt text-indigo-600 mt-1 mr-3 text-lg"></i>
+<div class="flex-1">
+<h4 class="text-sm font-bold text-indigo-900 uppercase tracking-wide border-b border-indigo-200 pb-2 mb-3">Actividad 2.1: Lógica de Ladrillos Base</h4>
+<p class="text-sm text-indigo-800 leading-relaxed mb-4">
+<strong>Instrucciones:</strong> Analiza y responde en tu libreta pensando como programador.
                                 </p>
-                                <ul class="space-y-3 text-sm text-slate-700">
-                                    <li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
-                                        <span class="font-bold text-indigo-700">1.</span> En un formulario web hay un campo de "Segundo Nombre" que es <strong>opcional</strong>. Matemáticamente, ¿cuál de los tres ladrillos base representa mejor que el usuario pueda presionar "Siguiente" sin escribir nada? ¿El conjunto vacío \(\emptyset\) o la cadena vacía \(\lambda\)? ¿Por qué?
+<ul class="space-y-3 text-sm text-slate-700">
+<li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
+<span class="font-bold text-indigo-700">1.</span> En un formulario web hay un campo de "Segundo Nombre" que es <strong>opcional</strong>. Matemáticamente, ¿cuál de los tres ladrillos base representa mejor que el usuario pueda presionar "Siguiente" sin escribir nada? ¿El conjunto vacío \(\emptyset\) o la cadena vacía \(\lambda\)? ¿Por qué?
                                     </li>
-                                    <li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
-                                        <span class="font-bold text-indigo-700">2.</span> Si definimos una regla \(r = x\), ¿Cuántas palabras válidas existen dentro del conjunto de respuestas correctas \(L(r)\)?
+<li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
+<span class="font-bold text-indigo-700">2.</span> Si definimos una regla \(r = x\), ¿Cuántas palabras válidas existen dentro del conjunto de respuestas correctas \(L(r)\)?
                                     </li>
-                                    <li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
-                                        <span class="font-bold text-indigo-700">3.</span> Escribe formalmente el conjunto generado por la Expresión Regular de la cadena vacía. Es decir, ¿A qué es exactamente igual \(L(\lambda)\)? <em>(Ojo: No es lo mismo que un conjunto vacío, piénsalo como un conjunto que contiene un string vacío de tamaño 0).</em>
+<li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
+<span class="font-bold text-indigo-700">3.</span> Escribe formalmente el conjunto generado por la Expresión Regular de la cadena vacía. Es decir, ¿A qué es exactamente igual \(L(\lambda)\)? <em>(Ojo: No es lo mismo que un conjunto vacío, piénsalo como un conjunto que contiene un string vacío de tamaño 0).</em>
+</li>
+<li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
+<span class="font-bold text-indigo-700">4.</span> Un analizador léxico de Java lee tu código y encuentra un símbolo extraño. Como no tiene ninguna regla para aceptarlo, bloquea el paso de la compilación. ¿Qué ladrillo base representa matemáticamente esta "regla imposible de cumplir"?
                                     </li>
-                                    <li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
-                                        <span class="font-bold text-indigo-700">4.</span> Un analizador léxico de Java lee tu código y encuentra un símbolo extraño. Como no tiene ninguna regla para aceptarlo, bloquea el paso de la compilación. ¿Qué ladrillo base representa matemáticamente esta "regla imposible de cumplir"?
+<li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
+<span class="font-bold text-indigo-700">5.</span> Si el alfabeto de tu lenguaje inventado es solo \(\Sigma = \{A, B, C\}\), escribe las 5 Expresiones Regulares atómicas (o bases) en total que se pueden formar matemáticamente en este universo.
                                     </li>
-                                    <li class="bg-white p-3 rounded shadow-sm border border-indigo-100">
-                                        <span class="font-bold text-indigo-700">5.</span> Si el alfabeto de tu lenguaje inventado es solo \(\Sigma = \{A, B, C\}\), escribe las 5 Expresiones Regulares atómicas (o bases) en total que se pueden formar matemáticamente en este universo.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2.2 Operaciones -->
-        <section id="operaciones" class="scroll-mt-32">
-            <div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">2.2</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Operaciones (Construyendo Filtros)</h2>
-                </div>
-
-                <p class="text-slate-600 text-sm mb-6">
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2.2 Operaciones -->
+<section class="scroll-mt-32" id="operaciones">
+<div class="concept-card p-8 bg-gradient-to-br from-white to-slate-50">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">2.2</span>
+<h2 class="text-2xl font-bold text-slate-800">Operaciones (Construyendo Filtros)</h2>
+</div>
+<p class="text-slate-600 text-sm mb-6">
                     Solos, los "ladrillos base" no sirven de mucho. Para validar correos o contraseñas, necesitamos pegarlos usando <strong>3 operaciones matemáticas</strong> que en programación se traducen a símbolos específicos.
                 </p>
-
-                <div class="grid lg:grid-cols-3 gap-6 mb-8">
-                    <!-- Unión -->
-                    <div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
-                        <div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-random"></i></div>
-                        <h3 class="font-bold text-slate-800 text-md">1. Unión (La Alternativa)</h3>
-                        <p class="text-xs text-slate-500 mt-2 h-10">Es una estructura "O". Acepta el camino de la izquierda o el de la derecha.</p>
-                        <div class="mt-3 space-y-2">
-                            <div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
-                                <span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
+<div class="grid lg:grid-cols-3 gap-6 mb-8">
+<!-- Unión -->
+<div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
+<div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-random"></i></div>
+<h3 class="font-bold text-slate-800 text-md">1. Unión (La Alternativa)</h3>
+<p class="text-xs text-slate-500 mt-2 h-10">Es una estructura "O". Acepta el camino de la izquierda o el de la derecha.</p>
+<div class="mt-3 space-y-2">
+<div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
+<span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
                                 \(a + b\)
                             </div>
-                            <div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
-                                <span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
+<div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
+<span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
                                 a | b
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Concatenación -->
-                    <div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
-                        <div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-link"></i></div>
-                        <h3 class="font-bold text-slate-800 text-md">2. Concatenación (La Secuencia)</h3>
-                        <p class="text-xs text-slate-500 mt-2 h-10">Es el orden obligatorio. Una cosa escrita exactamente después de la otra.</p>
-                        <div class="mt-3 space-y-2">
-                            <div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
-                                <span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
+</div>
+</div>
+<!-- Concatenación -->
+<div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
+<div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-link"></i></div>
+<h3 class="font-bold text-slate-800 text-md">2. Concatenación (La Secuencia)</h3>
+<p class="text-xs text-slate-500 mt-2 h-10">Es el orden obligatorio. Una cosa escrita exactamente después de la otra.</p>
+<div class="mt-3 space-y-2">
+<div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
+<span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
                                 \(a \cdot b\)  o simplemente  \(ab\)
                             </div>
-                            <div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
-                                <span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
+<div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
+<span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
                                 ab
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Kleene -->
-                    <div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
-                        <div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-redo-alt"></i></div>
-                        <h3 class="font-bold text-slate-800 text-md">3. Cerradura de Kleene (El Bucle)</h3>
-                        <p class="text-xs text-slate-500 mt-2 h-10">Repite el elemento anterior desde cero veces hasta el infinito.</p>
-                        <div class="mt-3 space-y-2">
-                            <div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
-                                <span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
+</div>
+</div>
+<!-- Kleene -->
+<div class="bg-white p-5 rounded-xl border border-indigo-100 shadow-sm relative group hover:border-indigo-400 transition">
+<div class="text-indigo-500 mb-2 text-2xl"><i class="fas fa-redo-alt"></i></div>
+<h3 class="font-bold text-slate-800 text-md">3. Cerradura de Kleene (El Bucle)</h3>
+<p class="text-xs text-slate-500 mt-2 h-10">Repite el elemento anterior desde cero veces hasta el infinito.</p>
+<div class="mt-3 space-y-2">
+<div class="bg-slate-50 p-2 rounded text-xs font-mono text-slate-600 border border-slate-200">
+<span class="text-indigo-500 font-bold text-[10px] uppercase font-sans block mb-1">Matemáticas:</span>
                                 \(a^*\)
                             </div>
-                            <div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
-                                <span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
+<div class="bg-indigo-900 p-2 rounded text-xs font-mono text-indigo-200 border border-indigo-700">
+<span class="text-indigo-400 font-bold text-[10px] uppercase font-sans block mb-1">En Java (Regex):</span>
                                 a*
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EJEMPLOS PASO A PASO -->
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8 shadow-inner">
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-magic mr-2 text-indigo-500"></i> Construyendo reglas del mundo real</h3>
-                    <p class="text-sm text-slate-600 mb-4">Observa cómo combinando estas 3 simples operaciones podemos validar variaciones complejas de palabras:</p>
-                    
-                    <div class="space-y-4">
-                        <!-- Ejemplo 1: Union -->
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
-                            <div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">color + colour</div>
-                            <div class="text-sm text-slate-600 flex-1">
-                                <strong>La Ortografía Dual (Usando Unión):</strong> Acepta la palabra escrita en inglés americano (color) O en inglés británico (colour).<br>
-                                <span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "color", "colour" }</span>
-                            </div>
-                        </div>
-                        <!-- Ejemplo 2: Concatenación + Kleene -->
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
-                            <div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">ja(ja)*</div>
-                            <div class="text-sm text-slate-600 flex-1">
-                                <strong>Detector de Risas (Usando Concat + Kleene):</strong> Exige obligatoriamente un "ja" inicial, seguido de cero o infinitas repeticiones adicionales de "(ja)".<br>
-                                <span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "ja", "jaja", "jajaja", "jajajaja"... }</span>
-                            </div>
-                        </div>
-                        <!-- Ejemplo 3: Combinación Total -->
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
-                            <div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">A(0+1)*</div>
-                            <div class="text-sm text-slate-600 flex-1">
-                                <strong>Generador de IDs (Usando todo):</strong> Toda cadena que empiece estrictamente con la letra "A", seguida de cualquier cantidad y combinación de ceros y unos.<br>
-                                <span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "A", "A0", "A1", "A00", "A0110"... }</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ACTIVIDAD PARA LIBRETA -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    <div class="bg-indigo-100 border-l-4 border-indigo-600 p-5 mb-6 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-book-open text-indigo-700 mt-1 mr-3 text-xl"></i>
-                            <div class="flex-1">
-                                <h4 class="text-md font-bold text-indigo-900 uppercase tracking-wide border-b border-indigo-200 pb-2 mb-3">Actividad 2.2: Ingeniería Inversa</h4>
-                                <p class="text-sm text-indigo-800 mt-1 leading-relaxed mb-4">
-                                    <strong>Instrucciones:</strong> En los ejemplos anteriores te dimos la fórmula matemática y tú viste el resultado. Ahora hazlo al revés: Escribe en tu libreta la Expresión Regular formal (usando símbolos matemáticos +, \(\cdot\), *) que resuelva estos problemas:
+</div>
+</div>
+</div>
+<!-- EJEMPLOS PASO A PASO -->
+<div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8 shadow-inner">
+<h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-magic mr-2 text-indigo-500"></i> Construyendo reglas del mundo real</h3>
+<p class="text-sm text-slate-600 mb-4">Observa cómo combinando estas 3 simples operaciones podemos validar variaciones complejas de palabras:</p>
+<div class="space-y-4">
+<!-- Ejemplo 1: Union -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
+<div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">color + colour</div>
+<div class="text-sm text-slate-600 flex-1">
+<strong>La Ortografía Dual (Usando Unión):</strong> Acepta la palabra escrita en inglés americano (color) O en inglés británico (colour).<br/>
+<span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "color", "colour" }</span>
+</div>
+</div>
+<!-- Ejemplo 2: Concatenación + Kleene -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
+<div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">ja(ja)*</div>
+<div class="text-sm text-slate-600 flex-1">
+<strong>Detector de Risas (Usando Concat + Kleene):</strong> Exige obligatoriamente un "ja" inicial, seguido de cero o infinitas repeticiones adicionales de "(ja)".<br/>
+<span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "ja", "jaja", "jajaja", "jajajaja"... }</span>
+</div>
+</div>
+<!-- Ejemplo 3: Combinación Total -->
+<div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row md:items-center gap-4 hover:border-indigo-300 transition">
+<div class="font-mono text-lg text-indigo-700 font-bold bg-indigo-50 px-4 py-2 rounded-lg w-max shadow-sm border border-indigo-100 text-center min-w-[120px]">A(0+1)*</div>
+<div class="text-sm text-slate-600 flex-1">
+<strong>Generador de IDs (Usando todo):</strong> Toda cadena que empiece estrictamente con la letra "A", seguida de cualquier cantidad y combinación de ceros y unos.<br/>
+<span class="inline-block mt-1 bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-mono border border-green-200">L = { "A", "A0", "A1", "A00", "A0110"... }</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ACTIVIDAD PARA LIBRETA -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<div class="bg-indigo-100 border-l-4 border-indigo-600 p-5 mb-6 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-book-open text-indigo-700 mt-1 mr-3 text-xl"></i>
+<div class="flex-1">
+<h4 class="text-md font-bold text-indigo-900 uppercase tracking-wide border-b border-indigo-200 pb-2 mb-3">Actividad 2.2: Ingeniería Inversa</h4>
+<p class="text-sm text-indigo-800 mt-1 leading-relaxed mb-4">
+<strong>Instrucciones:</strong> En los ejemplos anteriores te dimos la fórmula matemática y tú viste el resultado. Ahora hazlo al revés: Escribe en tu libreta la Expresión Regular formal (usando símbolos matemáticos +, \(\cdot\), *) que resuelva estos problemas:
                                 </p>
-                                
-                                <div class="grid md:grid-cols-2 gap-4">
-                                    <div class="bg-white/60 p-4 rounded border border-indigo-200 shadow-sm">
-                                        <span class="font-bold text-indigo-900 text-sm mb-1 block">Reto A: Confirmaciones</span>
-                                        <p class="text-xs text-slate-700 mb-2">Un sistema de terminal que acepte únicamente la letra "S" (mayúscula) o la letra "s" (minúscula) y ninguna otra letra más.</p>
-                                        <div class="text-[10px] text-slate-400 italic">Respuesta esperada: Una regla sencilla.</div>
-                                    </div>
-                                    <div class="bg-white/60 p-4 rounded border border-indigo-200 shadow-sm">
-                                        <span class="font-bold text-indigo-900 text-sm mb-1 block">Reto B: El Llorón</span>
-                                        <p class="text-xs text-slate-700 mb-2">Una regla que acepte el llanto en chat de la letra 'b' seguida de múltiples 'u'. Ejemplo de palabras válidas: "bu", "buu", "buuuuu".</p>
-                                        <div class="text-[10px] text-slate-400 italic">Pista: La 'b' solo aparece una vez al inicio.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2.3 Aplicaciones -->
-        <section id="aplicaciones" class="scroll-mt-32">
-            <div class="concept-card p-8">
-                <div class="flex items-center mb-6">
-                    <span class="text-4xl font-black text-slate-200 mr-4">2.3</span>
-                    <h2 class="text-2xl font-bold text-slate-800">Aplicaciones Reales (Regex en Código)</h2>
-                </div>
-                <p class="text-slate-600 text-sm mb-8 leading-relaxed break-words whitespace-normal">
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-white/60 p-4 rounded border border-indigo-200 shadow-sm">
+<span class="font-bold text-indigo-900 text-sm mb-1 block">Reto A: Confirmaciones</span>
+<p class="text-xs text-slate-700 mb-2">Un sistema de terminal que acepte únicamente la letra "S" (mayúscula) o la letra "s" (minúscula) y ninguna otra letra más.</p>
+<div class="text-[10px] text-slate-400 italic">Respuesta esperada: Una regla sencilla.</div>
+</div>
+<div class="bg-white/60 p-4 rounded border border-indigo-200 shadow-sm">
+<span class="font-bold text-indigo-900 text-sm mb-1 block">Reto B: El Llorón</span>
+<p class="text-xs text-slate-700 mb-2">Una regla que acepte el llanto en chat de la letra 'b' seguida de múltiples 'u'. Ejemplo de palabras válidas: "bu", "buu", "buuuuu".</p>
+<div class="text-[10px] text-slate-400 italic">Pista: La 'b' solo aparece una vez al inicio.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2.3 Aplicaciones -->
+<section class="scroll-mt-32" id="aplicaciones">
+<div class="concept-card p-8">
+<div class="flex items-center mb-6">
+<span class="text-4xl font-black text-slate-200 mr-4">2.3</span>
+<h2 class="text-2xl font-bold text-slate-800">Aplicaciones Reales (Regex en Código)</h2>
+</div>
+<p class="text-slate-600 text-sm mb-8 leading-relaxed break-words whitespace-normal">
                     En la programación moderna, la notación formal se adapta usando caracteres ASCII. En lugar del símbolo <code class="font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">+</code>, usamos <code class="font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">|</code> o corchetes <code class="font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">[]</code>. El asterisco de Kleene <code class="font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">*</code> se mantiene igual.
                 </p>
-
-                <!-- Elementos Básicos -->
-                <div class="mb-10">
-                    <h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-toolbox mr-2 text-indigo-500"></i> Elementos Básicos en Java (Sintaxis Regex)</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Metacaracteres -->
-                        <div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-indigo-600 font-bold mb-1">\d</div>
-                            <div class="text-xs text-slate-600 font-bold">Dígito numérico</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Equivale a [0-9]</div>
-                        </div>
-                        <div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-indigo-600 font-bold mb-1">\w</div>
-                            <div class="text-xs text-slate-600 font-bold">Alfanumérico</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Letras, números y "_"</div>
-                        </div>
-                        <div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-indigo-600 font-bold mb-1">\s</div>
-                            <div class="text-xs text-slate-600 font-bold">Espacio</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Espacios o tabuladores</div>
-                        </div>
-                        <div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-indigo-600 font-bold mb-1">.</div>
-                            <div class="text-xs text-slate-600 font-bold">Cualquier carácter</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Excepto saltos de línea</div>
-                        </div>
-                        <!-- Cuantificadores -->
-                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-rose-500 font-bold mb-1">+</div>
-                            <div class="text-xs text-slate-600 font-bold">1 o más veces</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Cerradura Positiva</div>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-rose-500 font-bold mb-1">?</div>
-                            <div class="text-xs text-slate-600 font-bold">0 o 1 vez</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Elemento opcional</div>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-rose-500 font-bold mb-1">{n,m}</div>
-                            <div class="text-xs text-slate-600 font-bold">Repetición exacta</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Entre n y m veces</div>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
-                            <div class="font-mono text-lg text-amber-500 font-bold mb-1">^ $</div>
-                            <div class="text-xs text-slate-600 font-bold">Anclas</div>
-                            <div class="text-[10px] text-slate-400 mt-1">Inicio y Fin de línea</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Explicación de Pattern y Matcher -->
-                <div class="mb-8 border-l-4 border-blue-500 pl-4 bg-blue-50/50 py-4 pr-4 rounded-r-lg shadow-sm">
-                    <h3 class="text-md font-bold text-blue-900 mb-2 flex items-center">
-                        <i class="fas fa-cogs mr-2"></i> El motor en Java: Pattern y Matcher
+<!-- Elementos Básicos -->
+<div class="mb-10">
+<h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-toolbox mr-2 text-indigo-500"></i> Elementos Básicos en Java (Sintaxis Regex)</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Metacaracteres -->
+<div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-indigo-600 font-bold mb-1">\d</div>
+<div class="text-xs text-slate-600 font-bold">Dígito numérico</div>
+<div class="text-[10px] text-slate-400 mt-1">Equivale a [0-9]</div>
+</div>
+<div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-indigo-600 font-bold mb-1">\w</div>
+<div class="text-xs text-slate-600 font-bold">Alfanumérico</div>
+<div class="text-[10px] text-slate-400 mt-1">Letras, números y "_"</div>
+</div>
+<div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-indigo-600 font-bold mb-1">\s</div>
+<div class="text-xs text-slate-600 font-bold">Espacio</div>
+<div class="text-[10px] text-slate-400 mt-1">Espacios o tabuladores</div>
+</div>
+<div class="bg-white border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-indigo-600 font-bold mb-1">.</div>
+<div class="text-xs text-slate-600 font-bold">Cualquier carácter</div>
+<div class="text-[10px] text-slate-400 mt-1">Excepto saltos de línea</div>
+</div>
+<!-- Cuantificadores -->
+<div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-rose-500 font-bold mb-1">+</div>
+<div class="text-xs text-slate-600 font-bold">1 o más veces</div>
+<div class="text-[10px] text-slate-400 mt-1">Cerradura Positiva</div>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-rose-500 font-bold mb-1">?</div>
+<div class="text-xs text-slate-600 font-bold">0 o 1 vez</div>
+<div class="text-[10px] text-slate-400 mt-1">Elemento opcional</div>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-rose-500 font-bold mb-1">{n,m}</div>
+<div class="text-xs text-slate-600 font-bold">Repetición exacta</div>
+<div class="text-[10px] text-slate-400 mt-1">Entre n y m veces</div>
+</div>
+<div class="bg-slate-50 border border-slate-200 p-3 rounded-xl shadow-sm text-center">
+<div class="font-mono text-lg text-amber-500 font-bold mb-1">^ $</div>
+<div class="text-xs text-slate-600 font-bold">Anclas</div>
+<div class="text-[10px] text-slate-400 mt-1">Inicio y Fin de línea</div>
+</div>
+</div>
+</div>
+<!-- Explicación de Pattern y Matcher -->
+<div class="mb-8 border-l-4 border-blue-500 pl-4 bg-blue-50/50 py-4 pr-4 rounded-r-lg shadow-sm">
+<h3 class="text-md font-bold text-blue-900 mb-2 flex items-center">
+<i class="fas fa-cogs mr-2"></i> El motor en Java: Pattern y Matcher
                     </h3>
-                    <p class="text-slate-700 text-sm leading-relaxed mb-3">
+<p class="text-slate-700 text-sm leading-relaxed mb-3">
                         En Java, validar o buscar texto usando Expresiones Regulares requiere el trabajo en equipo de dos clases principales del paquete <code>java.util.regex</code>:
                     </p>
-                    <ul class="space-y-3 text-sm text-slate-700">
-                        <li>
-                            <span class="font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-mono">Pattern</span>: 
+<ul class="space-y-3 text-sm text-slate-700">
+<li>
+<span class="font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-mono">Pattern</span>: 
                             Representa la "compilación" de tu expresión regular. Convierte tu string (ej. <code>"\d+"</code>) en un <strong>Autómata Finito</strong> en memoria. Compilar es un proceso "costoso" para la computadora, por lo que se hace una sola vez.
                         </li>
-                        <li>
-                            <span class="font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-mono">Matcher</span>: 
+<li>
+<span class="font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded font-mono">Matcher</span>: 
                             Es el "cabezal de lectura" que toma el autómata generado por <code>Pattern</code> y lo ejecuta sobre una cadena de texto (String) real, evaluando estado por estado.
                         </li>
-                    </ul>
-                </div>
-
-                <!-- Java Code Snippet 1 (Validación) -->
-                <div class="mb-10">
-                    <h3 class="font-bold text-slate-800 mb-3 flex items-center text-sm"><i class="fab fa-java text-rose-500 mr-2 text-lg"></i> Ejemplo 1: Validación Completa (matches)</h3>
-                    <p class="text-xs text-slate-500 mb-2 italic">Usa el método <code>matches()</code> cuando necesitas que <strong>toda la cadena</strong> encaje exactamente en el patrón, desde el inicio hasta el fin. Útil para validar correos, contraseñas o matrículas.</p>
-                    <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
-                        <div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
-                            <span class="flex space-x-2 mr-4">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            </span>
-                            <p class="text-xs font-mono text-slate-300">ValidadorRegex.java</p>
-                        </div>
-                        <div class="p-4 text-sm font-mono overflow-x-auto text-slate-300 leading-snug">
+</ul>
+</div>
+<!-- Java Code Snippet 1 (Validación) -->
+<div class="mb-10">
+<h3 class="font-bold text-slate-800 mb-3 flex items-center text-sm"><i class="fab fa-java text-rose-500 mr-2 text-lg"></i> Ejemplo 1: Validación Completa (matches)</h3>
+<p class="text-xs text-slate-500 mb-2 italic">Usa el método <code>matches()</code> cuando necesitas que <strong>toda la cadena</strong> encaje exactamente en el patrón, desde el inicio hasta el fin. Útil para validar correos, contraseñas o matrículas.</p>
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+<div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
+<span class="flex space-x-2 mr-4">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</span>
+<p class="text-xs font-mono text-slate-300">ValidadorRegex.java</p>
+</div>
+<div class="p-4 text-sm font-mono overflow-x-auto text-slate-300 leading-snug">
 <pre><code><span class="text-purple-400">import</span> java.util.regex.Pattern;
 <span class="text-purple-400">import</span> java.util.regex.Matcher;
 
@@ -471,24 +615,23 @@
         }
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Java Code Snippet 2 (Extracción) -->
-                <div class="mb-10">
-                    <h3 class="font-bold text-slate-800 mb-3 flex items-center text-sm"><i class="fab fa-java text-blue-500 mr-2 text-lg"></i> Ejemplo 2: Extracción de Datos (find y group)</h3>
-                    <p class="text-xs text-slate-500 mb-2 italic">Usa el método <code>find()</code> dentro de un bucle `while` cuando quieres <strong>buscar múltiples coincidencias</strong> ocultas dentro de un texto largo (como extraer todos los números telefónicos de un documento).</p>
-                    <div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
-                        <div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
-                            <span class="flex space-x-2 mr-4">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            </span>
-                            <p class="text-xs font-mono text-slate-300">ExtractorRegex.java</p>
-                        </div>
-                        <div class="p-4 text-sm font-mono overflow-x-auto text-slate-300 leading-snug">
+</div>
+</div>
+</div>
+<!-- Java Code Snippet 2 (Extracción) -->
+<div class="mb-10">
+<h3 class="font-bold text-slate-800 mb-3 flex items-center text-sm"><i class="fab fa-java text-blue-500 mr-2 text-lg"></i> Ejemplo 2: Extracción de Datos (find y group)</h3>
+<p class="text-xs text-slate-500 mb-2 italic">Usa el método <code>find()</code> dentro de un bucle `while` cuando quieres <strong>buscar múltiples coincidencias</strong> ocultas dentro de un texto largo (como extraer todos los números telefónicos de un documento).</p>
+<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+<div class="bg-slate-800 px-4 py-2 flex items-center border-b border-slate-700">
+<span class="flex space-x-2 mr-4">
+<div class="w-3 h-3 rounded-full bg-red-500"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+</span>
+<p class="text-xs font-mono text-slate-300">ExtractorRegex.java</p>
+</div>
+<div class="p-4 text-sm font-mono overflow-x-auto text-slate-300 leading-snug">
 <pre><code><span class="text-purple-400">import</span> java.util.regex.Pattern;
 <span class="text-purple-400">import</span> java.util.regex.Matcher;
 
@@ -508,222 +651,244 @@
         <span class="text-slate-500">// m.find() busca la siguiente coincidencia y retorna true si la encuentra</span>
         <span class="text-purple-400">while</span> (m.<span class="text-blue-300">find</span>()) {
             <span class="text-slate-500">// m.group() extrae el pedazo de texto que hizo "match"</span>
-            System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"-> "</span> + m.<span class="text-blue-300">group</span>()); 
+            System.out.<span class="text-blue-300">println</span>(<span class="text-green-400">"-&gt; "</span> + m.<span class="text-blue-300">group</span>()); 
         }
     }
 }</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actividad 2.3 -->
-                <div class="mt-8 border-t border-slate-100 pt-6">
-                    <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-lg shadow-sm">
-                        <div class="flex items-start">
-                            <i class="fas fa-laptop-code text-emerald-600 mt-1 mr-3 text-xl"></i>
-                            <div class="flex-1">
-                                <h4 class="text-md font-bold text-emerald-900 uppercase tracking-wide mb-2">Actividad 2.3: Laboratorio en IDE</h4>
-                                <p class="text-sm text-emerald-800 leading-relaxed mb-4">
-                                    <strong>Instrucciones:</strong> Abre tu entorno de desarrollo (Java) y utiliza las clases <code>Pattern</code> y <code>Matcher</code> para resolver los siguientes problemas:
+</div>
+</div>
+</div>
+<!-- Actividad 2.3 -->
+<div class="mt-8 border-t border-slate-100 pt-6">
+<div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 rounded-r-lg shadow-sm">
+<div class="flex items-start">
+<i class="fas fa-laptop-code text-emerald-600 mt-1 mr-3 text-xl"></i>
+<div class="flex-1">
+<h4 class="text-md font-bold text-emerald-900 uppercase tracking-wide mb-2">Actividad 2.3: Laboratorio en IDE</h4>
+<p class="text-sm text-emerald-800 leading-relaxed mb-4">
+<strong>Instrucciones:</strong> Abre tu entorno de desarrollo (Java) y utiliza las clases <code>Pattern</code> y <code>Matcher</code> para resolver los siguientes problemas:
                                 </p>
-                                
-                                <div class="space-y-4">
-                                    <!-- Ejercicio 1 -->
-                                    <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
-                                        <h5 class="font-bold text-emerald-800 text-sm mb-1">Ejercicio A: Validación de Coordenadas (matches)</h5>
-                                        <p class="text-xs text-slate-600 mb-2">Crea un programa que valide si una cadena es una coordenada GPS básica. Debe tener un número (de 1 a 3 dígitos), una coma, un espacio, y otro número (1 a 3 dígitos).</p>
-                                        <div class="text-[11px] font-mono bg-slate-50 p-2 rounded text-slate-700">
-                                            <span class="text-green-600">Válido: "123, 45"</span> | <span class="text-red-500">Inválido: "12,45" (falta espacio)</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Ejercicio 2 -->
-                                    <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
-                                        <h5 class="font-bold text-emerald-800 text-sm mb-1">Ejercicio B: Buscador de Hashtags (find)</h5>
-                                        <p class="text-xs text-slate-600 mb-2">Dado el siguiente texto de una red social, extrae e imprime en consola únicamente los hashtags (palabras que inician con # seguidas de letras/números).</p>
-                                        <div class="text-[11px] font-mono bg-slate-50 p-2 rounded text-slate-700">
+<div class="space-y-4">
+<!-- Ejercicio 1 -->
+<div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
+<h5 class="font-bold text-emerald-800 text-sm mb-1">Ejercicio A: Validación de Coordenadas (matches)</h5>
+<p class="text-xs text-slate-600 mb-2">Crea un programa que valide si una cadena es una coordenada GPS básica. Debe tener un número (de 1 a 3 dígitos), una coma, un espacio, y otro número (1 a 3 dígitos).</p>
+<div class="text-[11px] font-mono bg-slate-50 p-2 rounded text-slate-700">
+<span class="text-green-600">Válido: "123, 45"</span> | <span class="text-red-500">Inválido: "12,45" (falta espacio)</span>
+</div>
+</div>
+<!-- Ejercicio 2 -->
+<div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm">
+<h5 class="font-bold text-emerald-800 text-sm mb-1">Ejercicio B: Buscador de Hashtags (find)</h5>
+<p class="text-xs text-slate-600 mb-2">Dado el siguiente texto de una red social, extrae e imprime en consola únicamente los hashtags (palabras que inician con # seguidas de letras/números).</p>
+<div class="text-[11px] font-mono bg-slate-50 p-2 rounded text-slate-700">
                                             Texto: "Aprendiendo #Java en el #ITChilpancingo durante la #clase de autómatas!"
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECCIÓN DE PROYECTO FINAL (PROTEGIDA) -->
-        <section id="proyecto-final" class="scroll-mt-32 pb-20">
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-                <!-- Decoración -->
-                <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
-                
-                <!-- Pantalla de Bloqueo -->
-                <div id="lock-screen" class="text-center py-10 relative z-10">
-                    <i class="fas fa-lock text-5xl text-rose-500 mb-4"></i>
-                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Proyectos Prácticos - Unidad 2</h2>
-                    <p class="text-slate-400 mb-8 max-w-lg mx-auto">Esta sección contiene los requerimientos para el proyecto de Regex. Ingresa la contraseña del docente.</p>
-                    <div class="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
-                        <input type="password" id="projectPassword" class="flex-1 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center sm:text-left" placeholder="Contraseña...">
-                        <button onclick="unlockProjects()" class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-rose-900/50">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECCIÓN DE PROYECTO FINAL (PROTEGIDA) -->
+<section class="scroll-mt-32 pb-20" id="proyecto-final">
+<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
+<!-- Decoración -->
+<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+<!-- Pantalla de Bloqueo -->
+<div class="text-center py-10 relative z-10" id="lock-screen">
+<i class="fas fa-lock text-5xl text-rose-500 mb-4"></i>
+<h2 class="text-2xl md:text-3xl font-bold mb-2">Proyectos Prácticos - Unidad 2</h2>
+<p class="text-slate-400 mb-8 max-w-lg mx-auto">Esta sección contiene los requerimientos para el proyecto de Regex. Ingresa la contraseña del docente.</p>
+<div class="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
+<input class="flex-1 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center sm:text-left" id="projectPassword" placeholder="Contraseña..." type="password"/>
+<button class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-rose-900/50" onclick="unlockProjects()">
                             Desbloquear
                         </button>
-                    </div>
-                    <p id="passwordError" class="text-red-400 mt-4 text-sm hidden font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
-                </div>
-
-                <!-- Contenido Desbloqueado (Oculto por defecto) -->
-                <div id="unlocked-content" class="hidden relative z-10">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
-                        <div>
-                            <h2 class="text-2xl md:text-3xl font-bold flex items-center">
-                                <i class="fas fa-award text-rose-500 mr-3"></i> Proyecto Final Libre
+</div>
+<p class="text-red-400 mt-4 text-sm hidden font-bold" id="passwordError"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
+</div>
+<!-- Contenido Desbloqueado (Oculto por defecto) -->
+<div class="hidden relative z-10" id="unlocked-content">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
+<div>
+<h2 class="text-2xl md:text-3xl font-bold flex items-center">
+<i class="fas fa-award text-rose-500 mr-3"></i> Proyecto Final Libre
                             </h2>
-                            <p class="text-slate-400 mt-2 text-sm">Objetivo: Resolver un problema del mundo real aplicando el motor de Expresiones Regulares de Java.</p>
-                        </div>
-                    </div>
-
-                    <!-- REQUERIMIENTOS DEL PROYECTO LIBRE -->
-                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
-                        <h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm flex items-center">
-                            <i class="fas fa-clipboard-list mr-2"></i> Puntos a Cubrir (Obligatorios)
+<p class="text-slate-400 mt-2 text-sm">Objetivo: Resolver un problema del mundo real aplicando el motor de Expresiones Regulares de Java.</p>
+</div>
+</div>
+<!-- REQUERIMIENTOS DEL PROYECTO LIBRE -->
+<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
+<h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm flex items-center">
+<i class="fas fa-clipboard-list mr-2"></i> Puntos a Cubrir (Obligatorios)
                         </h4>
-                        <p class="text-sm text-slate-300 leading-relaxed mb-4">
+<p class="text-sm text-slate-300 leading-relaxed mb-4">
                             Deberás elegir, diseñar y construir una aplicación en Java (consola o interfaz gráfica) que resuelva un problema útil utilizando <strong>estrictamente</strong> la librería <code>java.util.regex</code>.
                         </p>
-                        
-                        <ul class="space-y-4 text-sm text-slate-300">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-                                <div>
-                                    <strong class="text-white">1. Uso de la API nativa:</strong> 
+<ul class="space-y-4 text-sm text-slate-300">
+<li class="flex items-start">
+<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
+<div>
+<strong class="text-white">1. Uso de la API nativa:</strong> 
                                     El núcleo del programa debe depender de las clases <code>Pattern</code> y <code>Matcher</code>. Queda prohibido el uso de métodos básicos como <code>split()</code>, <code>indexOf()</code> o bucles manuales de caracteres para la lógica principal.
                                 </div>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-                                <div>
-                                    <strong class="text-white">2. Múltiples Operaciones Regex:</strong> 
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
+<div>
+<strong class="text-white">2. Múltiples Operaciones Regex:</strong> 
                                     El proyecto debe implementar al menos <strong>dos acciones diferentes</strong> del motor. Por ejemplo: Validar un formato (usando <code>matches()</code>) Y extraer información específica (usando <code>find()</code> y <code>group()</code>), o realizar reemplazos estructurados (<code>replaceAll()</code>).
                                 </div>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-                                <div>
-                                    <strong class="text-white">3. Complejidad del Patrón:</strong> 
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
+<div>
+<strong class="text-white">3. Complejidad del Patrón:</strong> 
                                     Las Expresiones Regulares deben ser de tu autoría y mostrar nivel técnico. Deben incluir el uso de cuantificadores (<code>+, *, ?</code>), clases de caracteres (<code>\d, \w, [...]</code>), anclas (<code>^, $</code>) y agrupaciones con paréntesis <code>()</code>.
                                 </div>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-                                <div>
-                                    <strong class="text-white">4. Dataset Realista:</strong> 
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
+<div>
+<strong class="text-white">4. Dataset Realista:</strong> 
                                     El programa debe procesar un conjunto de datos lógico. Puede leer un archivo de texto (<code>.txt</code>, <code>.csv</code>, <code>.log</code>) o procesar un bloque grande de texto introducido por el usuario.
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- EJEMPLOS DE IDEAS -->
-                    <div class="bg-indigo-900/30 p-5 rounded-xl border border-indigo-500/30 mb-10">
-                        <h4 class="font-bold text-indigo-300 mb-2 text-sm"><i class="fas fa-lightbulb mr-2"></i>Ideas de inspiración (puedes elegir otra):</h4>
-                        <p class="text-xs text-indigo-200/80 leading-relaxed">
-                            - Un analizador de código fuente que extraiga todas las variables declaradas y detecte si siguen las reglas de estilo <em>camelCase</em>.<br>
-                            - Un procesador de logs de servidor que extraiga direcciones IP maliciosas y fechas de ataque.<br>
+</li>
+</ul>
+</div>
+<!-- EJEMPLOS DE IDEAS -->
+<div class="bg-indigo-900/30 p-5 rounded-xl border border-indigo-500/30 mb-10">
+<h4 class="font-bold text-indigo-300 mb-2 text-sm"><i class="fas fa-lightbulb mr-2"></i>Ideas de inspiración (puedes elegir otra):</h4>
+<p class="text-xs text-indigo-200/80 leading-relaxed">
+                            - Un analizador de código fuente que extraiga todas las variables declaradas y detecte si siguen las reglas de estilo <em>camelCase</em>.<br/>
+                            - Un procesador de logs de servidor que extraiga direcciones IP maliciosas y fechas de ataque.<br/>
                             - Un "Web Scraper" simulado que reciba el código HTML de una página y extraiga todos los links (<code>href</code>) y correos electrónicos ocultos.
                         </p>
-                    </div>
-
-                    <!-- RÚBRICA DE EVALUACIÓN LIBRE -->
-                    <h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Lista a Evaluar (100 Puntos)</h3>
-                    <div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-                        <table class="w-full text-left">
-                            <thead class="text-xs uppercase bg-slate-900 text-slate-400">
-                                <tr>
-                                    <th class="px-5 py-4 w-3/4">Criterio de Evaluación</th>
-                                    <th class="px-5 py-4 border-l border-slate-700 text-center">Puntaje</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-700">
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-5 py-4">
-                                        <strong class="text-white block mb-1">Complejidad y Precisión de Regex</strong>
-                                        <span class="text-xs text-slate-400">Los patrones están bien construidos, utilizan funciones avanzadas (grupos, anclas, cuantificadores) y no arrojan falsos positivos ni falsos negativos.</span>
-                                    </td>
-                                    <td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">35</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-5 py-4">
-                                        <strong class="text-white block mb-1">Uso estricto de la API de Java</strong>
-                                        <span class="text-xs text-slate-400">Implementación lógica y correcta de la instanciación de <code>Pattern.compile()</code> y la iteración con métodos de <code>Matcher</code> (matches, find, group).</span>
-                                    </td>
-                                    <td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">25</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-5 py-4">
-                                        <strong class="text-white block mb-1">Aplicación y Utilidad (Resolución del Problema)</strong>
-                                        <span class="text-xs text-slate-400">El problema elegido tiene sentido en el mundo real, resuelve una necesidad práctica y el uso de expresiones regulares está totalmente justificado.</span>
-                                    </td>
-                                    <td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">20</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-5 py-4">
-                                        <strong class="text-white block mb-1">Interfaz y Experiencia de Usuario (UX)</strong>
-                                        <span class="text-xs text-slate-400">El programa es fácil de usar, no colapsa con entradas vacías, muestra resultados limpios y presenta un menú claro (en consola o GUI).</span>
-                                    </td>
-                                    <td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
-                                </tr>
-                                <tr class="hover:bg-slate-700/50 transition">
-                                    <td class="px-5 py-4">
-                                        <strong class="text-white block mb-1">Documentación y Defensa</strong>
-                                        <span class="text-xs text-slate-400">El alumno es capaz de explicar detalladamente (paso a paso) cómo funciona su Expresión Regular y el código cuenta con comentarios pertinentes.</span>
-                                    </td>
-                                    <td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    
-        <!-- Navegación Inferior entre Unidades -->
-        <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold mt-12 mb-8">
-            <a href="unidad1.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
-                <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 1: Lenguajes Formales
+</div>
+<!-- RÚBRICA DE EVALUACIÓN LIBRE -->
+<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Lista a Evaluar (100 Puntos)</h3>
+<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+<table class="w-full text-left">
+<thead class="text-xs uppercase bg-slate-900 text-slate-400">
+<tr>
+<th class="px-5 py-4 w-3/4">Criterio de Evaluación</th>
+<th class="px-5 py-4 border-l border-slate-700 text-center">Puntaje</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-700">
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-5 py-4">
+<strong class="text-white block mb-1">Complejidad y Precisión de Regex</strong>
+<span class="text-xs text-slate-400">Los patrones están bien construidos, utilizan funciones avanzadas (grupos, anclas, cuantificadores) y no arrojan falsos positivos ni falsos negativos.</span>
+</td>
+<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">35</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-5 py-4">
+<strong class="text-white block mb-1">Uso estricto de la API de Java</strong>
+<span class="text-xs text-slate-400">Implementación lógica y correcta de la instanciación de <code>Pattern.compile()</code> y la iteración con métodos de <code>Matcher</code> (matches, find, group).</span>
+</td>
+<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">25</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-5 py-4">
+<strong class="text-white block mb-1">Aplicación y Utilidad (Resolución del Problema)</strong>
+<span class="text-xs text-slate-400">El problema elegido tiene sentido en el mundo real, resuelve una necesidad práctica y el uso de expresiones regulares está totalmente justificado.</span>
+</td>
+<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">20</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-5 py-4">
+<strong class="text-white block mb-1">Interfaz y Experiencia de Usuario (UX)</strong>
+<span class="text-xs text-slate-400">El programa es fácil de usar, no colapsa con entradas vacías, muestra resultados limpios y presenta un menú claro (en consola o GUI).</span>
+</td>
+<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
+</tr>
+<tr class="hover:bg-slate-700/50 transition">
+<td class="px-5 py-4">
+<strong class="text-white block mb-1">Documentación y Defensa</strong>
+<span class="text-xs text-slate-400">El alumno es capaz de explicar detalladamente (paso a paso) cómo funciona su Expresión Regular y el código cuenta con comentarios pertinentes.</span>
+</td>
+<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- Navegación Inferior entre Unidades -->
+<div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold mt-12 mb-8">
+<a class="flex items-center text-slate-600 hover:text-slate-900 transition" href="unidad1.html">
+<i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 1: Lenguajes Formales
             </a>
-            <a href="unidad3.html" class="flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition shadow-sm font-bold">
+<a class="flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition shadow-sm font-bold" href="unidad3.html">
                 Unidad 3: Autómatas Finitos <i class="fas fa-arrow-right ml-2 text-cyan-200"></i>
-            </a>
-        </div>
-    
-    </main>
+</a>
+</div>
 
-    <!-- Footer Minimalista -->
-    <footer class="bg-slate-950 text-white py-12 border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <div class="flex items-center space-x-3">
-                <div class="bg-indigo-600 p-2 rounded-lg">
-                    <i class="fas fa-university text-white text-sm"></i>
                 </div>
-                <div>
-                    <h3 class="text-lg font-bold tracking-tight leading-none">IT Chilpancingo</h3>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 italic">Lenguajes y Autómatas I</p>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad1.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 1: Teoría de Lenguajes</a>
+                    <a href="unidad3.html" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 3: Autómatas Finitos <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
-            </div>
-            
-            <div class="flex space-x-6">
-                <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white transition">INICIO</a>
-                <a href="unidad1.html" class="text-xs font-bold text-slate-400 hover:text-white transition">UNIDAD 1</a>
-                <a href="#" class="text-xs font-bold text-white transition border-b border-indigo-500">UNIDAD 2</a>
-            </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-indigo-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#intro" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">Introducción</a>
+<a href="#definicion" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.1 Definición Formal</a>
+<a href="#operaciones" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.2 Operaciones Regulares</a>
+<a href="#aplicaciones" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.3 Aplicaciones Léxicas</a>
+<a href="#ejercicios" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-sky-500 pl-2 transition">2.4 Ejercicios Resueltos</a>
+
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-indigo-50/60 p-3 rounded-xl border border-indigo-100">
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio LyA I</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Prácticas 5 a 8: Expresiones regulares para identificadores, números reales y cadenas.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
         </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García</p>
     </footer>
 
     <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
+            if (pre) {
+                navigator.clipboard.writeText(pre.innerText).then(() => {
+                    const orig = btn.innerText;
+                    btn.innerText = "¡Copiado!";
+                    setTimeout(() => { btn.innerText = orig; }, 1500);
+                });
+            }
+        }
+    </script>
+    
+<script>
         // Lógica de validación de contraseña para el Proyecto Final
         function unlockProjects() {
             const passInput = document.getElementById('projectPassword').value;
@@ -743,5 +908,6 @@
             }
         }
     </script>
+
 </body>
 </html>
