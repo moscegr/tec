@@ -5,7 +5,7 @@ Estas reglas aplican para la creación, actualización y mantenimiento de sitios
 ## 1. Datos Institucionales y Docente
 - **Institución**: Instituto Tecnológico de Chilpancingo (TecNM).
 - **Catedrático**: Cruz Enrique García.
-- **Periodo Escolar Predeterminado**: Ene - Jun 2026 (o el semestre que indique el usuario).
+- **Periodo Escolar**: No especificar semestre/periodo particular; mantener formato semestral genérico y atemporal.
 
 ## 2. Esquema Oficial de Evaluación
 Todas las planeaciones deben reflejar este desglose de evaluación:

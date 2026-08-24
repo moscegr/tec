@@ -5,7 +5,7 @@ Este proyecto y los futuros proyectos de planeaciones académicas deben cumplir 
 ## Datos Docentes
 - **Institución**: Instituto Tecnológico de Chilpancingo (TecNM).
 - **Catedrático**: Cruz Enrique García.
-- **Periodo**: Ene - Jun 2026.
+- **Periodo**: No especificar semestre/periodo (curso semestral genérico).
 
 ## Criterios de Evaluación Oficiales
 - **40% Firmas**: Actividades en clase, ejercicios y reportes de prácticas.
