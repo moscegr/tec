@@ -361,6 +361,74 @@
                     <a href="unidad4.html" class="flex items-center px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 4: Álgebra Booleana <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
 
+            
+<!-- SECCIÓN DE EJEMPLOS RESUELTOS Y EJERCICIOS DE PRÁCTICA -->
+<section id="ejemplos-y-practica" class="scroll-mt-24 space-y-6">
+    <div class="border-t border-slate-200 pt-8">
+        <span class="text-xs font-bold text-sky-600 uppercase tracking-widest block mb-1">Pedagogía y Taller Práctico</span>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Ejemplos Resueltos y Problemario para Alumnos</h2>
+    </div>
+
+    <!-- EJEMPLO RESUELTO INDUCCIÓN -->
+    <div class="bg-white border-2 border-sky-100 rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-sky-700 bg-sky-100 px-2.5 py-0.5 rounded font-mono">Ejemplo Resuelto 3.1</span>
+            <span class="text-[11px] text-slate-500 font-medium">Demostración Formal por Inducción</span>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-2">
+            Demostrar por inducción matemática que la suma de los primeros \(n\) cuadrados cumple:
+            \[\sum_{i=1}^n i^2 = 1^2 + 2^2 + 3^2 + \dots + n^2 = rac{n(n+1)(2n+1)}{6}, \quad orall n \ge 1\]
+        </h4>
+        <div class="text-xs text-slate-600 space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <p><strong>1. Paso Base (\(n = 1\)):</strong><br>
+            Lado Izquierdo: \(1^2 = 1\).<br>
+            Lado Derecho: \(rac{1(1+1)(2(1)+1)}{6} = rac{1(2)(3)}{6} = 1\). Se cumple \(1 = 1\).</p>
+            
+            <p><strong>2. Hipótesis Inductiva (\(n = k\)):</strong><br>
+            Asumimos verdadero que: \(1^2 + 2^2 + \dots + k^2 = rac{k(k+1)(2k+1)}{6}\).</p>
+
+            <p><strong>3. Paso Inductivo (\(n = k + 1\)):</strong><br>
+            Queremos demostrar que: \(1^2 + \dots + k^2 + (k+1)^2 = rac{(k+1)((k+1)+1)(2(k+1)+1)}{6} = rac{(k+1)(k+2)(2k+3)}{6}\).<br>
+            Sustituyendo la hipótesis: \(rac{k(k+1)(2k+1)}{6} + (k+1)^2 = (k+1) \left[ rac{k(2k+1) + 6(k+1)}{6} ight] = (k+1) \left[ rac{2k^2 + 7k + 6}{6} ight] = rac{(k+1)(k+2)(2k+3)}{6}\).<br>
+            \(	herefore\) Queda formalmente demostrado para todo \(n \in \mathbb{N}\).</p>
+        </div>
+    </div>
+
+    <!-- PROBLEMARIO PARA EL ALUMNO -->
+    <div class="bg-gradient-to-br from-slate-50 to-sky-50/30 border border-sky-200 rounded-2xl p-6">
+        <div class="flex items-center space-x-2 text-xs font-bold text-sky-800 uppercase tracking-wider mb-2">
+            <i class="fas fa-pencil-alt text-sky-600"></i> Problemario de Taller (Firmas - 40%)
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Ejercicios Propuestos de Lógica e Inducción</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 1 (Reglas de Inferencia):</strong>
+                <p class="text-slate-600 mb-2">Demuestra formalmente la conclusión \(R\) a partir de las premisas: 1) \(P 	o Q\), 2) \(
+eg Q\), 3) \(
+eg P 	o R\).</p>
+                <span class="text-[10px] text-sky-600 font-mono font-bold">Pista: Aplica Modus Tollens entre 1 y 2 para obtener \(
+eg P\), luego Modus Ponens con 3.</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 2 (Inducción Matemática):</strong>
+                <p class="text-slate-600 mb-2">Demuestra por inducción que \(2^0 + 2^1 + 2^2 + \dots + 2^n = 2^{n+1} - 1\) para todo \(n \ge 0\).</p>
+                <span class="text-[10px] text-sky-600 font-mono font-bold">Base: \(n=0 	o 1 = 2^1 - 1 = 1\).</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 3 (Lógica de Predicados):</strong>
+                <p class="text-slate-600 mb-2">Formaliza con cuantificadores: "Para todo número real \(x\), si \(x > 0\) entonces existe un \(y\) tal que \(x = y^2\)".</p>
+                <span class="text-[10px] text-sky-600 font-mono font-bold">Respuesta: \(orall x \in \mathbb{R}\ (x > 0 \implies \exists y \in \mathbb{R}\ (x = y^2))\).</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 4 (Tablas de Verdad):</strong>
+                <p class="text-slate-600 mb-2">Construye la tabla de verdad y determina si \(((P 	o Q) \land P) 	o Q\) es una tautología.</p>
+                <span class="text-[10px] text-sky-600 font-mono font-bold">Resultado: Es la tautología del Modus Ponens (todos los valores son 1).</span>
+            </div>
+        </div>
+    </div>
+</section>
+
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->

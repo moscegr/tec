@@ -446,6 +446,60 @@
                     </a>
                 </div>
 
+            
+<!-- SECCIÓN DE EJEMPLOS RESUELTOS Y EJERCICIOS DE PRÁCTICA -->
+<section id="ejemplos-y-practica" class="scroll-mt-24 space-y-6">
+    <div class="border-t border-slate-200 pt-8">
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-1">Taller de Compilación</span>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Ejemplos Resueltos de Generación TAC y Problemario</h2>
+    </div>
+
+    <!-- EJEMPLO RESUELTO TAC DE ARREGLO 2D -->
+    <div class="bg-white border-2 border-indigo-100 rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-indigo-700 bg-indigo-100 px-2.5 py-0.5 rounded font-mono">Ejemplo Resuelto 2.1</span>
+            <span class="text-[11px] text-slate-500 font-medium">Acceso a Arreglos Multidimensionales</span>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-2">
+            Generar el Código de Tres Direcciones (TAC) para la asignación: <code>matriz[i][j] = vector[k] * 2 + c</code>, considerando enteros de 4 bytes y matriz de dimensión \(10 	imes 20\).
+        </h4>
+        <div class="text-xs font-mono text-slate-700 bg-slate-900 p-4 rounded-xl border border-slate-800 text-emerald-300">
+            <span class="text-slate-500">// 1. Cálculo de offset para vector[k]:</span><br>
+            t1 = k * 4<br>
+            t2 = vector[t1]<br>
+            t3 = t2 * 2<br>
+            t4 = t3 + c<br><br>
+            <span class="text-slate-500">// 2. Cálculo de offset 2D para matriz[i][j] (Ncols = 20):</span><br>
+            t5 = i * 20<br>
+            t6 = t5 + j<br>
+            t7 = t6 * 4<br>
+            matriz[t7] = t4<br>
+            <span class="text-purple-300 font-bold font-sans">// Asignación completada con 7 instrucciones TAC</span>
+        </div>
+    </div>
+
+    <!-- PROBLEMARIO PARA EL ALUMNO -->
+    <div class="bg-gradient-to-br from-slate-50 to-indigo-50/30 border border-indigo-200 rounded-2xl p-6">
+        <div class="flex items-center space-x-2 text-xs font-bold text-indigo-800 uppercase tracking-wider mb-2">
+            <i class="fas fa-code text-indigo-600"></i> Problemario de Taller (Firmas - 40%)
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Ejercicios Propuestos de Código Intermedio</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 1 (Control de Flujo):</strong>
+                <p class="text-slate-600 mb-2">Genera el código TAC para el bucle <code>for (i = 0; i &lt; 100; i++) sum += A[i];</code></p>
+                <span class="text-[10px] text-indigo-600 font-mono font-bold">Pista: Incluye etiqueta de inicio, salto condicional y salto incondicional de retorno.</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 2 (Expresiones Booleanas en Cortocircuito):</strong>
+                <p class="text-slate-600 mb-2">Traduce a TAC con saltos condicionales: <code>if (x &gt; 5 || y &lt; 10 && z == 0) a = 1; else a = 0;</code></p>
+                <span class="text-[10px] text-indigo-600 font-mono font-bold">Pista: Evalúa el operador AND con mayor precedencia que el OR.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
@@ -463,7 +517,8 @@
                         <a href="#tema-2-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.3 Esquema de generación</a>
                         <a href="#tema-2-3-control" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">↳ Saltos y Backpatching</a>
                         <a href="#tema-2-3-arreglos" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">↳ Direcciones de Arreglos</a>
-                        <a href="#laboratorio-tac" class="block py-1 text-indigo-600 font-bold border-l-2 border-indigo-500 pl-2 transition">Generador Interactivo</a>
+                        <a href="#laboratorio-tac" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Generador TAC</a>
+<a href="#ejemplos-y-practica" class="block py-1 text-indigo-700 font-bold border-l-2 border-indigo-500 pl-2 transition">Ejemplos & Problemario</a>
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-indigo-50/60 p-3 rounded-xl border border-indigo-100">

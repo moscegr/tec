@@ -238,7 +238,8 @@
                             <a href="#intro" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
 <a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas y Conversiones</a>
 <a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Complemento a 2 & Booth</a>
-<a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Algoritmo Booth</a>
+<a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Booth</a>
+<a href="#ejemplos-y-practica" class="block py-1 text-emerald-700 font-bold border-l-2 border-emerald-500 pl-2 transition">Ejemplos & Problemario</a>
 
                         </ul>
                     </div>
@@ -496,6 +497,73 @@
                     <a href="unidad2.html" class="flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 2: Conjuntos <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
 
+            
+<!-- SECCIÓN DE EJEMPLOS RESUELTOS Y EJERCICIOS DE PRÁCTICA -->
+<section id="ejemplos-y-practica" class="scroll-mt-24 space-y-6">
+    <div class="border-t border-slate-200 pt-8">
+        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">Pedagogía y Taller Práctico</span>
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Ejemplos Resueltos y Problemario para Alumnos</h2>
+    </div>
+
+    <!-- EJEMPLO RESUELTO 1 -->
+    <div class="bg-white border-2 border-emerald-100 rounded-2xl p-5 shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded font-mono">Ejemplo Resuelto 1.1</span>
+            <span class="text-[11px] text-slate-500 font-medium">Conversión con Parte Fraccionaria</span>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-2">
+            Convertir el número decimal \(143.625_{10}\) a Binario, Octal y Hexadecimal.
+        </h4>
+        <div class="text-xs text-slate-600 space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <p><strong>Paso 1: Parte Entera (143) por divisiones sucesivas entre 2:</strong><br>
+            \(143 / 2 = 71\) (Residuo 1), \(71 / 2 = 35\) (Res. 1), \(35 / 2 = 17\) (Res. 1), \(17 / 2 = 8\) (Res. 1), \(8 / 2 = 4\) (Res. 0), \(4 / 2 = 2\) (Res. 0), \(2 / 2 = 1\) (Res. 0), \(1 / 2 = 0\) (Res. 1).<br>
+            \(\implies 143_{10} = 10001111_2\).</p>
+            
+            <p><strong>Paso 2: Parte Fraccionaria (0.625) por multiplicaciones sucesivas por 2:</strong><br>
+            \(0.625 	imes 2 = 1.250\) (Entero 1)<br>
+            \(0.250 	imes 2 = 0.500\) (Entero 0)<br>
+            \(0.500 	imes 2 = 1.000\) (Entero 1) \(\implies 0.625_{10} = 0.101_2\).</p>
+
+            <p class="pt-2 border-t border-slate-200 text-emerald-800 font-mono font-bold">
+                • Binario: \(10001111.101_2\)<br>
+                • Octal: Agrupando de 3 en 3 \(	o 010\ 001\ 111 . 101_2 = 217.5_8\)<br>
+                • Hexadecimal: Agrupando de 4 en 4 \(	o 1000\ 1111 . 1010_2 = 8F.A_{16}\)
+            </p>
+        </div>
+    </div>
+
+    <!-- PROBLEMARIO PARA EL ALUMNO (PORTAFOLIO DE FIRMAS) -->
+    <div class="bg-gradient-to-br from-slate-50 to-emerald-50/30 border border-emerald-200 rounded-2xl p-6">
+        <div class="flex items-center space-x-2 text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">
+            <i class="fas fa-pencil-alt text-emerald-600"></i> Problemario de Taller (Firmas - 40%)
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-3">Ejercicios de Práctica Propuestos para el Estudiante</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 1 (Conversiones):</strong>
+                <p class="text-slate-600 mb-2">Convierte el número hexadecimal \(2C5.B_{16}\) a decimal y binario.</p>
+                <span class="text-[10px] text-emerald-600 font-mono font-bold">Pista: \(2 	imes 16^2 + 12 	imes 16^1 + 5 	imes 16^0 + 11/16 = 709.6875_{10}\)</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 2 (Complemento a 2):</strong>
+                <p class="text-slate-600 mb-2">Representa en formato de 8 bits con signo el número \(-37_{10}\) usando complemento a 2.</p>
+                <span class="text-[10px] text-emerald-600 font-mono font-bold">Respuesta: \(37_{10} = 00100101_2 \implies C_2 = 11011011_2\)</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 3 (Algoritmo de Booth):</strong>
+                <p class="text-slate-600 mb-2">Realiza la traza completa paso a paso de la multiplicación \((-9) 	imes (6)\) usando registros de 5 bits.</p>
+                <span class="text-[10px] text-emerald-600 font-mono font-bold">Resultado esperado: \(-54_{10}\) con 5 ciclos de desplazamiento SAR.</span>
+            </div>
+            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
+                <strong class="text-slate-900 block mb-1">Ejercicio 4 (Resta Binaria):</strong>
+                <p class="text-slate-600 mb-2">Efectúa la resta \(10110_2 - 1101_2\) mediante suma con complemento a dos.</p>
+                <span class="text-[10px] text-emerald-600 font-mono font-bold">Resultado: \(1001_2\) (\(9_{10}\)).</span>
+            </div>
+        </div>
+    </div>
+</section>
+
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
@@ -510,7 +578,8 @@
                         <a href="#intro" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
 <a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas y Conversiones</a>
 <a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Complemento a 2 & Booth</a>
-<a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Algoritmo Booth</a>
+<a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Booth</a>
+<a href="#ejemplos-y-practica" class="block py-1 text-emerald-700 font-bold border-l-2 border-emerald-500 pl-2 transition">Ejemplos & Problemario</a>
 
                     </nav>
 
