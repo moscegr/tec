@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 5: Análisis Léxico | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Callouts Luis Llamas Style - White UI */
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0284c7; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        /* Code Block Container */
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        /* Step Pipeline */
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #e11d48;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #cbd5e1;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-rose-100 selection:text-rose-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-rose-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-rose-950 text-rose-300 px-2 py-0.5 rounded border border-rose-800 font-mono text-[11px]">SCD-1015 • Unidad 5</span>
+                <a href="index.html" class="hover:text-white transition"><i class="fas fa-home mr-1"></i> Planeación General</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-rose-100 text-rose-700 text-xs flex items-center justify-center font-bold mr-2">U5</span>
+                        Análisis Léxico
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad4.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
+                        <i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U4: Turing
+                    </a>
+                    <a href="unidad6.html" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white transition flex items-center shadow-sm">
+                        U6: Sintáctico <i class="fas fa-chevron-right ml-1.5 text-rose-200"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-rose-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Lenguajes Formales</span>
+                            <span class="difficulty-badge diff-easy">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge diff-easy">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge diff-med">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Máquinas de Turing</span>
+                            <span class="difficulty-badge diff-med">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg bg-rose-600 text-white font-bold shadow-sm">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge bg-rose-700 text-white border-0">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge diff-hard">18h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 5 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 5</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <li><a href="#tema-5-1" class="hover:text-rose-600 block py-1">5.1 Funciones del analizador léxico</a></li>
+                            <li><a href="#tema-5-2" class="hover:text-rose-600 block py-1">5.2 Tokens, patrones y lexemas</a></li>
+                            <li><a href="#tema-5-3" class="hover:text-rose-600 block py-1">5.3 Creación de tabla de tokens</a></li>
+                            <li><a href="#tema-5-4" class="hover:text-rose-600 block py-1">5.4 Errores léxicos y recuperación</a></li>
+                            <li><a href="#tema-5-5" class="hover:text-rose-600 block py-1">5.5 Generadores (Flex, JFlex, PLY)</a></li>
+                            <li><a href="#tema-5-6" class="hover:text-rose-600 block py-1">5.6 Caso de estudio interactivo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal de la Lección (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-rose-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Fase 1 del Front-End del Compilador</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Unidad 5: Análisis Léxico (Scanner)
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 15 Horas (Semanas 11-12)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-hard">Nivel Avanzado</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- Introducción y Competencia -->
+                <section>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+                        El <strong>Análisis Léxico</strong> (también llamado <em>escáner</em> o <em>scanner</em>) constituye la <strong>primera fase</strong> del front-end de un compilador. Su tarea fundamental consiste en leer la secuencia de caracteres del programa fuente de izquierda a derecha, agruparlos en unidades con significado lógico llamadas <strong>componentes léxicos (tokens)</strong> y suministrarlos al analizador sintáctico a petición de este.
+                    </p>
+
+                    <div class="lll-box lll-info">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-sky-600 mr-2"></i>Competencia Específica</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            <strong>Construir un analizador léxico</strong> a partir de un lenguaje de programación o mediante herramientas generadoras (Flex, Lex, JFlex, JavaCC, PLY), identificando patrones, gestionando la tabla de símbolos y manejando errores léxicos.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 5.1 Funciones del analizador léxico -->
+                <section id="tema-5-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.1</span> Funciones del Analizador Léxico
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        La función primordial del analizador léxico es transformar un flujo continuo de caracteres no estructurado en una corriente estructurada de tokens. Sin embargo, realiza múltiples tareas complementarias esenciales para la eficiencia del compilador:
+                    </p>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="step-item" data-step="1">
+                            <h4 class="font-bold text-slate-800 text-sm">Lectura y Agrupamiento de Caracteres</h4>
+                            <p class="text-xs text-slate-600">Lee los caracteres del flujo de entrada y los agrupa en lexemas que coinciden con los patrones definidos para el lenguaje.</p>
+                        </div>
+                        <div class="step-item" data-step="2">
+                            <h4 class="font-bold text-slate-800 text-sm">Eliminación de Elementos No Significativos</h4>
+                            <p class="text-xs text-slate-600">Filtra y descarta espacios en blanco, tabulaciones, saltos de línea y comentarios del código fuente sin sobrecargar al analizador sintáctico.</p>
+                        </div>
+                        <div class="step-item" data-step="3">
+                            <h4 class="font-bold text-slate-800 text-sm">Interacción con la Tabla de Símbolos</h4>
+                            <p class="text-xs text-slate-600">Detecta nuevos identificadores, los inserta en la tabla de símbolos o recupera su información de atributos si ya fueron declarados.</p>
+                        </div>
+                        <div class="step-item" data-step="4">
+                            <h4 class="font-bold text-slate-800 text-sm">Control de Ubicación y Detección de Errores</h4>
+                            <p class="text-xs text-slate-600">Mantiene contadores de número de línea y columna para emitir mensajes de error precisos referenciando la posición exacta del error.</p>
+                        </div>
+                    </div>
+
+                    <!-- Diagrama Interacción Léxico - Sintáctico -->
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center mb-6">
+                        <div class="text-xs font-bold text-slate-700 uppercase mb-3">Flujo de Comunicación: Léxico $\leftrightarrow$ Sintáctico</div>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 font-mono text-xs">
+                            <div class="bg-white px-3 py-2 border border-slate-300 rounded shadow-sm">
+                                <strong>Código Fuente</strong><br><span class="text-[10px] text-slate-400">total = suma + 10;</span>
+                            </div>
+                            <i class="fas fa-arrow-right text-rose-500 hidden sm:inline"></i>
+                            <div class="bg-rose-50 border border-rose-200 px-3 py-2 rounded text-rose-900 font-bold">
+                                <strong>Analizador Léxico</strong><br><span class="text-[10px] text-rose-600">getNextToken()</span>
+                            </div>
+                            <i class="fas fa-arrows-alt-h text-rose-500 hidden sm:inline"></i>
+                            <div class="bg-amber-50 border border-amber-200 px-3 py-2 rounded text-amber-900 font-bold">
+                                <strong>Analizador Sintáctico</strong><br><span class="text-[10px] text-amber-600">Parser (GLC)</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5.2 Componentes léxicos, patrones y lexemas -->
+                <section id="tema-5-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.2</span> Componentes Léxicos, Patrones y Lexemas
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Es indispensable distinguir con precisión técnica entre estos tres conceptos fundamentales:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+                            <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 font-bold text-xs flex items-center justify-center mb-2"><i class="fas fa-tag"></i></div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Token</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Categoría o símbolo abstracto que representa una unidad de información sintáctica (ej. <code>ID</code>, <code>NUMERO</code>, <code>IF</code>, <code>OP_ASIG</code>).
+                            </p>
+                        </div>
+                        <div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center mb-2"><i class="fas fa-code"></i></div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Lexema</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                La secuencia concreta de caracteres en el código fuente que coincide con el patrón de un token (ej. <code>radio</code>, <code>3.14159</code>, <code>if</code>, <code>=</code>).
+                            </p>
+                        </div>
+                        <div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+                            <div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold text-xs flex items-center justify-center mb-2"><i class="fas fa-filter"></i></div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Patrón</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                La regla formal de descripción (expresión regular) que deben satisfacer los caracteres para formar un token específico.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Ejemplos -->
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl mb-6">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                                <tr>
+                                    <th class="py-2.5 px-3 font-bold">Token (Nombre)</th>
+                                    <th class="py-2.5 px-3 font-bold">Patrón Informal / ER</th>
+                                    <th class="py-2.5 px-3 font-bold">Lexemas de Ejemplo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-mono">
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-sky-700">IF</td>
+                                    <td class="py-2 px-3 text-slate-800">if</td>
+                                    <td class="py-2 px-3 text-slate-800">if</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-sky-700">ID</td>
+                                    <td class="py-2 px-3 text-slate-800">letra (letra | digito | _)*</td>
+                                    <td class="py-2 px-3 text-slate-800">contador, valor_1, temp</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-sky-700">NUM_INT</td>
+                                    <td class="py-2 px-3 text-slate-800">digito+</td>
+                                    <td class="py-2 px-3 text-slate-800">0, 42, 1024</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-sky-700">NUM_REAL</td>
+                                    <td class="py-2 px-3 text-slate-800">digito+ . digito+ ([eE][+-]? digito+)?</td>
+                                    <td class="py-2 px-3 text-slate-800">3.14, 0.05, 1.2e-4</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-sky-700">OP_REL</td>
+                                    <td class="py-2 px-3 text-slate-800">&lt; | &lt;= | == | &gt;= | &gt; | !=</td>
+                                    <td class="py-2 px-3 text-slate-800">&lt;=, !=, ==</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 5.3 Creación de Tabla de tokens y Símbolos -->
+                <section id="tema-5-3" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.3</span> Creación y Gestión de la Tabla de Tokens
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        La <strong>Tabla de Tokens</strong> almacena la secuencia de pares <code>&lt;Token, Atributo&gt;</code> producida por el analizador léxico. Los identificadores se vinculan con una entrada en la <strong>Tabla de Símbolos</strong>, donde se concentran sus propiedades (tipo de dato, dirección de memoria, ámbito de visibilidad, etc.).
+                    </p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Estructura de Token en C++ / Java</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre class="p-4 text-slate-200 text-xs font-mono overflow-x-auto leading-relaxed"><code>enum TokenType {
+    TOKEN_IF, TOKEN_ELSE, TOKEN_WHILE,
+    TOKEN_ID, TOKEN_INT_LITERAL, TOKEN_FLOAT_LITERAL,
+    TOKEN_ASSIGN, TOKEN_PLUS, TOKEN_MINUS,
+    TOKEN_SEMICOLON, TOKEN_EOF, TOKEN_ERROR
+};
+
+struct Token {
+    TokenType type;
+    std::string lexeme;
+    int line;
+    int column;
+    // Puntero o índice hacia la tabla de símbolos para identificadores
+    int symbol_table_index; 
+};</code></pre>
+                    </div>
+
+                    <div class="lll-box lll-tip">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-lightbulb text-emerald-600 mr-2"></i>Tip de Eficiencia: Búfer Doble (Double Buffering)</h4>
+                        <p class="text-xs text-slate-600">
+                            Para evitar llamadas lentas al sistema operativo carácter por carácter, los escáneres profesionales utilizan un <strong>búfer doble circular</strong> con dos punteros: <code>inicio_lexema</code> y <code>puntero_hacia_adelante</code>, cargando bloques de 4096 bytes con centinelas de fin de bloque.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 5.4 Errores Léxicos -->
+                <section id="tema-5-4" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.4</span> Errores Léxicos y Estrategias de Recuperación
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Un <strong>error léxico</strong> ocurre cuando ningún prefijo del flujo restante de caracteres coincide con el patrón de algún token válido. Ejemplos clásicos:
+                    </p>
+
+                    <ul class="text-xs text-slate-600 space-y-2 mb-4">
+                        <li class="flex items-start"><i class="fas fa-times text-rose-500 mr-2 mt-0.5"></i> <strong>Carácter no reconocido:</strong> Símbolos extraños en el lenguaje (ej. <code>@</code>, <code>$</code>, <code>~</code> cuando no están contemplados en el alfabeto).</li>
+                        <li class="flex items-start"><i class="fas fa-times text-rose-500 mr-2 mt-0.5"></i> <strong>Cadena o comentario sin cerrar:</strong> Llegar a fin de archivo (EOF) con una comilla o delimitador abierto.</li>
+                        <li class="flex items-start"><i class="fas fa-times text-rose-500 mr-2 mt-0.5"></i> <strong>Constante numérica mal formada:</strong> Múltiples puntos decimales (ej. <code>12.34.56</code>) o exponente sin dígitos.</li>
+                    </ul>
+
+                    <div class="lll-box lll-warning">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-exclamation-triangle text-amber-600 mr-2"></i>Estrategias de Recuperación</h4>
+                        <p class="text-xs text-slate-600">
+                            La estrategia más común es el <strong>Modo Pánico</strong>: descartar caracteres hasta que el analizador pueda encontrar un prefijo que comience un nuevo token válido, emitiendo un reporte con número de línea y columna.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 5.5 Generadores de Analizadores Léxicos -->
+                <section id="tema-5-5" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.5</span> Generadores Automáticos (Flex, JFlex, PLY)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        En lugar de escribir a mano una máquina de estados para cada token, se emplean <strong>generadores automáticos de escáneres</strong>. Estas herramientas reciben una especificación de expresiones regulares y acciones en código huésped, aplicando internamente el <strong>Algoritmo de Thompson</strong> y la <strong>Construcción de Subconjuntos</strong> para producir código en C, Java o Python.
+                    </p>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Especificación JFlex (Java) - scanner.flex</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre class="p-4 text-slate-200 text-xs font-mono overflow-x-auto leading-relaxed"><code>%%
+%class MiniScanner
+%type Token
+%line
+%column
+
+/* Expresiones Regulares */
+LETRA   = [a-zA-Z_]
+DIGITO  = [0-9]
+ID      = {LETRA}({LETRA}|{DIGITO})*
+NUMERO  = {DIGITO}+
+BLANCO  = [ \t\r\n]+
+
+%%
+
+/* Reglas y Acciones */
+"if"            { return new Token(TokenType.IF, yytext(), yyline, yycolumn); }
+"else"          { return new Token(TokenType.ELSE, yytext(), yyline, yycolumn); }
+"while"         { return new Token(TokenType.WHILE, yytext(), yyline, yycolumn); }
+{NUMERO}        { return new Token(TokenType.NUM, yytext(), yyline, yycolumn); }
+{ID}            { return new Token(TokenType.ID, yytext(), yyline, yycolumn); }
+"="             { return new Token(TokenType.ASSIGN, yytext(), yyline, yycolumn); }
+"+"             { return new Token(TokenType.PLUS, yytext(), yyline, yycolumn); }
+";"             { return new Token(TokenType.SEMI, yytext(), yyline, yycolumn); }
+{BLANCO}        { /* Ignorar espacios */ }
+.               { return new Token(TokenType.ERROR, yytext(), yyline, yycolumn); }
+</code></pre>
+                    </div>
+                </section>
+
+                <!-- 5.6 Caso de Estudio Interactivo -->
+                <section id="tema-5-6" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-rose-600 mr-2 font-mono text-xl">5.6</span> Caso de Estudio: Scanner Interactivo en JavaScript
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Prueba en vivo la tokenización completa de un fragmento de código. Escribe instrucciones y observa cómo se descomponen en lexemas, categorías de tokens y tabla de símbolos.
+                    </p>
+
+                    <!-- App Interactiva del Scanner -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Código Fuente de Prueba:</label>
+                            <textarea id="codeInput" rows="4" class="w-full p-3 font-mono text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none bg-white">if (x > 10) {
+    suma = x + 42.5;
+} // fin</textarea>
+                        </div>
+
+                        <button onclick="ejecutarScanner()" class="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-lg transition shadow-sm flex items-center">
+                            <i class="fas fa-play mr-2"></i> Tokenizar Código
+                        </button>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs bg-white border border-slate-200 rounded-lg overflow-hidden">
+                                <thead class="bg-slate-100 border-b border-slate-200 text-slate-700 font-bold">
+                                    <tr>
+                                        <th class="py-2 px-3">#</th>
+                                        <th class="py-2 px-3">Lexema</th>
+                                        <th class="py-2 px-3">Token Asignado</th>
+                                        <th class="py-2 px-3">Tipo / Clasificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tokensTableBody" class="divide-y divide-slate-100 font-mono text-slate-600">
+                                    <tr><td colspan="4" class="py-4 text-center text-slate-400 font-sans">Presiona "Tokenizar Código" para ver los resultados</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad4.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
+                        <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 4: Máquinas de Turing
+                    </a>
+                    <a href="unidad6.html" class="flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg transition shadow-sm font-bold">
+                        Unidad 6: Análisis Sintáctico <i class="fas fa-arrow-right ml-2 text-rose-200"></i>
+                    </a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-rose-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#tema-5-1" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.1 Funciones del léxico</a>
+                        <a href="#tema-5-2" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.2 Tokens, patrones y lexemas</a>
+                        <a href="#tema-5-3" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.3 Tabla de tokens y símbolos</a>
+                        <a href="#tema-5-4" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.4 Errores y recuperación</a>
+                        <a href="#tema-5-5" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.5 Generadores automáticos</a>
+                        <a href="#tema-5-6" class="block py-1 hover:text-rose-600 border-l-2 border-transparent hover:border-rose-500 pl-2 transition">5.6 Scanner interactivo</a>
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-rose-50/60 p-3 rounded-xl border border-rose-100">
+                        <div class="text-[11px] font-bold text-rose-900 mb-1"><i class="fas fa-flask mr-1"></i> Prácticas de Unidad</div>
+                        <p class="text-[11px] text-rose-700 leading-tight">
+                            Prácticas Oficiales 13 a 17: Especificación léxica e implementación en código.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Periodo Ene-Jun 2026</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container').querySelector('code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => { btn.innerText = orig; }, 1500);
+            });
+        }
+
+        function ejecutarScanner() {
+            const code = document.getElementById('codeInput').value;
+            const tbody = document.getElementById('tokensTableBody');
+            tbody.innerHTML = "";
+
+            const keywords = ['if', 'else', 'while', 'for', 'return', 'int', 'float'];
+            const tokens = [];
+            let i = 0;
+            let count = 1;
+
+            while (i < code.length) {
+                let char = code[i];
+
+                // Espacios y saltos
+                if (/\s/.test(char)) {
+                    i++;
+                    continue;
+                }
+
+                // Comentarios //
+                if (char === '/' && code[i+1] === '/') {
+                    while (i < code.length && code[i] !== '\n') i++;
+                    continue;
+                }
+
+                // Palabras reservadas e Identificadores
+                if (/[a-zA-Z_]/.test(char)) {
+                    let lexema = "";
+                    while (i < code.length && /[a-zA-Z0-9_]/.test(code[i])) {
+                        lexema += code[i++];
+                    }
+                    if (keywords.includes(lexema)) {
+                        tokens.push({ num: count++, lex: lexema, tok: 'KW_' + lexema.toUpperCase(), desc: 'Palabra Reservada' });
+                    } else {
+                        tokens.push({ num: count++, lex: lexema, tok: 'TOKEN_ID', desc: 'Identificador (Variable)' });
+                    }
+                    continue;
+                }
+
+                // Números enteros o reales
+                if (/[0-9]/.test(char)) {
+                    let lexema = "";
+                    let isFloat = false;
+                    while (i < code.length && (/[0-9]/.test(code[i]) || code[i] === '.')) {
+                        if (code[i] === '.') isFloat = true;
+                        lexema += code[i++];
+                    }
+                    tokens.push({ num: count++, lex: lexema, tok: isFloat ? 'TOKEN_NUM_REAL' : 'TOKEN_NUM_INT', desc: isFloat ? 'Literal Real' : 'Literal Entero' });
+                    continue;
+                }
+
+                // Operadores dobles y simples
+                let twoChars = code.substr(i, 2);
+                if (['==', '!=', '<=', '>='].includes(twoChars)) {
+                    tokens.push({ num: count++, lex: twoChars, tok: 'TOKEN_OP_REL', desc: 'Operador Relacional' });
+                    i += 2;
+                    continue;
+                }
+
+                if (['+', '-', '*', '/', '=', '>', '<'].includes(char)) {
+                    let tokName = (char === '=') ? 'TOKEN_ASSIGN' : (['<', '>'].includes(char) ? 'TOKEN_OP_REL' : 'TOKEN_OP_ARIT');
+                    tokens.push({ num: count++, lex: char, tok: tokName, desc: 'Operador' });
+                    i++;
+                    continue;
+                }
+
+                // Delimitadores
+                if (['(', ')', '{', '}', ';', ','].includes(char)) {
+                    tokens.push({ num: count++, lex: char, tok: 'TOKEN_DELIM', desc: 'Delimitador Sintáctico' });
+                    i++;
+                    continue;
+                }
+
+                // Carácter no reconocido
+                tokens.push({ num: count++, lex: char, tok: 'TOKEN_ERROR', desc: 'Error Léxico: Carácter no válido' });
+                i++;
+            }
+
+            tokens.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.className = t.tok === 'TOKEN_ERROR' ? 'bg-rose-50 text-rose-700 font-bold' : 'hover:bg-slate-50';
+                tr.innerHTML = `
+                    <td class="py-2 px-3">${t.num}</td>
+                    <td class="py-2 px-3 font-bold text-slate-800">${t.lex}</td>
+                    <td class="py-2 px-3 text-rose-600 font-mono">${t.tok}</td>
+                    <td class="py-2 px-3 text-slate-500 font-sans">${t.desc}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 6: Análisis Sintáctico | Lenguajes y Autómatas I</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Callouts Luis Llamas Style - White UI */
+        .lll-box {
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .lll-info { border-left-color: #0284c7; background-color: #f8fafc; }
+        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
+
+        .difficulty-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+        }
+        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        /* Code Block Container */
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin: 1.25rem 0;
+            border: 1px solid #1e293b;
+        }
+        .code-header {
+            background-color: #1e293b;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        /* Step Pipeline */
+        .step-item {
+            position: relative;
+            padding-left: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-item::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #d97706;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-item::after {
+            content: '';
+            position: absolute;
+            left: 0.8rem;
+            top: 1.8rem;
+            bottom: -0.8rem;
+            width: 2px;
+            background: #cbd5e1;
+        }
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .sticky-sub-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-amber-100 selection:text-amber-900">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="font-semibold text-white"><i class="fas fa-university text-amber-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800 font-mono text-[11px]">SCD-1015 • Unidad 6</span>
+                <a href="index.html" class="hover:text-white transition"><i class="fas fa-home mr-1"></i> Planeación General</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Sticky -->
+    <nav class="sticky-sub-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Temario
+                    </a>
+                    <span class="text-slate-300">/</span>
+                    <span class="font-bold text-slate-900 text-sm flex items-center">
+                        <span class="w-6 h-6 rounded bg-amber-100 text-amber-700 text-xs flex items-center justify-center font-bold mr-2">U6</span>
+                        Análisis Sintáctico
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 text-xs font-semibold">
+                    <a href="unidad5.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
+                        <i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U5: Léxico
+                    </a>
+                    <a href="index.html" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition flex items-center shadow-sm">
+                        <i class="fas fa-check-circle mr-1.5 text-amber-200"></i> Finalizar Curso
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
+                        <i class="fas fa-book text-amber-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>1. Lenguajes Formales</span>
+                            <span class="difficulty-badge diff-easy">10h</span>
+                        </a>
+                        <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>2. Expresiones Regulares</span>
+                            <span class="difficulty-badge diff-easy">12h</span>
+                        </a>
+                        <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>3. Autómatas Finitos</span>
+                            <span class="difficulty-badge diff-med">15h</span>
+                        </a>
+                        <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>4. Máquinas de Turing</span>
+                            <span class="difficulty-badge diff-med">10h</span>
+                        </a>
+                        <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
+                            <span>5. Análisis Léxico</span>
+                            <span class="difficulty-badge diff-hard">15h</span>
+                        </a>
+                        <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg bg-amber-600 text-white font-bold shadow-sm">
+                            <span>6. Análisis Sintáctico</span>
+                            <span class="difficulty-badge bg-amber-700 text-white border-0">18h</span>
+                        </a>
+                    </nav>
+
+                    <!-- Subtemas Unidad 6 -->
+                    <div class="mt-6 pt-4 border-t border-slate-200">
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 6</h5>
+                        <ul class="space-y-1 text-xs text-slate-600">
+                            <li><a href="#tema-6-1" class="hover:text-amber-600 block py-1">6.1 Gramáticas Libres de Contexto</a></li>
+                            <li><a href="#tema-6-2" class="hover:text-amber-600 block py-1">6.2 Árboles de derivación</a></li>
+                            <li><a href="#tema-6-3" class="hover:text-amber-600 block py-1">6.3 Formas normales (FNC)</a></li>
+                            <li><a href="#tema-6-4" class="hover:text-amber-600 block py-1">6.4 Diagramas de sintaxis</a></li>
+                            <li><a href="#tema-6-5" class="hover:text-amber-600 block py-1">6.5 Eliminación de ambigüedad</a></li>
+                            <li><a href="#tema-6-6" class="hover:text-amber-600 block py-1">6.6 Cálculo FIRST y FOLLOW</a></li>
+                            <li><a href="#tema-6-7" class="hover:text-amber-600 block py-1">6.7 Tipos de analizadores (LL/LR)</a></li>
+                            <li><a href="#tema-6-8" class="hover:text-amber-600 block py-1">6.8 Manejo de errores</a></li>
+                            <li><a href="#tema-6-9" class="hover:text-amber-600 block py-1">6.9 Generadores (CUP, Yacc)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- COLUMNA CENTRAL: Contenido Principal de la Lección (6 Cols) -->
+            <main class="lg:col-span-6 space-y-10">
+
+                <!-- Header de la Lección -->
+                <header class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-2 text-xs text-amber-600 font-bold uppercase tracking-wider mb-2">
+                        <span>Fase 2 del Front-End del Compilador</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                        Unidad 6: Análisis Sintáctico (Parser)
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 18 Horas (Semanas 13-16)</span>
+                        <span>•</span>
+                        <span class="difficulty-badge diff-hard">Nivel Avanzado</span>
+                        <span>•</span>
+                        <span>Docente: Cruz Enrique García</span>
+                    </div>
+                </header>
+
+                <!-- Introducción y Competencia -->
+                <section>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
+                        El <strong>Análisis Sintáctico</strong> (o <em>parsing</em>) es el corazón de la etapa de análisis del compilador. Toma la secuencia de tokens producida por el analizador léxico y verifica si dicha secuencia satisface las reglas estructurales de la gramática del lenguaje, construyendo una representación jerárquica denominada <strong>árbol de sintaxis</strong> (Parse Tree / AST).
+                    </p>
+
+                    <div class="lll-box lll-info">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-sky-600 mr-2"></i>Competencia Específica</h4>
+                        <p class="text-xs sm:text-sm text-slate-600">
+                            <strong>Construir un analizador sintáctico</strong> a partir de un lenguaje de programación o un generador automático (YACC, CUP, Bison, ANTLR) para el reconocimiento y validación formal de gramáticas libres de contexto, cálculo de conjuntos predictivos y manejo de errores.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 6.1 GLC -->
+                <section id="tema-6-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.1</span> Gramáticas Libres de Contexto (GLC)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Una <strong>Gramática Libre de Contexto</strong> es una estructura formal matemática definida formalmente como una 4-tupla:
+                    </p>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl font-mono text-xs sm:text-sm text-center mb-4">
+                        $$G = (V, \Sigma, R, S)$$
+                    </div>
+
+                    <ul class="text-xs text-slate-600 space-y-2 mb-6">
+                        <li><strong>\(V\) (No terminales):</strong> Conjunto finito de variables sintácticas que definen subestructuras del lenguaje (ej. \(E, T, F, \text{Sentencia}\)).</li>
+                        <li><strong>\(\Sigma\) (Terminales):</strong> Alfabeto de símbolos básicos provistos como tokens por el analizador léxico (ej. \(+, *, \mathbf{id}, (, )\)).</li>
+                        <li><strong>\(R\) (Reglas de producción):</strong> Conjunto de producciones de la forma \(A \to \alpha\), donde \(A \in V\) y \(\alpha \in (V \cup \Sigma)^*\).</li>
+                        <li><strong>\(S\) (Símbolo inicial):</strong> Variable distinguida \(S \in V\) que representa la construcción máxima (ej. <em>Programa</em>).</li>
+                    </ul>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Gramática Estándar de Expresiones Aritméticas (Notación BNF)</span>
+                            <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre class="p-4 text-slate-200 text-xs font-mono overflow-x-auto leading-relaxed"><code>E -> E + T  |  T
+T -> T * F  |  F
+F -> ( E )  |  id  |  num</code></pre>
+                    </div>
+                </section>
+
+                <!-- 6.2 Árboles de derivación -->
+                <section id="tema-6-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.2</span> Árboles de Derivación (Parse Trees)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Un <strong>árbol de derivación</strong> muestra de forma gráfica cómo se deriva una cadena a partir del símbolo inicial:
+                    </p>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center mb-6">
+                        <div class="text-xs font-bold text-slate-700 uppercase mb-2">Árbol Sintáctico para: id + id * id</div>
+                        <pre class="font-mono text-xs text-slate-700 inline-block text-left leading-tight">
+        E
+       /|\
+      E + T
+      |  /|\
+      T T * F
+      | |   |
+      F F   id
+      | |
+     id id
+                        </pre>
+                        <p class="text-[11px] text-slate-500 mt-2">Nótese cómo la multiplicación (*) queda en un nivel más profundo, respetando la precedencia de operadores.</p>
+                    </div>
+                </section>
+
+                <!-- 6.3 Formas Normales de Chomsky -->
+                <section id="tema-6-3" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.3</span> Formas Normales de Chomsky y Greibach
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Para el análisis teórico y algoritmos de parsing dinámico (como CYK), las gramáticas se normalizan:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-xs uppercase text-amber-700 mb-1">Forma Normal de Chomsky (FNC)</h4>
+                            <p class="text-xs text-slate-600 mb-2">Toda producción tiene únicamente una de dos formas:</p>
+                            <div class="font-mono text-xs bg-slate-50 p-2 rounded border border-slate-200 text-center">
+                                \(A \to BC\) &nbsp; ó &nbsp; \(A \to a\)
+                            </div>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-xs uppercase text-amber-700 mb-1">Forma Normal de Greibach (FNG)</h4>
+                            <p class="text-xs text-slate-600 mb-2">Toda producción inicia con un símbolo terminal:</p>
+                            <div class="font-mono text-xs bg-slate-50 p-2 rounded border border-slate-200 text-center">
+                                \(A \to a \alpha\) &nbsp; con \(\alpha \in V^*\)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6.4 Diagramas de Sintaxis -->
+                <section id="tema-6-4" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.4</span> Diagramas de Sintaxis (Diagramas de Ferrocarril)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Representación gráfica visual de las reglas gramaticales utilizada históricamente en especificaciones de lenguajes como Pascal y JSON. Los no terminales se representan como rectángulos y los terminales como círculos/óvalos conectados por trayectorias direccionadas.
+                    </p>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-center mb-6">
+                        <div class="text-xs font-bold text-slate-700 uppercase mb-2">Diagrama de Ferrocarril: Sentencia IF</div>
+                        <div class="font-mono text-xs text-slate-700 inline-block bg-white p-3 rounded border border-slate-200">
+                            ──► [ if ] ──► ( Condición ) ──► [ Sentencia ] ──┬──────────────────►
+                                                                             └──► [ else ] ──► [ Sentencia ] ──┘
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6.5 Eliminación de la Ambigüedad -->
+                <section id="tema-6-5" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.5</span> Eliminación de Ambigüedad y Recursividad Izquierda
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Una gramática es <strong>ambigua</strong> si genera más de un árbol de derivación para una misma cadena. Los analizadores descendentes LL(1) no admiten gramáticas con recursividad por la izquierda ni factores comunes.
+                    </p>
+
+                    <div class="lll-box lll-warning">
+                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-tools text-amber-600 mr-2"></i>Fórmula de Eliminación de Recursividad Izquierda Directa</h4>
+                        <p class="text-xs text-slate-600 mb-2">Dada una regla con recursividad izquierda:</p>
+                        <div class="font-mono text-xs bg-white p-2 rounded border border-amber-200 text-slate-800 mb-2">
+                            \(A \to A \alpha \mid \beta\) &nbsp; (donde \(\beta\) no empieza con \(A\))
+                        </div>
+                        <p class="text-xs text-slate-600 mb-2">Se transforma de forma equivalente en:</p>
+                        <div class="font-mono text-xs bg-white p-2 rounded border border-amber-200 text-slate-800">
+                            \(A \to \beta A'\)<br>
+                            \(A' \to \alpha A' \mid \varepsilon\)
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6.6 Cálculo FIRST y FOLLOW -->
+                <section id="tema-6-6" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.6</span> Cálculo de Conjuntos FIRST (Primeros) y FOLLOW (Siguientes)
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
+                        Los conjuntos predictivos <strong>FIRST</strong> y <strong>FOLLOW</strong> permiten a un parser LL(1) decidir qué producción aplicar sin retroceso (*backtracking*).
+                    </p>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-xs uppercase text-sky-700 mb-1">Definición de FIRST(\(\alpha\))</h4>
+                            <p class="text-xs text-slate-600">Conjunto de terminales que pueden iniciar las cadenas derivadas de \(\alpha\). Si \(\alpha \Rightarrow^* \varepsilon\), entonces \(\varepsilon \in \text{FIRST}(\alpha)\).</p>
+                        </div>
+                        <div class="p-4 bg-white border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-xs uppercase text-indigo-700 mb-1">Definición de FOLLOW(\(A\))</h4>
+                            <p class="text-xs text-slate-600">Conjunto de terminales que pueden aparecer inmediatamente a la derecha de \(A\) en alguna derivación. El símbolo de fin de archivo (\(\$\)) siempre pertenece a \(\text{FOLLOW}(S)\).</p>
+                        </div>
+                    </div>
+
+                    <!-- Tabla Predictiva LL(1) de Ejemplo -->
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl mb-6">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                                <tr>
+                                    <th class="py-2 px-3 font-bold">No Terminal</th>
+                                    <th class="py-2 px-3 font-bold">FIRST</th>
+                                    <th class="py-2 px-3 font-bold">FOLLOW</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600 font-mono">
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-amber-700">E</td>
+                                    <td class="py-2 px-3">{ id, ( }</td>
+                                    <td class="py-2 px-3">{ $, ) }</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-amber-700">E'</td>
+                                    <td class="py-2 px-3">{ +, &epsilon; }</td>
+                                    <td class="py-2 px-3">{ $, ) }</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-amber-700">T</td>
+                                    <td class="py-2 px-3">{ id, ( }</td>
+                                    <td class="py-2 px-3">{ +, $, ) }</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-amber-700">T'</td>
+                                    <td class="py-2 px-3">{ *, &epsilon; }</td>
+                                    <td class="py-2 px-3">{ +, $, ) }</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-bold text-amber-700">F</td>
+                                    <td class="py-2 px-3">{ id, ( }</td>
+                                    <td class="py-2 px-3">{ *, +, $, ) }</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 6.7 Tipos de Analizadores Sintácticos -->
+                <section id="tema-6-7" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.7</span> Tipos de Analizadores: Top-Down vs Bottom-Up
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-sm mb-2 flex items-center">
+                                <i class="fas fa-arrow-down text-sky-600 mr-2"></i> Descendentes (Top-Down)
+                            </h4>
+                            <p class="text-xs text-slate-600 mb-2 leading-relaxed">Construyen el árbol desde la raíz hacia las hojas:</p>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                                <li>Descenso Recursivo</li>
+                                <li>LL(1) Predictivo No Recursivo (Tabla)</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="font-bold text-slate-900 text-sm mb-2 flex items-center">
+                                <i class="fas fa-arrow-up text-amber-600 mr-2"></i> Ascendentes (Bottom-Up)
+                            </h4>
+                            <p class="text-xs text-slate-600 mb-2 leading-relaxed">Reducen desde las hojas hacia la raíz (Shift-Reduce):</p>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                                <li>LR(0) / SLR(1)</li>
+                                <li>LALR(1) (Yacc, Bison, CUP)</li>
+                                <li>LR(1) Canónico</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6.8 y 6.9 Generadores y Caso de Estudio -->
+                <section id="tema-6-9" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
+                        <span class="text-amber-600 mr-2 font-mono text-xl">6.9</span> Generadores Automáticos (CUP / Yacc) y Parser Interactivo
+                    </h2>
+                    
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Prueba en vivo la evaluación sintáctica de expresiones mediante un analizador sintáctico descendente recursivo implementado en JavaScript.
+                    </p>
+
+                    <!-- Evaluador Interactivo Sintáctico -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50 space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Expresión Matemática a Analizar:</label>
+                            <input type="text" id="parserInput" value="3 + 5 * (10 - 2)" class="w-full p-2.5 font-mono text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
+                        </div>
+
+                        <button onclick="analizarSintaxis()" class="px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-lg transition shadow-sm flex items-center">
+                            <i class="fas fa-play mr-2"></i> Ejecutar Parsing y Construir AST
+                        </button>
+
+                        <div id="parserResult" class="p-4 bg-white border border-slate-200 rounded-lg font-mono text-xs text-slate-700 min-h-[80px]">
+                            Presiona el botón para verificar la sintaxis y ver el árbol sintáctico estructurado.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad5.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
+                        <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 5: Análisis Léxico
+                    </a>
+                    <a href="index.html" class="flex items-center px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-lg transition shadow-sm font-bold">
+                        <i class="fas fa-home mr-2"></i> Volver a la Planeación General
+                    </a>
+                </div>
+
+            </main>
+
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+                <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                    <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
+                        <i class="fas fa-list text-amber-600 text-xs"></i>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                    </div>
+
+                    <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#tema-6-1" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.1 GLC y Notación BNF</a>
+                        <a href="#tema-6-2" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.2 Árboles de derivación</a>
+                        <a href="#tema-6-3" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.3 Formas normales (FNC)</a>
+                        <a href="#tema-6-4" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.4 Diagramas de sintaxis</a>
+                        <a href="#tema-6-5" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.5 Eliminación de ambigüedad</a>
+                        <a href="#tema-6-6" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.6 Cálculo FIRST y FOLLOW</a>
+                        <a href="#tema-6-7" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.7 Parsers Top-Down vs Bottom-Up</a>
+                        <a href="#tema-6-9" class="block py-1 hover:text-amber-600 border-l-2 border-transparent hover:border-amber-500 pl-2 transition">6.9 Parser interactivo</a>
+                    </nav>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-amber-50/60 p-3 rounded-xl border border-amber-100">
+                        <div class="text-[11px] font-bold text-amber-900 mb-1"><i class="fas fa-trophy mr-1"></i> Proyecto Final</div>
+                        <p class="text-[11px] text-amber-700 leading-tight">
+                            Prácticas Oficiales 18 a 22: Construcción del analizador sintáctico y entrega del compilador.
+                        </p>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
+        <p>Lenguajes y Autómatas I • SCD-1015 • IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Periodo Ene-Jun 2026</p>
+    </footer>
+
+    <script>
+        function copyCode(btn) {
+            const pre = btn.closest('.code-container').querySelector('code');
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => { btn.innerText = orig; }, 1500);
+            });
+        }
+
+        // Mini Parser Descendente Recursivo para expresiones
+        function analizarSintaxis() {
+            const input = document.getElementById('parserInput').value;
+            const resDiv = document.getElementById('parserResult');
+            
+            try {
+                // Tokenizer simple
+                const tokens = input.match(/\d+|\+|\-|\*|\/|\(|\)/g) || [];
+                let pos = 0;
+
+                function peek() { return tokens[pos]; }
+                function consume(expected) {
+                    if (tokens[pos] === expected) {
+                        return tokens[pos++];
+                    }
+                    throw new Error(`Se esperaba '${expected}' pero se encontró '${tokens[pos] || 'FIN'}'`);
+                }
+
+                // Gramática:
+                // E -> T ((+|-) T)*
+                // T -> F ((*|/) F)*
+                // F -> ( E ) | num
+                function parseE() {
+                    let node = { type: 'Expr', left: parseT(), ops: [] };
+                    while (peek() === '+' || peek() === '-') {
+                        let op = consume(peek());
+                        let right = parseT();
+                        node.ops.push({ op, right });
+                    }
+                    return node;
+                }
+
+                function parseT() {
+                    let node = { type: 'Term', left: parseF(), ops: [] };
+                    while (peek() === '*' || peek() === '/') {
+                        let op = consume(peek());
+                        let right = parseF();
+                        node.ops.push({ op, right });
+                    }
+                    return node;
+                }
+
+                function parseF() {
+                    if (peek() === '(') {
+                        consume('(');
+                        let expr = parseE();
+                        consume(')');
+                        return { type: 'Group', expr };
+                    } else if (/^\d+$/.test(peek())) {
+                        let val = consume(peek());
+                        return { type: 'Number', value: val };
+                    } else {
+                        throw new Error(`Símbolo inesperado en expresión: '${peek() || 'FIN'}'`);
+                    }
+                }
+
+                const ast = parseE();
+                if (pos < tokens.length) {
+                    throw new Error(`Tokens sobrantes sin analizar al final: '${tokens.slice(pos).join(' ')}'`);
+                }
+
+                resDiv.innerHTML = `
+                    <div class="text-emerald-700 font-bold mb-2">
+                        <i class="fas fa-check-circle mr-1"></i> ¡Análisis Sintáctico Exitoso! (Cadena válida según la GLC)
+                    </div>
+                    <div class="text-slate-500 text-[11px] mb-2">Representación JSON del Árbol Sintáctico Abstracto (AST):</div>
+                    <pre class="bg-slate-900 text-emerald-300 p-3 rounded text-[11px] overflow-x-auto">${JSON.stringify(ast, null, 2)}</pre>
+                `;
+            } catch (err) {
+                resDiv.innerHTML = `
+                    <div class="text-rose-700 font-bold mb-1">
+                        <i class="fas fa-times-circle mr-1"></i> Error Sintáctico
+                    </div>
+                    <div class="text-rose-600 text-xs">${err.message}</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
