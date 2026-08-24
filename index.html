@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lenguajes y Autómatas I - Planeación Didáctica | IT Chilpancingo</title>
+    <title>Portal de Planeaciones Didácticas | IT Chilpancingo - TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -18,17 +18,6 @@
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            500: '#0284c7',
-                            600: '#0369a1',
-                            700: '#075985',
-                            800: '#0c4a6e',
-                            900: '#082f49',
-                        }
                     }
                 }
             }
@@ -42,44 +31,15 @@
             scroll-behavior: smooth;
         }
 
-        /* Estilo Callouts Luis Llamas - White UI */
-        .lll-box {
-            border-radius: 0.75rem;
-            padding: 1.25rem 1.5rem;
-            margin: 1.5rem 0;
-            border-left: 4px solid;
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03);
-            border-top: 1px solid #f1f5f9;
-            border-right: 1px solid #f1f5f9;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .lll-info { border-left-color: #0284c7; background-color: #f8fafc; }
-        .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
-        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
-
-        .difficulty-badge {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 9999px;
-            letter-spacing: 0.05em;
-        }
-        .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-        .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-
-        /* Tarjetas de Unidad estilo Luis Llamas */
-        .course-card {
+        .subject-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            transition: all 0.25s ease;
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
         }
-        .course-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.08);
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08);
             border-color: #cbd5e1;
         }
 
@@ -101,11 +61,10 @@
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - Instituto Tecnológico de Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+                <span class="text-slate-400 hidden sm:inline">Departamento de Sistemas y Computación</span>
             </div>
             <div class="flex items-center space-x-4">
-                <span class="bg-sky-950 text-sky-300 px-2 py-0.5 rounded border border-sky-800/60 font-mono text-[11px]">SCD-1015 • SATCA 2-3-5</span>
-                <span><i class="fas fa-layer-group text-sky-400 mr-1"></i> Curso Semestral</span>
+                <span class="text-slate-400"><i class="fas fa-chalkboard-teacher text-sky-400 mr-1"></i> Docente: <strong>Cruz Enrique García</strong></span>
             </div>
         </div>
     </div>
@@ -114,771 +73,187 @@
     <nav class="sticky-top-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-4">
-                    <a href="index.html" class="flex items-center space-x-3 group">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm group-hover:shadow transition">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <div>
-                            <span class="text-base font-bold text-slate-900 leading-tight block group-hover:text-sky-600 transition">Lenguajes y Autómatas I</span>
-                            <span class="text-[11px] text-slate-500 font-medium">Portal y Planeación Semestral (5 hrs/sem)</span>
-                        </div>
-                    </a>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <span class="text-base font-bold text-slate-900 leading-tight block">Portal de Planeaciones Didácticas</span>
+                        <span class="text-[11px] text-slate-500 font-medium">Catálogo Oficial de Asignaturas de Ingeniería</span>
+                    </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-slate-600">
-                    <a href="#presentacion" class="hover:text-sky-600 transition">Presentación</a>
-                    <a href="#unidades" class="hover:text-sky-600 transition">6 Unidades</a>
-                    <a href="#planeacion-16-semanas" class="hover:text-sky-600 transition">Calendario 16 Semanas</a>
-                    <a href="#practicas" class="hover:text-sky-600 transition">22 Prácticas</a>
-                    <a href="#evaluacion" class="hover:text-sky-600 transition">Evaluación</a>
-                    <a href="unidad1.html" class="bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg font-bold text-xs transition shadow-sm">Iniciar Curso <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="#materias" class="hover:text-sky-600 transition">Materias</a>
+                    <a href="#criterios" class="hover:text-sky-600 transition">Criterios de Evaluación</a>
+                    <a href="#acerca" class="hover:text-sky-600 transition">Acerca del Portal</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Header Hero - White Style con Acentos Azules -->
+    <!-- Header Hero -->
     <header class="border-b border-slate-200 bg-gradient-to-b from-slate-50 via-white to-white py-14 px-4">
-        <div class="max-w-6xl mx-auto text-center">
+        <div class="max-w-5xl mx-auto text-center">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-semibold uppercase tracking-wider mb-4">
-                <i class="fas fa-book-open"></i> Programa Oficial de Formación y Competencias Profesionales
+                <i class="fas fa-graduation-cap"></i> Formación y Competencias Profesionales (TecNM)
             </div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
-                Lenguajes y Autómatas I
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+                Planeaciones Didácticas y Cursos
             </h1>
-            <p class="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto font-normal leading-relaxed mb-8">
-                Fundamentos matemáticos y formales de la computación, autómatas, gramáticas, expresiones regulares y el diseño estructural de las fases léxica y sintáctica de un compilador.
+            <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed mb-6">
+                Repositorio centralizado de planeaciones didácticas semestrales, contenidos interactivos para proyección en aula, laboratorios y seguimiento académico de Ingeniería en Sistemas Computacionales.
             </p>
-
-            <!-- Metadata Cards Blancas -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-chalkboard-teacher text-sky-500 mr-1"></i> Docente</div>
-                    <div class="font-bold text-slate-800 text-sm">Cruz Enrique García</div>
-                    <div class="text-[11px] text-slate-500">IT Chilpancingo</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-clock text-sky-500 mr-1"></i> Carga Horaria</div>
-                    <div class="font-bold text-slate-800 text-sm">5 Horas / Semana</div>
-                    <div class="text-[11px] text-slate-500">2 Teóricas • 3 Prácticas (80h)</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-code-branch text-sky-500 mr-1"></i> Créditos SATCA</div>
-                    <div class="font-bold text-slate-800 text-sm">2 - 3 - 5 Créditos</div>
-                    <div class="text-[11px] text-slate-500">Clave: SCD-1015</div>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1"><i class="fas fa-graduation-cap text-sky-500 mr-1"></i> Carrera</div>
-                    <div class="font-bold text-slate-800 text-sm">Ing. Sistemas Comp.</div>
-                    <div class="text-[11px] text-slate-500">Materia Previa a LyA II</div>
-                </div>
-            </div>
         </div>
     </header>
 
     <!-- Contenido Principal -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <!-- SECCIÓN 1: Caracterización y Competencias -->
-        <section id="presentacion" class="mb-16 scroll-mt-24">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 space-y-6">
-                    <div>
-                        <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Sección 1</span>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Caracterización e Intención Didáctica</h2>
-                    </div>
-                    <p class="text-slate-600 leading-relaxed text-justify">
-                        El desarrollo de sistemas basados en computadora y la búsqueda de soluciones para problemas de procesamiento de información son la base tecnológica de la carrera de <strong>Ingeniería en Sistemas Computacionales</strong>. Todo egresado debe poseer los conocimientos necesarios para resolver de manera óptima cualquier problema relacionado con el procesamiento de información, comprendiendo las características, fortalezas y limitaciones de los lenguajes de programación y sus herramientas de traducción.
-                    </p>
-                    <p class="text-slate-600 leading-relaxed text-justify">
-                        En esta asignatura se abordan todos los temas relacionados con la <strong>teoría de lenguajes formales</strong>, permitiendo vislumbrar los procesos inherentes y a veces escondidos dentro de todo lenguaje. Las formas de representación formal, procesamiento e implementación de lenguajes de programación se estudian desde un punto de vista riguroso y de implementación práctica.
-                    </p>
-
-                    <!-- Callout Info -->
-                    <div class="lll-box lll-info">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-bullseye text-sky-600 text-lg mt-0.5"></i>
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-sm">Competencia Específica del Curso</h4>
-                                <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                                    <strong>Definir, diseñar, construir y programar las fases del analizador léxico y sintáctico</strong> de un traductor o compilador, aplicando la teoría de autómatas, expresiones regulares y gramáticas libres de contexto para resolver problemas reales de procesamiento de información.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta Lateral de Competencias Previas y Genéricas -->
-                <div class="space-y-4">
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
-                            <i class="fas fa-key text-amber-500 mr-2"></i> Competencias Previas
-                        </h3>
-                        <ul class="text-xs text-slate-600 space-y-2">
-                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Diseñar e interpretar algoritmos computacionales y notaciones matemáticas.</li>
-                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Manejar la programación estructurada y orientada a objetos para la solución de aplicaciones.</li>
-                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Aplicar estructuras de datos (árboles, pilas, tablas hash) en la solución de problemas.</li>
-                            <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-0.5"></i> Manipular operaciones básicas de archivos y flujos de entrada/salida.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center mb-3">
-                            <i class="fas fa-link text-indigo-500 mr-2"></i> Relación con Otras Materias
-                        </h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            Vinculada directamente con <em>Estructuras de Datos</em>, <em>Arquitectura de Computadoras</em> y como base obligatoria para <strong>Lenguajes y Autómatas II</strong> (donde se completa el análisis semántico, generación y optimización de código objeto).
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 2: Las 6 Unidades Temáticas Oficiales -->
-        <section id="unidades" class="mb-16 scroll-mt-24">
+        <!-- SECCIÓN 1: Catálogo de Asignaturas -->
+        <section id="materias" class="mb-16 scroll-mt-24">
             <div class="flex flex-col sm:flex-row justify-between sm:items-end mb-8 gap-4">
                 <div>
-                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Estructura Curricular</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Las 6 Unidades de Aprendizaje</h2>
-                    <p class="text-sm text-slate-500 mt-1">Programa oficial SCD-1015 (80 horas semestrales)</p>
-                </div>
-                <div class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto">
-                    <i class="fas fa-info-circle text-sky-500 mr-1"></i> Haz clic en "Explorar Unidad" para ver el contenido completo
+                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Catálogo Académico</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">Materias e Instrumentaciones</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Selecciona una asignatura para acceder a su planeación semanal, unidades y prácticas</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- UNIDAD 1 -->
-                <div class="course-card p-6 flex flex-col justify-between">
+                <!-- TARJETA: Lenguajes y Autómatas I (ACTIVA) -->
+                <div class="subject-card p-6 flex flex-col justify-between border-sky-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-bl-full pointer-events-none"></div>
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 font-bold text-sm flex items-center justify-center border border-sky-200">U1</span>
-                            <span class="difficulty-badge diff-easy">Iniciación • 10h</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 font-bold text-xs font-mono border border-sky-200">SCD-1015</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase">Activa • 80h</span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-sky-600 transition">
-                            <a href="unidad1.html">1. Teoría de Lenguajes Formales</a>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-sky-600 transition">
+                            <a href="lenguajes-y-automatas-1/index.html">Lenguajes y Autómatas I</a>
                         </h3>
                         <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Alfabetos, cadenas, lenguajes, tipos de lenguajes (Jerarquía de Chomsky), herramientas computacionales, estructura de un traductor y fases de un compilador.
+                            Teoría de lenguajes formales, autómatas finitos, expresiones regulares, máquinas de Turing y fases léxica y sintáctica del compilador.
                         </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-sky-500 mr-1.5"></i> 1.1 Alfabeto y 1.2 Cadenas</li>
-                            <li><i class="fas fa-angle-right text-sky-500 mr-1.5"></i> 1.3 Lenguajes y 1.4 Jerarquía</li>
-                            <li><i class="fas fa-angle-right text-sky-500 mr-1.5"></i> 1.6 Estructura de traductores</li>
-                            <li><i class="fas fa-angle-right text-sky-500 mr-1.5"></i> 1.7 Fases del compilador</li>
-                        </ul>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 mb-5 space-y-1 text-xs text-slate-600">
+                            <div class="flex justify-between"><span>Unidades temáticas:</span> <strong class="text-slate-800">6 Unidades</strong></div>
+                            <div class="flex justify-between"><span>Calendario:</span> <strong class="text-slate-800">16 Semanas (5 hrs/sem)</strong></div>
+                            <div class="flex justify-between"><span>Laboratorio:</span> <strong class="text-slate-800">22 Prácticas Oficiales</strong></div>
+                        </div>
                     </div>
-                    <a href="unidad1.html" class="w-full text-center py-2 px-3 bg-slate-50 hover:bg-sky-50 hover:text-sky-700 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200 transition">
-                        Ver Unidad 1 <i class="fas fa-arrow-right ml-1"></i>
+                    <a href="lenguajes-y-automatas-1/index.html" class="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-xl transition text-center shadow-sm flex items-center justify-center">
+                        Abrir Planeación y Contenidos <i class="fas fa-arrow-right ml-2 text-sky-200"></i>
                     </a>
                 </div>
 
-                <!-- UNIDAD 2 -->
-                <div class="course-card p-6 flex flex-col justify-between">
+                <!-- TARJETA: Próxima Materia (Espacio Listo) -->
+                <div class="subject-card p-6 flex flex-col justify-between border-dashed border-slate-300 bg-slate-50/50">
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center border border-indigo-200">U2</span>
-                            <span class="difficulty-badge diff-easy">Iniciación • 12h</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-600 font-bold text-xs font-mono">SCD-1016</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 uppercase">Próxima Asignatura</span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-indigo-600 transition">
-                            <a href="unidad2.html">2. Expresiones Regulares</a>
+                        <h3 class="text-xl font-bold text-slate-700 mb-2">
+                            Lenguajes y Autómatas II
                         </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Definición formal de una ER, operaciones regulares (unión, concatenación, cerraduras), identidades algebraicas y aplicaciones en problemas reales de validación.
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            Análisis semántico, esquemas de traducción, generación de código intermedio, optimización de código y generación de código objeto.
                         </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.1 Definición formal de ER</li>
-                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.2 Operaciones y Álgebra</li>
-                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> 2.3 Aplicaciones en problemas reales</li>
-                            <li><i class="fas fa-angle-right text-indigo-500 mr-1.5"></i> Regex en Python, Java y JS</li>
-                        </ul>
                     </div>
-                    <a href="unidad2.html" class="w-full text-center py-2 px-3 bg-slate-50 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200 transition">
-                        Ver Unidad 2 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
+                    <div class="text-center py-2.5 px-4 bg-slate-200/60 text-slate-500 font-semibold text-xs rounded-xl border border-slate-300">
+                        <i class="fas fa-plus-circle mr-1"></i> Lista para agregar
+                    </div>
                 </div>
 
-                <!-- UNIDAD 3 -->
-                <div class="course-card p-6 flex flex-col justify-between">
+                <!-- TARJETA: Espacio para otra materia -->
+                <div class="subject-card p-6 flex flex-col justify-between border-dashed border-slate-300 bg-slate-50/50">
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 font-bold text-sm flex items-center justify-center border border-cyan-200">U3</span>
-                            <span class="difficulty-badge diff-med">Intermedio • 15h</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-600 font-bold text-xs font-mono">SCD-xxxx</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 uppercase">Próxima Asignatura</span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-cyan-600 transition">
-                            <a href="unidad3.html">3. Autómatas Finitos</a>
+                        <h3 class="text-xl font-bold text-slate-700 mb-2">
+                            Nueva Asignatura
                         </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Definición formal (5-tupla), AFD, AFND, conversión AFND a AFD (subconjuntos), algoritmo de Thompson (ER a AFND), minimización de estados y casos de estudio.
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            Espacio modular para integrar cualquier otra materia del programa académico de Ingeniería en Sistemas Computacionales.
                         </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1 Definición formal y 3.2 AF</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.3 Conversión AFND a AFD</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.4 ER usando AFND (Thompson)</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.5 Minimización de estados</li>
-                        </ul>
                     </div>
-                    <a href="unidad3.html" class="w-full text-center py-2 px-3 bg-slate-50 hover:bg-cyan-50 hover:text-cyan-700 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200 transition">
-                        Ver Unidad 3 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-
-                <!-- UNIDAD 4 -->
-                <div class="course-card p-6 flex flex-col justify-between">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold text-sm flex items-center justify-center border border-emerald-200">U4</span>
-                            <span class="difficulty-badge diff-med">Intermedio • 10h</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-emerald-600 transition">
-                            <a href="unidad4.html">4. Máquinas de Turing</a>
-                        </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Definición formal de la MT (7-tupla), cinta infinita, cabezal lecto-escritor, construcción modular de subrutinas y lenguajes reconocibles y decidibles.
-                        </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.1 Definición formal de MT</li>
-                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.2 Construcción modular</li>
-                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.3 Lenguajes aceptados y Tesis CT</li>
-                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> Simulador de cinta interactivo</li>
-                        </ul>
+                    <div class="text-center py-2.5 px-4 bg-slate-200/60 text-slate-500 font-semibold text-xs rounded-xl border border-slate-300">
+                        <i class="fas fa-plus-circle mr-1"></i> Lista para agregar
                     </div>
-                    <a href="unidad4.html" class="w-full text-center py-2 px-3 bg-slate-50 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200 transition">
-                        Ver Unidad 4 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-
-                <!-- UNIDAD 5 -->
-                <div class="course-card p-6 flex flex-col justify-between border-rose-100 shadow-sm">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center border border-rose-200">U5</span>
-                            <span class="difficulty-badge diff-hard">Avanzado • 15h</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-rose-600 transition">
-                            <a href="unidad5.html">5. Análisis Léxico</a>
-                        </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Funciones del escáner, componentes léxicos (tokens, patrones, lexemas), gestión de la tabla de símbolos, tratamiento de errores léxicos y generadores (Flex, JFlex, PLY).
-                        </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 5.1 Funciones del analizador léxico</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 5.2 Tokens, patrones y lexemas</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 5.3 Tabla de tokens y 5.4 Errores</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 5.5 Generadores Flex/JFlex/PLY</li>
-                        </ul>
-                    </div>
-                    <a href="unidad5.html" class="w-full text-center py-2 px-3 bg-rose-50 hover:bg-rose-100 hover:text-rose-800 text-rose-700 font-semibold text-xs rounded-lg border border-rose-200 transition">
-                        Ver Unidad 5 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-
-                <!-- UNIDAD 6 -->
-                <div class="course-card p-6 flex flex-col justify-between border-amber-100 shadow-sm">
-                    <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 font-bold text-sm flex items-center justify-center border border-amber-200">U6</span>
-                            <span class="difficulty-badge diff-hard">Avanzado • 18h</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2 hover:text-amber-600 transition">
-                            <a href="unidad6.html">6. Análisis Sintáctico</a>
-                        </h3>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Gramáticas Libres de Contexto (GLC), árboles sintácticos, eliminación de ambigüedad y recursividad, cálculo FIRST y FOLLOW, tablas predictivas LL(1), parsers LR y generadores (YACC, CUP, Bison).
-                        </p>
-                        <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-amber-500 mr-1.5"></i> 6.1 GLC y 6.2 Árboles sintácticos</li>
-                            <li><i class="fas fa-angle-right text-amber-500 mr-1.5"></i> 6.5 Eliminación de ambigüedad</li>
-                            <li><i class="fas fa-angle-right text-amber-500 mr-1.5"></i> 6.6 Cálculo FIRST y FOLLOW</li>
-                            <li><i class="fas fa-angle-right text-amber-500 mr-1.5"></i> 6.7 Parsers LL/LR y 6.9 Generadores</li>
-                        </ul>
-                    </div>
-                    <a href="unidad6.html" class="w-full text-center py-2 px-3 bg-amber-50 hover:bg-amber-100 hover:text-amber-800 text-amber-700 font-semibold text-xs rounded-lg border border-amber-200 transition">
-                        Ver Unidad 6 <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
                 </div>
 
             </div>
         </section>
 
-        <!-- SECCIÓN 3: Calendario de Planeación Didáctica Semanal (16 Semanas x 5 Horas = 80 Horas) -->
-        <section id="planeacion-16-semanas" class="mb-16 scroll-mt-24">
+        <!-- SECCIÓN 2: Criterios de Evaluación Estándar -->
+        <section id="criterios" class="mb-16 scroll-mt-24">
             <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-6 pb-4 border-b border-slate-200 gap-4">
-                    <div>
-                        <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Calendarización Semestral</span>
-                        <h2 class="text-2xl font-bold text-slate-900">Planeación Docente Semana a Semana</h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Distribución reglamentaria: 2 Horas Teóricas + 3 Horas Prácticas por Semana (Total: 80 Horas)</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs bg-slate-100 text-slate-700 font-semibold px-3 py-1.5 rounded-lg border border-slate-200">
-                            16 Semanas • 80 Horas
-                        </span>
-                    </div>
+                <div class="mb-6 pb-4 border-b border-slate-100">
+                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Normativa Académica</span>
+                    <h2 class="text-2xl font-bold text-slate-900 mt-1">Criterios de Evaluación Oficiales</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Ponderación estándar reglamentaria aplicada en todas las asignaturas</p>
                 </div>
 
-                <!-- Tabla de Calendario 16 Semanas -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs sm:text-sm">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-700">
-                                <th class="py-3 px-3 font-bold w-16 text-center">Sem.</th>
-                                <th class="py-3 px-3 font-bold w-20 text-center">Unidad</th>
-                                <th class="py-3 px-4 font-bold">Temas y Contenido Teórico (2 hrs)</th>
-                                <th class="py-3 px-4 font-bold">Actividades Prácticas y Laboratorio (3 hrs)</th>
-                                <th class="py-3 px-3 font-bold text-center w-28">Entregable</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100 text-slate-600">
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S1</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U1</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">Evaluación diagnóstica. 1.1 Alfabetos, 1.2 Cadenas y operaciones (longitud, concatenación, potencia, reflexión).</td>
-                                <td class="py-3 px-4"><strong>Práctica 1 & 4:</strong> Identificación formal de alfabetos a partir de lenguajes. Ejercicios con cadenas en Python.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P1</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S2</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U1</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">1.3 Lenguajes formales, 1.4 Jerarquía de Chomsky (Tipos 0, 1, 2, 3) y 1.5 Herramientas computacionales.</td>
-                                <td class="py-3 px-4"><strong>Práctica 2:</strong> Cuadro comparativo de traductores, intérpretes y compiladores. Clasificación de herramientas.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Cuadro Comp.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S3</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 font-bold text-xs">U1</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">1.6 Estructura de un traductor y 1.7 Las 6 fases del compilador (Front-end vs Back-end). Evaluación U1.</td>
-                                <td class="py-3 px-4"><strong>Práctica 3:</strong> Taller de rastreo de código fuente a través del pipeline de compilación. Examen Teórico-Práctico U1.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U1</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S4</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">2.1 Definición inductiva de Expresión Regular. 2.2 Operaciones regulares (unión, concatenación, Kleene *, +).</td>
-                                <td class="py-3 px-4"><strong>Práctica 5 & 6:</strong> Construcción de ER a partir de conjuntos de cadenas y viceversa. Álgebra de ER.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Ejercicios ER</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S5</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold text-xs">U2</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">2.3 Aplicaciones de ER en validación de datos reales (emails, URLs, identificadores, SQL, logs). Evaluación U2.</td>
-                                <td class="py-3 px-4"><strong>Práctica 7:</strong> Implementación de un validador de expresiones regulares en Java / Python. Evaluación U2.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U2</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S6</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">3.1 Definición formal de Autómatas Finitos (5-tupla). 3.2 Clasificación: AFD vs AFND y transiciones epsilon.</td>
-                                <td class="py-3 px-4"><strong>Práctica 8:</strong> Programación de simuladores de AFD usando matrices de transición y grafos.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Código AFD</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S7</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">3.4 Representación de ER usando AFND (Construcción de Thompson). 3.3 Conversión de AFND a AFD por subconjuntos.</td>
-                                <td class="py-3 px-4"><strong>Práctica 9 & 10:</strong> Taller paso a paso: ER $\to$ Thompson $\to$ Cerradura-$\varepsilon$ $\to$ AFD Determinista.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Taller AFND</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S8</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-cyan-100 text-cyan-800 font-bold text-xs">U3</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">3.5 Minimización de estados (Algoritmo de Moore / Hopcroft). 3.6 Casos de estudio y proyecto AF. Evaluación U3.</td>
-                                <td class="py-3 px-4">Laboratorio: Reducción y minimización de autómatas. Simulador en JFLAP / Python. Evaluación U3.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U3</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S9</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">U4</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">4.1 Definición formal de la Máquina de Turing (7-tupla). Función de transición y cabezal bidireccional.</td>
-                                <td class="py-3 px-4"><strong>Práctica 11:</strong> Diseño de MTs para reconocimiento del lenguaje $a^n b^n c^n$ y operaciones aritméticas.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Diseño MT</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S10</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">U4</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">4.2 Construcción modular de MT (subrutinas). 4.3 Lenguajes aceptados, decidibilidad y problema de la parada.</td>
-                                <td class="py-3 px-4"><strong>Práctica 12:</strong> Simulación en software de la cinta y transiciones de una MT. Evaluación U4.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U4</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S11</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U5</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">5.1 Funciones del analizador léxico. 5.2 Tokens, patrones y lexemas. Buffer doble y lectura de flujo.</td>
-                                <td class="py-3 px-4"><strong>Práctica 13 & 14:</strong> Definición de especificación léxica de un lenguaje de programación propio.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Reglas Léxicas</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S12</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U5</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">5.3 Creación de tabla de tokens y símbolos. 5.4 Errores léxicos. 5.5 Generadores léxicos (Flex / JFlex / PLY).</td>
-                                <td class="py-3 px-4"><strong>Práctica 15, 16 & 17:</strong> Construcción de analizador léxico con JFlex/PLY y manejo de errores. Evaluación U5.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-emerald-600">Eval. U5</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S13</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">U6</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">6.1 Gramáticas Libres de Contexto (GLC) y notación BNF. 6.2 Árboles de derivación (por izquierda y derecha).</td>
-                                <td class="py-3 px-4"><strong>Práctica 18 & 19:</strong> Construcción de GLC y diagramas de sintaxis para expresiones y sentencias de control.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Diseño GLC</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S14</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">U6</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">6.3 Formas normales de Chomsky y Greibach. 6.5 Eliminación de ambigüedad, recursividad izquierda y factorización.</td>
-                                <td class="py-3 px-4">Taller de transformación gramatical: Eliminación de recursividad por la izquierda y ambigüedad del <em>dangling-else</em>.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Transform. GLC</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S15</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">U6</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">6.6 Cálculo de conjuntos FIRST y FOLLOW. Construcción de matrices predictivas LL(1).</td>
-                                <td class="py-3 px-4">Laboratorio: Implementación de tabla M[A, a] y parser descendente no recursivo.</td>
-                                <td class="py-3 px-3 text-center text-xs text-slate-500">Tabla LL(1)</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/80 transition">
-                                <td class="py-3 px-3 text-center font-bold text-slate-900">S16</td>
-                                <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">U6</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">6.7 Analizadores LR / LALR, 6.8 Manejo de errores y 6.9 Generadores (CUP, Yacc, ANTLR). Entrega Proyecto Integrador.</td>
-                                <td class="py-3 px-4"><strong>Práctica 20, 21 & 22:</strong> Integración del Analizador Léxico + Analizador Sintáctico. Evaluación U6.</td>
-                                <td class="py-3 px-3 text-center text-xs font-bold text-rose-600">Proyecto Final</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 4: Catálogo Oficial de las 22 Prácticas Propuestas (SCD-1015) -->
-        <section id="practicas" class="mb-16 scroll-mt-24">
-            <div class="border border-slate-200 rounded-2xl bg-white p-6 sm:p-8 shadow-sm">
-                <div class="mb-6">
-                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Trabajo de Laboratorio</span>
-                    <h2 class="text-2xl font-bold text-slate-900">Catálogo de las 22 Prácticas Oficiales</h2>
-                    <p class="text-xs text-slate-500 mt-1">Actividades prácticas establecidas en el programa de estudios del TecNM</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- P1 a P4: U1 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 1</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar un cuadro comparativo de los traductores que incluya ventajas, desventajas y características.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 2</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Clasificar una lista de lenguajes, ambientes de desarrollo y utilerías en herramientas computacionales.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 3</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Clasificar los componentes léxicos en un código de programa fuente.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-sky-700 bg-sky-100 px-2 py-0.5 rounded">Práctica 4</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U1</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Obtener un alfabeto a partir de un lenguaje formal y viceversa.</p>
-                    </div>
-
-                    <!-- P5 a P7: U2 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 5</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Relacionar los componentes léxicos con una Expresión Regular correspondiente.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 6</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Obtener expresiones regulares a partir de casos de estudio del mundo real.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Práctica 7</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U2</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar un programa que implemente y valide una expresión regular.</p>
-                    </div>
-
-                    <!-- P8 a P10: U3 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 8</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar programas que implementen lenguajes simples representados con AFD's.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 9</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar ejercicios de construcción de AF a partir de ER o casos de estudio.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Práctica 10</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U3</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar conversiones de AFN a AFD aplicando el método de construcción de subconjuntos.</p>
-                    </div>
-
-                    <!-- P11 y P12: U4 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Práctica 11</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U4</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Construir Máquinas de Turing a partir de casos de estudio formales.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Práctica 12</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U4</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Simular a través de un lenguaje de alto nivel la representación de una Máquina de Turing.</p>
-                    </div>
-
-                    <!-- P13 a P17: U5 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 13</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Definir las reglas léxicas de un lenguaje de programación propio.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 14</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Generar el autómata léxico correspondiente al lenguaje definido.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 15</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Analizar la funcionalidad de diferentes generadores léxicos (Flex, Lex, JavaCC, PLY).</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 16</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar prácticas de especificación léxica en algún generador automático.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 17</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U5</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Construir un analizador léxico completo con tabla de tokens y manejo de errores.</p>
-                    </div>
-
-                    <!-- P18 a P22: U6 -->
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Práctica 18</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Construir diagramas de sintaxis para el lenguaje propuesto.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Práctica 19</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Construir una GLC no ambigua para el lenguaje propuesto.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Práctica 20</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Analizar la funcionalidad de generadores sintácticos (YACC, CUP, Bison, ANTLR).</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Práctica 21</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Realizar prácticas de especificación sintáctica en herramientas generadoras.</p>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="font-mono text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Práctica 22</span>
-                            <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
-                        </div>
-                        <p class="text-xs text-slate-700">Construir un analizador sintáctico completo integrado con la fase léxica.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 5: Sugerencias de Evaluación y Fuentes de Información -->
-        <section id="evaluacion" class="mb-16 scroll-mt-24">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Criterios de Evaluación -->
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Lineamientos Oficiales</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Criterios de Evaluación</h3>
-                    
-                    <div class="space-y-4">
-                        <!-- 40% Firmas -->
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center font-bold text-sm">
-                                    <i class="fas fa-signature"></i>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Firmas (Actividades y Tareas)</div>
-                                    <div class="text-[11px] text-slate-500">Ejercicios en clase, tareas y reportes de prácticas</div>
-                                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-5 bg-sky-50/50 border border-sky-100 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg font-bold">
+                                <i class="fas fa-signature"></i>
                             </div>
-                            <span class="font-extrabold text-sky-600 text-base">40%</span>
+                            <span class="text-2xl font-extrabold text-sky-600">40%</span>
                         </div>
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">Firmas y Actividades</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Ejercicios resueltos en clase, tareas de investigación, actividades en libreta/taller y reportes de prácticas de laboratorio firmadas.
+                        </p>
+                    </div>
 
-                        <!-- 10% Asistencias -->
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">
-                                    <i class="fas fa-user-check"></i>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Asistencias</div>
-                                    <div class="text-[11px] text-slate-500">Puntualidad, asistencia y permanencia reglamentaria</div>
-                                </div>
+                    <div class="p-5 bg-indigo-50/50 border border-indigo-100 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-lg font-bold">
+                                <i class="fas fa-user-check"></i>
                             </div>
-                            <span class="font-extrabold text-indigo-600 text-base">10%</span>
+                            <span class="text-2xl font-extrabold text-indigo-600">10%</span>
                         </div>
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">Asistencias</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Asistencia regular, puntualidad al inicio de clase y permanencia reglamentaria en el aula o centro de cómputo.
+                        </p>
+                    </div>
 
-                        <!-- 50% Proyecto Integrador -->
-                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
-                                    <i class="fas fa-cogs"></i>
-                                </div>
-                                <div>
-                                    <div class="font-bold text-slate-800 text-xs sm:text-sm">Proyecto Integrador</div>
-                                    <div class="text-[11px] text-slate-500">Compilador funcional (Fase Léxica + Sintáctica)</div>
-                                </div>
+                    <div class="p-5 bg-emerald-50/50 border border-emerald-100 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg font-bold">
+                                <i class="fas fa-cogs"></i>
                             </div>
-                            <span class="font-extrabold text-emerald-600 text-base">50%</span>
+                            <span class="text-2xl font-extrabold text-emerald-600">50%</span>
                         </div>
+                        <h3 class="font-bold text-slate-900 text-sm mb-1">Proyecto Integrador</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Desarrollo, implementación en código, funcionalidad y defensa del proyecto integrador correspondiente a la materia.
+                        </p>
                     </div>
                 </div>
-
-                <!-- Fuentes de Información Oficiales -->
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-                    <span class="text-xs font-bold text-sky-600 uppercase tracking-widest">Bibliografía</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1 mb-4">Fuentes de Información Oficiales</h3>
-                    <ul class="text-xs text-slate-600 space-y-3">
-                        <li class="flex items-start">
-                            <span class="font-bold text-slate-400 mr-2">1.</span>
-                            <div><strong>Aho, Lam, Sethi, Ullman.</strong> <em>Compiladores: Principios, Técnicas y Herramientas</em> (El Libro del Dragón). 2da Ed., Pearson / Addison-Wesley.</div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="font-bold text-slate-400 mr-2">2.</span>
-                            <div><strong>Hopcroft, Motwani, Ullman.</strong> <em>Introducción a la Teoría de Autómatas, Lenguajes y Computación</em>. 3ra Ed., Addison-Wesley.</div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="font-bold text-slate-400 mr-2">3.</span>
-                            <div><strong>Sipser, Michael.</strong> <em>Introduction to the Theory of Computation</em>. 3rd Ed., Cengage Learning.</div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="font-bold text-slate-400 mr-2">4.</span>
-                            <div><strong>Martin, John C.</strong> <em>Lenguajes Formales y Teoría de la Computación</em>. 3ra Ed., McGraw-Hill.</div>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="font-bold text-slate-400 mr-2">5.</span>
-                            <div><strong>Gálvez Rojas, S. & Mora Mata, M. A.</strong> <em>Compiladores: Traductores y Compiladores con Lex/Yacc, JFlex/Cup y JavaCC</em>. Universidad de Málaga.</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Mini Laboratorio Interactivo -->
-        <section class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mb-12">
-            <div class="max-w-3xl mx-auto text-center">
-                <span class="text-xs font-bold text-sky-600 uppercase tracking-widest"><i class="fas fa-flask"></i> Laboratorio Demostrativo</span>
-                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1 mb-2">Comprobador Rápido de Tokens e Identificadores</h3>
-                <p class="text-xs sm:text-sm text-slate-600 mb-6">
-                    Prueba en tiempo real cómo un analizador léxico determina si una cadena es un identificador válido según la regla formal: <code>^[a-zA-Z_][a-zA-Z0-9_]*$</code>
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mb-4">
-                    <input type="text" id="demoInput" placeholder="Ejemplo: contador_total" class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono text-sm">
-                    <button onclick="evaluarDemo()" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-sm rounded-xl transition shadow-sm">
-                        Analizar Lexema
-                    </button>
-                </div>
-                <div id="demoOutput" class="text-xs font-mono h-8 flex items-center justify-center"></div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer Institucional Estilo Limpio -->
+    <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-10 text-slate-600 text-xs">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
             <div>
-                <div class="font-bold text-slate-900 text-sm">Instituto Tecnológico de Chilpancingo</div>
-                <div class="text-slate-500">Departamento de Sistemas y Computación • Docente: Cruz Enrique García</div>
+                <div class="font-bold text-slate-900 text-sm">Instituto Tecnológico de Chilpancingo (TecNM)</div>
+                <div class="text-slate-500">Ingeniería en Sistemas Computacionales • Catedrático: Cruz Enrique García</div>
             </div>
             <div class="text-slate-500">
-                Programa Académico SCD-1015 • Lenguajes y Autómatas I (5 hrs/semana)<br>
+                Portal Docente de Planeaciones Didácticas<br>
                 <span>Todos los derechos académicos reservados</span>
             </div>
         </div>
     </footer>
 
-    <script>
-        function evaluarDemo() {
-            const val = document.getElementById('demoInput').value.trim();
-            const out = document.getElementById('demoOutput');
-            if (!val) {
-                out.innerHTML = '<span class="text-slate-400">Ingresa un texto para evaluar</span>';
-                return;
-            }
-            const regex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
-            if (regex.test(val)) {
-                out.innerHTML = `<span class="text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 font-semibold"><i class="fas fa-check-circle mr-1"></i> "${val}" es un IDENTIFICADOR válido (Token ID)</span>`;
-            } else {
-                let errorDesc = "No cumple con la regla de identificador";
-                if (/^[0-9]/.test(val)) errorDesc = "No puede iniciar con un dígito numérico";
-                out.innerHTML = `<span class="text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200 font-semibold"><i class="fas fa-times-circle mr-1"></i> Error Léxico en "${val}": ${errorDesc}</span>`;
-            }
-        }
-    </script>
 </body>
 </html>
