@@ -264,7 +264,7 @@
                         Conjuntos (2.1 - 2.4)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Conjunto potencia, operaciones, leyes de De Morgan, diagramas de Venn y aplicaciones en bases de datos.
+                        Características, conjunto potencia, operaciones con diagramas de Venn, propiedades de De Morgan y aplicaciones SQL.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 10 Horas (Semanas 3-5)</span>
@@ -284,69 +284,194 @@
     </p>
 </div>
 
-<!-- 2.1 CARACTERÍSTICAS DE LOS CONJUNTOS -->
-<div id="tema-2-1" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">2.1</span>
-        Características de los Conjuntos
-    </h2>
-    <div class="pedagogy-step">
-        <h4 class="font-bold text-slate-800 text-xs sm:text-sm mb-1">2.1.1 a 2.1.4 Conjuntos Notables y Conjunto Potencia</h4>
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-2">
-            • <strong>2.1.1 Conjunto Universo (\(U\)) y Vacío (\(\emptyset\)):</strong> \(U\) abarca todos los elementos del contexto; \(\emptyset = \{\}\) no contiene elementos.<br>
-            • <strong>2.1.2 Conjuntos Numéricos:</strong> Naturales (\(\mathbb{N}\)), Enteros (\(\mathbb{Z}\)), Racionales (\(\mathbb{Q}\)), Reales (\(\mathbb{R}\)) y Complejos (\(\mathbb{C}\)).<br>
-            • <strong>2.1.3 Subconjuntos:</strong> \(A \subseteq B \iff (\forall x \in A \implies x \in B)\).<br>
-            • <strong>2.1.4 Conjunto Potencia \(\mathcal{P}(A)\):</strong> Colección de todos los subconjuntos. Si \(|A| = n\), entonces \(|\mathcal{P}(A)| = 2^n\).
-        </p>
+<div id="tema-2-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold">2.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Características de los Conjuntos y Conjunto Potencia</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>La Teoría de Conjuntos formaliza la noción de colección de elementos distintos sin orden. Es la base conceptual de las bases de datos relacionales y el tipado de datos en lenguajes de programación. Si un conjunto \(A\) contiene \(n\) elementos, el <strong>Conjunto Potencia \(\mathcal{P}(A)\)</strong> contiene todas las posibles agrupaciones con cardinalidad exacta \(|\mathcal{P}(A)| = 2^n\).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Conjunto Universo (\(U\)):</strong> Conjunto referencial que contiene todos los elementos del contexto de estudio.</li><li>• <strong>Conjunto Vacío (\(\emptyset\)):</strong> Conjunto que no contiene elementos (\(|\emptyset| = 0\)). Es subconjunto de todo conjunto.</li><li>• <strong>Conjuntos Numéricos:</strong> \(\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}\).</li><li>• <strong>Conjunto Potencia \(\mathcal{P}(A)\):</strong> \(\mathcal{P}(A) = \{X \mid X \subseteq A\}\), con \(|\mathcal{P}(A)| = 2^n\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-teal-50 border border-teal-200 rounded-xl text-xs font-mono text-teal-900">Ejemplo de Conjunto Potencia:<br>Sea \(A = \{x, y\}\) ➔ \(n = 2\)<br>\(\mathcal{P}(A) = \{\emptyset, \{x\}, \{y\}, \{x, y\}\}\) (Total: \(2^2 = 4\) subconjuntos)</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Determinar el conjunto potencia de \(S = \{1, 2, 3\}\) y verificar su cardinalidad.</p><p class='text-slate-600 mt-1'>1. Cardinalidad: \(n = 3 \implies 2^3 = 8\) elementos.<br>2. Subconjuntos de tamaño 0: \(\emptyset\).<br>3. Tamaño 1: \(\{1\}, \{2\}, \{3\}\).<br>4. Tamaño 2: \(\{1, 2\}, \{1, 3\}, \{2, 3\}\).<br>5. Tamaño 3: \(\{1, 2, 3\}\).<br><strong class='text-teal-800 font-mono'>\(\mathcal{P}(S) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1,3\}, \{2,3\}, \{1,2,3\}\}\).</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Si un conjunto \(B\) tiene 5 elementos, ¿cuántos elementos tiene su conjunto potencia \(\mathcal{P}(B)\)? Escribe al menos 4 subconjuntos. <span class='text-teal-700 font-bold font-mono'>Pista: \(2^5 = 32\) subconjuntos.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 2.2 OPERACIONES CON CONJUNTOS -->
-<div id="tema-2-2" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">2.2</span>
-        Operaciones con Conjuntos y Diagramas de Venn
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-2">
-            • <strong>Unión (\(A \cup B\)):</strong> Elementos en \(A\) o en \(B\).<br>
-            • <strong>Intersección (\(A \cap B\)):</strong> Elementos comunes en ambos.<br>
-            • <strong>Complemento (\(A'\)):</strong> Elementos del universo que no están en \(A\).<br>
-            • <strong>Diferencia (\(A - B\)):</strong> Elementos de \(A\) que no pertenecen a \(B\).<br>
-            • <strong>Diferencia Simétrica (\(A \oplus B\)):</strong> \((A - B) \cup (B - A)\).
-        </p>
+<div id="tema-2-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold">2.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Operaciones con Conjuntos y Diagramas de Venn</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las operaciones sobre conjuntos combinan o transforman colecciones de elementos generando nuevos conjuntos. Los <strong>Diagramas de Venn</strong> son herramientas geométricas visuales donde el rectángulo representa el universo \(U\) y los círculos representan los conjuntos, permitiendo sombreados específicos para cada operación booleana.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Unión (\(A \cup B\)):</strong> \(\{x \mid x \in A \lor x \in B\}\).</li><li>• <strong>Intersección (\(A \cap B\)):</strong> \(\{x \mid x \in A \land x \in B\}\).</li><li>• <strong>Complemento (\(A'\)):</strong> \(\{x \in U \mid x \notin A\}\).</li><li>• <strong>Diferencia (\(A - B\)):</strong> \(\{x \mid x \in A \land x \notin B\}\).</li><li>• <strong>Diferencia Simétrica (\(A \oplus B\)):</strong> \((A \cup B) - (A \cap B)\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono"><div class="p-2 bg-white border rounded font-sans"><strong>Unión</strong><br>\(A \cup B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Intersección</strong><br>\(A \cap B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Diferencia</strong><br>\(A - B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Dif. Simétrica</strong><br>\(A \oplus B\)</div></div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Sean \(U = \{1, 2, 3, 4, 5, 6\}\), \(A = \{1, 2, 3, 4\}\) y \(B = \{3, 4, 5\}\). Calcular \(A \cup B\), \(A \cap B\), \(A - B\) y \(A \oplus B\).</p><p class='text-slate-600 mt-1'>• \(A \cup B = \{1, 2, 3, 4, 5\}\)<br>• \(A \cap B = \{3, 4\}\)<br>• \(A - B = \{1, 2\}\)<br>• \(A \oplus B = \{1, 2, 5\}\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Sean \(A = \{a, b, c, d\}\) y \(B = \{c, d, e, f\}\). Determina \(A \oplus B\) y \(B - A\). <span class='text-teal-700 font-bold font-mono'>Pista: \(A \oplus B = \{a, b, e, f\}\), \(B - A = \{e, f\}\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 2.3 PROPIEDADES DE LOS CONJUNTOS -->
-<div id="tema-2-3" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">2.3</span>
-        Propiedades de los Conjuntos (Leyes de De Morgan e Inclusión-Exclusión)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Leyes de De Morgan:</strong> \((A \cup B)' = A' \cap B'\) y \((A \cap B)' = A' \cup B'\).<br>
-            • <strong>Principio de Inclusión-Exclusión:</strong> \(|A \cup B| = |A| + |B| - |A \cap B|\).
-        </p>
+<div id="tema-2-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold">2.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Propiedades de los Conjuntos (Leyes de De Morgan e Inclusión-Exclusión)</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las propiedades de los conjuntos rigen el comportamiento de las operaciones algebraicas. Destacan las <strong>Leyes de De Morgan</strong>, que establecen la dualidad entre unión e intersección bajo complementación, y el <strong>Principio de Inclusión-Exclusión</strong>, fundamental en combinatoria y conteo probabilístico para evitar duplicidades.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Leyes de De Morgan:</strong> \((A \cup B)' = A' \cap B'\) y \((A \cap B)' = A' \cup B'\).</li><li>• <strong>Distributiva:</strong> \(A \cap (B \cup C) = (A \cap B) \cup (A \cap C)\).</li><li>• <strong>Principio de Inclusión-Exclusión:</strong> \(|A \cup B| = |A| + |B| - |A \cap B|\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-teal-400 font-bold">Principio de Inclusión-Exclusión:</span><br>|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> En una encuesta a 100 estudiantes de sistemas, 60 programan en Java, 45 programan en Python y 20 programan en ambos. ¿Cuántos estudiantes programan en al menos uno de los dos lenguajes?</p><p class='text-slate-600 mt-1'>Aplicando Inclusión-Exclusión: \(|J \cup P| = |J| + |P| - |J \cap P| = 60 + 45 - 20 = 85\) estudiantes.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> De 50 alumnos, 30 aprobaron Cálculo, 25 aprobaron Discretas y 15 ambas. ¿Cuántos no aprobaron ninguna? <span class='text-teal-700 font-bold font-mono'>Pista: 10 alumnos.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 2.4 APLICACIONES DE CONJUNTOS -->
-<div id="tema-2-4" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">2.4</span>
-        Aplicaciones de Conjuntos en Computación
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Bases de Datos Relacionales (SQL):</strong> Operaciones <code>UNION</code>, <code>INTERSECT</code>, <code>EXCEPT</code> y <code>JOIN</code>.<br>
-            • <strong>Estructuras de Datos Set:</strong> Colecciones sin elementos duplicados en Python, Java y C++.
-        </p>
+<div id="tema-2-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-teal-100 text-teal-800 text-sm flex items-center justify-center font-mono font-bold">2.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Aplicaciones de los Conjuntos en la Computación</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>En ciencias computacionales, los conjuntos son la base de los modelos de <strong>Bases de Datos Relacionales (SQL)</strong>, donde las consultas algebraicas operan sobre conjuntos de tuplas mediante cláusulas como <code>UNION</code>, <code>INTERSECT</code> y <code>EXCEPT</code>, así como en estructuras de datos optimizadas con búsquedas \(O(1)\) basadas en Hash Sets.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Relación SQL:</strong> Conjunto de registros (tuplas) con atributos definidos.</li><li>• <strong>HashSet:</strong> Colección en Java/Python donde cada inserción es única mediante funciones hash.</li><li>• <strong>JOIN en SQL:</strong> Producto cartesiano filtrado por predicados de igualdad de conjuntos.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-teal-400 font-bold">Equivalencia en Código SQL:</span><br>SELECT id FROM Alumnos_A INTERSECT SELECT id FROM Alumnos_B; /* A ∩ B */</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Un sistema de control escolar tiene el conjunto de inscritos en Taller A \(\{101, 102, 103\}\) y en Taller B \(\{102, 103, 104\}\). ¿Cómo se obtienen los alumnos inscritos exclusivamente en el Taller A?</p><p class='text-slate-600 mt-1'>Se aplica la diferencia de conjuntos: \(A - B = \{101\}\) (Cláusula SQL: <code>SELECT id FROM TallerA EXCEPT SELECT id FROM TallerB;</code>).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Escribe la expresión de conjuntos que represente a los usuarios registrados en una app que NO han realizado ninguna compra. <span class='text-teal-700 font-bold font-mono'>Pista: Usuarios - Compradores.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- SIMULADOR CONJUNTOS -->
 <section id="laboratorio-conjuntos" class="scroll-mt-24">
     <div class="border-2 border-teal-200 rounded-2xl p-6 bg-gradient-to-b from-teal-50/40 via-white to-white shadow-sm">
         <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-shapes text-teal-600 mr-2"></i>Calculadora Interactiva de Conjuntos</h3>

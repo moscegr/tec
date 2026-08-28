@@ -242,7 +242,7 @@
                         <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas Oficiales U5</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
                             <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Conceptos Básicos</a>
-<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades de Relaciones</a>
+<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades</a>
 <a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Equivalencia y Hasse</a>
 <a href="#tema-5-4" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.4 Funciones</a>
 <a href="#tema-5-5" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.5 Aplicaciones</a>
@@ -264,7 +264,7 @@
                         Relaciones y Funciones (5.1 - 5.5)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Producto cartesiano, propiedades, relaciones de equivalencia, orden parcial, funciones y aplicaciones en bases de datos.
+                        Producto cartesiano, propiedades, equivalencia, clases, diagramas de Hasse, funciones y aplicaciones en bases de datos.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 12 Horas (Semanas 11-13)</span>
@@ -284,79 +284,238 @@
     </p>
 </div>
 
-<!-- 5.1 CONCEPTOS BÁSICOS -->
-<div id="tema-5-1" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.1</span>
-        Conceptos Básicos de Relaciones (5.1.1 - 5.1.3)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>5.1.1 Producto Cartesiano:</strong> \(A \times B = \{(a, b) \mid a \in A, b \in B\}\).<br>
-            • <strong>5.1.2 Relación Binaria:</strong> Cualquier subconjunto \(R \subseteq A \times B\).<br>
-            • <strong>5.1.3 Representación:</strong> Matrices booleanas (\(M_R\)), conjuntos de pares, grafos dirigidos (dígrafos) y diagramas de flechas.
-        </p>
+<div id="tema-5-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">5.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Conceptos Básicos y Representación de Relaciones</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Una <strong>Relación Binaria</strong> \(R\) entre dos conjuntos \(A\) y \(B\) es cualquier subconjunto del producto cartesiano \(A \times B = \{(a,b) \mid a \in A, b \in B\}\). Se pueden representar mediante pares ordenados, <strong>matrices booleanas (\(M_R\))</strong> de ceros y unos, <strong>grafos dirigidos (dígrafos)</strong> o diagramas de flechas entre conjuntos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Producto Cartesiano (\(A \times B\)):</strong> Conjunto de todos los pares ordenados con cardinalidad \(|A \times B| = |A| \cdot |B|\).</li><li>• <strong>Matriz de Relación (\(M_R\)):</strong> Matriz binaria donde \(M_{ij} = 1\) si \((a_i, b_j) \in R\), y 0 en caso contrario.</li><li>• <strong>Dígrafo de una Relación:</strong> Grafo con vértices en \(A\) donde existe una flecha dirigida de \(u\) a \(v\) si \((u,v) \in R\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-purple-400 font-bold">Matriz Booleana de Relación:</span><br>Sea A = {1, 2}, R = {(1,1), (1,2), (2,2)}<br>MR = [ 1  1 ]<br>     [ 0  1 ]</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Sean \(A = \{1, 2, 3\}\) y la relación \(R = \{(x, y) \mid x < y\}\). Determinar \(R\) por extensión y su matriz \(M_R\).</p><p class='text-slate-600 font-mono mt-1'>\(R = \{(1, 2), (1, 3), (2, 3)\}\).<br>MR = [ 0 1 1 ]<br>     [ 0 0 1 ]<br>     [ 0 0 0 ]</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Para \(A = \{2, 4, 6\}\), escribe la relación de divisibilidad \(R = \{(x, y) \mid x \text{ divide a } y\}\). <span class='text-purple-700 font-bold font-mono'>Pista: {(2,2), (2,4), (2,6), (4,4), (6,6)}.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 5.2 PROPIEDADES DE LAS RELACIONES -->
-<div id="tema-5-2" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.2</span>
-        Propiedades de las Relaciones
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Reflexiva:</strong> \(\forall x, (x, x) \in R\). <strong>Irreflexiva:</strong> Ningún \((x, x) \in R\).<br>
-            • <strong>Simétrica:</strong> \((x, y) \in R \implies (y, x) \in R\). <strong>Asimétrica:</strong> Si \((x, y) \in R \implies (y, x) \notin R\).<br>
-            • <strong>Antisimétrica:</strong> \((x, y) \in R \land (y, x) \in R \implies x = y\).<br>
-            • <strong>Transitiva:</strong> \((x, y) \in R \land (y, z) \in R \implies (x, z) \in R\).
-        </p>
+<div id="tema-5-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">5.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Propiedades de las Relaciones</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las propiedades de una relación definen su estructura formal. Una relación sobre \(A\) puede ser <strong>Reflexiva</strong> (cada elemento se relaciona consigo mismo), <strong>Irreflexiva</strong>, <strong>Simétrica</strong> (las flechas son de doble sentido), <strong>Asimétrica</strong>, <strong>Antisimétrica</strong> (no hay flechas bidireccionales salvo lazos) o <strong>Transitiva</strong> (los caminos indirectos tienen atajo directo).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Reflexiva:</strong> \(\forall x \in A, (x, x) \in R\) (Diagonal de \(M_R\) llena de unos).</li><li>• <strong>Simétrica:</strong> \((x, y) \in R \implies (y, x) \in R\) (\(M_R = M_R^T\)).</li><li>• <strong>Antisimétrica:</strong> \((x, y) \in R \land (y, x) \in R \implies x = y\).</li><li>• <strong>Transitiva:</strong> \((x, y) \in R \land (y, z) \in R \implies (x, z) \in R\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-xs font-mono"><div class="p-2 bg-white border rounded"><strong>Reflexiva</strong><br>Lazos en todo nodo</div><div class="p-2 bg-white border rounded"><strong>Simétrica</strong><br>Flechas ida y vuelta</div><div class="p-2 bg-white border rounded"><strong>Transitiva</strong><br>Caminos cerrados</div></div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Determinar las propiedades de la relación de orden \(R = \{(a, b) \mid a \le b\}\) sobre los números enteros.</p><p class='text-slate-600 mt-1'>1. Reflexiva: \(a \le a\) (Verdadero).<br>2. Antisimétrica: \(a \le b \land b \le a \implies a = b\) (Verdadero).<br>3. Transitiva: \(a \le b \land b \le c \implies a \le c\) (Verdadero).<br><strong class='text-purple-800 font-sans'>Es una relación de orden parcial.</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Analiza si la relación de 'amigo en Facebook' es reflexiva, simétrica o transitiva. <span class='text-purple-700 font-bold font-mono'>Pista: No reflexiva, Simétrica, No transitiva.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 5.3 RELACIONES DE EQUIVALENCIA -->
-<div id="tema-5-3" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.3</span>
-        Relaciones de Equivalencia, Cerraduras y Diagramas de Hasse
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Cerraduras de Warshall:</strong> Cerradura reflexiva, simétrica y transitiva.<br>
-            • <strong>Clases de Equivalencia y Particiones:</strong> Subconjuntos disjuntos que dividen al universo.<br>
-            • <strong>Orden Parcial (Poset) y Diagramas de Hasse:</strong> Relación reflexiva, antisimétrica y transitiva.
-        </p>
+<div id="tema-5-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">5.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Relaciones de Equivalencia, Cerraduras y Diagramas de Hasse</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Una <strong>Relación de Equivalencia</strong> es aquella que cumple ser simultáneamente reflexiva, simétrica y transitiva. Divide al conjunto en <strong>Clases de Equivalencia</strong> disjuntas que forman una partición. Por otro lado, un <strong>Orden Parcial (Poset)</strong> es reflexivo, antisimétrico y transitivo, y se visualiza mediante un <strong>Diagrama de Hasse</strong> sin lazos redundantes.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Clase de Equivalencia \([a]\):</strong> \([a] = \{x \in A \mid (a, x) \in R\}\).</li><li>• <strong>Cerradura de Warshall:</strong> Mínima relación que contiene a \(R\) y cumple una propiedad deseada (Cerradura Transitiva \(R^+\)).</li><li>• <strong>Diagrama de Hasse:</strong> Gráfico simplificado de un conjunto parcialmente ordenado omitiendo lazos reflexivos y aristas transitivas.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-purple-400 font-bold">Diagrama de Hasse para divisores de 12 {1, 2, 3, 4, 6, 12}:</span><br>        12<br>       /  \<br>      4    6<br>     / \  / \<br>    2    3<br>     \  /<br>       1</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Encontrar las clases de equivalencia para la relación congruencia módulo 3 sobre los enteros: \(a \equiv b \pmod 3\).</p><p class='text-slate-600 mt-1'>Las clases corresponden a los residuos posibles {0, 1, 2}:<br>• \([0] = \{\dots, -3, 0, 3, 6, \dots\}\)<br>• \([1] = \{\dots, -2, 1, 4, 7, \dots\}\)<br>• \([2] = \{\dots, -1, 2, 5, 8, \dots\}\). Forman una partición exacta de \(\mathbb{Z}\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Dibuja el diagrama de Hasse para el conjunto potencia de \(S = \{a, b\}\) bajo la relación de inclusión \(\subseteq\). <span class='text-purple-700 font-bold font-mono'>Pista: 4 nodos con \(\emptyset\) en el fondo y \(\{a,b\}\) en el tope.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 5.4 FUNCIONES -->
-<div id="tema-5-4" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.4</span>
-        Funciones (Inyectiva, Suprayectiva, Biyectiva)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Inyectiva (Uno a Uno):</strong> \(f(a) = f(b) \implies a = b\).<br>
-            • <strong>Suprayectiva (Sobre):</strong> El rango es igual a todo el codominio.<br>
-            • <strong>Biyectiva:</strong> Inyectiva y Suprayectiva a la vez (admite función inversa \(f^{-1}\)).
-        </p>
+<div id="tema-5-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">5.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Funciones (Inyectiva, Suprayectiva, Biyectiva)</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Una <strong>Función</strong> \(f: A \to B\) es un caso especial de relación donde a cada elemento del dominio \(A\) le corresponde un único elemento en el codominio \(B\). Se clasifican en <strong>Inyectivas (Uno a Uno)</strong>, <strong>Suprayectivas (Sobre)</strong> y <strong>Biyectivas</strong> (ambas simultáneamente, lo que garantiza la existencia de una función inversa \(f^{-1}\)).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Inyectiva:</strong> \(f(x_1) = f(x_2) \implies x_1 = x_2\) (no hay dos flechas al mismo destino).</li><li>• <strong>Suprayectiva:</strong> \(\forall y \in B, \exists x \in A \text{ tal que } f(x) = y\) (todo el codominio está cubierto).</li><li>• <strong>Biyectiva:</strong> Función invertible donde \(|A| = |B|\) en conjuntos finitos.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs font-mono"><div class="p-2 bg-white border rounded font-sans"><strong>Inyectiva</strong><br>Destinos únicos</div><div class="p-2 bg-white border rounded font-sans"><strong>Suprayectiva</strong><br>Codominio lleno</div><div class="p-2 bg-white border rounded font-sans"><strong>Biyectiva</strong><br>Invertible (1 a 1 exacto)</div></div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Determinar si la función hash \(h(k) = k \bmod 10\) es inyectiva para claves enteras.</p><p class='text-slate-600 mt-1'>No es inyectiva porque \(h(12) = 2\) y \(h(22) = 2\) (genera colisión). Es suprayectiva sobre el rango \(\{0, 1, \dots, 9\}\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Sea \(f(x) = 2x + 3\). Demuestra que es biyectiva en los números reales y encuentra su inversa \(f^{-1}(x)\). <span class='text-purple-700 font-bold font-mono'>Pista: \(f^{-1}(x) = \frac{x-3}{2}\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 5.5 APLICACIONES EN COMPUTACIÓN -->
-<div id="tema-5-5" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.5</span>
-        Aplicaciones de las Relaciones y Funciones en Computación
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Bases de Datos Relacionales (SQL):</strong> Claves foráneas que relacionan tablas.<br>
-            • <strong>Estructura de Datos:</strong> Listas enlazadas y grafos dirigidos en memoria.<br>
-            • <strong>Sistemas Operativos:</strong> Grafos de asignación de recursos y prevención de interbloqueos (*deadlocks*).
-        </p>
+<div id="tema-5-5" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">5.5</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Aplicaciones de Relaciones y Funciones en Computación</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las relaciones modelan la arquitectura de <strong>Bases de Datos Relacionales (SQL)</strong> mediante claves foráneas (Foreign Keys) que enlazan entidades (1:1, 1:N, N:M), el enlazamiento de nodos en <strong>listas ligadas y estructuras de punteros</strong>, matrices de transformación en graficación 3D y grafos de precedencia de procesos en sistemas operativos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Clave Foránea:</strong> Restricción de integridad referencial que implementa una relación matemática entre dos tablas.</li><li>• <strong>Estructura de Nodos:</strong> Punteros en memoria que modelan relaciones binarias dirigidas (<code>nodo->siguiente</code>).</li><li>• <strong>Grafo de Espera (Wait-For Graph):</strong> Relación que modela hilos esperando recursos en el Kernel de un SO.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-purple-400 font-bold">Esquema Relacional SQL:</span><br>CREATE TABLE Pedidos (<br>  id INT PRIMARY KEY,<br>  cliente_id INT REFERENCES Clientes(id) /* Relación 1:N */<br>);</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> ¿Cómo se resuelve una relación de Muchos a Muchos (N:M) entre Estudiantes y Materias en una base de datos relacional?</p><p class='text-slate-600 mt-1'>Se descompone en dos relaciones 1:N creando una tabla intermedia (tabla de unión) con las claves foráneas de ambas entidades.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Diseña la tabla intermedia para modelar la relación N:M entre Médicos y Pacientes. <span class='text-purple-700 font-bold font-mono'>Pista: Citas (id_medico, id_paciente, fecha).</span></p></div>
+        </div>
     </div>
 </div>
 
@@ -379,7 +538,7 @@
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
                         <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Conceptos Básicos</a>
-<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades de Relaciones</a>
+<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades</a>
 <a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Equivalencia y Hasse</a>
 <a href="#tema-5-4" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.4 Funciones</a>
 <a href="#tema-5-5" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.5 Aplicaciones</a>

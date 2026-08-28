@@ -266,7 +266,7 @@
                         Teoría de Grafos, Árboles y Redes (6.1 - 6.6)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Elementos, matrices, algoritmos Dijkstra/BFS/DFS, recorridos de árboles, redes de Petri y compresión de Huffman.
+                        Elementos, matrices, algoritmos Dijkstra/BFS/DFS, recorridos de árboles con pilas, redes de Petri y compresión de Huffman.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 16 Horas (Semanas 13-16)</span>
@@ -286,90 +286,288 @@
     </p>
 </div>
 
-<!-- 6.1 ELEMENTOS Y CARACTERÍSTICAS -->
-<div id="tema-6-1" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.1</span>
-        Elementos y Características de los Grafos (6.1.1 - 6.1.2)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>6.1.1 Componentes:</strong> Vértices (\(V\)), Aristas (\(E\)), Lazos, Valencia/Grado (\(\text{deg}(v)\)) y Caminos.<br>
-            • <strong>6.1.2 Tipos de Grafos:</strong> Simples, completos (\(K_n\)), bipartidos (\(K_{m,n}\)), planos, conexos y ponderados.
-        </p>
+<div id="tema-6-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Elementos y Características de los Grafos</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Un <strong>Grafo</strong> \(G = (V, E)\) es una estructura no lineal conformada por un conjunto de <strong>vértices</strong> \(V\) y un conjunto de <strong>aristas</strong> \(E\). Se clasifican en simples (sin lazos ni aristas paralelas), completos (\(K_n\)), bipartidos (\(K_{m,n}\)), planos (dibujables sin cruce de aristas), conexos y ponderados (con pesos o costos asociados a las aristas).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Vértice / Nodo:</strong> Elemento puntual de datos.</li><li>• <strong>Arista:</strong> Conexión entre un par de vértices \((u, v)\).</li><li>• <strong>Valencia / Grado (\(\text{deg}(v)\)):</strong> Número de aristas incidentes al vértice.</li><li>• <strong>Lema del Apretón de Manos:</strong> \(\sum \text{deg}(v) = 2|E|\) (la suma de grados siempre es par).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Grafo Completo K4:</span><br>4 vértices, todos conectados entre sí ➔ E = [4(3)] / 2 = 6 aristas.</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Un grafo tiene 5 vértices con grados 2, 3, 3, 4, 4. ¿Cuántas aristas tiene el grafo?</p><p class='text-slate-600 mt-1'>Por el lema del apretón de manos: \(\sum \text{deg}(v) = 2 + 3 + 3 + 4 + 4 = 16 = 2|E| \implies |E| = 8\) aristas.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> ¿Cuántas aristas tiene un grafo completo \(K_6\)? <span class='text-rose-700 font-bold font-mono'>Pista: \(\frac{6 \times 5}{2} = 15\) aristas.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 6.2 REPRESENTACIÓN DE GRAFOS -->
-<div id="tema-6-2" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.2</span>
-        Representación de Grafos (6.2.1 Matemática y 6.2.2 Computacional)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>6.2.1 Representación Matemática:</strong> Matriz de Adyacencia (\(A\)) y Matriz de Incidencia (\(M\)). Cálculo de caminos de longitud \(n\) mediante potencias \(A^n\).<br>
-            • <strong>6.2.2 Representación Computacional:</strong> Listas de adyacencia y arreglos de nodos en memoria RAM.
-        </p>
+<div id="tema-6-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Representación de los Grafos (Matemática y Computacional)</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Los grafos se representan matemáticamente mediante la <strong>Matriz de Adyacencia</strong> (\(A\)) y la <strong>Matriz de Incidencia</strong> (\(M\)). Una propiedad poderosa es que la entrada \((i, j)\) de la potencia \(A^n\) indica el número exacto de caminos de longitud \(n\) entre los nodos \(i\) y \(j\). En computación se implementan como listas de adyacencia para ahorrar memoria en grafos dispersos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Matriz de Adyacencia:</strong> Matriz \(n \times n\) donde \(A_{ij} = 1\) si existe arista entre \(i\) y \(j\).</li><li>• <strong>Caminos de longitud \(n\):</strong> Calculados como \(A^n\).</li><li>• <strong>Lista de Adyacencia:</strong> Arreglo de listas enlazadas en memoria (\(O(V + E)\) espacio).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Matriz de Adyacencia de Triángulo K3:</span><br>A = [ 0 1 1 ]<br>    [ 1 0 1 ]<br>    [ 1 1 0 ]</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Dada la matriz de adyacencia de un grafo, ¿cómo se calculan los caminos de longitud 2 entre todos los nodos?</p><p class='text-slate-600 mt-1'>Se calcula la multiplicación matricial \(A^2 = A \times A\). El valor en cada celda \(A^2_{ij}\) es el número de caminos de 2 pasos de \(i\) a \(j\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Para un grafo de 3 nodos en línea \(1 - 2 - 3\), calcula \(A^2\) y halla los caminos de longitud 2 de 1 a 3. <span class='text-rose-700 font-bold font-mono'>Pista: 1 camino (1-2-3).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 6.3 ALGORITMOS DE RECORRIDO Y BÚSQUEDA -->
-<div id="tema-6-3" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.3</span>
-        Algoritmos de Recorrido y Búsqueda (6.3.1 - 6.3.3)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>6.3.1 El Camino Más Corto (Algoritmo de Dijkstra):</strong> Encuentra la ruta de menor costo desde un origen.<br>
-            • <strong>6.3.2 Búsqueda a lo Ancho (BFS):</strong> Explora nivel por nivel usando una cola (Queue).<br>
-            • <strong>6.3.3 Búsqueda en Profundidad (DFS):</strong> Explora hasta el fondo usando una pila (Stack).
-        </p>
+<div id="tema-6-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Algoritmos de Recorrido y Búsqueda (Dijkstra, BFS, DFS)</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Los algoritmos fundamentales sobre grafos resuelven problemas de exploración y optimización: <strong>Dijkstra</strong> encuentra la ruta más corta en grafos ponderados con pesos positivos; <strong>BFS (Búsqueda en Anchura)</strong> explora nivel por nivel usando una Cola (FIFO); y <strong>DFS (Búsqueda en Profundidad)</strong> explora ramas hasta el fondo usando una Pila (LIFO) o recursión.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Algoritmo de Dijkstra:</strong> Algoritmo voraz (Greedy) para caminos mínimos con complejidad \(O((V + E)\log V)\).</li><li>• <strong>BFS (Breadth-First Search):</strong> Utiliza Cola para hallar el menor número de saltos.</li><li>• <strong>DFS (Depth-First Search):</strong> Utiliza Pila para detección de ciclos y componentes conexas.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Estructuras de Búsqueda:</span><br>• BFS ➔ Cola (Queue): Primero en Entrar, Primero en Salir.<br>• DFS ➔ Pila (Stack): Último en Entrar, Primero en Salir.</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Un grafo tiene aristas \((A,B)=4, (A,C)=2, (C,B)=1, (B,D)=5\). Hallar la ruta más corta de \(A\) a \(D\) con Dijkstra.</p><p class='text-slate-600 mt-1'>1. De \(A\), el vecino más cercano es \(C\) (costo 2).<br>2. De \(C\), se llega a \(B\) con costo acumulado \(2 + 1 = 3\) (menor que el directo \(A \to B\) de 4).<br>3. De \(B\), se llega a \(D\) con costo \(3 + 5 = 8\).<br><strong class='text-rose-800 font-mono'>Ruta mínima: A ➔ C ➔ B ➔ D (Costo total: 8).</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> En un grafo con aristas \((A,B)=3, (A,C)=5, (B,C)=1\), ¿cuál es la distancia más corta de \(A\) a \(C\)? <span class='text-rose-700 font-bold font-mono'>Pista: 4 (vía B).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 6.4 ÁRBOLES -->
-<div id="tema-6-4" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.4</span>
-        Árboles y Recorridos (6.4.1 - 6.4.5)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>6.4.1 a 6.4.4 Componentes y Propiedades:</strong> Raíz, hojas, padre, hijo, altura, árboles con peso.<br>
-            • <strong>6.4.5 Recorridos de un Árbol:</strong> Preorden (Raíz-Izq-Der), Inorden (Izq-Raíz-Der), Postorden (Izq-Der-Raíz). Evaluación de expresiones aritméticas con pilas.
-        </p>
+<div id="tema-6-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Árboles y Recorridos (Preorden, Inorden, Postorden)</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Un <strong>Árbol</strong> es un grafo conexo y acíclico con \(n\) vértices y exactamente \(n - 1\) aristas. En computación, los <strong>Árboles Binarios</strong> son esenciales para estructurar expresiones matemáticas y jerarquías. Los tres recorridos estándar son <strong>Preorden</strong> (Raíz, Izq, Der), <strong>Inorden</strong> (Izq, Raíz, Der) y <strong>Postorden</strong> (Izq, Der, Raíz, base de la notación polaca inversa en pilas).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Raíz:</strong> Nodo principal sin nodo padre. <strong>Hojas:</strong> Nodos terminales sin hijos.</li><li>• <strong>Altura de un Árbol:</strong> Longitud del camino más largo desde la raíz hasta una hoja.</li><li>• <strong>Preorden:</strong> Raíz ➔ Subárbol Izquierdo ➔ Subárbol Derecho.</li><li>• <strong>Inorden:</strong> Subárbol Izquierdo ➔ Raíz ➔ Subárbol Derecho (genera orden ascendente en BST).</li><li>• <strong>Postorden:</strong> Subárbol Izquierdo ➔ Subárbol Derecho ➔ Raíz.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Árbol de Expresión para (A + B) * C:</span><br>       *<br>      / \<br>     +   C<br>    / \<br>   A   B<br>Inorden: A + B * C | Postorden: A B + C *</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Dado el árbol con raíz <code>+</code>, hijo izquierdo <code>3</code> e hijo derecho <code>* (4, 5)</code>, obtener su recorrido en Postorden y evaluar con pila.</p><p class='text-slate-600 mt-1'>Postorden: <code>3 4 5 * +</code>. Evaluación en pila: empuja 3, 4, 5 ➔ multiplica \(4 \times 5 = 20\) ➔ suma \(3 + 20 = 23\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Escribe la expresión en Postorden para el árbol de \((8 - 2) / (1 + 2)\). <span class='text-rose-700 font-bold font-mono'>Pista: 8 2 - 1 2 + /</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 6.5 REDES Y PETRI -->
-<div id="tema-6-5" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.5</span>
-        Redes de Flujo y Redes de Petri
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Teorema de flujo máximo / corte mínimo (Ford-Fulkerson), pareos en grafos bipartidos y <strong>Redes de Petri</strong> para modelar concurrencia, sincronización de procesos y protocolos de red.
-        </p>
+<div id="tema-6-5" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.5</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Redes de Flujo y Redes de Petri</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las <strong>Redes de Flujo</strong> modelan el transporte de datos o fluidos donde cada arista tiene una capacidad máxima. El <strong>Teorema de Flujo Máximo / Corte Mínimo (Ford-Fulkerson)</strong> establece que el flujo máximo transferible es igual a la capacidad del corte cuello de botella. Las <strong>Redes de Petri</strong> modelan sistemas concurrentes y asíncronos mediante lugares, transiciones y fichas (*tokens*).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Red de Flujo:</strong> Grafo dirigido con fuente \(s\), sumidero \(t\) y capacidades \(c(u,v) \ge 0\).</li><li>• <strong>Corte Mínimo:</strong> Conjunto de aristas de menor capacidad cuya eliminación desconecta la fuente del sumidero.</li><li>• <strong>Red de Petri:</strong> Grafo bipartito dirigido \((P, T, F)\) con Lugares (\(P\)), Transiciones (\(T\)) y Arcos (\(F\)).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Red de Petri (Sincronización):</span><br>[Lugar P1: Token] ➔ (Transición T1) ➔ [Lugar P2: Token]<br>Disparo de transición consume token de P1 y genera token en P2.</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Una red tiene un enlace origen con capacidad 10 y dos caminos intermedios de capacidades 6 y 4 que convergen en el destino. ¿Cuál es el flujo máximo?</p><p class='text-slate-600 mt-1'>El corte cuello de botella limita el flujo: \(6 + 4 = 10\) unidades de datos por segundo.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> ¿Qué condición debe cumplirse para que una transición en una Red de Petri pueda dispararse? <span class='text-rose-700 font-bold font-mono'>Pista: Todos sus lugares de entrada deben tener al menos un token.</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 6.6 APLICACIONES -->
-<div id="tema-6-6" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">6.6</span>
-        Aplicaciones de Grafos y Árboles en Computación
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Enrutamiento en Internet (OSPF/BGP), compresión de archivos sin pérdida mediante <strong>Codificación de Huffman</strong> y árboles de decisión en inteligencia artificial.
-        </p>
+<div id="tema-6-6" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-rose-100 text-rose-800 text-sm flex items-center justify-center font-mono font-bold">6.6</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Aplicaciones de Grafos y Árboles en la Computación</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las aplicaciones de grafos y árboles abarcan la infraestructura completa de tecnologías de la información: el protocolo de enrutamiento <strong>OSPF</strong> en routers de Internet calcula caminos mínimos, el algoritmo de <strong>Codificación de Huffman</strong> construye árboles binarios de frecuencias para comprimir archivos ZIP y MP3, y el sistema de archivos organiza directorios jerárquicos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Árbol de Huffman:</strong> Árbol binario óptimo de longitud variable donde caracteres más frecuentes tienen códigos de bits más cortos.</li><li>• <strong>Protocolo OSPF:</strong> Algoritmo de estado de enlace basado en Dijkstra ejecutado en routers Cisco/Juniper.</li><li>• <strong>Jerarquía de Archivos:</strong> Árbol n-ario donde la raíz es <code>/</code> (Linux) o <code>C:\</code> (Windows).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-rose-400 font-bold">Compresión de Huffman:</span><br>Caracter 'e' (muy frecuente) ➔ Código '0' (1 bit)<br>Caracter 'z' (raro) ➔ Código '11010' (5 bits)<br>Ahorro de almacenamiento global: ~40%</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> En un texto con frecuencias A (45%), B (13%), C (12%), D (16%), E (9%), ¿cuál caracter tendrá el código más corto en el árbol de Huffman?</p><p class='text-slate-600 mt-1'>El caracter A tendrá el código más corto (menor profundidad) por ser el de mayor frecuencia probabilística.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> ¿Por qué la codificación de Huffman es libre de prefijos? <span class='text-rose-700 font-bold font-mono'>Pista: Porque ningún caracter es ancestro de otro (todos son hojas).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- SIMULADOR DIJKSTRA -->
 <section id="laboratorio-dijkstra" class="scroll-mt-24">
     <div class="border-2 border-rose-200 rounded-2xl p-6 bg-gradient-to-b from-rose-50/40 via-white to-white shadow-sm">
         <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-route text-rose-600 mr-2"></i>Simulador de Camino Mínimo (Dijkstra)</h3>
@@ -419,7 +617,7 @@
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-rose-50/60 p-3 rounded-xl border border-rose-100">
                         <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 10 a 15 oficiales del TecNM: Dijkstra, recorridos de árboles en pre/in/postorden y Huffman.
+                            Prácticas 10 a 15 oficiales: Dijkstra, recorridos de árboles y compresión de Huffman.
                         </p>
                     </div>
                 </div>

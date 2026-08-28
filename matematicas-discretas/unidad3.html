@@ -265,7 +265,7 @@
                         Lógica Matemática (3.1 - 3.5)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Lógica proposicional, tablas de verdad, inferencias, predicados, álgebra declarativa e inducción matemática.
+                        Lógica proposicional, tablas de verdad, cuantificadores, álgebra declarativa, inducción matemática y verificación.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 16 Horas (Semanas 5-8)</span>
@@ -285,82 +285,244 @@
     </p>
 </div>
 
-<!-- 3.1 LÓGICA PROPOSICIONAL -->
-<div id="tema-3-1" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.1</span>
-        Lógica Proposicional (3.1.1 - 3.1.8)
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>3.1.1 Concepto de Proposición:</strong> Enunciado declarativo con valor Verdadero (1) o Falso (0).<br>
-            • <strong>3.1.2 Proposiciones Compuestas:</strong> Disyunción (\(P \lor Q\)), Conjunción (\(P \land Q\)), Negación (\(\neg P\)), Condicional (\(P \to Q\)), Bicondicional (\(P \leftrightarrow Q\)).<br>
-            • <strong>3.1.3 Tablas de Verdad:</strong> Arreglo con las \(2^n\) combinaciones de verdad.<br>
-            • <strong>3.1.4 Tautología, Contradicción y Contingencia:</strong> Tautología (siempre 1), Contradicción (siempre 0), Contingencia (mixto).<br>
-            • <strong>3.1.5 Equivalencias Lógicas:</strong> Leyes de De Morgan y doble negación.<br>
-            • <strong>3.1.6 y 3.1.7 Reglas de Inferencia y Argumentos Válidos:</strong> Modus Ponens (\(P \to Q, P \vdash Q\)), Modus Tollens (\(P \to Q, \neg Q \vdash \neg P\)).<br>
-            • <strong>3.1.8 Demostración Formal:</strong> Método Directo y Método por Contradicción (Reducción al Absurdo).
-        </p>
+<div id="tema-3-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold">3.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Lógica Proposicional, Tablas de Verdad e Inferencias</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>La <strong>Lógica Proposicional</strong> estudia las proposiciones (oraciones con valor de verdad binario \(V=1\) ó \(F=0\)) y sus combinaciones mediante conectivos lógicos (\(\land, \lor, \neg, \to, \leftrightarrow\)). Una tabla de verdad evalúa las \(2^n\) combinaciones. Si la columna final es siempre 1 se tiene una <strong>Tautología</strong>; si es siempre 0, una <strong>Contradicción</strong>; si es mixta, una <strong>Contingencia</strong>. Las demostraciones se fundamentan en reglas de inferencia como <em>Modus Ponens</em> (\(P \to Q, P \vdash Q\)).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Proposición Simple:</strong> Enunciado atómico que no contiene conectivos (ej. \(P\): 'El servidor está activo').</li><li>• <strong>Condicional (\(P \to Q\)):</strong> Falsa únicamente cuando el antecedente \(P\) es verdadero y el consecuente \(Q\) es falso.</li><li>• <strong>Modus Ponens:</strong> Si \(P \to Q\) es verdadero y \(P\) es verdadero, se concluye \(Q\).</li><li>• <strong>Modus Tollens:</strong> Si \(P \to Q\) es verdadero y \(\neg Q\) es verdadero, se concluye \(\neg P\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Tabla de Verdad del Condicional:</span><br>P=1, Q=1 ➔ P → Q = 1<br>P=1, Q=0 ➔ P → Q = 0 (Único caso falso)<br>P=0, Q=1 ➔ P → Q = 1<br>P=0, Q=0 ➔ P → Q = 1</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Demostrar que \((P \to Q) \equiv (\neg P \lor Q)\) mediante tabla de verdad.</p><p class='text-slate-600 font-mono mt-1'>Evaluando para (1,1): 1=1. Para (1,0): 0=0. Para (0,1): 1=1. Para (0,0): 1=1.<br><strong class='text-sky-800 font-sans'>Ambas columnas son idénticas en todas las filas, demostrando la equivalencia lógica.</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Construye la tabla de verdad para \(P \land \neg(P \lor Q)\) y clasifícala. <span class='text-sky-700 font-bold font-mono'>Pista: Es una Contradicción (todos ceros).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 3.2 LÓGICA DE PREDICADOS -->
-<div id="tema-3-2" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.2</span>
-        Lógica de Predicados y Cuantificadores
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>3.2.1 Cuantificadores:</strong> Cuantificador Universal (\(\forall x\)) ("para todo") y Cuantificador Existencial (\(\exists x\)) ("existe al menos uno").<br>
-            • <strong>3.2.2 Representación y Evaluación:</strong> \(\forall x \in \mathbb{R} (x^2 \ge 0)\) (Verdadero).
-        </p>
+<div id="tema-3-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold">3.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Lógica de Predicados y Cuantificadores</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>La <strong>Lógica de Predicados</strong> extiende la lógica proposicional al permitir variables, funciones y cuantificadores sobre un dominio de discurso. El <strong>Cuantificador Universal (\(\forall x\))</strong> afirma que una propiedad se cumple para todos los elementos, mientras que el <strong>Cuantificador Existencial (\(\exists x\))</strong> afirma que se cumple para al menos uno.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Predicado \(P(x)\):</strong> Función booleana que se convierte en proposición al asignarle un valor a la variable \(x\).</li><li>• <strong>Cuantificador Universal (\(\forall x\)):</strong> \(\forall x P(x)\) es verdadero si \(P(a)\) es verdadero para todo \(a \in D\).</li><li>• <strong>Cuantificador Existencial (\(\exists x\)):</strong> \(\exists x P(x)\) es verdadero si existe al menos un \(a \in D\) con \(P(a)\) verdadero.</li><li>• <strong>Negación de Cuantificadores:</strong> \(\neg (\forall x P(x)) \equiv \exists x \neg P(x)\).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Ejemplo Formal:</span><br>∀x (x > 0 → x² > 0) [Dominio: Reales no nulos] ➔ Verdadero</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Negar la proposición: 'Todos los programas tienen errores' (\(\forall x (P(x) \to E(x))\)).</p><p class='text-slate-600 mt-1'>\(\neg(\forall x (P(x) \to E(x))) \equiv \exists x \neg(P(x) \to E(x)) \equiv \exists x (P(x) \land \neg E(x))\).<br>Interpretación: 'Existe al menos un programa que no tiene errores'.</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Expresa formalmente: 'Existe un número entero cuyo cuadrado es igual a 9'. <span class='text-sky-700 font-bold font-mono'>Pista: \(\exists x \in \mathbb{Z} (x^2 = 9)\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 3.3 ÁLGEBRA DECLARATIVA -->
-<div id="tema-3-3" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.3</span>
-        Álgebra Declarativa
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Sintaxis formal de cláusulas de Horn y hechos en programación lógica (ej. <strong>Prolog</strong>: <code>padre(juan, maria).</code>).
-        </p>
+<div id="tema-3-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold">3.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Álgebra Declarativa y Programación Lógica</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>El <strong>Álgebra Declarativa</strong> es el paradigma computacional donde los programas se definen mediante sentencias lógicas y hechos, indicando <em>qué</em> debe resolverse en lugar de <em>cómo</em> resolverse secuencialmente. Es el fundamento del lenguaje <strong>Prolog</strong> y los sistemas de razonamiento automático en Inteligencia Artificial.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Cláusula de Horn:</strong> Disyunción de literales con a lo más un literal positivo (\(B \leftarrow A_1 \land A_2 \land \dots \land A_n\)).</li><li>• <strong>Hecho:</strong> Afirmación incondicionalmente verdadera (ej. <code>conecta(routerA, switch1).</code>).</li><li>• <strong>Regla:</strong> Afirmación condicional que infiere nuevos hechos mediante un motor de inferencia por resolución.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Código Prolog:</span><br>padre(juan, carlos).<br>abuelo(X, Y) :- padre(X, Z), padre(Z, Y).</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Representar en álgebra declarativa la regla: 'Un usuario tiene acceso de administrador si es del departamento de TI y tiene autorización firmada'.</p><p class='text-slate-600 font-mono mt-1'>admin(U) :- depto(U, ti), autorizado(U).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Escribe en formato de regla declarativa: 'Un servidor está en peligro si tiene el puerto 22 abierto y la contraseña es débil'. <span class='text-sky-700 font-bold font-mono'>Pista: peligro(S) :- puerto(S, 22), pass_debil(S).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 3.4 INDUCCIÓN MATEMÁTICA -->
-<div id="tema-3-4" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.4</span>
-        Inducción Matemática
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Demostración de propiedades para todo \(n \in \mathbb{N}\): 1) Paso Base (\(P(1)\)), 2) Hipótesis de Inducción (\(P(k)\)), 3) Paso Inductivo (\(P(k) \implies P(k+1)\)).
-        </p>
+<div id="tema-3-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold">3.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Inducción Matemática y Demostraciones</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>La <strong>Inducción Matemática</strong> es una técnica de demostración formal para proposiciones que involucran números naturales \(\mathbb{N}\). Funciona como el efecto dominó: si se demuestra el caso base \(P(1)\) y se prueba que la veracidad en \(k\) implica la veracidad en \(k+1\), queda demostrado para todos los enteros positivos. Es clave para validar algoritmos recursivos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Paso Base:</strong> Verificar que la proposición \(P(n)\) es cierta para el caso inicial \(n = 1\).</li><li>• <strong>Hipótesis de Inducción:</strong> Asumir como verdadera la proposición para un entero arbitrario \(n = k\) (\(P(k)\)).</li><li>• <strong>Paso Inductivo:</strong> Demostrar que bajo la hipótesis \(P(k)\), la proposición es verdadera para \(n = k + 1\) (\(P(k+1)\)).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Fórmula Clásica de Sumatoria de Gauss:</span><br>1 + 2 + 3 + ... + n = [ n(n + 1) ] / 2</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Demostrar por inducción que \(1 + 2 + \dots + n = \frac{n(n+1)}{2}\).</p><p class='text-slate-600 mt-1'>1. Base (\(n=1\)): \(1 = \frac{1(2)}{2} = 1\) (Cumple).<br>2. Hipótesis: \(1 + \dots + k = \frac{k(k+1)}{2}\).<br>3. Paso (\(k+1\)): \(1 + \dots + k + (k+1) = \frac{k(k+1)}{2} + (k+1) = \frac{k(k+1) + 2(k+1)}{2} = \frac{(k+1)(k+2)}{2}\).<br><strong class='text-sky-800 font-sans'>Queda demostrado para todo \(n \ge 1\).</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Demuestra por inducción matemática que la suma de los primeros \(n\) números impares es \(n^2\) (\(1 + 3 + 5 + \dots + (2n-1) = n^2\)). <span class='text-sky-700 font-bold font-mono'>Pista: \(k^2 + 2k + 1 = (k+1)^2\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- 3.5 APLICACIÓN EN COMPUTACIÓN -->
-<div id="tema-3-5" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.5</span>
-        Aplicación de la Lógica Matemática en la Computación
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Verificación formal de algoritmos, inteligencia artificial, sistemas expertos y control de flujo condicional en programación.
-        </p>
+<div id="tema-3-5" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold">3.5</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Aplicaciones de la Lógica en la Computación</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>La lógica matemática es el lenguaje formal detrás del diseño de compiladores, sistemas de verificación formal de código crítico (aviónica, sistemas bancarios), optimización de consultas en motores de bases de datos y la estructuración de condiciones de parada en algoritmos iterativos y recursivos.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Verificación Formal:</strong> Demostración matemática de que un programa cumple sus especificaciones sin errores de ejecución.</li><li>• <strong>Cortocircuito Lógico:</strong> Optimización en lenguajes donde <code>A && B</code> no evalúa <code>B</code> si <code>A</code> es falso.</li><li>• <strong>Invariante de Bucle:</strong> Condición lógica que se mantiene verdadera antes y después de cada iteración de un ciclo <code>while</code>.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Invariante de Bucle en Código:</span><br>/* Invariante: suma = Σ array[0..i-1] */<br>for(int i=0; i&lt;n; i++) { suma += array[i]; }</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Analizar si la expresión condicional <code>if (x > 0 || (x <= 0 && y > 5))</code> puede simplificarse lógicamente.</p><p class='text-slate-600 mt-1'>Definiendo \(P: x > 0\), \(Q: y > 5\). La expresión es \(P \lor (\neg P \land Q)\). Por ley distributiva: \((P \lor \neg P) \land (P \lor Q) \equiv 1 \land (P \lor Q) \equiv P \lor Q\).<br><strong class='text-sky-800 font-sans'>Código simplificado: <code>if (x > 0 || y > 5)</code>.</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Simplifica la condición lógica <code>if (!(a && !b) && !b)</code>. <span class='text-sky-700 font-bold font-mono'>Pista: \(\neg b \land \neg a\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- SIMULADOR TABLAS DE VERDAD -->
 <section id="laboratorio-logica" class="scroll-mt-24">
     <div class="border-2 border-sky-200 rounded-2xl p-6 bg-gradient-to-b from-sky-50/40 via-white to-white shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-check-circle text-sky-600 mr-2"></i>Generador Interactivo de Tablas de Verdad</h3>
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-check-circle text-sky-600 mr-2"></i>Generador de Tablas de Verdad</h3>
         <div class="max-w-md mx-auto mb-4">
             <select id="propSelect" onchange="generarTablaVerdad()" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-xs font-bold bg-white">
                 <option value="cond">P -> Q (Condicional)</option>
@@ -409,7 +571,7 @@
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
                         <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 4, 5 y 6 oficiales del TecNM: Tablas de verdad, silogismos e inducción.
+                            Prácticas 4, 5 y 6 oficiales: Tablas de verdad, evaluación de expresiones e inducción.
                         </p>
                     </div>
                 </div>
@@ -432,7 +594,6 @@
         const tbody = document.getElementById('truthTableBody');
         const classif = document.getElementById('truthClassification');
         thead.innerHTML = ""; tbody.innerHTML = "";
-
         if (sel === "cond") {
             thead.innerHTML = `<tr><th class="p-2">P</th><th class="p-2">Q</th><th class="p-2 bg-sky-100 text-sky-900">P → Q</th></tr>`;
             [[1,1,1],[1,0,0],[0,1,1],[0,0,1]].forEach(r => { tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-sky-700">${r[2]}</td></tr>`; });

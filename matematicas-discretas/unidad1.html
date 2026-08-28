@@ -265,7 +265,7 @@
                         Sistemas Numéricos (1.1 - 1.5)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Bases posicionales, aritmética binaria, complemento a 2, multiplicación de Booth y aplicaciones en hardware.
+                        Bases posicionales, conversiones, complemento a 2, multiplicación de Booth y aplicaciones computacionales.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 12 Horas (Semanas 1-3)</span>
@@ -285,142 +285,252 @@
     </p>
 </div>
 
-<!-- 1.1 SISTEMAS NUMÉRICOS -->
-<div id="tema-1-1" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.1</span>
-        Sistemas Numéricos (Binario, Octal, Decimal, Hexadecimal)
-    </h2>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1"></i> 1. Explicación</span>
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            Un sistema numérico posicional es aquel donde el valor de cada símbolo depende de su posición respecto a la base \(b\): \(N = \sum d_i \cdot b^i\). Las computadoras emplean <strong>binario (\(b=2\))</strong> por el hardware de transistores, <strong>octal (\(b=8\))</strong> y <strong>hexadecimal (\(b=16\))</strong> para simplificar direcciones de memoria RAM.
-        </p>
+<div id="tema-1-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold">1.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Sistemas Numéricos (Binario, Octal, Decimal, Hexadecimal)</h2>
     </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-tag mr-1"></i> 2. Términos Clave</span>
-        <p class="text-xs text-slate-700"><strong>Bit:</strong> 0 ó 1. <strong>Nibble:</strong> 4 bits (1 dígito hex). <strong>Byte:</strong> 8 bits. <strong>Base:</strong> Cantidad de símbolos permitidos (\(b=2, 8, 10, 16\)).</p>
-    </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-draw-polygon mr-1"></i> 3. Ilustración</span>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono text-center my-1">
-            <div class="p-2 bg-white border border-slate-200 rounded">Binario: {0,1}</div>
-            <div class="p-2 bg-white border border-slate-200 rounded">Octal: {0..7}</div>
-            <div class="p-2 bg-white border border-slate-200 rounded">Decimal: {0..9}</div>
-            <div class="p-2 bg-white border border-slate-200 rounded">Hex: {0..9, A..F}</div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Los sistemas numéricos posicionales representan cantidades mediante dígitos cuyo peso depende de su posición respecto a la base \(b\): \(N = \sum_{i=-m}^{n-1} d_i \cdot b^i\). En computación, el <strong>sistema binario (\(b=2\))</strong> es el lenguaje nativo del hardware (transistores encendidos/apagados), mientras que el <strong>octal (\(b=8\))</strong> y <strong>hexadecimal (\(b=16\))</strong> permiten compactar cadenas largas de bits para facilitar la lectura de direcciones de memoria RAM y códigos de operación.</p>
         </div>
     </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1"></i> 4. Ejercicio Guiado</span>
-        <p class="text-xs text-slate-700">Representar el valor posicional de \(2A3_{16}\) en decimal: \(2 \times 16^2 + 10 \times 16^1 + 3 \times 16^0 = 512 + 160 + 3 = 675_{10}\).</p>
-    </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1"></i> 5. Ejercicio de Práctica</span>
-        <p class="text-xs text-slate-700">Calcula el valor decimal de \(375_8\) y \(101101_2\). <span class="text-emerald-700 font-bold">(Resp: 253 y 45).</span></p>
-    </div>
-</div>
 
-<!-- 1.2 CONVERSIONES -->
-<div id="tema-1-2" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.2</span>
-        Conversiones entre Sistemas Numéricos
-    </h2>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1"></i> 1. Explicación</span>
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Decimal a Base \(b\):</strong> Divisiones sucesivas entre \(b\), tomando los residuos.<br>
-            • <strong>Binario a Octal/Hex:</strong> Agrupación en bloques de 3 bits (Octal) o 4 bits (Hexadecimal) desde el punto binario.
-        </p>
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Base (\(b\)):</strong> Total de símbolos disponibles en el sistema (\(b=2, 8, 10, 16\)).</li><li>• <strong>Bit:</strong> Dígito binario básico (0 ó 1).</li><li>• <strong>Byte:</strong> Bloque de 8 bits (\(2^8 = 256\) combinaciones posibles).</li><li>• <strong>Nibble:</strong> Bloque de 4 bits (exactamente 1 dígito hexadecimal).</li></ul>
+        </div>
     </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1"></i> 4. Ejercicio Guiado</span>
-        <p class="text-xs text-slate-700">Convertir \(11010110_2\) a Hexadecimal: Agrupar [1101] [0110] ➔ \(D6_{16}\).</p>
-    </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1"></i> 5. Ejercicio de Práctica</span>
-        <p class="text-xs text-slate-700">Convierte \(189_{10}\) a binario y hexadecimal. <span class="text-emerald-700 font-bold">(Resp: \(10111101_2\) y \(BD_{16}\)).</span></p>
-    </div>
-</div>
 
-<!-- 1.3 OPERACIONES BÁSICAS Y COMPLEMENTO A 2 -->
-<div id="tema-1-3" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.3</span>
-        Operaciones Básicas (Suma, Resta, Multiplicación, División) y Complemento a 2
-    </h2>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1"></i> 1. Explicación</span>
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            La resta binaria se ejecuta como una suma con <strong>Complemento a 2 (\(C_2\))</strong>: \(A - B = A + C_2(B)\), donde \(C_2(B) = \overline{B} + 1\). Esto simplifica el circuito de la ALU en el procesador.
-        </p>
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono"><div class="p-2 bg-white border rounded"><strong>Binario (Base 2)</strong><br>{0, 1}</div><div class="p-2 bg-white border rounded"><strong>Octal (Base 8)</strong><br>{0, 1, 2, 3, 4, 5, 6, 7}</div><div class="p-2 bg-white border rounded"><strong>Decimal (Base 10)</strong><br>{0, 1, ..., 9}</div><div class="p-2 bg-white border rounded"><strong>Hexadecimal (Base 16)</strong><br>{0..9, A..F}</div></div>
+        </div>
     </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1"></i> 4. Ejercicio Guiado</span>
-        <p class="text-xs text-slate-700">Resta \(1101_2 (13) - 0110_2 (6)\): \(C_2(0110) = 1001 + 1 = 1010_2\). Suma: \(1101 + 1010 = [1]0111_2 = 7_{10}\) (se descarta el desbordamiento).</p>
-    </div>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1"></i> 5. Ejercicio de Práctica</span>
-        <p class="text-xs text-slate-700">Realiza en binario de 8 bits con signo la operación \(-15_{10} + 9_{10}\). <span class="text-emerald-700 font-bold">(Resp: \(11111010_2 = -6_{10}\)).</span></p>
-    </div>
-</div>
 
-<!-- 1.4 ALGORITMOS DE BOOTH -->
-<div id="tema-1-4" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.4</span>
-        Algoritmos de Booth para Multiplicación y División en Binario
-    </h2>
-    <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1"></i> 1. Explicación</span>
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            El <strong>Algoritmo de Booth</strong> permite multiplicar enteros con signo en complemento a dos en \(n\) ciclos inspeccionando el par de bits \((Q_0, Q_{-1})\) con desplazamientos aritméticos a la derecha (SAR).
-        </p>
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Hallar el valor decimal del número hexadecimal \(3F8_{16}\).</p><p class='font-mono text-emerald-800 mt-1'>Desarrollo: \(3 \times 16^2 + 15 \times 16^1 + 8 \times 16^0 = 3(256) + 15(16) + 8(1) = 768 + 240 + 8 = 1016_{10}\).</p></div>
+        </div>
     </div>
-    <!-- Diagrama Hardware ALU -->
-    <div class="pedagogy-step">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-draw-polygon mr-1"></i> 3. Arquitectura Hardware ALU</span>
-        <div class="bg-slate-900 p-3 rounded-xl text-white text-xs font-mono">
-            Registros: [ M (Multiplicando) ] ➔ ALU ➔ [ A (Acumulador) ][ Q (Multiplicador) ][ Q-1 ]
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Encuentra el valor decimal de \(110110_2\) y de \(725_8\). <span class='text-emerald-700 font-bold font-mono'>Pista: \(110110_2 = 54_{10}\), \(725_8 = 469_{10}\).</span></p></div>
         </div>
     </div>
 </div>
 
-<!-- 1.5 APLICACIÓN EN COMPUTACIÓN -->
-<div id="tema-1-5" class="topic-container scroll-mt-24">
-    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.5</span>
-        Aplicación de los Sistemas Numéricos en la Computación
-    </h2>
-    <div class="pedagogy-step">
-        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-            • <strong>Direccionamiento de Memoria RAM:</strong> Expresado en hexadecimal (ej. <code>0x7FFF0000</code>).<br>
-            • <strong>Codificación de Colores Web:</strong> Modelo RGB en 24 bits (ej. <code>#FF5733</code> = Rojo 255, Verde 87, Azul 51).<br>
-            • <strong>Máscaras de Subred IP (IPv4 / IPv6):</strong> Notación binaria y hexadecimal para enrutamiento.
-        </p>
+<div id="tema-1-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold">1.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Conversiones entre Sistemas Numéricos</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las conversiones entre bases son algoritmos matemáticos que transforman la representación de un número sin alterar su valor real. La conversión de <strong>Decimal a Base \(b\)</strong> se realiza mediante divisiones sucesivas entre la base tomando los residuos, mientras que la conversión entre <strong>Binario y Octal/Hexadecimal</strong> es directa agrupando bits en tríadas (3 bits) o cuartetos (4 bits).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Divisiones sucesivas:</strong> Algoritmo de división entera donde los residuos en orden inverso forman la parte entera.</li><li>• <strong>Multiplicaciones sucesivas:</strong> Algoritmo para convertir la parte fraccionaria multiplicando por la base destino.</li><li>• <strong>Agrupación directa:</strong> Agrupar de 3 en 3 bits para octal o de 4 en 4 bits para hexadecimal a partir del punto binario.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="bg-slate-900 text-white p-3 rounded-xl font-mono text-xs"><span class="text-emerald-400 font-bold">Conversión Binario ➔ Hexadecimal:</span><br>1101011101_2 ➔ [0011] [0101] [1101] ➔ 3 5 D_{16}</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Convertir el número decimal \(218.625_{10}\) a Binario y Hexadecimal.</p><p class='text-slate-600 mt-1'>1. Entera: \(218 / 2 = 109\) (res 0), \(109/2=54\) (1), \(54/2=27\) (0), \(27/2=13\) (1), \(13/2=6\) (1), \(6/2=3\) (0), \(3/2=1\) (1), \(1/2=0\) (1) ➔ \(11011010_2\).<br>2. Fraccionaria: \(0.625 \times 2 = 1.25\) (1), \(0.25 \times 2 = 0.5\) (0), \(0.5 \times 2 = 1.0\) (1) ➔ \(0.101_2\).<br><strong class='text-emerald-800 font-mono'>Resultado: \(11011010.101_2 = DA.A_{16}\).</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Convierte \(425_{10}\) a base octal y hexadecimal. <span class='text-emerald-700 font-bold font-mono'>Pista: \(651_8\) y \(1A9_{16}\).</span></p></div>
+        </div>
     </div>
 </div>
 
-<!-- SIMULADOR BOOTH -->
+<div id="tema-1-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold">1.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Operaciones Básicas y Complemento a 2</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Las operaciones aritméticas binarias siguen las mismas reglas que en decimal pero con tabla base simplificada (\(1+1 = 10_2\)). Para representar cantidades negativas y ejecutar restas usando el mismo sumador se utiliza el <strong>Complemento a 2 (\(C_2\))</strong>: \(C_2(N) = \overline{N} + 1\). La resta se transforma en \(A - B = A + C_2(B)\).</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Complemento a 1 (\(C_1\)):</strong> Inversión lógica bit a bit (0 pasa a 1, 1 pasa a 0).</li><li>• <strong>Complemento a 2 (\(C_2\)):</strong> \(C_1 + 1\). Elimina el problema del doble cero (+0 y -0).</li><li>• <strong>Bit de Signo (MSB):</strong> El bit más a la izquierda; 0 representa positivo y 1 representa negativo.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Resta con Complemento a 2:</span><br>  01100 (12)<br>- 00101 ( 5) ➔ C2(5) = 11010 + 1 = 11011<br>---------<br>  01100 + 11011 = [1]00111 = 7_{10} (Acarreo final descartado)</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Realizar en binario de 8 bits con signo la operación \(-18_{10} + 11_{10}\).</p><p class='text-slate-600 mt-1'>1. \(18_{10} = 00010010_2 \implies C_2(18) = 11101101 + 1 = 11101110_2\) (\(-18\)).<br>2. \(11_{10} = 00001011_2\).<br>3. Suma: \(11101110 + 00001011 = 11111001_2\). Verificando en decimal: \(C_2(11111001) = -(00000110 + 1) = -7_{10}\).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Realiza la suma de \(-35_{10} + 20_{10}\) en complemento a dos de 8 bits. <span class='text-emerald-700 font-bold font-mono'>Pista: Resultado \(11110001_2 = -15_{10}\).</span></p></div>
+        </div>
+    </div>
+</div>
+
+<div id="tema-1-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold">1.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Algoritmos de Booth para Multiplicación y División</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>El <strong>Algoritmo de Booth</strong> es un método eficiente para multiplicar números enteros con signo representados en complemento a dos. En lugar de sumar en cada bit '1', Booth inspecciona pares de bits \((Q_0, Q_{-1})\) y realiza sumas o restas únicamente en las transiciones (\(10 \to\) Resta, \(01 \to\) Suma, \(00\) y \(11 \to\) Solo desplazamiento SAR), acelerando el cálculo en hardware.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Registro A (Acumulador):</strong> Registro inicializado en ceros donde se acumulan los resultados parciales.</li><li>• <strong>Registro Q:</strong> Contiene el multiplicador; su bit menos significativo es \(Q_0\).</li><li>• <strong>Bit \(Q_{-1}\):</strong> Flip-flop auxiliar inicializado en 0.</li><li>• <strong>SAR (Shift Arithmetic Right):</strong> Desplazamiento aritmético a la derecha que preserva el bit de signo.</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-yellow-400 font-bold">Reglas de Booth por Ciclo:</span><br>• Q0 Q-1 = 10 ➔ A = A - M, luego SAR [A, Q, Q-1]<br>• Q0 Q-1 = 01 ➔ A = A + M, luego SAR [A, Q, Q-1]<br>• Q0 Q-1 = 00 ó 11 ➔ Solo SAR [A, Q, Q-1]</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Multiplicar \(M = 5\) (\(00101\)) por \(Q = -4\) (\(11100\)) en 5 bits con Booth.</p><p class='text-slate-600 font-mono mt-1'>Traza: Ciclo 1 (00 ➔ SAR), Ciclo 2 (00 ➔ SAR), Ciclo 3 (10 ➔ A=A-M, SAR), Ciclo 4 (11 ➔ SAR), Ciclo 5 (11 ➔ SAR).<br><strong class='text-emerald-800 font-sans'>Resultado concatenado [A Q] = \(1111101100_2 = -20_{10}\).</strong></p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Realiza la traza del algoritmo de Booth para \(M = -7\) y \(Q = 3\) en 5 bits. <span class='text-emerald-700 font-bold font-mono'>Pista: Resultado final \(-21_{10}\).</span></p></div>
+        </div>
+    </div>
+</div>
+
+<div id="tema-1-5" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold">1.5</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Aplicación de los Sistemas Numéricos en la Computación</h2>
+    </div>
+
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Los sistemas numéricos son el pilar de la arquitectura computacional moderna. Permiten estructurar el <strong>mapa de memoria RAM</strong> (segmentos de código, pila y datos), definir protocolos de red (direcciones IPv4 en decimal punteado e IPv6 en hexadecimal), representar paletas de colores en gráficos por computadora y codificar texto mediante estándares ASCII y UTF-8.</p>
+        </div>
+    </div>
+
+    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Espacio de Direcciones:</strong> Cada byte de memoria RAM tiene asignada una dirección hexadecimal única (ej. <code>0x00400000</code>).</li><li>• <strong>Código ASCII / Unicode:</strong> Mapeo numérico para caracteres (ej. 'A' = \(65_{10} = 41_{16} = 01000001_2\)).</li><li>• <strong>Color RGB 24 bits:</strong> 3 bytes que definen intensidades de Rojo, Verde y Azul (ej. <code>#00FF00</code> = Verde puro).</li></ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
+        <div class="my-2">
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-emerald-400 font-bold">Aplicaciones en Software:</span><br>• Puntero C++: int* ptr = 0x7ffd5e8a;<br>• Color CSS: background-color: #3b82f6; /* R:59, G:130, B:246 */<br>• IPv4: 192.168.1.1 ➔ 11000000.10101000.00000001.00000001_2</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Un microcontrolador lee un sensor de temperatura de 8 bits que entrega el valor binario \(01100100_2\). ¿Cuál es el valor en decimal y hexadecimal?</p><p class='text-slate-600 mt-1'>\(01100100_2 = 64_{16} = 6(16) + 4 = 100_{10}\) (°C / unidades de sensor).</p></div>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Descompón el color hexadecimal <code>#E11D48</code> en sus valores decimales de Rojo (R), Verde (G) y Azul (B). <span class='text-emerald-700 font-bold font-mono'>Pista: R=225, G=29, B=72.</span></p></div>
+        </div>
+    </div>
+</div>
+
 <section id="laboratorio-booth" class="scroll-mt-24">
     <div class="border-2 border-emerald-200 rounded-2xl p-6 bg-gradient-to-b from-emerald-50/40 via-white to-white shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-laptop-code text-emerald-600 mr-2"></i>Simulador Interactivo del Algoritmo de Booth</h3>
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-microchip text-emerald-600 mr-2"></i>Simulador del Multiplicador Binario de Booth</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto mb-4">
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Multiplicando (M):</label>
-                <input type="number" id="boothMInput" value="7" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Multiplicador (Q):</label>
-                <input type="number" id="boothQInput" value="-3" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
-            </div>
+            <div><label class="block text-xs font-bold text-slate-700 uppercase mb-1">Multiplicando (M):</label><input type="number" id="boothMInput" value="7" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm"></div>
+            <div><label class="block text-xs font-bold text-slate-700 uppercase mb-1">Multiplicador (Q):</label><input type="number" id="boothQInput" value="-3" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm"></div>
         </div>
-        <div class="text-center mb-4">
-            <button onclick="ejecutarBooth()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-sm">Calcular</button>
-        </div>
+        <div class="text-center mb-4"><button onclick="ejecutarBooth()" class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-sm">Ejecutar Booth</button></div>
         <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl p-3 shadow-inner text-xs font-mono">
             <table class="w-full text-left">
-                <thead class="bg-slate-100 text-slate-700"><tr><th class="p-2">Paso</th><th class="p-2">Operación</th><th class="p-2 text-center">A</th><th class="p-2 text-center">Q</th><th class="p-2 text-center">Q-1</th></tr></thead>
+                <thead class="bg-slate-100 text-slate-700"><tr><th class="p-2">Ciclo</th><th class="p-2">Operación</th><th class="p-2 text-center">A</th><th class="p-2 text-center">Q</th><th class="p-2 text-center">Q-1</th></tr></thead>
                 <tbody id="boothTableBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
             </table>
             <div id="boothResultado" class="text-center font-bold text-emerald-700 mt-2 font-sans"></div>
@@ -458,7 +568,7 @@
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-emerald-50/60 p-3 rounded-xl border border-emerald-100">
                         <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 1 y 2 oficiales del TecNM: Conversiones y operaciones aritméticas con Booth.
+                            Prácticas 1 y 2 oficiales: Conversiones entre bases posicionales y multiplicación de Booth.
                         </p>
                     </div>
                 </div>
@@ -475,10 +585,7 @@
 
     
 <script>
-    function toBinSigned(val, bits) {
-        if (val < 0) val = (1 << bits) + val;
-        return (val >>> 0).toString(2).padStart(bits, '0').slice(-bits);
-    }
+    function toBinSigned(val, bits) { if (val < 0) val = (1 << bits) + val; return (val >>> 0).toString(2).padStart(bits, '0').slice(-bits); }
     function ejecutarBooth() {
         const M = parseInt(document.getElementById('boothMInput').value, 10);
         const Q = parseInt(document.getElementById('boothQInput').value, 10);
