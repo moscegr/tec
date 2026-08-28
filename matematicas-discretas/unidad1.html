@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 1: Sistemas Numéricos y Algoritmo de Booth | Matemáticas Discretas</title>
+    <title>Unidad 1: Sistemas Numéricos y Circuitos Sumadores | Matemáticas Discretas (1er Semestre)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-        <!-- MathJax Config -->
+    
+    <!-- MathJax Config -->
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']]
-            },
-            options: {
-                processHtmlClass: 'tex2jax_process'
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
             }
         };
     </script>
@@ -71,36 +69,34 @@
         .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .code-container {
-            background-color: #0f172a;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            margin: 1.25rem 0;
-            border: 1px solid #1e293b;
+        .pedagogy-step {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
         }
-        .code-header {
-            background-color: #1e293b;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
+
+        .badge-step {
+            display: inline-flex;
             align-items: center;
-            color: #94a3b8;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
-            padding: 2px 8px;
-            border-radius: 4px;
             font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
         }
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
+
+        .chip-hardware {
+            background-color: #0f172a;
+            color: #38bdf8;
+            border: 1px solid #1e293b;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .step-item {
@@ -145,33 +141,25 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
-    
-        @keyframes dash {
-            to { stroke-dashoffset: -20; }
-        }
-        .anim-flow {
-            stroke-dasharray: 6;
-            animation: dash 1.5s linear infinite;
-        }
-        @keyframes pulse-glow {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4)); }
+
+        @keyframes pulse-node {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         .pulse-card {
-            animation: pulse-glow 3s ease-in-out infinite;
+            animation: pulse-node 3s ease-in-out infinite;
         }
-
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
-    <!-- Top Bar -->
+    <!-- Top Bar Institucional -->
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales • 1er Semestre</span>
             </div>
             <div class="flex items-center space-x-4">
                 <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 1</span>
@@ -191,7 +179,7 @@
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
                         <span class="w-6 h-6 rounded bg-emerald-100 text-emerald-800 text-xs flex items-center justify-center font-bold mr-2">U1</span>
-                        Sistemas Numéricos y Algoritmo de Booth
+                        Sistemas Numéricos y Circuitos Sumadores
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
@@ -210,264 +198,287 @@
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
-                        <i class="fas fa-book text-emerald-600"></i>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                        <i class="fas fa-microchip text-emerald-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades de la Materia</h4>
                     </div>
 
                     <nav class="space-y-1 text-xs">
                         
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg bg-emerald-600 text-white font-bold shadow-sm">
-                            <span>1. Sistemas Numéricos</span>
+                            <span>1. Sistemas Numéricos y Circuitos</span>
                             <span class="difficulty-badge bg-white/20 text-white border-0">12h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>2. Conjuntos</span>
+                            <span>2. Conjuntos y Lógica Booleana</span>
                             <span class="difficulty-badge diff-easy">10h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>3. Lógica Matemática</span>
+                            <span>3. Lógica Proposicional y Tablas</span>
                             <span class="difficulty-badge diff-med">16h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>4. Álgebra Booleana</span>
+                            <span>4. Álgebra Booleana y Compuertas</span>
                             <span class="difficulty-badge diff-med">14h</span>
                         </a>
                         <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>5. Relaciones y Funciones</span>
+                            <span>5. Relaciones y Decodificadores</span>
                             <span class="difficulty-badge diff-hard">12h</span>
                         </a>
                         <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>6. Grafos y Árboles</span>
+                            <span>6. Grafos, Redes y Árboles</span>
                             <span class="difficulty-badge diff-hard">16h</span>
                         </a>
                     </nav>
 
-                    <!-- Subtemas Unidad 1 -->
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 1</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido de la Unidad 1</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <a href="#intro" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
-<a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas y Conversiones</a>
-<a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Complemento a 2 & Booth</a>
+                            <a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas Numéricos</a>
+<a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Circuitos Sumadores</a>
+<a href="#tema-1-4" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.4 Complemento a 2</a>
 <a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Booth</a>
-<a href="#ejemplos-y-practica" class="block py-1 text-emerald-700 font-bold border-l-2 border-emerald-500 pl-2 transition">Ejemplos & Problemario</a>
 
                         </ul>
                     </div>
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
-            <main class="lg:col-span-6 space-y-10">
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Digerible (6 Cols) -->
+            <main class="lg:col-span-6 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-emerald-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Unidad 1 • Matemáticas Discretas</span>
+                        <span>Unidad 1 • Matemáticas Discretas para Principiantes</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Sistemas Numéricos y Algoritmo de Booth
+                        Sistemas Numéricos y Circuitos Sumadores
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Bases posicionales, aritmética binaria, complemento a 2 y multiplicación en hardware.
+                        Bases posicionales, aritmética binaria, complemento a 2 y circuitos sumadores con compuertas lógicas.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 12 Horas (Semanas 1-3)</span>
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 12 Horas (Semanas 1-3)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-easy">Nivel Didáctico</span>
+                        <span class="difficulty-badge diff-easy">1er Semestre Universitario</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- CONTENIDO TEMÁTICO EDUCATIVO -->
+                <!-- CONTENIDO PEDAGÓGICO DIGERIBLE -->
                 
-<section id="intro">
-    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
-        Los <strong>Sistemas Numéricos Posicionales</strong> son la base fundamental sobre la que se construyen los circuitos lógicos, microprocesadores y la arquitectura de memoria en las ciencias de la computación. En esta unidad se analiza la representación de cantidades en bases binaria (\(b=2\)), octal (\(b=8\)), decimal (\(b=10\)) y hexadecimal (\(b=16\)), junto con los algoritmos aritméticos de <strong>Complemento a 2</strong> y el <strong>Algoritmo de Multiplicación de Booth</strong> utilizado en las unidades aritmético-lógicas (ALU).
+<!-- INTRODUCCIÓN DIDÁCTICA -->
+<div class="lll-box lll-info">
+    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-lightbulb text-emerald-600 mr-2"></i>¿Por qué estudiamos esto en 1er Semestre?</h4>
+    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Las computadoras no entienden letras ni números decimales; sólo comprenden la presencia o ausencia de electricidad (5 Voltios = 1 / 0 Voltios = 0). En esta unidad aprenderás cómo se transforman los números humanos a ceros y unos, y <strong>cómo construir físicamente un circuito sumador</strong> con compuertas lógicas en una protoboard.
     </p>
-
-    <div class="lll-box lll-info">
-        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-emerald-600 mr-2"></i>Competencia Específica</h4>
-        <p class="text-xs sm:text-sm text-slate-600">
-            <strong>Sistematizar la conversión entre sistemas numéricos posicionales</strong> y dominar las operaciones aritméticas básicas de suma, resta con complemento a 2, y multiplicación/división binaria con signo mediante el <strong>Algoritmo de Booth</strong>.
-        </p>
-    </div>
-</section>
-
-<!-- 1.1 y 1.2 Sistemas Numéricos y Conversiones -->
-<section id="tema-1-1" class="scroll-mt-24">
-    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
-        <span class="text-emerald-600 mr-2 font-mono text-xl">1.1 - 1.2</span> Sistemas Posicionales y Métodos de Conversión
-    </h2>
-
-    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
-        En un sistema posicional de base \(b\), el valor de una cantidad viene dado por la sumatoria ponderada:
-        \[N = \sum_{i=-m}^{n-1} d_i \cdot b^i\]
-    </p>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-6 text-xs">
-        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="font-bold text-emerald-700 block mb-1">Binario (\(b=2\))</span>
-            <p class="text-slate-500 font-mono">Dígitos: {0, 1}</p>
-            <p class="text-slate-600 text-[11px] mt-1">Lenguaje nativo del hardware digital (estados lógicos on/off).</p>
-        </div>
-        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="font-bold text-teal-700 block mb-1">Octal (\(b=8\))</span>
-            <p class="text-slate-500 font-mono">Dígitos: {0..7}</p>
-            <p class="text-slate-600 text-[11px] mt-1">Agrupación directa de 3 bits por dígito.</p>
-        </div>
-        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="font-bold text-slate-800 block mb-1">Decimal (\(b=10\))</span>
-            <p class="text-slate-500 font-mono">Dígitos: {0..9}</p>
-            <p class="text-slate-600 text-[11px] mt-1">Sistema estándar de uso humano cotidiano.</p>
-        </div>
-        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
-            <span class="font-bold text-indigo-700 block mb-1">Hexadecimal (\(b=16\))</span>
-            <p class="text-slate-500 font-mono">Dígitos: {0..9, A..F}</p>
-            <p class="text-slate-600 text-[11px] mt-1">Agrupación directa de 4 bits (Nibble). Direccionamiento de memoria RAM.</p>
-        </div>
-    </div>
-
-    <!-- Procedimientos de Conversión -->
-    <h3 class="text-lg font-bold text-slate-800 mb-3">Técnicas de Conversión</h3>
-    <div class="space-y-3 mb-6">
-        <div class="step-item" data-step="1">
-            <h4 class="font-bold text-slate-800 text-sm">Decimal a Base \(b\) (Divisiones Sucesivas)</h4>
-            <p class="text-xs text-slate-600">Se divide el número entre la base destino; los residuos leídos desde el último al primero forman el resultado.</p>
-        </div>
-        <div class="step-item" data-step="2">
-            <h4 class="font-bold text-slate-800 text-sm">Base \(b\) a Decimal (Evaluación Polinómica)</h4>
-            <p class="text-xs text-slate-600">Se multiplica cada dígito por la potencia de la base correspondiente a su posición: \(d_k b^k + \dots + d_0 b^0\).</p>
-        </div>
-        <div class="step-item" data-step="3">
-            <h4 class="font-bold text-slate-800 text-sm">Conversión Directa Binario \(\leftrightarrow\) Octal / Hexadecimal</h4>
-            <p class="text-xs text-slate-600">Se agrupan los bits de 3 en 3 (Octal) o de 4 en 4 (Hexadecimal) a partir del punto binario.</p>
-        </div>
-    </div>
-</section>
-
-<!-- 1.3 y 1.4 Operaciones y Algoritmo de Booth -->
-<section id="tema-1-3" class="scroll-mt-24">
-
-<!-- DIAGRAMA VISUAL DE ARQUITECTURA ALU Y ALGORITMO DE BOOTH -->
-<div class="my-6 p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl text-white border border-slate-700 shadow-lg">
-    <div class="flex items-center justify-between mb-3 border-b border-slate-700 pb-2">
-        <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest"><i class="fas fa-microchip mr-1.5"></i> Arquitectura de Hardware de la ALU</span>
-        <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded font-mono">Multiplicador Booth</span>
-    </div>
-    
-    <div class="w-full overflow-x-auto py-2">
-        <svg viewBox="0 0 700 240" class="w-full max-w-2xl mx-auto block" style="min-width: 500px;">
-            <!-- Background grids -->
-            <defs>
-                <linearGradient id="regGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#059669"/>
-                    <stop offset="100%" stop-color="#047857"/>
-                </linearGradient>
-                <linearGradient id="aluGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#0284c7"/>
-                    <stop offset="100%" stop-color="#0369a1"/>
-                </linearGradient>
-            </defs>
-
-            <!-- Registros A, Q, Q-1 -->
-            <g transform="translate(40, 30)">
-                <!-- Registro M -->
-                <rect x="0" y="0" width="130" height="45" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
-                <text x="65" y="24" fill="#38bdf8" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REGISTRO M</text>
-                <text x="65" y="38" fill="#94a3b8" font-size="9" font-family="Outfit" text-anchor="middle">Multiplicando (n bits)</text>
-
-                <!-- ALU Bloque -->
-                <polygon points="170,10 270,10 290,45 270,80 170,80 190,45" fill="url(#aluGrad)" stroke="#38bdf8" stroke-width="1.5"/>
-                <text x="230" y="48" fill="#ffffff" font-size="13" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">ALU (+ / -)</text>
-
-                <!-- Flechas M a ALU -->
-                <line x1="130" y1="22" x2="170" y2="22" stroke="#38bdf8" stroke-width="2" class="anim-flow"/>
-
-                <!-- Registro A -->
-                <rect x="320" y="10" width="100" height="50" rx="8" fill="url(#regGrad)" stroke="#10b981" stroke-width="2"/>
-                <text x="370" y="33" fill="#ffffff" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REG A (00..0)</text>
-                <text x="370" y="48" fill="#d1fae5" font-size="9" font-family="Outfit" text-anchor="middle">Acumulador</text>
-
-                <!-- Registro Q -->
-                <rect x="430" y="10" width="100" height="50" rx="8" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-                <text x="480" y="33" fill="#ffffff" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">REG Q</text>
-                <text x="480" y="48" fill="#cbd5e1" font-size="9" font-family="Outfit" text-anchor="middle">Multiplicador</text>
-
-                <!-- Flip-Flop Q-1 -->
-                <rect x="540" y="10" width="60" height="50" rx="8" fill="#475569" stroke="#f59e0b" stroke-width="2"/>
-                <text x="570" y="33" fill="#fbbf24" font-size="12" font-weight="bold" font-family="JetBrains Mono" text-anchor="middle">Q-1</text>
-                <text x="570" y="48" fill="#fde68a" font-size="9" font-family="Outfit" text-anchor="middle">Bit Extra</text>
-
-                <!-- Flecha de Desplazamiento SAR -->
-                <path d="M 320,80 L 600,80" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4"/>
-                <polygon points="600,80 592,76 592,84" fill="#f59e0b"/>
-                <text x="460" y="96" fill="#fbbf24" font-size="10" font-family="JetBrains Mono" font-weight="bold" text-anchor="middle">➔ Desplazamiento Aritmético a la Derecha (SAR)</text>
-
-                <!-- Lógica de Control -->
-                <rect x="420" y="125" width="190" height="45" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
-                <text x="515" y="145" fill="#a5b4fc" font-size="11" font-weight="bold" font-family="Outfit" text-anchor="middle">LÓGICA DE CONTROL</text>
-                <text x="515" y="159" fill="#c7d2fe" font-size="9" font-family="JetBrains Mono" text-anchor="middle">Inspecciona (Q0, Q-1)</text>
-
-                <!-- Líneas de control -->
-                <line x1="480" y1="60" x2="480" y2="125" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3"/>
-                <line x1="570" y1="60" x2="570" y2="125" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3"/>
-                <path d="M 420,147 L 230,147 L 230,80" fill="none" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="4"/>
-            </g>
-        </svg>
-    </div>
-    <div class="text-center text-[11px] text-slate-400 mt-1">
-        Flujo de datos durante la multiplicación binaria con signo: evaluación de pares de bits y desplazamientos aritméticos.
-    </div>
 </div>
 
-    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
-        <span class="text-emerald-600 mr-2 font-mono text-xl">1.3 - 1.4</span> Complemento a 2 y el Algoritmo de Booth
+<!-- ================= TEMA 1.1 Y 1.2: SISTEMAS NUMÉRICOS Y CONVERSIONES ================= -->
+<section id="tema-1-1" class="scroll-mt-24">
+    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.1</span>
+        Sistemas Numéricos (Binario, Octal, Decimal, Hexadecimal)
     </h2>
 
-    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
-        En las computadoras, los números enteros negativos se representan mediante <strong>Complemento a 2 (\(C_2\))</strong>, lo que permite realizar restas utilizando los mismos circuitos sumadores:
-        \[C_2(N) = \overline{N} + 1\]
-    </p>
-
-    <!-- Algoritmo de Booth -->
-    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Algoritmo de Multiplicación con Signo</span>
-            <span class="difficulty-badge diff-hard">ALU Hardware</span>
-        </div>
-        <h3 class="text-base font-bold text-slate-900 mb-2">El Algoritmo de Booth</h3>
-        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-            Multiplica dos números enteros con signo representados en complemento a dos en \(n\) ciclos inspeccionando el par de bits \((Q_0, Q_{-1})\):
+    <!-- FASE 1: EXPLICACIÓN CONCEPTUAL -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-reader mr-1.5"></i> 1. Explicación Clara</span>
+        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
+            Un <strong>sistema de numeración posicional</strong> es una forma de escribir números donde el valor de cada dígito depende del lugar donde está escrito.
+            Por ejemplo, en nuestro sistema decimal cotidiano (Base 10), el número <strong>235</strong> significa:
+            \[235 = (2 \times 10^2) + (3 \times 10^1) + (5 \times 10^0) = 200 + 30 + 5\]
+            En las computadoras aplicamos exactamente la misma idea, pero en lugar de multiplicar por potencias de 10, multiplicamos por potencias de <strong>2 (Binario)</strong>, <strong>8 (Octal)</strong> o <strong>16 (Hexadecimal)</strong>.
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono mb-4">
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                <strong class="text-indigo-600 block text-sm mb-1 font-sans">Si \(Q_0 Q_{-1} = 10\)</strong>
-                <p class="text-slate-700">\(A \leftarrow A - M\)<br>Desplazamiento Aritmético Derecha (SAR)</p>
+        <!-- Cuadros comparativos sencillos -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-center font-mono">
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                <strong class="text-emerald-700 font-sans block text-xs">Binario (Base 2)</strong>
+                <span class="text-slate-500">Dígitos: 0, 1</span>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                <strong class="text-emerald-600 block text-sm mb-1 font-sans">Si \(Q_0 Q_{-1} = 01\)</strong>
-                <p class="text-slate-700">\(A \leftarrow A + M\)<br>Desplazamiento Aritmético Derecha (SAR)</p>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                <strong class="text-teal-700 font-sans block text-xs">Octal (Base 8)</strong>
+                <span class="text-slate-500">Dígitos: 0 a 7</span>
             </div>
-            <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
-                <strong class="text-slate-500 block text-sm mb-1 font-sans">Si \(Q_0 Q_{-1} = 00\) ó \(11\)</strong>
-                <p class="text-slate-700">Sólo Desplazamiento Aritmético Derecha (SAR)</p>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                <strong class="text-slate-800 font-sans block text-xs">Decimal (Base 10)</strong>
+                <span class="text-slate-500">Dígitos: 0 a 9</span>
+            </div>
+            <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg">
+                <strong class="text-indigo-700 font-sans block text-xs">Hexadecimal (Base 16)</strong>
+                <span class="text-slate-500">0-9 y A, B, C, D, E, F</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FASE 2: TÉRMINOS Y DEFINICIONES -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-tags mr-1.5"></i> 2. Términos Clave</span>
+        <ul class="text-xs sm:text-sm text-slate-700 space-y-2">
+            <li><strong>• Bit (Binary Digit):</strong> La unidad mínima de memoria en informática (un 0 o un 1).</li>
+            <li><strong>• Byte:</strong> Un paquete de 8 bits juntos (ej. <code>10110010</code>). Permite almacenar un caracter o número de 0 a 255.</li>
+            <li><strong>• Nibble:</strong> Un paquete de 4 bits (la mitad de un byte). Equivale exactamente a 1 dígito hexadecimal.</li>
+            <li><strong>• Letras en Hexadecimal:</strong> Para no inventar símbolos raros se usan letras: \(A=10\), \(B=11\), \(C=12\), \(D=13\), \(E=14\), \(F=15\).</li>
+        </ul>
+    </div>
+
+    <!-- FASE 3: DIAGRAMA E ILUSTRACIÓN -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-draw-polygon mr-1.5"></i> 3. Diagrama Visual de Conversión</span>
+        <p class="text-xs text-slate-600 mb-2">Para convertir entre Binario, Octal y Hexadecimal solo agrupas los bits:</p>
+        
+        <div class="bg-slate-900 text-white p-4 rounded-xl font-mono text-xs overflow-x-auto">
+            <div class="text-emerald-400 font-bold mb-1">// Ejemplo: Convertir el número binario 11010110_2 a Hexadecimal</div>
+            <div class="text-slate-300">Paso 1: Separa en grupos de 4 bits (de derecha a izquierda):</div>
+            <div class="text-yellow-300 font-bold text-sm my-1"> [ 1101 ]   [ 0110 ]</div>
+            <div class="text-slate-400">       ↓          ↓</div>
+            <div class="text-sky-400 font-bold text-sm">    D (13)       6        ➔  Resultado: D6_{16}</div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EJERCICIO GUIADO PASO A PASO -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1.5"></i> 4. Ejercicio Guiado Paso a Paso</span>
+        <h4 class="font-bold text-slate-900 text-xs sm:text-sm mb-2">Convertir el número decimal \(25_{10}\) a Binario</h4>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1">
+            <p>Se divide entre 2 sucesivamente y se anotan los residuos:</p>
+            <p>• \(25 \div 2 = 12\) (Residuo: <strong>1</strong>) ➔ Último bit</p>
+            <p>• \(12 \div 2 = 6\)  (Residuo: <strong>0</strong>)</p>
+            <p>• \(6 \div 2 = 3\)   (Residuo: <strong>0</strong>)</p>
+            <p>• \(3 \div 2 = 1\)   (Residuo: <strong>1</strong>)</p>
+            <p>• \(1 \div 2 = 0\)   (Residuo: <strong>1</strong>) ➔ Primer bit</p>
+            <p class="font-bold text-emerald-700 pt-1">Leyendo los residuos de abajo hacia arriba: \(25_{10} = 11001_2\).</p>
+        </div>
+    </div>
+
+    <!-- FASE 5: PRÁCTICA PARA EL ALUMNO -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica (Firmas 40%)</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-white border border-slate-200 rounded-lg">
+                <strong>1. Convierte a Binario:</strong>
+                <p class="text-slate-600">El número decimal \(42_{10}\).</p>
+                <span class="text-[11px] text-emerald-600 font-bold">Respuesta: \(101010_2\)</span>
+            </div>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg">
+                <strong>2. Convierte a Hexadecimal:</strong>
+                <p class="text-slate-600">El binario \(11111010_2\).</p>
+                <span class="text-[11px] text-emerald-600 font-bold">Respuesta: \(FA_{16}\)</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- SIMULADOR INTERACTIVO ALGORITMO DE BOOTH -->
+<!-- ================= TEMA 1.3: CIRCUITOS SUMADORES EN HARDWARE ================= -->
+<section id="tema-1-3" class="scroll-mt-24">
+    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.3</span>
+        Circuitos Digitales: El Semisumador y Sumador Completo
+    </h2>
+
+    <!-- FASE 1: EXPLICACIÓN CONCEPTUAL -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-microchip mr-1.5"></i> 1. ¿Cómo suma físicamente una computadora?</span>
+        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
+            Cuando sumas dos bits en papel:
+            \[0 + 0 = 0, \quad 0 + 1 = 1, \quad 1 + 0 = 1, \quad 1 + 1 = 0 \text{ (y llevas 1 de acarreo)}\]
+            Para construir esto en la vida real usamos 2 compuertas lógicas:
+            <strong>XOR</strong> (calcula la suma \(S = A \oplus B\)) y <strong>AND</strong> (calcula el acarreo \(C = A \cdot B\)). Este circuito se llama <strong>Semisumador (Half Adder)</strong>.
+        </p>
+
+        <!-- Detalle de componentes de laboratorio -->
+        <div class="chip-hardware">
+            <div class="text-xs text-emerald-400 font-bold mb-2"><i class="fas fa-box-open mr-1"></i> Lista de Componentes Físicos para Armar en Protoboard:</div>
+            <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>• <strong>Circuito Integrado 74LS86 (XOR cuádruple de 2 entradas):</strong> Pin 14 a +5V (VCC), Pin 7 a Tierra (GND).</li>
+                <li>• <strong>Circuito Integrado 74LS08 (AND cuádruple de 2 entradas):</strong> Pin 14 a +5V, Pin 7 a Tierra (GND).</li>
+                <li>• <strong>DIP Switch de 2 posiciones:</strong> Para meter las entradas A y B (0 = 0V / 1 = 5V).</li>
+                <li>• <strong>2 Diodos LED (Rojo para Suma, Verde para Acarreo):</strong> Con resistencias de 330Ω a tierra para no quemarlos.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: ESQUEMA VECTORIAL DEL CIRCUITO -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Esquema Eléctrico del Semisumador</span>
+        
+        <div class="bg-slate-900 p-4 rounded-xl my-2">
+            <svg viewBox="0 0 500 160" class="w-full max-w-md mx-auto block">
+                <!-- Entradas A y B -->
+                <text x="20" y="45" fill="#38bdf8" font-family="JetBrains Mono" font-size="12" font-weight="bold">Entrada A</text>
+                <line x1="90" y1="40" x2="160" y2="40" stroke="#38bdf8" stroke-width="2"/>
+                <circle cx="120" cy="40" r="3" fill="#38bdf8"/>
+                <line x1="120" y1="40" x2="120" y2="110" stroke="#38bdf8" stroke-width="2"/>
+                <line x1="120" y1="110" x2="160" y2="110" stroke="#38bdf8" stroke-width="2"/>
+
+                <text x="20" y="75" fill="#38bdf8" font-family="JetBrains Mono" font-size="12" font-weight="bold">Entrada B</text>
+                <line x1="90" y1="70" x2="160" y2="70" stroke="#38bdf8" stroke-width="2"/>
+                <circle cx="140" cy="70" r="3" fill="#38bdf8"/>
+                <line x1="140" y1="70" x2="140" y2="130" stroke="#38bdf8" stroke-width="2"/>
+                <line x1="140" y1="130" x2="160" y2="130" stroke="#38bdf8" stroke-width="2"/>
+
+                <!-- Compuerta XOR (Suma) -->
+                <g transform="translate(160, 20)">
+                    <path d="M 0,10 Q 15,30 0,50 Q 40,50 50,30 Q 40,10 0,10 Z" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                    <path d="M -8,10 Q 7,30 -8,50" fill="none" stroke="#10b981" stroke-width="2"/>
+                    <line x1="50" y1="30" x2="100" y2="30" stroke="#10b981" stroke-width="2"/>
+                    <text x="110" y="34" fill="#10b981" font-family="JetBrains Mono" font-size="11" font-weight="bold">Suma (S = A ⊕ B) ➔ LED Rojo</text>
+                </g>
+
+                <!-- Compuerta AND (Acarreo) -->
+                <g transform="translate(160, 95)">
+                    <path d="M 0,0 L 25,0 A 25,25 0 0,1 25,50 L 0,50 Z" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/>
+                    <line x1="50" y1="25" x2="100" y2="25" stroke="#fbbf24" stroke-width="2"/>
+                    <text x="110" y="29" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold">Acarreo (C = A · B) ➔ LED Verde</text>
+                </g>
+            </svg>
+        </div>
+        <div class="text-center text-[11px] text-slate-500">Diagrama esquemático con compuertas 74LS86 (XOR) y 74LS08 (AND).</div>
+    </div>
+</section>
+
+<!-- ================= TEMA 1.4: COMPLEMENTO A 2 Y NÚMEROS NEGATIVOS ================= -->
+<section id="tema-1-4" class="scroll-mt-24">
+    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">1.4</span>
+        Números Negativos y Complemento a 2 (\(C_2\))
+    </h2>
+
+    <div class="pedagogy-step">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-info-circle mr-1.5"></i> 1. ¿Cómo sabe la computadora si un número es negativo?</span>
+        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
+            Las computadoras no tienen signo '-' físico. Lo que hacen es usar el <strong>bit más a la izquierda (MSB)</strong> como bit de signo: si es <strong>0 es positivo</strong>, y si es <strong>1 es negativo</strong>.
+            Para convertir un número positivo a negativo se usa la regla de <strong>Complemento a 2</strong>:
+        </p>
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs sm:text-sm text-emerald-900 font-bold">
+            Regla de oro: Invierte todos los bits (0 pasa a 1, y 1 pasa a 0) y súmale 1 al final.
+        </div>
+    </div>
+
+    <!-- EJERCICIO GUIADO C2 -->
+    <div class="pedagogy-step">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1.5"></i> 4. Ejemplo Guiado: Representar -5 en 8 bits</span>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 space-y-1.5">
+            <p>1. Escribe el número 5 positivo en 8 bits: <code>0000 0101</code></p>
+            <p>2. Invierte todos sus bits (Compuertas NOT): <code>1111 1010</code></p>
+            <p>3. Súmale 1 al resultado: <code>1111 1010 + 1 = 1111 1011</code></p>
+            <p class="font-bold text-emerald-700 pt-1">Resultado: En la memoria de la computadora, el número \(-5\) se almacena como <code>11111011</code>.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SIMULADOR INTERACTIVO ================= -->
 <section id="laboratorio-booth" class="scroll-mt-24">
     <div class="border-2 border-emerald-200 rounded-2xl p-6 bg-gradient-to-b from-emerald-50/40 via-white to-white shadow-sm">
         <div class="flex items-center space-x-2 text-xs font-bold text-emerald-700 uppercase tracking-widest mb-1">
-            <i class="fas fa-microchip"></i> Laboratorio Interactivo de Cátedra
+            <i class="fas fa-laptop-code"></i> Laboratorio Interactivo
         </div>
-        <h2 class="text-2xl font-bold text-slate-900 mb-2">Simulador del Algoritmo de Booth (Multiplicador Binario)</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
-            Ingresa dos enteros con signo (ej. \(M = 7\), \(Q = -3\)). El simulador ejecutará paso a paso las operaciones en registros \(A, Q, Q_{-1}\) con desplazamiento aritmético:
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Simulador del Multiplicador Binario (Algoritmo de Booth)</h2>
+        <p class="text-xs sm:text-sm text-slate-600 mb-4">
+            Ingresa dos enteros (pueden ser negativos) y observa cómo la Unidad Aritmético Lógica (ALU) calcula la multiplicación en ciclos de reloj:
         </p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto mb-4">
@@ -483,18 +494,16 @@
 
         <div class="text-center mb-6">
             <button onclick="ejecutarBooth()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition shadow-sm">
-                <i class="fas fa-play mr-2"></i> Ejecutar Algoritmo de Booth
+                <i class="fas fa-play mr-2"></i> Calcular Multiplicación en Bits
             </button>
         </div>
 
         <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl p-3 shadow-inner">
             <table class="w-full text-left text-xs font-mono">
                 <thead class="bg-slate-100 text-slate-700">
-                    <tr><th class="p-2">Ciclo</th><th class="p-2">Operación</th><th class="p-2 text-center">A (Acumulador)</th><th class="p-2 text-center">Q (Multiplicador)</th><th class="p-2 text-center">Q-1</th><th class="p-2 text-center">Contador</th></tr>
+                    <tr><th class="p-2">Ciclo</th><th class="p-2">Acción</th><th class="p-2 text-center">Acumulador (A)</th><th class="p-2 text-center">Multiplicador (Q)</th><th class="p-2 text-center">Bit Q-1</th><th class="p-2 text-center">Restantes</th></tr>
                 </thead>
-                <tbody id="boothTableBody" class="divide-y divide-slate-100 text-slate-600">
-                    <!-- Filas inyectadas por JS -->
-                </tbody>
+                <tbody id="boothTableBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
             </table>
             <div id="boothResultado" class="text-center font-bold text-emerald-700 mt-3 text-xs font-sans"></div>
         </div>
@@ -508,73 +517,6 @@
                     <a href="unidad2.html" class="flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 2: Conjuntos <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
 
-            
-<!-- SECCIÓN DE EJEMPLOS RESUELTOS Y EJERCICIOS DE PRÁCTICA -->
-<section id="ejemplos-y-practica" class="scroll-mt-24 space-y-6">
-    <div class="border-t border-slate-200 pt-8">
-        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest block mb-1">Pedagogía y Taller Práctico</span>
-        <h2 class="text-2xl font-bold text-slate-900 mb-4">Ejemplos Resueltos y Problemario para Alumnos</h2>
-    </div>
-
-    <!-- EJEMPLO RESUELTO 1 -->
-    <div class="bg-white border-2 border-emerald-100 rounded-2xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded font-mono">Ejemplo Resuelto 1.1</span>
-            <span class="text-[11px] text-slate-500 font-medium">Conversión con Parte Fraccionaria</span>
-        </div>
-        <h4 class="font-bold text-slate-900 text-sm mb-2">
-            Convertir el número decimal \(143.625_{10}\) a Binario, Octal y Hexadecimal.
-        </h4>
-        <div class="text-xs text-slate-600 space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <p><strong>Paso 1: Parte Entera (143) por divisiones sucesivas entre 2:</strong><br>
-            \(143 / 2 = 71\) (Residuo 1), \(71 / 2 = 35\) (Res. 1), \(35 / 2 = 17\) (Res. 1), \(17 / 2 = 8\) (Res. 1), \(8 / 2 = 4\) (Res. 0), \(4 / 2 = 2\) (Res. 0), \(2 / 2 = 1\) (Res. 0), \(1 / 2 = 0\) (Res. 1).<br>
-            \(\implies 143_{10} = 10001111_2\).</p>
-            
-            <p><strong>Paso 2: Parte Fraccionaria (0.625) por multiplicaciones sucesivas por 2:</strong><br>
-            \(0.625 	imes 2 = 1.250\) (Entero 1)<br>
-            \(0.250 	imes 2 = 0.500\) (Entero 0)<br>
-            \(0.500 	imes 2 = 1.000\) (Entero 1) \(\implies 0.625_{10} = 0.101_2\).</p>
-
-            <p class="pt-2 border-t border-slate-200 text-emerald-800 font-mono font-bold">
-                • Binario: \(10001111.101_2\)<br>
-                • Octal: Agrupando de 3 en 3 \(	o 010\ 001\ 111 . 101_2 = 217.5_8\)<br>
-                • Hexadecimal: Agrupando de 4 en 4 \(	o 1000\ 1111 . 1010_2 = 8F.A_{16}\)
-            </p>
-        </div>
-    </div>
-
-    <!-- PROBLEMARIO PARA EL ALUMNO (PORTAFOLIO DE FIRMAS) -->
-    <div class="bg-gradient-to-br from-slate-50 to-emerald-50/30 border border-emerald-200 rounded-2xl p-6">
-        <div class="flex items-center space-x-2 text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2">
-            <i class="fas fa-pencil-alt text-emerald-600"></i> Problemario de Taller (Firmas - 40%)
-        </div>
-        <h3 class="text-lg font-bold text-slate-900 mb-3">Ejercicios de Práctica Propuestos para el Estudiante</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 1 (Conversiones):</strong>
-                <p class="text-slate-600 mb-2">Convierte el número hexadecimal \(2C5.B_{16}\) a decimal y binario.</p>
-                <span class="text-[10px] text-emerald-600 font-mono font-bold">Pista: \(2 	imes 16^2 + 12 	imes 16^1 + 5 	imes 16^0 + 11/16 = 709.6875_{10}\)</span>
-            </div>
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 2 (Complemento a 2):</strong>
-                <p class="text-slate-600 mb-2">Representa en formato de 8 bits con signo el número \(-37_{10}\) usando complemento a 2.</p>
-                <span class="text-[10px] text-emerald-600 font-mono font-bold">Respuesta: \(37_{10} = 00100101_2 \implies C_2 = 11011011_2\)</span>
-            </div>
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 3 (Algoritmo de Booth):</strong>
-                <p class="text-slate-600 mb-2">Realiza la traza completa paso a paso de la multiplicación \((-9) 	imes (6)\) usando registros de 5 bits.</p>
-                <span class="text-[10px] text-emerald-600 font-mono font-bold">Resultado esperado: \(-54_{10}\) con 5 ciclos de desplazamiento SAR.</span>
-            </div>
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 4 (Resta Binaria):</strong>
-                <p class="text-slate-600 mb-2">Efectúa la resta \(10110_2 - 1101_2\) mediante suma con complemento a dos.</p>
-                <span class="text-[10px] text-emerald-600 font-mono font-bold">Resultado: \(1001_2\) (\(9_{10}\)).</span>
-            </div>
-        </div>
-    </div>
-</section>
-
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
@@ -586,18 +528,17 @@
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
-                        <a href="#intro" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Introducción</a>
-<a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas y Conversiones</a>
-<a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Complemento a 2 & Booth</a>
+                        <a href="#tema-1-1" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.1 Sistemas Numéricos</a>
+<a href="#tema-1-3" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.3 Circuitos Sumadores</a>
+<a href="#tema-1-4" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">1.4 Complemento a 2</a>
 <a href="#laboratorio-booth" class="block py-1 hover:text-emerald-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Booth</a>
-<a href="#ejemplos-y-practica" class="block py-1 text-emerald-700 font-bold border-l-2 border-emerald-500 pl-2 transition">Ejemplos & Problemario</a>
 
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-emerald-50/60 p-3 rounded-xl border border-emerald-100">
-                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Laboratorio y Ejercicios</div>
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-tools mr-1"></i> Taller de Circuitos y Firmas (40%)</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 1 y 2: Conversión entre bases y multiplicador de Booth.
+                            Práctica 1 y 2: Armado del Semisumador (74LS86 + 74LS08) en protoboard y conversor de bases.
                         </p>
                     </div>
                 </div>
@@ -608,22 +549,10 @@
 
     <!-- Footer -->
     <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-        <p>Matemáticas Discretas • AEF-1041 • IT Chilpancingo</p>
-        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+        <p>Matemáticas Discretas • AEF-1041 • TecNM Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Adaptado para Primer Semestre de Ingeniería</p>
     </footer>
 
-    <script>
-        function copyCode(btn) {
-            const pre = btn.closest('.code-container') ? btn.closest('.code-container').querySelector('code') : btn.nextElementSibling;
-            if (pre) {
-                navigator.clipboard.writeText(pre.innerText).then(() => {
-                    const orig = btn.innerText;
-                    btn.innerText = "¡Copiado!";
-                    setTimeout(() => { btn.innerText = orig; }, 1500);
-                });
-            }
-        }
-    </script>
     
 <script>
     function toBinSigned(val, bits) {
@@ -646,21 +575,20 @@
         let m_reg = M < 0 ? (1 << bits) + M : M;
         let m_neg = (-M) < 0 ? (1 << bits) + (-M) : (-M);
 
-        tbody.innerHTML += `<tr><td class="p-2 font-bold">0</td><td class="p-2">Inicialización</td><td class="p-2 text-center">${toBinSigned(A, bits)}</td><td class="p-2 text-center">${toBinSigned(q_reg, bits)}</td><td class="p-2 text-center">${q_minus_1}</td><td class="p-2 text-center">${bits}</td></tr>`;
+        tbody.innerHTML += `<tr><td class="p-2 font-bold">0</td><td class="p-2">Inicio</td><td class="p-2 text-center">${toBinSigned(A, bits)}</td><td class="p-2 text-center">${toBinSigned(q_reg, bits)}</td><td class="p-2 text-center">${q_minus_1}</td><td class="p-2 text-center">${bits}</td></tr>`;
 
         for (let i = 1; i <= bits; i++) {
             const q0 = q_reg & 1;
-            let opDesc = "SAR";
+            let opDesc = "Desplazamiento SAR";
 
             if (q0 === 1 && q_minus_1 === 0) {
                 A = (A + m_neg) & ((1 << bits) - 1);
-                opDesc = "A = A - M, luego SAR";
+                opDesc = "Resta (A = A - M) + SAR";
             } else if (q0 === 0 && q_minus_1 === 1) {
                 A = (A + m_reg) & ((1 << bits) - 1);
-                opDesc = "A = A + M, luego SAR";
+                opDesc = "Suma (A = A + M) + SAR";
             }
 
-            // Desplazamiento Aritmético Derecha (SAR) combinado de [A, Q, Q-1]
             const signBit = (A & (1 << (bits - 1))) !== 0 ? 1 : 0;
             q_minus_1 = q_reg & 1;
             q_reg = ((A & 1) << (bits - 1)) | (q_reg >>> 1);
@@ -670,7 +598,7 @@
         }
 
         const resDec = M * Q;
-        document.getElementById('boothResultado').innerHTML = `Resultado Final: ${M} × ${Q} = <strong>${resDec}</strong> (Verificado exitosamente)`;
+        document.getElementById('boothResultado').innerHTML = `Resultado: ${M} × ${Q} = <strong>${resDec}</strong> (Verificado exitosamente)`;
     }
     window.onload = ejecutarBooth;
 </script>
