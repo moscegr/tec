@@ -311,7 +311,28 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Tabla de Verdad del Condicional:</span><br>P=1, Q=1 ➔ P → Q = 1<br>P=1, Q=0 ➔ P → Q = 0 (Único caso falso)<br>P=0, Q=1 ➔ P → Q = 1<br>P=0, Q=0 ➔ P → Q = 1</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-sky-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-project-diagram mr-1"></i> Conectivos Lógicos Proposicionales</div>
+    <svg viewBox="0 0 460 80" class="w-full max-w-md mx-auto block">
+        <rect x="20" y="15" width="95" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="67" y="38" fill="#38bdf8" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">P ∧ Q</text>
+        <text x="67" y="54" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Conjunción (AND)</text>
+
+        <rect x="130" y="15" width="95" height="50" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="177" y="38" fill="#10b981" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">P ∨ Q</text>
+        <text x="177" y="54" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Disyunción (OR)</text>
+
+        <rect x="240" y="15" width="95" height="50" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="287" y="38" fill="#fbbf24" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">P → Q</text>
+        <text x="287" y="54" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Condicional (IF)</text>
+
+        <rect x="350" y="15" width="90" height="50" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5"/>
+        <text x="395" y="38" fill="#f43f5e" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">P ↔ Q</text>
+        <text x="395" y="54" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Bicondicional</text>
+    </svg>
+</div>
+
         </div>
     </div>
 
@@ -358,7 +379,21 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Ejemplo Formal:</span><br>∀x (x > 0 → x² > 0) [Dominio: Reales no nulos] ➔ Verdadero</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-sky-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-globe mr-1"></i> Cuantificador Universal (∀x) vs Existencial (∃x)</div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center text-xs">
+        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+            <span class="text-emerald-400 font-bold text-sm block mb-1">∀x P(x) • Universal</span>
+            <p class="text-slate-300 text-[11px]">Se cumple para <strong>TODOS</strong> los elementos del dominio. Un solo contraejemplo lo hace falso.</p>
+        </div>
+        <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+            <span class="text-sky-400 font-bold text-sm block mb-1">∃x P(x) • Existencial</span>
+            <p class="text-slate-300 text-[11px]">Basta que <strong>AL MENOS UNO</strong> cumpla la condición para ser verdadero.</p>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 
@@ -397,7 +432,7 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
         <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Cláusula de Horn:</strong> Disyunción de literales con a lo más un literal positivo (\(B \leftarrow A_1 \land A_2 \land \dots \land A_n\)).</li><li>• <strong>Hecho:</strong> Afirmación incondicionalmente verdadera (ej. <code>conecta(routerA, switch1).</code>).</li><li>• <strong>Regla:</strong> Afirmación condicional que infiere nuevos hechos mediante un motor de inferencia por resolución.</li></ul>
+            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Cláusula de Horn:</strong> Disyunción de literales con a lo más un literal positivo (\(B \leftarrow A_1 \land A_2 \land \dots \land A_n\)).</li><li>• <strong>Hecho:</strong> Afirmación incondicionalmente verdadera (ej. <code>padre(juan, maria).</code>).</li><li>• <strong>Regla:</strong> Afirmación condicional que infiere nuevos hechos mediante un motor de inferencia por resolución.</li></ul>
         </div>
     </div>
 
@@ -405,7 +440,28 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Código Prolog:</span><br>padre(juan, carlos).<br>abuelo(X, Y) :- padre(X, Z), padre(Z, Y).</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-amber-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-sitemap mr-1"></i> Motor de Inferencia por Resolución (Prolog)</div>
+    <svg viewBox="0 0 460 75" class="w-full max-w-md mx-auto block">
+        <rect x="20" y="15" width="120" height="45" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="80" y="35" fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">Base de Hechos</text>
+        <text x="80" y="48" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">padre(juan, luis)</text>
+
+        <path d="M 140,37 L 180,37" stroke="#10b981" stroke-width="2" class="anim-flow"/>
+
+        <rect x="180" y="15" width="130" height="45" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="245" y="35" fill="#10b981" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">Motor Inferencia</text>
+        <text x="245" y="48" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Unificación / Horn</text>
+
+        <path d="M 310,37 L 350,37" stroke="#10b981" stroke-width="2" class="anim-flow"/>
+
+        <rect x="350" y="15" width="90" height="45" rx="6" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="395" y="35" fill="#fbbf24" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">Resultado</text>
+        <text x="395" y="48" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">true / false</text>
+    </svg>
+</div>
+
         </div>
     </div>
 
@@ -452,7 +508,27 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Fórmula Clásica de Sumatoria de Gauss:</span><br>1 + 2 + 3 + ... + n = [ n(n + 1) ] / 2</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-sky-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-dice mr-1"></i> Analogía del Dominó en Inducción Matemática</div>
+    <svg viewBox="0 0 460 90" class="w-full max-w-md mx-auto block">
+        <!-- Fichas de Domino -->
+        <g stroke="#38bdf8" stroke-width="2">
+            <!-- Ficha 1 -->
+            <rect x="50" y="20" width="16" height="50" rx="3" fill="#1e293b" transform="rotate(20 50 70)"/>
+            <text x="45" y="85" fill="#38bdf8" font-size="9" font-weight="bold">n=1 (Base)</text>
+            <!-- Ficha k -->
+            <rect x="170" y="20" width="16" height="50" rx="3" fill="#1e293b" transform="rotate(15 170 70)"/>
+            <text x="165" y="85" fill="#fbbf24" font-size="9" font-weight="bold">n=k (Hipótesis)</text>
+            <!-- Ficha k+1 -->
+            <rect x="290" y="20" width="16" height="50" rx="3" fill="#1e293b"/>
+            <text x="275" y="85" fill="#10b981" font-size="9" font-weight="bold">n=k+1 (Paso)</text>
+            <!-- Infinito -->
+            <text x="380" y="55" fill="#ffffff" font-size="28" font-weight="bold">⋯ ∞</text>
+        </g>
+    </svg>
+</div>
+
         </div>
     </div>
 
@@ -499,7 +575,22 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-sky-400 font-bold">Invariante de Bucle en Código:</span><br>/* Invariante: suma = Σ array[0..i-1] */<br>for(int i=0; i&lt;n; i++) { suma += array[i]; }</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-sky-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-code-branch mr-1"></i> Grafo de Control de Flujo (CFG) con Invariante</div>
+    <svg viewBox="0 0 460 70" class="w-full max-w-md mx-auto block">
+        <circle cx="80" cy="35" r="18" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="80" y="39" fill="#38bdf8" font-size="10" font-weight="bold" text-anchor="middle">Inicio</text>
+        <line x1="98" y1="35" x2="160" y2="35" stroke="#94a3b8" stroke-width="2"/>
+        <rect x="160" y="15" width="130" height="40" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="225" y="32" fill="#10b981" font-size="10" font-weight="bold" text-anchor="middle">while(i &lt; n)</text>
+        <text x="225" y="45" fill="#94a3b8" font-size="8" text-anchor="middle">{ Invariante I }</text>
+        <line x1="290" y1="35" x2="350" y2="35" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="370" cy="35" r="18" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="370" y="39" fill="#fbbf24" font-size="10" font-weight="bold" text-anchor="middle">Fin</text>
+    </svg>
+</div>
+
         </div>
     </div>
 
@@ -522,7 +613,7 @@
 
 <section id="laboratorio-logica" class="scroll-mt-24">
     <div class="border-2 border-sky-200 rounded-2xl p-6 bg-gradient-to-b from-sky-50/40 via-white to-white shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-check-circle text-sky-600 mr-2"></i>Generador de Tablas de Verdad</h3>
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-check-circle text-sky-600 mr-2"></i>Generador Interactivo de Tablas de Verdad</h3>
         <div class="max-w-md mx-auto mb-4">
             <select id="propSelect" onchange="generarTablaVerdad()" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-xs font-bold bg-white">
                 <option value="cond">P -> Q (Condicional)</option>

@@ -310,7 +310,28 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-teal-50 border border-teal-200 rounded-xl text-xs font-mono text-teal-900">Ejemplo de Conjunto Potencia:<br>Sea \(A = \{x, y\}\) ➔ \(n = 2\)<br>\(\mathcal{P}(A) = \{\emptyset, \{x\}, \{y\}, \{x, y\}\}\) (Total: \(2^2 = 4\) subconjuntos)</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-teal-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-layer-group mr-1"></i> Jerarquía de Conjuntos Numéricos (\(\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}\))</div>
+    <svg viewBox="0 0 460 110" class="w-full max-w-md mx-auto block">
+        <!-- Elipses anidadas -->
+        <ellipse cx="230" cy="55" rx="210" ry="48" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+        <text x="50" y="30" fill="#818cf8" font-family="Outfit" font-size="11" font-weight="bold">Complejos ℂ</text>
+
+        <ellipse cx="240" cy="58" rx="165" ry="38" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="100" y="42" fill="#38bdf8" font-family="Outfit" font-size="11" font-weight="bold">Reales ℝ</text>
+
+        <ellipse cx="250" cy="62" rx="120" ry="28" fill="#1e293b" stroke="#34d399" stroke-width="1.5"/>
+        <text x="150" y="56" fill="#34d399" font-family="Outfit" font-size="11" font-weight="bold">Racionales ℚ</text>
+
+        <ellipse cx="260" cy="65" rx="80" ry="20" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="200" y="68" fill="#fbbf24" font-family="Outfit" font-size="10" font-weight="bold">Enteros ℤ</text>
+
+        <ellipse cx="280" cy="68" rx="45" ry="12" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="1.5"/>
+        <text x="280" y="72" fill="#ffffff" font-family="Outfit" font-size="10" font-weight="bold" text-anchor="middle">Naturales ℕ</text>
+    </svg>
+</div>
+
         </div>
     </div>
 
@@ -357,7 +378,46 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono"><div class="p-2 bg-white border rounded font-sans"><strong>Unión</strong><br>\(A \cup B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Intersección</strong><br>\(A \cap B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Diferencia</strong><br>\(A - B\)</div><div class="p-2 bg-white border rounded font-sans"><strong>Dif. Simétrica</strong><br>\(A \oplus B\)</div></div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-teal-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-draw-polygon mr-1"></i> Diagramas de Venn Vectoriales</div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+        <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-12 mx-auto mb-1">
+                <circle cx="45" cy="35" r="24" fill="#0d9488" fill-opacity="0.8"/>
+                <circle cx="75" cy="35" r="24" fill="#0d9488" fill-opacity="0.8"/>
+            </svg>
+            <strong class="text-teal-300 block text-[11px]">Unión (A ∪ B)</strong>
+        </div>
+        <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-12 mx-auto mb-1">
+                <circle cx="45" cy="35" r="24" fill="#334155"/>
+                <circle cx="75" cy="35" r="24" fill="#334155"/>
+                <clipPath id="clipU2_v2"><circle cx="45" cy="35" r="24"/></clipPath>
+                <circle cx="75" cy="35" r="24" fill="#10b981" clip-path="url(#clipU2_v2)"/>
+            </svg>
+            <strong class="text-emerald-300 block text-[11px]">Intersección (A ∩ B)</strong>
+        </div>
+        <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-12 mx-auto mb-1">
+                <mask id="maskDiff_v2"><rect width="120" height="70" fill="white"/><circle cx="75" cy="35" r="24" fill="black"/></mask>
+                <circle cx="45" cy="35" r="24" fill="#38bdf8" mask="url(#maskDiff_v2)"/>
+                <circle cx="75" cy="35" r="24" fill="none" stroke="#64748b"/>
+            </svg>
+            <strong class="text-sky-300 block text-[11px]">Diferencia (A - B)</strong>
+        </div>
+        <div class="p-2 bg-slate-800 rounded-lg border border-slate-700">
+            <svg viewBox="0 0 120 70" class="w-full h-12 mx-auto mb-1">
+                <mask id="maskSymA_v2"><rect width="120" height="70" fill="white"/><circle cx="75" cy="35" r="24" fill="black"/></mask>
+                <mask id="maskSymB_v2"><rect width="120" height="70" fill="white"/><circle cx="45" cy="35" r="24" fill="black"/></mask>
+                <circle cx="45" cy="35" r="24" fill="#f43f5e" mask="url(#maskSymA_v2)"/>
+                <circle cx="75" cy="35" r="24" fill="#f43f5e" mask="url(#maskSymB_v2)"/>
+            </svg>
+            <strong class="text-rose-300 block text-[11px]">Dif. Simétrica (A ⊕ B)</strong>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 
@@ -404,7 +464,22 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-teal-400 font-bold">Principio de Inclusión-Exclusión:</span><br>|A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-amber-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-balance-scale mr-1"></i> Principio de Inclusión-Exclusión para 3 Conjuntos</div>
+    <svg viewBox="0 0 460 110" class="w-full max-w-md mx-auto block">
+        <circle cx="210" cy="45" r="32" fill="#38bdf8" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="195" y="35" fill="#38bdf8" font-size="11" font-weight="bold">A</text>
+        <circle cx="250" cy="45" r="32" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="1.5"/>
+        <text x="265" y="35" fill="#10b981" font-size="11" font-weight="bold">B</text>
+        <circle cx="230" cy="75" r="32" fill="#fbbf24" fill-opacity="0.3" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="230" y="98" fill="#fbbf24" font-size="11" font-weight="bold" text-anchor="middle">C</text>
+        <circle cx="230" cy="55" r="6" fill="#f43f5e"/>
+        <text x="230" y="58" fill="#ffffff" font-size="7" font-weight="bold" text-anchor="middle">A∩B∩C</text>
+    </svg>
+    <div class="text-center text-[10px] text-slate-400 font-mono">|A ∪ B ∪ C| = Σ|A| - Σ|A ∩ B| + |A ∩ B ∩ C|</div>
+</div>
+
         </div>
     </div>
 
@@ -451,7 +526,24 @@
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
         <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
         <div class="my-2">
-            <div class="p-3 bg-slate-900 text-white rounded-xl text-xs font-mono"><span class="text-teal-400 font-bold">Equivalencia en Código SQL:</span><br>SELECT id FROM Alumnos_A INTERSECT SELECT id FROM Alumnos_B; /* A ∩ B */</div>
+            
+<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+    <div class="text-[11px] font-bold text-sky-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-database mr-1"></i> Operaciones de Conjuntos en Consultas SQL</div>
+    <svg viewBox="0 0 460 70" class="w-full max-w-md mx-auto block">
+        <rect x="20" y="15" width="120" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+        <text x="80" y="32" fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">UNION</text>
+        <text x="80" y="46" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">A ∪ B (Sin duplicados)</text>
+
+        <rect x="170" y="15" width="120" height="40" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+        <text x="230" y="32" fill="#10b981" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">INTERSECT</text>
+        <text x="230" y="46" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">A ∩ B (Registros comunes)</text>
+
+        <rect x="320" y="15" width="120" height="40" rx="6" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5"/>
+        <text x="380" y="32" fill="#f43f5e" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">EXCEPT / MINUS</text>
+        <text x="380" y="46" fill="#94a3b8" font-family="JetBrains Mono" font-size="8" text-anchor="middle">A - B (Exclusivos de A)</text>
+    </svg>
+</div>
+
         </div>
     </div>
 
