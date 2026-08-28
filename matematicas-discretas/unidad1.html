@@ -10,7 +10,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- MathJax -->
+        <!-- MathJax Config -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']]
+            },
+            options: {
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script>
@@ -330,7 +341,7 @@
             <p class="text-xs text-slate-600">Se multiplica cada dígito por la potencia de la base correspondiente a su posición: \(d_k b^k + \dots + d_0 b^0\).</p>
         </div>
         <div class="step-item" data-step="3">
-            <h4 class="font-bold text-slate-800 text-sm">Conversión Directa Binario $\leftrightarrow$ Octal / Hexadecimal</h4>
+            <h4 class="font-bold text-slate-800 text-sm">Conversión Directa Binario \(\leftrightarrow\) Octal / Hexadecimal</h4>
             <p class="text-xs text-slate-600">Se agrupan los bits de 3 en 3 (Octal) o de 4 en 4 (Hexadecimal) a partir del punto binario.</p>
         </div>
     </div>
@@ -416,7 +427,7 @@
     </h2>
 
     <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
-        En las computadoras, los números enteros negativos se representan mediante <strong>Complemento a 2 ($C_2$)</strong>, lo que permite realizar restas utilizando los mismos circuitos sumadores:
+        En las computadoras, los números enteros negativos se representan mediante <strong>Complemento a 2 (\(C_2\))</strong>, lo que permite realizar restas utilizando los mismos circuitos sumadores:
         \[C_2(N) = \overline{N} + 1\]
     </p>
 

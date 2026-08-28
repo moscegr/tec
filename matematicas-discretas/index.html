@@ -91,6 +91,19 @@
             border-bottom: 1px solid #e2e8f0;
         }
     </style>
+    <!-- MathJax Config -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
@@ -278,7 +291,7 @@
                             <a href="unidad2.html">2. Teoría de Conjuntos</a>
                         </h3>
                         <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Conjunto universo, vacío, numéricos ($\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}$), potencia $\mathcal{P}(A)$, operaciones de unión, intersección, diferencia simétrica, leyes de De Morgan y diagramas de Venn.
+                            Conjunto universo, vacío, numéricos (\(\mathbb{N}, \mathbb{Z}, \mathbb{Q}, \mathbb{R}\)), potencia \(\mathcal{P}(A)\), operaciones de unión, intersección, diferencia simétrica, leyes de De Morgan y diagramas de Venn.
                         </p>
                     </div>
                     <a href="unidad2.html" class="w-full text-center py-2.5 px-3 bg-teal-50 hover:bg-teal-100 hover:text-teal-800 text-teal-700 font-bold text-xs rounded-xl border border-teal-200 transition">
@@ -354,7 +367,7 @@
                             <a href="unidad6.html">6. Teoría de Grafos y Árboles</a>
                         </h3>
                         <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Grafos simples, completos $K_n$, matrices de adyacencia, algoritmo de Dijkstra (camino más corto), BFS, DFS, árboles con peso, codificación de Huffman y redes de Petri.
+                            Grafos simples, completos \(K_n\), matrices de adyacencia, algoritmo de Dijkstra (camino más corto), BFS, DFS, árboles con peso, codificación de Huffman y redes de Petri.
                         </p>
                     </div>
                     <a href="unidad6.html" class="w-full text-center py-2.5 px-3 bg-rose-50 hover:bg-rose-100 hover:text-rose-800 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition">
@@ -481,8 +494,8 @@
                             <tr class="hover:bg-slate-50/80 transition">
                                 <td class="py-3 px-3 text-center font-bold text-slate-900">S13</td>
                                 <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">U6</span></td>
-                                <td class="py-3 px-4 font-medium text-slate-800">6.1 Elementos de un grafo (vértices, aristas, valencias), tipos de grafos (completos $K_n$, bipartidos $K_{m,n}$, planos, conexos, ponderados). 6.2 Matrices de adyacencia e incidencia.</td>
-                                <td class="py-3 px-4"><strong>Práctica 10 & 11:</strong> Representación matricial de grafos y cálculo de número de caminos de longitud $n$ mediante potencias $A^n$.</td>
+                                <td class="py-3 px-4 font-medium text-slate-800">6.1 Elementos de un grafo (vértices, aristas, valencias), tipos de grafos (completos \(K_n\), bipartidos \(K_{m,n}\), planos, conexos, ponderados). 6.2 Matrices de adyacencia e incidencia.</td>
+                                <td class="py-3 px-4"><strong>Práctica 10 & 11:</strong> Representación matricial de grafos y cálculo de número de caminos de longitud \(n\) mediante potencias \(A^n\).</td>
                                 <td class="py-3 px-3 text-center text-xs text-slate-500">Reporte P10-P11</td>
                             </tr>
                             <tr class="hover:bg-slate-50/80 transition">
@@ -599,7 +612,7 @@
                             <span class="font-mono text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">Práctica 10</span>
                             <span class="text-[10px] text-slate-400 font-bold uppercase">U6</span>
                         </div>
-                        <p class="text-xs text-slate-700">Representar un grafo mediante matrices de adyacencia y calcular el número de caminos de longitud $n$ mediante potencias matriciales $A^n$.</p>
+                        <p class="text-xs text-slate-700">Representar un grafo mediante matrices de adyacencia y calcular el número de caminos de longitud \(n\) mediante potencias matriciales \(A^n\).</p>
                     </div>
 
                     <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl">
