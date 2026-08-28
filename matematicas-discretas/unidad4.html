@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 4: Álgebra Booleana, Compuertas y Sumador 4 Bits | Matemáticas Discretas (1er Semestre)</title>
+    <title>Unidad 4: Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2) | Matemáticas Discretas • TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -69,25 +69,33 @@
         .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .pedagogy-step {
+        .topic-container {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .pedagogy-step {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 0.875rem;
+            padding: 1.1rem;
+            margin-bottom: 1.1rem;
         }
 
         .badge-step {
             display: inline-flex;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             padding: 0.2rem 0.6rem;
             border-radius: 9999px;
             letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .chip-hardware {
@@ -102,19 +110,19 @@
         .step-item {
             position: relative;
             padding-left: 2.25rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .step-item::before {
             content: attr(data-step);
             position: absolute;
             left: 0;
             top: 0;
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 1.5rem;
+            height: 1.5rem;
             background: #4f46e5;
             color: white;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -123,9 +131,9 @@
         .step-item::after {
             content: '';
             position: absolute;
-            left: 0.8rem;
-            top: 1.8rem;
-            bottom: -0.8rem;
+            left: 0.75rem;
+            top: 1.6rem;
+            bottom: -0.6rem;
             width: 2px;
             background: #e2e8f0;
         }
@@ -142,12 +150,12 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        @keyframes pulse-node {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
         }
-        .pulse-card {
-            animation: pulse-node 3s ease-in-out infinite;
+        .anim-flow {
+            stroke-dasharray: 6;
+            animation: dash 1.5s linear infinite;
         }
     </style>
 </head>
@@ -159,7 +167,7 @@
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales • 1er Semestre</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
             </div>
             <div class="flex items-center space-x-4">
                 <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 4</span>
@@ -179,11 +187,11 @@
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
                         <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-800 text-xs flex items-center justify-center font-bold mr-2">U4</span>
-                        Álgebra Booleana, Compuertas y Sumador 4 Bits
+                        Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2)
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
-                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 3: Lógica Proposicional</a>
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> Unidad 3: Lógica Matemática</a>
                     <a href="unidad5.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center shadow-sm">Unidad 5: Relaciones <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
@@ -198,44 +206,44 @@
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
-                        <i class="fas fa-microchip text-indigo-600"></i>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades de la Materia</h4>
+                        <i class="fas fa-book text-indigo-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
                     </div>
 
                     <nav class="space-y-1 text-xs">
                         
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>1. Sistemas Numéricos y Circuitos</span>
+                            <span>1. Sistemas Numéricos</span>
                             <span class="difficulty-badge diff-easy">12h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>2. Conjuntos y Lógica Booleana</span>
+                            <span>2. Conjuntos</span>
                             <span class="difficulty-badge diff-easy">10h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>3. Lógica Proposicional y Tablas</span>
+                            <span>3. Lógica Matemática</span>
                             <span class="difficulty-badge diff-med">16h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg bg-indigo-600 text-white font-bold shadow-sm">
-                            <span>4. Álgebra Booleana y Compuertas</span>
+                            <span>4. Álgebra Booleana y Circuitos</span>
                             <span class="difficulty-badge bg-white/20 text-white border-0">14h</span>
                         </a>
                         <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>5. Relaciones y Decodificadores</span>
+                            <span>5. Relaciones y Funciones</span>
                             <span class="difficulty-badge diff-hard">12h</span>
                         </a>
                         <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>6. Grafos, Redes y Árboles</span>
+                            <span>6. Teoría de Grafos y Árboles</span>
                             <span class="difficulty-badge diff-hard">16h</span>
                         </a>
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido de la Unidad 4</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas Oficiales U4</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Compuertas Lógicas TTL</a>
+                            <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Teoremas y Postulados</a>
 <a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.2 Mapas de Karnaugh</a>
-<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Sumador 4 Bits (74LS83)</a>
+<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Compuertas y Sumador 4 Bits</a>
 <a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Karnaugh Interactivo</a>
 
                         </ul>
@@ -243,151 +251,146 @@
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Didáctico Digerible (6 Cols) -->
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (6 Cols) -->
             <main class="lg:col-span-6 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-indigo-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Unidad 4 • Matemáticas Discretas para Principiantes</span>
+                        <span>Programa Oficial TecNM • Matemáticas Discretas</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Álgebra Booleana, Compuertas y Sumador 4 Bits
+                        Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Compuertas 74LS08/32/04/86, simplificación de Karnaugh y armado del sumador 74LS83.
+                        Postulados de Huntington, optimización con Karnaugh, compuertas lógicas TTL y sumador binario de 4 bits.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 14 Horas (Semanas 8-11)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-med">1er Semestre Universitario</span>
+                        <span class="difficulty-badge diff-med">Programa Oficial</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- CONTENIDO PEDAGÓGICO DIGERIBLE -->
+                <!-- CONTENIDO PEDAGÓGICO COMPLETO -->
                 
-<!-- INTRODUCCIÓN DIDÁCTICA -->
 <div class="lll-box lll-info">
-    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-microchip text-indigo-600 mr-2"></i>El Corazón del Hardware Digital</h4>
+    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Unidad 4 • Álgebra Booleana y Compuertas Lógicas (14 Horas)</h4>
     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-        El Álgebra Booleana es la matemática que permite diseñar todos los chips del mundo. Aquí aprenderás a reducir ecuaciones lógicas gigantes a su forma más pequeña usando <strong>Mapas de Karnaugh</strong> y a armar un <strong>Sumador Binario de 4 bits con el circuito integrado 74LS83 / 74LS283</strong> en protoboard.
+        <strong>Competencia Específica:</strong> Aplicar los conceptos básicos, teoremas, mapas de Karnaugh y propiedades del álgebra booleana para optimizar expresiones y <strong>diseñar circuitos digitales básicos con compuertas lógicas (AND, OR, NOT, XOR y sumador de 4 bits)</strong>.
     </p>
 </div>
 
-<!-- ================= TEMA 4.1: COMPUERTAS LÓGICAS Y CIRCUITOS INTEGRADOS ================= -->
-<section id="tema-4-1" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 4.1 TEOREMAS Y POSTULADOS -->
+<div id="tema-4-1" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">4.1</span>
-        Compuertas Lógicas y Circuitos Integrados TTL (Serie 74LS)
+        Teoremas y Postulados del Álgebra Booleana
     </h2>
-
-    <!-- FASE 1: EXPLICACIÓN CONCEPTUAL -->
     <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-plug mr-1.5"></i> 1. Las 4 Compuertas Básicas</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            Cada compuerta lógica es un pequeño chip con patitas (pines). Para que funcionen en el laboratorio, <strong>siempre debes conectar el Pin 14 a +5V (VCC) y el Pin 7 a Tierra (GND)</strong>:
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1"></i> 1. Explicación</span>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            Formulada por George Boole y formalizada por Huntington, opera sobre el conjunto binario \(\{0, 1\}\) con las operaciones suma lógica (+) y producto lógico (\(\cdot\)).
         </p>
-
-        <!-- Cuadros de Chips TTL -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700">
-                <span class="text-sky-400 font-bold text-sm block mb-1">74LS08 • Compuerta AND</span>
-                <p class="text-slate-300">Produce un 1 (5V) únicamente si <strong>todas</strong> sus entradas están en 1: \(F = A \cdot B\).</p>
-                <div class="text-[10px] text-slate-400 mt-1 font-mono">Pin 1: A, Pin 2: B ➔ Pin 3: Salida</div>
-            </div>
-            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700">
-                <span class="text-indigo-400 font-bold text-sm block mb-1">74LS32 • Compuerta OR</span>
-                <p class="text-slate-300">Produce un 1 (5V) si <strong>al menos una</strong> de sus entradas está en 1: \(F = A + B\).</p>
-                <div class="text-[10px] text-slate-400 mt-1 font-mono">Pin 1: A, Pin 2: B ➔ Pin 3: Salida</div>
-            </div>
-            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700">
-                <span class="text-rose-400 font-bold text-sm block mb-1">74LS04 • Inversor NOT</span>
-                <p class="text-slate-300">Invierte la señal: si entra 0 sale 1, si entra 1 sale 0: \(F = A'\).</p>
-                <div class="text-[10px] text-slate-400 mt-1 font-mono">Pin 1: Entrada ➔ Pin 2: Salida invertida</div>
-            </div>
-            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700">
-                <span class="text-emerald-400 font-bold text-sm block mb-1">74LS86 • Compuerta XOR</span>
-                <p class="text-slate-300">Produce un 1 solo si las entradas son <strong>distintas</strong>: \(F = A \oplus B\).</p>
-                <div class="text-[10px] text-slate-400 mt-1 font-mono">Pin 1: A, Pin 2: B ➔ Pin 3: Salida</div>
-            </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono my-2 text-slate-800">
+            <div class="p-2 bg-white border rounded">Identidad: \(x+0=x, x\cdot 1=x\)</div>
+            <div class="p-2 bg-white border rounded">Complemento: \(x+x'=1, x\cdot x'=0\)</div>
+            <div class="p-2 bg-white border rounded">Idempotencia: \(x+x=x, x\cdot x=x\)</div>
+            <div class="p-2 bg-white border rounded">De Morgan: \((x+y)'=x'y'\)</div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- ================= TEMA 4.2: MAPAS DE KARNAUGH DE FORMA FÁCIL ================= -->
-<section id="tema-4-2" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 4.2 OPTIMIZACIÓN Y MAPAS DE KARNAUGH -->
+<div id="tema-4-2" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">4.2</span>
-        Mapas de Karnaugh (Simplificación Visual)
+        Optimización de Expresiones Booleanas (Mapas de Karnaugh)
     </h2>
-
     <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-th mr-1.5"></i> 1. ¿Cómo funciona un Mapa de Karnaugh?</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            Un Mapa de Karnaugh es una cuadrícula donde colocas los '1' de tu tabla de verdad. Para simplificar solo sigues estas 3 reglas de oro:
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-th mr-1"></i> 1. Explicación Sencilla</span>
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            Los <strong>Mapas de Karnaugh (K-Maps)</strong> organizan la tabla de verdad en código Gray para agrupar visualmente unos adyacentes en potencias de 2 (\(1, 2, 4, 8, 16\)), eliminando variables redundantes.
         </p>
-        <div class="bg-indigo-50 border border-indigo-200 p-3 rounded-xl text-xs sm:text-sm text-indigo-900 space-y-1">
-            <p><strong>1. Agrupa en potencias de 2:</strong> Grupos de 1, 2, 4, 8 ó 16 unos.</p>
-            <p><strong>2. Haz los grupos lo más grandes posible:</strong> Mientras más grande el grupo, más compuertas te ahorras.</p>
-            <p><strong>3. Las esquinas y bordes son vecinos:</strong> Puedes unir el extremo izquierdo con el derecho como si fuera un cilindro.</p>
-        </div>
     </div>
-</section>
+    <div class="pedagogy-step">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1"></i> 4. Ejercicio Guiado</span>
+        <p class="text-xs text-slate-700">Simplificar \(F(A,B,C) = \sum m(1,3,5,7)\): Las 4 celdas forman un grupo de 4 unos donde \(A\) y \(B\) cambian de estado ➔ \(F = C\).</p>
+    </div>
+</div>
 
-<!-- ================= TEMA 4.3: SUMADOR DE 4 BITS (CI 74LS83 / 74LS283) ================= -->
-<section id="tema-4-3" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 4.3 APLICACIÓN: COMPUERTAS LÓGICAS Y CIRCUITOS -->
+<div id="tema-4-3" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">4.3</span>
-        Proyecto de Laboratorio: Sumador Binario de 4 Bits
+        Aplicación del Álgebra Booleana (Compuertas Lógicas y Circuitos)
     </h2>
 
+    <!-- 4.3.1 Mini y Maxi términos -->
     <div class="pedagogy-step">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-tools mr-1.5"></i> Circuito Integrado 74LS83 (Sumador de 4 Bits)</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            El chip <strong>74LS83</strong> suma dos números binarios de 4 bits \((A_3 A_2 A_1 A_0) + (B_3 B_2 B_1 B_0)\) y entrega la suma en 4 salidas \((S_3 S_2 S_1 S_0)\) más un acarreo de salida \(C_{out}\).
+        <h4 class="font-bold text-slate-800 text-xs sm:text-sm mb-1">4.3.1 Mini y Maxi términos (SOP y POS)</h4>
+        <p class="text-xs text-slate-600 leading-relaxed">
+            • <strong>Minitérminos (\(m_i\)):</strong> Suma de Productos (SOP), donde cada término produce un 1 en la salida.<br>
+            • <strong>Maxitérminos (\(M_i\)):</strong> Producto de Sumas (POS), donde cada término produce un 0 en la salida.
+        </p>
+    </div>
+
+    <!-- 4.3.2 Representación con Circuitos Lógicos TTL y Sumador 4 Bits -->
+    <div class="pedagogy-step">
+        <h4 class="font-bold text-slate-800 text-xs sm:text-sm mb-1">4.3.2 Representación de Expresiones con Circuitos Lógicos (Práctica 7)</h4>
+        <p class="text-xs text-slate-600 mb-3">
+            Implementación física en protoboard utilizando circuitos integrados TTL estándar:
         </p>
 
+        <!-- Chips TTL con Pinouts -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs mb-3">
+            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700 font-mono">
+                <span class="text-sky-400 font-bold block mb-1">74LS08 (Compuerta AND)</span>
+                <p class="text-slate-300 text-[11px]">Pin 14: VCC (+5V), Pin 7: GND (0V). Pines 1 y 2 entradas ➔ Pin 3 salida (\(F = A \cdot B\)).</p>
+            </div>
+            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700 font-mono">
+                <span class="text-indigo-400 font-bold block mb-1">74LS32 (Compuerta OR)</span>
+                <p class="text-slate-300 text-[11px]">Pin 14: VCC (+5V), Pin 7: GND (0V). Pines 1 y 2 entradas ➔ Pin 3 salida (\(F = A + B\)).</p>
+            </div>
+            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700 font-mono">
+                <span class="text-rose-400 font-bold block mb-1">74LS04 (Inversor NOT)</span>
+                <p class="text-slate-300 text-[11px]">Pin 14: VCC (+5V), Pin 7: GND (0V). Pin 1 entrada ➔ Pin 2 salida invertida (\(F = A'\)).</p>
+            </div>
+            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-700 font-mono">
+                <span class="text-emerald-400 font-bold block mb-1">74LS86 (Compuerta XOR)</span>
+                <p class="text-slate-300 text-[11px]">Pin 14: VCC (+5V), Pin 7: GND (0V). Pines 1 y 2 entradas ➔ Pin 3 salida (\(F = A \oplus B\)).</p>
+            </div>
+        </div>
+
+        <!-- Sumador de 4 Bits 74LS83 -->
         <div class="chip-hardware">
-            <div class="text-xs text-indigo-400 font-bold mb-2">Conexión en Protoboard paso a paso:</div>
-            <ul class="text-[11px] text-slate-300 space-y-1">
-                <li>• <strong>Alimentación:</strong> Pin 5 a +5V (VCC) y Pin 12 a Tierra (GND).</li>
-                <li>• <strong>Acarreo de entrada (\(C_0\)):</strong> Conectar a Tierra (0V) si es una suma simple.</li>
-                <li>• <strong>Entradas A y B:</strong> Conectar a dos DIP Switches de 4 posiciones con resistencias de 1kΩ a tierra (pull-down).</li>
-                <li>• <strong>Salidas de Suma (\(S_1\) a \(S_4\)):</strong> Conectar a 4 LEDs con resistencias de 330Ω para ver el resultado en binario.</li>
-            </ul>
+            <span class="text-indigo-400 font-bold text-xs block mb-1"><i class="fas fa-microchip mr-1"></i> Circuito Sumador de 4 Bits (CI 74LS83 / 74LS283)</span>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+                Suma dos palabras binarias de 4 bits \((A_3 A_2 A_1 A_0) + (B_3 B_2 B_1 B_0)\) con acarreo de entrada \(C_0\) y entrega 4 salidas \((S_3 S_2 S_1 S_0)\) más acarreo \(C_4\). Conectado a DIP Switches y 4 LEDs con resistencias de 330Ω.
+            </p>
         </div>
     </div>
-</section>
+</div>
 
-<!-- ================= SIMULADOR KARNAUGH ================= -->
+<!-- SIMULADOR KARNAUGH -->
 <section id="laboratorio-karnaugh" class="scroll-mt-24">
     <div class="border-2 border-indigo-200 rounded-2xl p-6 bg-gradient-to-b from-indigo-50/40 via-white to-white shadow-sm">
-        <div class="flex items-center space-x-2 text-xs font-bold text-indigo-700 uppercase tracking-widest mb-1">
-            <i class="fas fa-microchip"></i> Laboratorio Interactivo
-        </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Mapa de Karnaugh Interactivo (2 Variables: A, B)</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mb-6">
-            Haz clic en las celdas para alternar entre 0 y 1. Observa cómo cambia la función lógica simplificada:
-        </p>
-
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Simulador de Mapa de Karnaugh (2 Variables)</h3>
         <div class="max-w-xs mx-auto mb-4 bg-white p-4 border border-slate-200 rounded-2xl shadow-sm">
             <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono font-bold">
                 <div class="p-2 text-slate-400">A \ B</div>
                 <div class="p-2 bg-slate-100 rounded">B=0</div>
                 <div class="p-2 bg-slate-100 rounded">B=1</div>
-
                 <div class="p-2 bg-slate-100 rounded">A=0</div>
                 <button id="kcell00" onclick="toggleKCell('00')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">0</button>
                 <button id="kcell01" onclick="toggleKCell('01')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">1</button>
-
                 <div class="p-2 bg-slate-100 rounded">A=1</div>
                 <button id="kcell10" onclick="toggleKCell('10')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">0</button>
                 <button id="kcell11" onclick="toggleKCell('11')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">1</button>
             </div>
         </div>
-
         <div class="text-center font-mono text-xs bg-slate-900 text-emerald-400 p-3 rounded-xl max-w-xs mx-auto">
             <span class="text-slate-400 font-sans block text-[10px] uppercase font-bold mb-1">Circuito Simplificado:</span>
             <strong id="kResultDisplay" class="text-sm">F(A, B) = B</strong>
@@ -398,7 +401,7 @@
 
                 <!-- Navegación Inferior -->
                 <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
-                    <a href="unidad3.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 3: Lógica Proposicional</a>
+                    <a href="unidad3.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 3: Lógica Matemática</a>
                     <a href="unidad5.html" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 5: Relaciones <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
 
@@ -409,21 +412,21 @@
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-indigo-600 text-xs"></i>
-                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta unidad</h4>
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
-                        <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Compuertas Lógicas TTL</a>
+                        <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Teoremas y Postulados</a>
 <a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.2 Mapas de Karnaugh</a>
-<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Sumador 4 Bits (74LS83)</a>
+<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Compuertas y Sumador 4 Bits</a>
 <a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Karnaugh Interactivo</a>
 
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-indigo-50/60 p-3 rounded-xl border border-indigo-100">
-                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-tools mr-1"></i> Taller de Circuitos y Firmas (40%)</div>
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Práctica 7: Armado del sumador binario de 4 bits con el CI 74LS83 / 74LS283 en protoboard.
+                            Práctica 7 oficial del TecNM: Construcción de circuito lógico con compuertas y sumador de 4 bits (74LS83).
                         </p>
                     </div>
                 </div>
@@ -434,52 +437,37 @@
 
     <!-- Footer -->
     <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-        <p>Matemáticas Discretas • AEF-1041 • TecNM Chilpancingo</p>
-        <p class="mt-1">Catedrático: Cruz Enrique García • Adaptado para Primer Semestre de Ingeniería</p>
+        <p>Matemáticas Discretas • AEF-1041 • TecNM IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Programa Oficial de Ingeniería en Sistemas</p>
     </footer>
 
     
 <script>
     const kstate = { '00': 0, '01': 1, '10': 0, '11': 1 };
-
     function toggleKCell(id) {
         kstate[id] = kstate[id] === 1 ? 0 : 1;
         const btn = document.getElementById('kcell' + id);
         btn.innerText = kstate[id];
-        if (kstate[id] === 1) {
-            btn.className = "p-3 bg-indigo-600 text-white text-base rounded font-bold transition shadow-sm";
-        } else {
-            btn.className = "p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition";
-        }
+        btn.className = kstate[id] === 1 ? "p-3 bg-indigo-600 text-white text-base rounded font-bold transition" : "p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition";
         actualizarKarnaugh();
     }
-
     function actualizarKarnaugh() {
         const c00 = kstate['00'], c01 = kstate['01'], c10 = kstate['10'], c11 = kstate['11'];
         const disp = document.getElementById('kResultDisplay');
-
-        if (c00 && c01 && c10 && c11) disp.innerText = "F(A, B) = 1 (Voltaje constante 5V)";
-        else if (!c00 && !c01 && !c10 && !c11) disp.innerText = "F(A, B) = 0 (Tierra 0V)";
-        else if (c01 && c11 && !c00 && !c10) disp.innerText = "F(A, B) = B (Cable directo de B)";
-        else if (c10 && c11 && !c00 && !c01) disp.innerText = "F(A, B) = A (Cable directo de A)";
-        else if (c00 && c01 && !c10 && !c11) disp.innerText = "F(A, B) = A' (Inversor NOT de A)";
-        else if (c00 && c10 && !c01 && !c11) disp.innerText = "F(A, B) = B' (Inversor NOT de B)";
-        else if (c01 && c10 && !c00 && !c11) disp.innerText = "F(A, B) = A ⊕ B (Compuerta XOR 74LS86)";
-        else if (c00 && c11 && !c01 && !c10) disp.innerText = "F(A, B) = (A ⊕ B)' (Compuerta XNOR)";
+        if (c00 && c01 && c10 && c11) disp.innerText = "F(A, B) = 1 (VCC +5V)";
+        else if (!c00 && !c01 && !c10 && !c11) disp.innerText = "F(A, B) = 0 (GND 0V)";
+        else if (c01 && c11 && !c00 && !c10) disp.innerText = "F(A, B) = B (Línea directa)";
+        else if (c10 && c11 && !c00 && !c01) disp.innerText = "F(A, B) = A (Línea directa)";
+        else if (c00 && c01 && !c10 && !c11) disp.innerText = "F(A, B) = A' (74LS04 NOT)";
+        else if (c00 && c10 && !c01 && !c11) disp.innerText = "F(A, B) = B' (74LS04 NOT)";
+        else if (c01 && c10 && !c00 && !c11) disp.innerText = "F(A, B) = A ⊕ B (74LS86 XOR)";
         else {
             let terms = [];
-            if (c00) terms.push("A'B'");
-            if (c01) terms.push("A'B");
-            if (c10) terms.push("AB'");
-            if (c11) terms.push("AB");
+            if (c00) terms.push("A'B'"); if (c01) terms.push("A'B"); if (c10) terms.push("AB'"); if (c11) terms.push("AB");
             disp.innerText = "F(A, B) = " + terms.join(" + ");
         }
     }
-    window.onload = function() {
-        toggleKCell('01'); toggleKCell('01');
-        toggleKCell('11'); toggleKCell('11');
-        actualizarKarnaugh();
-    };
+    window.onload = function() { toggleKCell('01'); toggleKCell('01'); toggleKCell('11'); toggleKCell('11'); actualizarKarnaugh(); };
 </script>
 
 </body>

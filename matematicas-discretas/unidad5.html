@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 5: Relaciones, Funciones y Decodificadores | Matemáticas Discretas (1er Semestre)</title>
+    <title>Unidad 5: Relaciones y Funciones (5.1 - 5.5) | Matemáticas Discretas • TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -69,25 +69,33 @@
         .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .pedagogy-step {
+        .topic-container {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .pedagogy-step {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 0.875rem;
+            padding: 1.1rem;
+            margin-bottom: 1.1rem;
         }
 
         .badge-step {
             display: inline-flex;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             padding: 0.2rem 0.6rem;
             border-radius: 9999px;
             letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .chip-hardware {
@@ -102,19 +110,19 @@
         .step-item {
             position: relative;
             padding-left: 2.25rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .step-item::before {
             content: attr(data-step);
             position: absolute;
             left: 0;
             top: 0;
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 1.5rem;
+            height: 1.5rem;
             background: #9333ea;
             color: white;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -123,9 +131,9 @@
         .step-item::after {
             content: '';
             position: absolute;
-            left: 0.8rem;
-            top: 1.8rem;
-            bottom: -0.8rem;
+            left: 0.75rem;
+            top: 1.6rem;
+            bottom: -0.6rem;
             width: 2px;
             background: #e2e8f0;
         }
@@ -142,12 +150,12 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        @keyframes pulse-node {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
         }
-        .pulse-card {
-            animation: pulse-node 3s ease-in-out infinite;
+        .anim-flow {
+            stroke-dasharray: 6;
+            animation: dash 1.5s linear infinite;
         }
     </style>
 </head>
@@ -159,7 +167,7 @@
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales • 1er Semestre</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
             </div>
             <div class="flex items-center space-x-4">
                 <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 5</span>
@@ -179,7 +187,7 @@
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
                         <span class="w-6 h-6 rounded bg-purple-100 text-purple-800 text-xs flex items-center justify-center font-bold mr-2">U5</span>
-                        Relaciones, Funciones y Decodificadores
+                        Relaciones y Funciones (5.1 - 5.5)
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
@@ -198,128 +206,159 @@
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
-                        <i class="fas fa-microchip text-purple-600"></i>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades de la Materia</h4>
+                        <i class="fas fa-book text-purple-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
                     </div>
 
                     <nav class="space-y-1 text-xs">
                         
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>1. Sistemas Numéricos y Circuitos</span>
+                            <span>1. Sistemas Numéricos</span>
                             <span class="difficulty-badge diff-easy">12h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>2. Conjuntos y Lógica Booleana</span>
+                            <span>2. Conjuntos</span>
                             <span class="difficulty-badge diff-easy">10h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>3. Lógica Proposicional y Tablas</span>
+                            <span>3. Lógica Matemática</span>
                             <span class="difficulty-badge diff-med">16h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>4. Álgebra Booleana y Compuertas</span>
+                            <span>4. Álgebra Booleana y Circuitos</span>
                             <span class="difficulty-badge diff-med">14h</span>
                         </a>
                         <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg bg-purple-600 text-white font-bold shadow-sm">
-                            <span>5. Relaciones y Decodificadores</span>
+                            <span>5. Relaciones y Funciones</span>
                             <span class="difficulty-badge bg-white/20 text-white border-0">12h</span>
                         </a>
                         <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>6. Grafos, Redes y Árboles</span>
+                            <span>6. Teoría de Grafos y Árboles</span>
                             <span class="difficulty-badge diff-hard">16h</span>
                         </a>
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido de la Unidad 5</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas Oficiales U5</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Propiedades de Relaciones</a>
-<a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Decodificador 74LS138</a>
+                            <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Conceptos Básicos</a>
+<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades de Relaciones</a>
+<a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Equivalencia y Hasse</a>
+<a href="#tema-5-4" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.4 Funciones</a>
+<a href="#tema-5-5" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.5 Aplicaciones</a>
 
                         </ul>
                     </div>
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Didáctico Digerible (6 Cols) -->
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (6 Cols) -->
             <main class="lg:col-span-6 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-purple-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Unidad 5 • Matemáticas Discretas para Principiantes</span>
+                        <span>Programa Oficial TecNM • Matemáticas Discretas</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Relaciones, Funciones y Decodificadores
+                        Relaciones y Funciones (5.1 - 5.5)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Propiedades de relaciones binarias, diagramas de Hasse y decodificadores de hardware (74LS138).
+                        Producto cartesiano, propiedades, relaciones de equivalencia, orden parcial, funciones y aplicaciones en bases de datos.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 12 Horas (Semanas 11-13)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-hard">1er Semestre Universitario</span>
+                        <span class="difficulty-badge diff-hard">Programa Oficial</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- CONTENIDO PEDAGÓGICO DIGERIBLE -->
+                <!-- CONTENIDO PEDAGÓGICO COMPLETO -->
                 
 <div class="lll-box lll-info">
-    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-project-diagram text-purple-600 mr-2"></i>Asociando Datos y Señales</h4>
+    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-project-diagram text-purple-600 mr-2"></i>Unidad 5 • Relaciones y Funciones (12 Horas)</h4>
     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-        Las relaciones y funciones explican cómo se comunican las entradas y salidas en un sistema de software y hardware. Aprenderás las propiedades de relaciones (reflexiva, simétrica, transitiva), diagramas de Hasse y cómo los <strong>Decodificadores (CI 74LS138)</strong> seleccionan salidas a partir de combinaciones binarias.
+        <strong>Competencia Específica:</strong> Comprender el uso de las relaciones en el diseño y análisis de problemas computacionales relacionados con bases de datos, estructuras de datos, graficación, sistemas operativos y redes.
     </p>
 </div>
 
-<!-- TEMA 5.1: RELACIONES BINARIAS -->
-<section id="tema-5-1" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 5.1 CONCEPTOS BÁSICOS -->
+<div id="tema-5-1" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.1</span>
-        Propiedades de una Relación de Forma Sencilla
+        Conceptos Básicos de Relaciones (5.1.1 - 5.1.3)
     </h2>
-
     <div class="pedagogy-step">
-        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-check mr-1.5"></i> 1. Las 3 Propiedades Clave</span>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-purple-900 block text-xs mb-1">1. Reflexiva</strong>
-                <p class="text-slate-600">Todo elemento se relaciona consigo mismo: \((a, a)\). (En el grafo hay un lazo circular en cada nodo).</p>
-            </div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-purple-900 block text-xs mb-1">2. Simétrica</strong>
-                <p class="text-slate-600">Si \(a\) se relaciona con \(b\), entonces \(b\) se relaciona con \(a\). (Flechas de ida y vuelta como amistad mutua).</p>
-            </div>
-            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-purple-900 block text-xs mb-1">3. Transitiva</strong>
-                <p class="text-slate-600">Si \(a \to b\) y \(b \to c\), entonces existe un camino directo \(a \to c\).</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- TEMA 5.3: APLICACIÓN EN HARDWARE - DECODIFICADOR 74LS138 -->
-<section id="tema-5-3" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
-        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.3</span>
-        Aplicación en Hardware: Decodificador 3 a 8 (CI 74LS138)
-    </h2>
-
-    <div class="pedagogy-step">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-microchip mr-1.5"></i> Funciones Biyectivas en Hardware</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            El chip <strong>74LS138</strong> recibe un número binario de 3 bits (\(A, B, C\)) en sus entradas y activa exactamente una de sus 8 salidas (\(Y_0\) a \(Y_7\)), comportándose como una función matemática bien definida entre el conjunto de entradas y salidas.
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>5.1.1 Producto Cartesiano:</strong> \(A \times B = \{(a, b) \mid a \in A, b \in B\}\).<br>
+            • <strong>5.1.2 Relación Binaria:</strong> Cualquier subconjunto \(R \subseteq A \times B\).<br>
+            • <strong>5.1.3 Representación:</strong> Matrices booleanas (\(M_R\)), conjuntos de pares, grafos dirigidos (dígrafos) y diagramas de flechas.
         </p>
-
-        <div class="chip-hardware">
-            <div class="text-xs text-purple-400 font-bold mb-1">Práctica de Laboratorio 74LS138:</div>
-            <p class="text-[11px] text-slate-300">
-                Al meter la combinación binaria <code>011</code> (3 en decimal), el integrado enciende el LED conectado a la salida \(Y_3\), demostrando la relación biyectiva \(f(\text{código}) = \text{línea activada}\).
-            </p>
-        </div>
     </div>
-</section>
+</div>
+
+<!-- 5.2 PROPIEDADES DE LAS RELACIONES -->
+<div id="tema-5-2" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.2</span>
+        Propiedades de las Relaciones
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>Reflexiva:</strong> \(\forall x, (x, x) \in R\). <strong>Irreflexiva:</strong> Ningún \((x, x) \in R\).<br>
+            • <strong>Simétrica:</strong> \((x, y) \in R \implies (y, x) \in R\). <strong>Asimétrica:</strong> Si \((x, y) \in R \implies (y, x) \notin R\).<br>
+            • <strong>Antisimétrica:</strong> \((x, y) \in R \land (y, x) \in R \implies x = y\).<br>
+            • <strong>Transitiva:</strong> \((x, y) \in R \land (y, z) \in R \implies (x, z) \in R\).
+        </p>
+    </div>
+</div>
+
+<!-- 5.3 RELACIONES DE EQUIVALENCIA -->
+<div id="tema-5-3" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.3</span>
+        Relaciones de Equivalencia, Cerraduras y Diagramas de Hasse
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>Cerraduras de Warshall:</strong> Cerradura reflexiva, simétrica y transitiva.<br>
+            • <strong>Clases de Equivalencia y Particiones:</strong> Subconjuntos disjuntos que dividen al universo.<br>
+            • <strong>Orden Parcial (Poset) y Diagramas de Hasse:</strong> Relación reflexiva, antisimétrica y transitiva.
+        </p>
+    </div>
+</div>
+
+<!-- 5.4 FUNCIONES -->
+<div id="tema-5-4" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.4</span>
+        Funciones (Inyectiva, Suprayectiva, Biyectiva)
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>Inyectiva (Uno a Uno):</strong> \(f(a) = f(b) \implies a = b\).<br>
+            • <strong>Suprayectiva (Sobre):</strong> El rango es igual a todo el codominio.<br>
+            • <strong>Biyectiva:</strong> Inyectiva y Suprayectiva a la vez (admite función inversa \(f^{-1}\)).
+        </p>
+    </div>
+</div>
+
+<!-- 5.5 APLICACIONES EN COMPUTACIÓN -->
+<div id="tema-5-5" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">5.5</span>
+        Aplicaciones de las Relaciones y Funciones en Computación
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>Bases de Datos Relacionales (SQL):</strong> Claves foráneas que relacionan tablas.<br>
+            • <strong>Estructura de Datos:</strong> Listas enlazadas y grafos dirigidos en memoria.<br>
+            • <strong>Sistemas Operativos:</strong> Grafos de asignación de recursos y prevención de interbloqueos (*deadlocks*).
+        </p>
+    </div>
+</div>
 
 
                 <!-- Navegación Inferior -->
@@ -335,19 +374,22 @@
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-purple-600 text-xs"></i>
-                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta unidad</h4>
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
-                        <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Propiedades de Relaciones</a>
-<a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Decodificador 74LS138</a>
+                        <a href="#tema-5-1" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.1 Conceptos Básicos</a>
+<a href="#tema-5-2" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.2 Propiedades de Relaciones</a>
+<a href="#tema-5-3" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.3 Equivalencia y Hasse</a>
+<a href="#tema-5-4" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.4 Funciones</a>
+<a href="#tema-5-5" class="block py-1 hover:text-purple-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">5.5 Aplicaciones</a>
 
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-purple-50/60 p-3 rounded-xl border border-purple-100">
-                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-tools mr-1"></i> Taller de Circuitos y Firmas (40%)</div>
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 8 y 9: Verificación de relaciones con el decodificador 74LS138 en protoboard.
+                            Prácticas 8 y 9 oficiales del TecNM: Modelo relacional, cerraduras y diagramas de Hasse.
                         </p>
                     </div>
                 </div>
@@ -358,8 +400,8 @@
 
     <!-- Footer -->
     <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-        <p>Matemáticas Discretas • AEF-1041 • TecNM Chilpancingo</p>
-        <p class="mt-1">Catedrático: Cruz Enrique García • Adaptado para Primer Semestre de Ingeniería</p>
+        <p>Matemáticas Discretas • AEF-1041 • TecNM IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Programa Oficial de Ingeniería en Sistemas</p>
     </footer>
 
     

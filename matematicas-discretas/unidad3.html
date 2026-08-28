@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 3: Lógica Proposicional, Tablas e Inducción | Matemáticas Discretas (1er Semestre)</title>
+    <title>Unidad 3: Lógica Matemática (3.1 - 3.5) | Matemáticas Discretas • TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -69,25 +69,33 @@
         .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .diff-hard { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
-        .pedagogy-step {
+        .topic-container {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .pedagogy-step {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 0.875rem;
+            padding: 1.1rem;
+            margin-bottom: 1.1rem;
         }
 
         .badge-step {
             display: inline-flex;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
             padding: 0.2rem 0.6rem;
             border-radius: 9999px;
             letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
         }
 
         .chip-hardware {
@@ -102,19 +110,19 @@
         .step-item {
             position: relative;
             padding-left: 2.25rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .step-item::before {
             content: attr(data-step);
             position: absolute;
             left: 0;
             top: 0;
-            width: 1.6rem;
-            height: 1.6rem;
+            width: 1.5rem;
+            height: 1.5rem;
             background: #0284c7;
             color: white;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -123,9 +131,9 @@
         .step-item::after {
             content: '';
             position: absolute;
-            left: 0.8rem;
-            top: 1.8rem;
-            bottom: -0.8rem;
+            left: 0.75rem;
+            top: 1.6rem;
+            bottom: -0.6rem;
             width: 2px;
             background: #e2e8f0;
         }
@@ -142,12 +150,12 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        @keyframes pulse-node {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes dash {
+            to { stroke-dashoffset: -20; }
         }
-        .pulse-card {
-            animation: pulse-node 3s ease-in-out infinite;
+        .anim-flow {
+            stroke-dasharray: 6;
+            animation: dash 1.5s linear infinite;
         }
     </style>
 </head>
@@ -159,7 +167,7 @@
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales • 1er Semestre</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
             </div>
             <div class="flex items-center space-x-4">
                 <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 3</span>
@@ -179,7 +187,7 @@
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
                         <span class="w-6 h-6 rounded bg-sky-100 text-sky-800 text-xs flex items-center justify-center font-bold mr-2">U3</span>
-                        Lógica Proposicional, Tablas e Inducción
+                        Lógica Matemática (3.1 - 3.5)
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
@@ -198,43 +206,46 @@
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
-                        <i class="fas fa-microchip text-sky-600"></i>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades de la Materia</h4>
+                        <i class="fas fa-book text-sky-600"></i>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
                     </div>
 
                     <nav class="space-y-1 text-xs">
                         
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>1. Sistemas Numéricos y Circuitos</span>
+                            <span>1. Sistemas Numéricos</span>
                             <span class="difficulty-badge diff-easy">12h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>2. Conjuntos y Lógica Booleana</span>
+                            <span>2. Conjuntos</span>
                             <span class="difficulty-badge diff-easy">10h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg bg-sky-600 text-white font-bold shadow-sm">
-                            <span>3. Lógica Proposicional y Tablas</span>
+                            <span>3. Lógica Matemática</span>
                             <span class="difficulty-badge bg-white/20 text-white border-0">16h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>4. Álgebra Booleana y Compuertas</span>
+                            <span>4. Álgebra Booleana y Circuitos</span>
                             <span class="difficulty-badge diff-med">14h</span>
                         </a>
                         <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>5. Relaciones y Decodificadores</span>
+                            <span>5. Relaciones y Funciones</span>
                             <span class="difficulty-badge diff-hard">12h</span>
                         </a>
                         <a href="unidad6.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>6. Grafos, Redes y Árboles</span>
+                            <span>6. Teoría de Grafos y Árboles</span>
                             <span class="difficulty-badge diff-hard">16h</span>
                         </a>
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido de la Unidad 3</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas Oficiales U3</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <a href="#tema-3-1" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.1 Proposiciones y Tablas</a>
-<a href="#tema-3-4" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.4 Inducción (Efecto Dominó)</a>
+                            <a href="#tema-3-1" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.1 Lógica Proposicional</a>
+<a href="#tema-3-2" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.2 Lógica de Predicados</a>
+<a href="#tema-3-3" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.3 Álgebra Declarativa</a>
+<a href="#tema-3-4" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.4 Inducción Matemática</a>
+<a href="#tema-3-5" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.5 Aplicaciones</a>
 <a href="#laboratorio-logica" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Generador Tablas</a>
 
                         </ul>
@@ -242,122 +253,128 @@
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Didáctico Digerible (6 Cols) -->
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (6 Cols) -->
             <main class="lg:col-span-6 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-sky-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Unidad 3 • Matemáticas Discretas para Principiantes</span>
+                        <span>Programa Oficial TecNM • Matemáticas Discretas</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Lógica Proposicional, Tablas e Inducción
+                        Lógica Matemática (3.1 - 3.5)
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Proposiciones lógicas, tablas de verdad, inferencias y el principio del dominó en inducción matemática.
+                        Lógica proposicional, tablas de verdad, inferencias, predicados, álgebra declarativa e inducción matemática.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 16 Horas (Semanas 5-8)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-med">1er Semestre Universitario</span>
+                        <span class="difficulty-badge diff-med">Programa Oficial</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- CONTENIDO PEDAGÓGICO DIGERIBLE -->
+                <!-- CONTENIDO PEDAGÓGICO COMPLETO -->
                 
 <div class="lll-box lll-info">
-    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-brain text-sky-600 mr-2"></i>El Lenguaje del Razonamiento y los Algoritmos</h4>
+    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-brain text-sky-600 mr-2"></i>Unidad 3 • Lógica Matemática (16 Horas)</h4>
     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-        En programación, cada sentencia <code>if (condicion)</code> es una proposición lógica. Aquí aprenderás a armar tablas de verdad, probar argumentos y entender el principio de <strong>Inducción Matemática</strong> (el efecto dominó de los algoritmos recursivos).
+        <strong>Competencia Específica:</strong> Analizar y resolver problemas computacionales utilizando las técnicas básicas de lógica proposicional, lógica de predicados, álgebra declarativa e inducción matemática.
     </p>
 </div>
 
-<!-- TEMA 3.1: PROPOSICIONES Y CONECTIVOS LÓGICOS -->
-<section id="tema-3-1" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 3.1 LÓGICA PROPOSICIONAL -->
+<div id="tema-3-1" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.1</span>
-        Proposiciones, Tablas de Verdad y Circuitos
+        Lógica Proposicional (3.1.1 - 3.1.8)
     </h2>
-
     <div class="pedagogy-step">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-check-circle mr-1.5"></i> 1. ¿Qué es una Proposición?</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            Una proposición es una oración que puede ser <strong>Verdadera (1 / 5V)</strong> o <strong>Falsa (0 / 0V)</strong>, pero no ambas a la vez.
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>3.1.1 Concepto de Proposición:</strong> Enunciado declarativo con valor Verdadero (1) o Falso (0).<br>
+            • <strong>3.1.2 Proposiciones Compuestas:</strong> Disyunción (\(P \lor Q\)), Conjunción (\(P \land Q\)), Negación (\(\neg P\)), Condicional (\(P \to Q\)), Bicondicional (\(P \leftrightarrow Q\)).<br>
+            • <strong>3.1.3 Tablas de Verdad:</strong> Arreglo con las \(2^n\) combinaciones de verdad.<br>
+            • <strong>3.1.4 Tautología, Contradicción y Contingencia:</strong> Tautología (siempre 1), Contradicción (siempre 0), Contingencia (mixto).<br>
+            • <strong>3.1.5 Equivalencias Lógicas:</strong> Leyes de De Morgan y doble negación.<br>
+            • <strong>3.1.6 y 3.1.7 Reglas de Inferencia y Argumentos Válidos:</strong> Modus Ponens (\(P \to Q, P \vdash Q\)), Modus Tollens (\(P \to Q, \neg Q \vdash \neg P\)).<br>
+            • <strong>3.1.8 Demostración Formal:</strong> Método Directo y Método por Contradicción (Reducción al Absurdo).
         </p>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
-            <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-slate-800 block text-xs font-sans">Y (AND)</strong>
-                <span class="text-sky-600 font-bold">\(P \land Q\)</span>
-                <span class="text-[10px] text-slate-500 block">Ambas verdaderas</span>
-            </div>
-            <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-slate-800 block text-xs font-sans">O (OR)</strong>
-                <span class="text-sky-600 font-bold">\(P \lor Q\)</span>
-                <span class="text-[10px] text-slate-500 block">Al menos una verdadera</span>
-            </div>
-            <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-slate-800 block text-xs font-sans">NO (NOT)</strong>
-                <span class="text-sky-600 font-bold">\(\neg P\)</span>
-                <span class="text-[10px] text-slate-500 block">Invierte el valor</span>
-            </div>
-            <div class="p-2 bg-slate-50 border border-slate-200 rounded-lg">
-                <strong class="text-slate-800 block text-xs font-sans">Si... entonces</strong>
-                <span class="text-sky-600 font-bold">\(P \to Q\)</span>
-                <span class="text-[10px] text-slate-500 block">Condicional clásica</span>
-            </div>
-        </div>
     </div>
-</section>
+</div>
 
-<!-- TEMA 3.4: INDUCCIÓN MATEMÁTICA (EL EFECTO DOMINÓ) -->
-<section id="tema-3-4" class="scroll-mt-24">
-    <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-200 flex items-center">
+<!-- 3.2 LÓGICA DE PREDICADOS -->
+<div id="tema-3-2" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.2</span>
+        Lógica de Predicados y Cuantificadores
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            • <strong>3.2.1 Cuantificadores:</strong> Cuantificador Universal (\(\forall x\)) ("para todo") y Cuantificador Existencial (\(\exists x\)) ("existe al menos uno").<br>
+            • <strong>3.2.2 Representación y Evaluación:</strong> \(\forall x \in \mathbb{R} (x^2 \ge 0)\) (Verdadero).
+        </p>
+    </div>
+</div>
+
+<!-- 3.3 ÁLGEBRA DECLARATIVA -->
+<div id="tema-3-3" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.3</span>
+        Álgebra Declarativa
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            Sintaxis formal de cláusulas de Horn y hechos en programación lógica (ej. <strong>Prolog</strong>: <code>padre(juan, maria).</code>).
+        </p>
+    </div>
+</div>
+
+<!-- 3.4 INDUCCIÓN MATEMÁTICA -->
+<div id="tema-3-4" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
         <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.4</span>
-        Inducción Matemática: La Analogía del Dominó
+        Inducción Matemática
     </h2>
-
     <div class="pedagogy-step">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-dice mr-1.5"></i> 1. Cómo entender la Inducción sin dolor de cabeza</span>
-        <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-3">
-            Imagina una fila infinita de fichas de dominó. Para asegurar que <strong>todas</strong> se van a caer, solo necesitas verificar 2 cosas:
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            Demostración de propiedades para todo \(n \in \mathbb{N}\): 1) Paso Base (\(P(1)\)), 2) Hipótesis de Inducción (\(P(k)\)), 3) Paso Inductivo (\(P(k) \implies P(k+1)\)).
         </p>
-        <div class="bg-sky-50 border border-sky-200 p-3.5 rounded-xl text-xs text-sky-950 space-y-2">
-            <p><strong>1. Paso Base:</strong> Empujar la primera ficha (\(n = 1\)) y ver que realmente se cae.</p>
-            <p><strong>2. Paso Inductivo:</strong> Demostrar que si la ficha \(k\) se cae, automáticamente empuja y tira a la ficha siguiente (\(k+1\)).</p>
-            <p class="font-bold text-emerald-800 pt-1">¡Listo! Con esos dos pasos queda demostrado que todas las fichas del universo se caerán.</p>
-        </div>
     </div>
-</section>
+</div>
 
-<!-- ================= SIMULADOR INTERACTIVO ================= -->
+<!-- 3.5 APLICACIÓN EN COMPUTACIÓN -->
+<div id="tema-3-5" class="topic-container scroll-mt-24">
+    <h2 class="text-xl font-bold text-slate-900 mb-3 flex items-center">
+        <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 text-sm flex items-center justify-center font-mono font-bold mr-2.5">3.5</span>
+        Aplicación de la Lógica Matemática en la Computación
+    </h2>
+    <div class="pedagogy-step">
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+            Verificación formal de algoritmos, inteligencia artificial, sistemas expertos y control de flujo condicional en programación.
+        </p>
+    </div>
+</div>
+
+<!-- SIMULADOR TABLAS DE VERDAD -->
 <section id="laboratorio-logica" class="scroll-mt-24">
     <div class="border-2 border-sky-200 rounded-2xl p-6 bg-gradient-to-b from-sky-50/40 via-white to-white shadow-sm">
-        <div class="flex items-center space-x-2 text-xs font-bold text-sky-700 uppercase tracking-widest mb-1">
-            <i class="fas fa-check-circle"></i> Laboratorio Interactivo
-        </div>
-        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Generador de Tablas de Verdad</h2>
-        <p class="text-xs sm:text-sm text-slate-600 mb-4">
-            Selecciona una expresión lógica para calcular su tabla de verdad y clasificarla en Tautología, Contradicción o Contingencia:
-        </p>
-
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-check-circle text-sky-600 mr-2"></i>Generador Interactivo de Tablas de Verdad</h3>
         <div class="max-w-md mx-auto mb-4">
-            <select id="propSelect" onchange="generarTablaVerdad()" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-xs font-bold focus:ring-2 focus:ring-sky-500 focus:outline-none bg-white">
-                <option value="cond">P -> Q (Condicional Clásica)</option>
-                <option value="taut">P v ~P (Principio del Tercero Excluido - Tautología)</option>
-                <option value="demorgan">~(P ^ Q) <-> (~P v ~Q) (Ley de De Morgan)</option>
-                <option value="contra">P ^ ~P (Contradicción - Siempre Falsa)</option>
+            <select id="propSelect" onchange="generarTablaVerdad()" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-xs font-bold bg-white">
+                <option value="cond">P -> Q (Condicional)</option>
+                <option value="taut">P v ~P (Tautología)</option>
+                <option value="demorgan">~(P ^ Q) <-> (~P v ~Q) (De Morgan)</option>
+                <option value="contra">P ^ ~P (Contradicción)</option>
             </select>
         </div>
-
-        <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl p-3 shadow-inner max-w-lg mx-auto">
-            <table class="w-full text-center text-xs font-mono">
-                <thead class="bg-slate-100 text-slate-700 font-bold" id="truthTableHead"></thead>
-                <tbody id="truthTableBody" class="divide-y divide-slate-100 text-slate-600"></tbody>
+        <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl p-3 shadow-inner max-w-lg mx-auto text-xs font-mono">
+            <table class="w-full text-center">
+                <thead class="bg-slate-100 text-slate-700" id="truthTableHead"></thead>
+                <tbody id="truthTableBody" class="divide-y divide-slate-100"></tbody>
             </table>
-            <div id="truthClassification" class="text-center font-bold text-sky-700 mt-3 text-xs font-sans"></div>
+            <div id="truthClassification" class="text-center font-bold text-sky-700 mt-2 font-sans"></div>
         </div>
     </div>
 </section>
@@ -376,20 +393,23 @@
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-sky-600 text-xs"></i>
-                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta unidad</h4>
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
-                        <a href="#tema-3-1" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.1 Proposiciones y Tablas</a>
-<a href="#tema-3-4" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.4 Inducción (Efecto Dominó)</a>
+                        <a href="#tema-3-1" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.1 Lógica Proposicional</a>
+<a href="#tema-3-2" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.2 Lógica de Predicados</a>
+<a href="#tema-3-3" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.3 Álgebra Declarativa</a>
+<a href="#tema-3-4" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.4 Inducción Matemática</a>
+<a href="#tema-3-5" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">3.5 Aplicaciones</a>
 <a href="#laboratorio-logica" class="block py-1 hover:text-sky-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Generador Tablas</a>
 
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-sky-50/60 p-3 rounded-xl border border-sky-100">
-                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-tools mr-1"></i> Taller de Circuitos y Firmas (40%)</div>
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 4, 5 y 6: Tablas de verdad con interruptores y LEDs en protoboard.
+                            Prácticas 4, 5 y 6 oficiales del TecNM: Tablas de verdad, silogismos e inducción.
                         </p>
                     </div>
                 </div>
@@ -400,8 +420,8 @@
 
     <!-- Footer -->
     <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-        <p>Matemáticas Discretas • AEF-1041 • TecNM Chilpancingo</p>
-        <p class="mt-1">Catedrático: Cruz Enrique García • Adaptado para Primer Semestre de Ingeniería</p>
+        <p>Matemáticas Discretas • AEF-1041 • TecNM IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Programa Oficial de Ingeniería en Sistemas</p>
     </footer>
 
     
@@ -411,43 +431,24 @@
         const thead = document.getElementById('truthTableHead');
         const tbody = document.getElementById('truthTableBody');
         const classif = document.getElementById('truthClassification');
-
-        thead.innerHTML = "";
-        tbody.innerHTML = "";
+        thead.innerHTML = ""; tbody.innerHTML = "";
 
         if (sel === "cond") {
             thead.innerHTML = `<tr><th class="p-2">P</th><th class="p-2">Q</th><th class="p-2 bg-sky-100 text-sky-900">P → Q</th></tr>`;
-            const rows = [
-                [1, 1, 1],
-                [1, 0, 0],
-                [0, 1, 1],
-                [0, 0, 1]
-            ];
-            rows.forEach(r => {
-                tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-sky-700">${r[2]}</td></tr>`;
-            });
-            classif.innerHTML = "Clasificación: <strong>Contingencia</strong> (Depende de los valores de entrada)";
+            [[1,1,1],[1,0,0],[0,1,1],[0,0,1]].forEach(r => { tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-sky-700">${r[2]}</td></tr>`; });
+            classif.innerHTML = "Clasificación: <strong>Contingencia</strong>";
         } else if (sel === "taut") {
             thead.innerHTML = `<tr><th class="p-2">P</th><th class="p-2">~P</th><th class="p-2 bg-emerald-100 text-emerald-900">P ∨ ~P</th></tr>`;
-            const rows = [[1, 0, 1], [0, 1, 1]];
-            rows.forEach(r => {
-                tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-emerald-700">${r[2]}</td></tr>`;
-            });
-            classif.innerHTML = "Clasificación: <strong>TAUTOLOGÍA</strong> (Siempre verdadera en cualquier caso)";
+            [[1,0,1],[0,1,1]].forEach(r => { tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-emerald-700">${r[2]}</td></tr>`; });
+            classif.innerHTML = "Clasificación: <strong>TAUTOLOGÍA</strong>";
         } else if (sel === "demorgan") {
-            thead.innerHTML = `<tr><th class="p-1">P</th><th class="p-1">Q</th><th class="p-1">~(P∧Q)</th><th class="p-1">(~P∨~Q)</th><th class="p-1 bg-emerald-100 text-emerald-900">Equivalencia</th></tr>`;
-            const rows = [[1, 1, 0, 0, 1], [1, 0, 1, 1, 1], [0, 1, 1, 1, 1], [0, 0, 1, 1, 1]];
-            rows.forEach(r => {
-                tbody.innerHTML += `<tr><td class="p-1">${r[0]}</td><td class="p-1">${r[1]}</td><td class="p-1">${r[2]}</td><td class="p-1">${r[3]}</td><td class="p-1 font-bold text-emerald-700">${r[4]}</td></tr>`;
-            });
-            classif.innerHTML = "Clasificación: <strong>TAUTOLOGÍA</strong> (Ley universal demostrada)";
+            thead.innerHTML = `<tr><th class="p-1">P</th><th class="p-1">Q</th><th class="p-1">~(P∧Q)</th><th class="p-1">(~P∨~Q)</th><th class="p-1 bg-emerald-100">Equivalencia</th></tr>`;
+            [[1,1,0,0,1],[1,0,1,1,1],[0,1,1,1,1],[0,0,1,1,1]].forEach(r => { tbody.innerHTML += `<tr><td class="p-1">${r[0]}</td><td class="p-1">${r[1]}</td><td class="p-1">${r[2]}</td><td class="p-1">${r[3]}</td><td class="p-1 font-bold text-emerald-700">${r[4]}</td></tr>`; });
+            classif.innerHTML = "Clasificación: <strong>TAUTOLOGÍA</strong>";
         } else if (sel === "contra") {
-            thead.innerHTML = `<tr><th class="p-2">P</th><th class="p-2">~P</th><th class="p-2 bg-rose-100 text-rose-900">P ∧ ~P</th></tr>`;
-            const rows = [[1, 0, 0], [0, 1, 0]];
-            rows.forEach(r => {
-                tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-rose-700">${r[2]}</td></tr>`;
-            });
-            classif.innerHTML = "Clasificación: <strong>CONTRADICCIÓN</strong> (Siempre falsa)";
+            thead.innerHTML = `<tr><th class="p-2">P</th><th class="p-2">~P</th><th class="p-2 bg-rose-100">P ∧ ~P</th></tr>`;
+            [[1,0,0],[0,1,0]].forEach(r => { tbody.innerHTML += `<tr><td class="p-2">${r[0]}</td><td class="p-2">${r[1]}</td><td class="p-2 font-bold text-rose-700">${r[2]}</td></tr>`; });
+            classif.innerHTML = "Clasificación: <strong>CONTRADICCIÓN</strong>";
         }
     }
     window.onload = generarTablaVerdad;
