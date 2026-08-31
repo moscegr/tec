@@ -308,45 +308,47 @@
                             <span class="difficulty-badge diff-hard">Avanzado • 20h</span>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-cyan-600 transition">
-                            <a href="unidad3.html">3. Optimización de Código</a>
+                            <a href="unidad3.html">3. Análisis Sintáctico con CUP en NetBeans</a>
                         </h3>
                         <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Estrategias de optimización locales, de ciclos (movimiento de código invariable, variables de inducción), globales (análisis de flujo de datos, propagación de constantes, eliminación de código muerto) y optimizaciones de mirilla (*peephole*), bloques básicos y grafos de flujo (CFG).
+                            Especificación de gramáticas LALR(1), símbolos terminales/no terminales con tipos de datos, resolución de conflictos Shift/Reduce mediante precedencia y asociatividad, valores semánticos <code>RESULT</code>, recuperación de errores con <code>error</code> y proyectos visuales en NetBeans.
                         </p>
                         <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.1 Optimizaciones locales y 3.1.2 En ciclos</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.3 Optimizaciones globales y análisis de flujo</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1.4 Optimización de mirilla (Peephole)</li>
-                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.2 Partición en Bloques Básicos y Grafo CFG</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.1 Introducción a CUP y gramáticas LALR(1)</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.2 Precedencia, asociatividad y conflictos Shift/Reduce</li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.3 Símbolos con tipos Java y cálculo con <code>RESULT</code></li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.4 Manejo y recuperación de errores con <code>syntax_error</code></li>
+                            <li><i class="fas fa-angle-right text-cyan-500 mr-1.5"></i> 3.5 Proyecto NetBeans con Parser CUP y Swing</li>
                         </ul>
                     </div>
                     <a href="unidad3.html" class="w-full text-center py-2.5 px-3 bg-cyan-50 hover:bg-cyan-100 hover:text-cyan-800 text-cyan-700 font-bold text-xs rounded-xl border border-cyan-200 transition">
-                        Ver Unidad 3: Optimización <i class="fas fa-arrow-right ml-1"></i>
+                        Ver Unidad 3: Parser con CUP <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
 
                 <!-- UNIDAD 4 -->
-                <div class="course-card p-6 flex flex-col justify-between border-rose-100 shadow-sm">
+                <div class="course-card p-6 flex flex-col justify-between border-emerald-100 shadow-sm">
                     <div>
                         <div class="flex justify-between items-start mb-3">
-                            <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 font-bold text-sm flex items-center justify-center border border-rose-200">U4</span>
-                            <span class="difficulty-badge diff-hard">Avanzado • 20h</span>
+                            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold text-sm flex items-center justify-center border border-emerald-200">U4</span>
+                            <span class="difficulty-badge diff-hard">Proyecto • 20h</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-rose-600 transition">
-                            <a href="unidad4.html">4. Generación de Código Objeto y Runtime</a>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2 hover:text-emerald-600 transition">
+                            <a href="unidad4.html">4. Construcción de un Compilador Completo (JFlex + CUP)</a>
                         </h3>
                         <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Asignación y distribución óptima de registros de CPU, emisión de código en lenguaje ensamblador (x86/MIPS) y Bytecode, administración de memoria en tiempo de ejecución (Stack, Heap, Static Data, Registros de Activación / Frames) y compilador final integrado.
+                            Unificación total de JFlex y CUP en Apache NetBeans mediante <code>GeneradorCompilador.java</code>. Desarrollo progresivo: Mini-proyecto 1 (Calculadora con variables y memoria) y Mini-proyecto 2 (Compilador del lenguaje estructurado MiniLang con <code>if</code>, <code>while</code>, <code>print</code> e IDE Swing con pestañas).
                         </p>
                         <ul class="text-xs text-slate-500 space-y-1 mb-6">
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.1 Asignación de registros y descriptores</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.2 Emisión a Lenguaje Ensamblador y 4.3 Código máquina</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> 4.4 Administración de memoria y Stack Frames</li>
-                            <li><i class="fas fa-angle-right text-rose-500 mr-1.5"></i> Entrega del Compilador Funcional Completo</li>
+                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.1 Arquitectura e integración unificada JFlex + CUP</li>
+                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.2 Mini-Proyecto 1: Calculadora con asignaciones y memoria</li>
+                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.3 Mini-Proyecto 2: Compilador MiniLang (if/while/print)</li>
+                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.4 Diagnóstico unificado de errores léxicos/sintácticos</li>
+                            <li><i class="fas fa-angle-right text-emerald-500 mr-1.5"></i> 4.5 IDE Didáctico Completo en Apache NetBeans (Swing)</li>
                         </ul>
                     </div>
-                    <a href="unidad4.html" class="w-full text-center py-2.5 px-3 bg-rose-50 hover:bg-rose-100 hover:text-rose-800 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition">
-                        Ver Unidad 4: Código Objeto <i class="fas fa-arrow-right ml-1"></i>
+                    <a href="unidad4.html" class="w-full text-center py-2.5 px-3 bg-emerald-50 hover:bg-emerald-100 hover:text-emerald-800 text-emerald-700 font-bold text-xs rounded-xl border border-emerald-200 transition">
+                        Ver Unidad 4: Compilador Completo <i class="fas fa-arrow-right ml-1"></i>
                     </a>
                 </div>
 
