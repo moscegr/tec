@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 2: Generación de Código Intermedio | Lenguajes y Autómatas II</title>
+    <title>Unidad 2: Análisis Léxico con JFlex (Consola a Swing) | Lenguajes y Autómatas II • TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-        <!-- MathJax Config -->
+    
+    <!-- MathJax Config -->
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']]
-            },
-            options: {
-                processHtmlClass: 'tex2jax_process'
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
             }
         };
     </script>
@@ -68,73 +66,36 @@
             letter-spacing: 0.05em;
         }
         .diff-easy { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-        .diff-med { background-color: #e0e7ff; color: #3730a3; border: 1px solid #c7d2fe; }
+        .diff-med { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
         .diff-hard { background-color: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
 
-        .code-container {
-            background-color: #0f172a;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            margin: 1.25rem 0;
-            border: 1px solid #1e293b;
-        }
-        .code-header {
-            background-color: #1e293b;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #94a3b8;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #e2e8f0;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
+        .topic-container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .step-item {
-            position: relative;
-            padding-left: 2.25rem;
-            margin-bottom: 1.5rem;
+        .pedagogy-step {
+            background: #f8fafc;
+            border: 1px solid #edf2f7;
+            border-radius: 0.875rem;
+            padding: 1.1rem;
+            margin-bottom: 1.1rem;
         }
-        .step-item::before {
-            content: attr(data-step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.6rem;
-            height: 1.6rem;
-            background: #4f46e5;
-            color: white;
-            font-weight: bold;
-            font-size: 0.75rem;
-            border-radius: 50%;
-            display: flex;
+
+        .badge-step {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-        }
-        .step-item::after {
-            content: '';
-            position: absolute;
-            left: 0.8rem;
-            top: 1.8rem;
-            bottom: -0.8rem;
-            width: 2px;
-            background: #e2e8f0;
-        }
-        .step-item:last-child::after {
-            display: none;
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.6rem;
         }
 
         .sticky-sub-nav {
@@ -145,11 +106,20 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
         }
+
+        @keyframes flow-line {
+            0% { stroke-dashoffset: 20; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .anim-line {
+            stroke-dasharray: 5;
+            animation: flow-line 1.2s linear infinite;
+        }
     </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-900">
 
-    <!-- Top Bar -->
+    <!-- Top Bar Institucional -->
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -170,372 +140,742 @@
             <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Temario LyA II
+                        <i class="fas fa-arrow-left mr-2"></i> Temario
                     </a>
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
-                        <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold mr-2">U2</span>
-                        Código Intermedio
+                        <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-800 text-xs flex items-center justify-center font-bold mr-2">U2</span>
+                        Análisis Léxico con JFlex
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
-                    <a href="unidad1.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center">
-                        <i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U1: Semántico
-                    </a>
-                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center shadow-sm">
-                        U3: Optimización <i class="fas fa-chevron-right ml-1.5 text-indigo-200"></i>
-                    </a>
+                    <a href="unidad1.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-chevron-left mr-1.5 text-slate-400"></i> U1: Análisis Semántico</a>
+                    <a href="unidad3.html" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition flex items-center shadow-sm">Unidad 3: Optimización <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Contenedor Principal de 3 Columnas (Estilo Luis Llamas) -->
+    <!-- Contenedor Principal de 3 Columnas -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso -->
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
                         <i class="fas fa-book text-indigo-600"></i>
-                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades del Curso</h4>
+                        <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider">Unidades de la Materia</h4>
                     </div>
 
                     <nav class="space-y-1 text-xs">
+                        
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>1. Análisis Semántico</span>
+                            <span>1. Análisis Semántico y Pilas</span>
                             <span class="difficulty-badge diff-med">20h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg bg-indigo-600 text-white font-bold shadow-sm">
-                            <span>2. Código Intermedio</span>
-                            <span class="difficulty-badge bg-indigo-700 text-white border-0">20h</span>
+                            <span>2. Análisis Léxico con JFlex</span>
+                            <span class="difficulty-badge bg-white/20 text-white border-0">20h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>3. Optimización</span>
+                            <span>3. Optimización de Código</span>
                             <span class="difficulty-badge diff-hard">20h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>4. Código Objeto</span>
+                            <span>4. Generación de Código Objeto</span>
                             <span class="difficulty-badge diff-hard">20h</span>
                         </a>
                     </nav>
 
-                    <!-- Subtemas Unidad 2 -->
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contenido Unidad 2</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas JFlex U2</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <li><a href="#tema-2-1" class="hover:text-indigo-600 block py-1">2.1 Notaciones (Infija, Prefija, Posfija)</a></li>
-                            <li><a href="#tema-2-2" class="hover:text-indigo-600 block py-1">2.2 Representaciones intermedias</a></li>
-                            <li><a href="#tema-2-2-cuadruplos" class="hover:text-indigo-600 block py-1 pl-3 text-[11px]">↳ Triplos, Cuádruplos y TAC</a></li>
-                            <li><a href="#tema-2-3" class="hover:text-indigo-600 block py-1">2.3 Esquema de generación</a></li>
-                            <li><a href="#tema-2-3-control" class="hover:text-indigo-600 block py-1 pl-3 text-[11px]">↳ Saltos y Backpatching</a></li>
-                            <li><a href="#tema-2-3-arreglos" class="hover:text-indigo-600 block py-1 pl-3 text-[11px]">↳ Cálculo de direcciones de arreglos</a></li>
-                            <li><a href="#laboratorio-tac" class="hover:text-indigo-600 block py-1 text-emerald-600 font-bold">Generador Interactivo TAC</a></li>
+                            <a href="#tema-2-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.1 Formalización del Análisis Léxico</a>
+<a href="#tema-2-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.2 Estrategias de Implementación</a>
+<a href="#tema-2-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.3 Estructura del Archivo JFlex (.flex)</a>
+<a href="#tema-2-4" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.4 Flujo en Consola con VS Code y javac</a>
+<a href="#tema-2-5" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.5 Proyecto NetBeans con GUI javax.swing</a>
+<a href="#simulador-lexico" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Simulador Interactivo JFlex</a>
+
                         </ul>
                     </div>
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
-            <main class="lg:col-span-6 space-y-10">
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo -->
+            <main class="lg:col-span-6 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-indigo-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Fase 4 del Compilador • Puente entre Front-End y Back-End</span>
+                        <span>Programa Oficial TecNM • Lenguajes y Autómatas II</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Unidad 2: Generación de Código Intermedio
+                        Unidad 2: Generación de Analizadores Léxicos con JFlex
                     </h1>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Formalización del análisis léxico, especificación <code>.flex</code>, resolución de ambigüedades, compilación por terminal en VS Code con <code>javac/java</code> y desarrollo de aplicaciones GUI completas en Apache NetBeans con <code>javax.swing</code> y lectura de archivos.
+                    </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
-                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> Duración: 20 Horas (Semanas 5-8)</span>
+                        <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 20 Horas (Semanas 5-8)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-med">Nivel Intermedio</span>
+                        <span class="difficulty-badge diff-med">JFlex • Consola & NetBeans</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- Introducción -->
-                <section>
-                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
-                        El <strong>Código Intermedio</strong> es una representación del programa fuente en un lenguaje abstracto de bajo nivel independiente de la arquitectura física de la máquina destino. Su objetivo principal es <strong>desacoplar el análisis de la síntesis</strong>: permite optimizar el código una sola vez y reutilizar el mismo front-end para generar código máquina hacia múltiples plataformas (x86, ARM, RISC-V, MIPS o JVM).
-                    </p>
+                <!-- CONTENIDO PEDAGÓGICO COMPLETO -->
+                
+<!-- INTRODUCCIÓN GENERAL -->
+<div class="lll-box lll-info">
+    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-cogs text-indigo-600 mr-2"></i>Unidad 2 • Análisis Léxico y Generación con JFlex (20 Horas)</h4>
+    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        <strong>Competencia Específica:</strong> Diseñar, implementar e integrar analizadores léxicos profesionales utilizando la herramienta <strong>JFlex</strong>. El estudiante aprenderá la formalización matemática (lenguajes regulares, gramáticas lineales y autómatas finitos), la construcción de escáneres por línea de comandos en <strong>VS Code con javac</strong>, y culminará con aplicaciones completas en <strong>Apache NetBeans</strong> con interfaz gráfica basada en <strong>javax.swing</strong>, selector de archivos (<code>JFileChooser</code>) y detección de errores léxicos.
+    </p>
+</div>
 
-                    <div class="lll-box lll-info">
-                        <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-bullseye text-indigo-600 mr-2"></i>Competencia Específica</h4>
-                        <p class="text-xs sm:text-sm text-slate-600">
-                            <strong>Diseñar y programar las reglas y esquemas de traducción</strong> para transformar el árbol sintáctico en representaciones intermedias (Código de Tres Direcciones, Cuádruplos, Triplos y Código P), implementando el control de flujo con <em>backpatching</em> y el cálculo de desplazamientos en estructuras de datos.
-                        </p>
-                    </div>
-                </section>
+<!-- ============================================================================== -->
+<!-- 2.1 FORMALIZACIÓN DEL ANÁLISIS LÉXICO -->
+<!-- ============================================================================== -->
+<div id="tema-2-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">2.1</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Formalización del Análisis Léxico y Modelos Regulares</h2>
+    </div>
 
-                <!-- 2.1 Notaciones -->
-                <section id="tema-2-1" class="scroll-mt-24">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
-                        <span class="text-indigo-600 mr-2 font-mono text-xl">2.1</span> Notaciones: Infija, Prefija y Postfija
-                    </h2>
-                    
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
-                        La posición del operador respecto a sus operandos determina la notación. En compiladores, las notaciones sin paréntesis (Polaca y Polaca Inversa) son ideales para la evaluación mediante máquinas de pila.
-                    </p>
+    <!-- FASE 1: TEORÍA -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>
+                El <strong>Analizador Léxico</strong> (o <em>Scanner</em>) es el primer módulo del compilador. Su función principal es leer el flujo secuencial de caracteres del archivo fuente y agruparlos en unidades con significado léxico llamadas <strong>tokens</strong>. El analizador sintáctico solicita tokens bajo demanda mediante llamadas a la función <code>nextToken()</code>.
+            </p>
+            <p>
+                Para especificar formalmente los componentes léxicos se emplean tres formalismos isomorfos (intercambiables):
+            </p>
+            <ul class="space-y-1 text-xs text-slate-700">
+                <li>• <strong>Gramáticas Lineales (por la derecha o izquierda):</strong> Conjunto de reglas de reescritura \(A \to x B \mid x\) con \(x \in T\).</li>
+                <li>• <strong>Expresiones Regulares (ER):</strong> Fórmulas algebraicas sobre terminales con operadores de concatenación (\(\cdot\)), unión (\(\mid\)) y cerraduras (\(*, +\)).</li>
+                <li>• <strong>Autómatas Finitos Deterministas (AFD) y No Deterministas (AFND):</strong> Grafos de estados y transiciones donde se consumen caracteres para alcanzar estados de aceptación.</li>
+            </ul>
+        </div>
+    </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6 text-xs">
-                        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
-                            <strong class="text-slate-900 block mb-1">Notación Infija</strong>
-                            <p class="text-slate-500 mb-2">Operador entre los operandos. Requiere reglas de precedencia y paréntesis.</p>
-                            <div class="font-mono bg-slate-100 p-2 rounded text-slate-800 text-center font-bold">
-                                (a + b) * (c - d)
-                            </div>
-                        </div>
-                        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
-                            <strong class="text-indigo-900 block mb-1">Notación Prefija (Polaca)</strong>
-                            <p class="text-slate-500 mb-2">Operador antes de sus operandos. No requiere paréntesis.</p>
-                            <div class="font-mono bg-indigo-50 p-2 rounded text-indigo-800 text-center font-bold">
-                                * + a b - c d
-                            </div>
-                        </div>
-                        <div class="p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
-                            <strong class="text-purple-900 block mb-1">Notación Postfija (Polaca Inversa)</strong>
-                            <p class="text-slate-500 mb-2">Operador después de sus operandos. Base de la JVM y calculadoras RPN.</p>
-                            <div class="font-mono bg-purple-50 p-2 rounded text-purple-800 text-center font-bold">
-                                a b + c d - *
-                            </div>
-                        </div>
-                    </div>
-                </section>
+    <!-- FASE 2: GLOSARIO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700 mt-1">
+            <div class="p-2 bg-white border rounded"><strong>• Token:</strong> Unidad léxica abstracta indivisible (ej. <code>&lt;ID, "contador"&gt;</code>, <code>&lt;PR_WHILE, "while"&gt;</code>).</div>
+            <div class="p-2 bg-white border rounded"><strong>• Lexema:</strong> Cadena exacta de caracteres del código fuente que concuerda con un patrón léxico.</div>
+            <div class="p-2 bg-white border rounded"><strong>• Patrón Léxico:</strong> Expresión regular abstracta que describe a la familia de lexemas del token.</div>
+            <div class="p-2 bg-white border rounded"><strong>• Cadena Propia vs No Propia:</strong> Propia si es idéntica al patrón (palabras reservadas como <code>while</code>); no propia si es variable (identificadores o números).</div>
+        </div>
+    </div>
 
-                <!-- 2.2 Representaciones Intermedias -->
-                <section id="tema-2-2" class="scroll-mt-24">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
-                        <span class="text-indigo-600 mr-2 font-mono text-xl">2.2</span> Representaciones: Triplos, Cuádruplos y TAC
-                    </h2>
-                    
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4 text-justify">
-                        Las tres estructuras clásicas para representar código intermedio lineal son:
-                    </p>
+    <!-- FASE 3: ILUSTRACIÓN SVG -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Triángulo de Formalismos y Flujo Scanner ➔ Parser</span>
+        <div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+            <div class="text-[11px] font-bold text-indigo-400 mb-2 text-center uppercase tracking-wider font-mono">Comunicación Bajo Demanda: Analizador Léxico ➔ Analizador Sintáctico</div>
+            <svg viewBox="0 0 460 90" class="w-full max-w-md mx-auto block">
+                <rect x="20" y="20" width="130" height="50" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="85" y="42" fill="#818cf8" font-size="11" font-weight="bold" text-anchor="middle">Analizador Léxico</text>
+                <text x="85" y="56" fill="#94a3b8" font-size="8" text-anchor="middle">(Scanner / JFlex)</text>
 
-                    <!-- Cuádruplos vs Triplos vs TAC -->
-                    <div class="space-y-4 mb-6">
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h4 class="font-bold text-slate-900 text-sm mb-1">1. Código de Tres Direcciones (TAC / 3AC)</h4>
-                            <p class="text-xs text-slate-600 mb-2">Secuencia lineal de instrucciones con como máximo un operador y a lo sumo 3 direcciones de memoria (2 operandos fuente y 1 destino temporal):</p>
-                            <div class="font-mono text-xs bg-slate-900 text-emerald-400 p-2.5 rounded">
-                                t1 = a + b<br>
-                                t2 = c - d<br>
-                                t3 = t1 * t2
-                            </div>
-                        </div>
+                <!-- Flechas de comunicacion -->
+                <path d="M 150,35 L 290,35" stroke="#34d399" stroke-width="2" class="anim-line"/>
+                <text x="220" y="28" fill="#34d399" font-size="8" font-mono text-anchor="middle">nextToken()</text>
 
-                        <div id="tema-2-2-cuadruplos" class="overflow-x-auto border border-slate-200 rounded-xl">
-                            <table class="w-full text-left text-xs bg-white">
-                                <thead class="bg-indigo-50 text-indigo-900 font-bold border-b border-indigo-100">
-                                    <tr>
-                                        <th class="py-2.5 px-3">Estructura</th>
-                                        <th class="py-2.5 px-3">Campos</th>
-                                        <th class="py-2.5 px-3">Ejemplo para: <code>x = a + b * c</code></th>
-                                        <th class="py-2.5 px-3">Ventaja Principal</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100 text-slate-600 font-mono">
-                                    <tr>
-                                        <td class="py-2 px-3 font-bold text-slate-800">Cuádruplo</td>
-                                        <td class="py-2 px-3">(op, arg1, arg2, res)</td>
-                                        <td class="py-2 px-3">(*, b, c, t1)<br>(+, a, t1, x)</td>
-                                        <td class="py-2 px-3 font-sans text-[11px]">Fácil de reordenar en optimizaciones.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-3 font-bold text-slate-800">Triplo</td>
-                                        <td class="py-2 px-3">(op, arg1, arg2)</td>
-                                        <td class="py-2 px-3">(0) (*, b, c)<br>(1) (+, a, (0))</td>
-                                        <td class="py-2 px-3 font-sans text-[11px]">Ahorra memoria al no nombrar temporales.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
+                <path d="M 290,55 L 150,55" stroke="#fbbf24" stroke-width="2"/>
+                <text x="220" y="68" fill="#fbbf24" font-size="8" font-mono text-anchor="middle">&lt;TOKEN, lexema&gt;</text>
 
-                <!-- 2.3 Esquema de Generación: Control de Flujo y Arreglos -->
-                <section id="tema-2-3" class="scroll-mt-24">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center">
-                        <span class="text-indigo-600 mr-2 font-mono text-xl">2.3</span> Esquemas de Generación (Control de Flujo y Arreglos)
-                    </h2>
-                    
-                    <div id="tema-2-3-control" class="mb-6">
-                        <h3 class="text-base font-bold text-slate-800 mb-2">Traducción de Sentencias de Control (`if-else`, `while`)</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-3 text-justify">
-                            Para estructuras de control condicionales se generan etiquetas de salto (*labels*) y saltos condicionales (`if_false x goto L1`).
-                        </p>
+                <rect x="290" y="20" width="140" height="50" rx="8" fill="#1e293b" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="360" y="42" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">Analizador Sintáctico</text>
+                <text x="360" y="56" fill="#94a3b8" font-size="8" text-anchor="middle">(Parser / CUP)</text>
+            </svg>
+        </div>
+    </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                                <span class="text-purple-600 font-bold block mb-1 font-sans">// Código Alto Nivel:</span>
-                                if (a &lt; b) {<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;x = 10;<br>
-                                } else {<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;x = 20;<br>
-                                }
-                            </div>
-                            <div class="bg-slate-900 text-indigo-300 p-3 rounded-xl">
-                                <span class="text-slate-400 font-bold block mb-1 font-sans">// Código TAC Generado:</span>
-                                &nbsp;&nbsp;&nbsp;&nbsp;if_false (a &lt; b) goto L1<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;x = 10<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;goto L2<br>
-                                L1: x = 20<br>
-                                L2: // Continuación
-                            </div>
-                        </div>
-                    </div>
+    <!-- FASE 4: EJERCICIO GUIADO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicio Guiado: Conversión de Gramática Lineal a Expresión Regular y AFD</span>
+        <div class="text-xs text-slate-700 space-y-1">
+            <p><strong>Problema:</strong> Dada la gramática lineal por la derecha \(G = (\{l, d\}, \{A, B\}, A, P)\) con producciones \(A \to l B, B \to l B \mid d B \mid \varepsilon\):</p>
+            <p>1. <strong>Expresión Regular equivalente:</strong> \(L(G) = l (l \mid d)^*\) (Identificadores en programación).</p>
+            <p>2. <strong>Autómata Finito:</strong> Estado inicial 0 lee letra \(l\) y pasa a estado 1. Estado 1 tiene lazo reflexivo con letra o dígito y transición <em>otro</em> (\(*\)) hacia el estado final de aceptación 2 emitiendo el token <code>&lt;ID&gt;</code>.</p>
+        </div>
+    </div>
 
-                    <!-- Arreglos y Direcciones -->
-                    <div id="tema-2-3-arreglos" class="p-4 bg-indigo-50/50 border border-indigo-100 rounded-xl mb-6">
-                        <h4 class="font-bold text-indigo-900 text-sm mb-1"><i class="fas fa-calculator text-indigo-600 mr-2"></i>Fórmula de Desplazamiento para Arreglos 2D (\(A[i][j]\))</h4>
-                        <p class="text-xs text-slate-600 mb-2">En almacenamiento por filas (*Row-Major Order*):</p>
-                        <div class="font-mono text-xs bg-white p-2.5 rounded border border-indigo-200 text-center text-slate-800">
-                            $$\text{Dirección}(A[i][j]) = \text{Base}(A) + \left( i \times N_{\text{cols}} + j \right) \times \text{TamElemento}$$
-                        </div>
-                    </div>
-                </section>
+    <!-- FASE 5: PROBLEMÁTICA -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos (Firmas 40%)</span>
+        <p class="text-xs text-slate-700">Diseña la expresión regular, la gramática lineal por la derecha y el AFD con estado de retroceso para números flotantes con exponente opcional (ej. <code>3.1416</code>, <code>2.5e-3</code>). <span class="text-indigo-700 font-bold font-mono">Pista: \([0-9]+ (\.[0-9]+)? ([eE][+-]?[0-9]+)?\)</span></p>
+    </div>
+</div>
 
-                <!-- SIMULADOR INTERACTIVO DE TAC -->
-                <section id="laboratorio-tac" class="scroll-mt-24">
-                    <div class="border-2 border-indigo-200 rounded-2xl p-6 bg-gradient-to-b from-indigo-50/40 via-white to-white shadow-sm">
-                        <div class="flex items-center space-x-2 text-xs font-bold text-indigo-700 uppercase tracking-widest mb-1">
-                            <i class="fas fa-flask"></i> Laboratorio Interactivo de Cátedra
-                        </div>
-                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Generador de Código de Tres Direcciones (TAC)</h2>
-                        <p class="text-xs sm:text-sm text-slate-600 mb-6">
-                            Prueba la traducción inmediata de asignaciones complejas o sentencias condicionales a instrucciones elementales TAC y su matriz de cuádruplos asociada.
-                        </p>
+<!-- ============================================================================== -->
+<!-- 2.2 ESTRATEGIAS DE IMPLEMENTACIÓN -->
+<!-- ============================================================================== -->
+<div id="tema-2-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">2.2</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Estrategias de Implementación de Analizadores Léxicos</h2>
+    </div>
 
-                        <!-- Controles -->
-                        <div class="space-y-3 mb-4">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sentencia en Lenguaje Fuente:</label>
-                                <input type="text" id="tacSrcInput" value="total = (base * 1.16) + (envio - descuento)" class="w-full px-3 py-2 border border-slate-300 rounded-xl font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
-                            </div>
-                            <div class="flex flex-wrap gap-2">
-                                <button onclick="generarTAC()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-sm flex items-center">
-                                    <i class="fas fa-code mr-2"></i> Generar TAC y Cuádruplos
-                                </button>
-                                <button onclick="cargarEjemploControl()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-300 transition">
-                                    Cargar `while (i < 10) suma = suma + i`
-                                </button>
-                            </div>
-                        </div>
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Existen tres paradigmas de codificación para analizadores léxicos:</p>
+            <ol class="list-decimal list-inside space-y-1 text-xs">
+                <li><strong>Implementación Basada en Casos (Hardcoded):</strong> Emplea bucles <code>while</code> y sentencias <code>switch (estado)</code> anidadas con <code>switch (caracter)</code>. Es eficiente pero difícil de mantener.</li>
+                <li><strong>Implementación Dirigida por Tablas:</strong> Se almacena la matriz de transición \(M[Q, T] \to Q\) y un bucle genérico itera sobre los caracteres.</li>
+                <li><strong>Implementación Guiada por Herramientas (JFlex):</strong> Se definen reglas <em>patrón - acción</em> en un archivo <code>.flex</code> y JFlex compila automáticamente un AFD determinista optimizado en Java.</li>
+            </ol>
+            <div class="bg-indigo-50 p-2.5 rounded-lg border border-indigo-200 mt-2">
+                <strong class="text-indigo-900 text-xs">Reglas de Resolución de Ambigüedad en JFlex:</strong>
+                <p class="text-slate-600 text-xs mt-0.5">
+                    1. <strong>Preferencia al token más largo (Longest Match):</strong> Entre <code>&gt;</code> y <code>&gt;=</code>, la cadena <code>&gt;=</code> se reconoce como un solo operador de comparación.<br>
+                    2. <strong>Preferencia de orden de aparición:</strong> Las palabras reservadas (<code>while</code>, <code>if</code>) se declaran <em>antes</em> que el patrón general de identificadores <code>{LETRA}({LETRA}|{DIGITO})*</code>.
+                </p>
+            </div>
+        </div>
+    </div>
 
-                        <!-- Resultados -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-slate-900 p-4 rounded-xl font-mono text-xs text-emerald-300 shadow-inner min-h-[140px]">
-                                <div class="text-[10px] text-slate-400 font-bold uppercase mb-2 border-b border-slate-800 pb-1">Instrucciones TAC:</div>
-                                <div id="tacCodeDisplay">// Las instrucciones TAC aparecerán aquí</div>
-                            </div>
-                            <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl p-3 shadow-inner">
-                                <div class="text-[10px] text-slate-600 font-bold uppercase mb-2">Matriz de Cuádruplos:</div>
-                                <table class="w-full text-left text-xs font-mono">
-                                    <thead class="bg-slate-100 text-slate-700">
-                                        <tr><th class="p-1">#</th><th class="p-1">op</th><th class="p-1">arg1</th><th class="p-1">arg2</th><th class="p-1">res</th></tr>
-                                    </thead>
-                                    <tbody id="quadTableBody" class="divide-y divide-slate-100 text-slate-600">
-                                        <tr><td colspan="5" class="p-2 text-center text-slate-400 font-sans">Sin datos</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-code mr-1.5"></i> 3. Comparativa: Hardcoded Switch vs JFlex Declarativo</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+            <div class="bg-slate-900 text-slate-200 p-3 rounded-lg">
+                <div class="text-rose-400 font-bold mb-1">// 1. Hardcoded Switch-Case en Java</div>
+                while (!fin) {<br>
+                &nbsp;&nbsp;switch(estado) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;case 0: if (isLetra(c)) { estado=1; lex+=c; } break;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;case 1: if (isLetra(c)||isDigito(c)) lex+=c; else fin=true; break;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <div class="bg-slate-900 text-slate-200 p-3 rounded-lg">
+                <div class="text-emerald-400 font-bold mb-1">// 2. Regla JFlex en Scanner.flex</div>
+                LETRA = [a-zA-Z_]<br>
+                DIGITO = [0-9]<br>
+                ID = {LETRA}({LETRA}|{DIGITO})*<br><br>
+                &lt;YYINITIAL&gt; {ID} { return new Token("ID", yytext(), yyline, yychar); }
+            </div>
+        </div>
+    </div>
 
-                <!-- Navegación Inferior -->
-                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
-                    <a href="unidad1.html" class="flex items-center text-slate-600 hover:text-slate-900 transition">
-                        <i class="fas fa-arrow-left mr-2 text-slate-400"></i> Unidad 1: Análisis Semántico
-                    </a>
-                    <a href="unidad3.html" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold">
-                        Unidad 3: Optimización <i class="fas fa-arrow-right ml-2 text-indigo-200"></i>
-                    </a>
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicio de Práctica (Firmas 40%)</span>
+        <p class="text-xs text-slate-700">Construye la matriz de transiciones para un reconocedor manual de operadores relacionales <code>&lt;, &lt;=, &lt;&gt;, =, &gt;, &gt;=</code> indicando los estados de retroceso.</p>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- 2.3 ESTRUCTURA DEL ARCHIVO JFLEX (.flex) -->
+<!-- ============================================================================== -->
+<div id="tema-2-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">2.3</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Anatomía y Directivas de un Archivo JFlex (`.flex`)</h2>
+    </div>
+
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación de las 3 Secciones de JFlex</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>Un archivo de especificación léxica de JFlex se divide estrictamente en <strong>tres secciones separadas por el delimitador <code>%%</code></strong>:</p>
+            <div class="space-y-2 text-xs">
+                <div class="p-2.5 bg-white border rounded-lg">
+                    <strong class="text-indigo-900">Sección 1: Código de Usuario (Imports y Paquetes)</strong><br>
+                    Se ubica antes del primer <code>%%</code>. Todo el código Java escrito aquí se copia verbatim al inicio de la clase generada <code>Scanner.java</code> (ej. <code>package compiler.lexical; import java.util.*;</code>).
                 </div>
-
-            
-<!-- SECCIÓN DE EJEMPLOS RESUELTOS Y EJERCICIOS DE PRÁCTICA -->
-<section id="ejemplos-y-practica" class="scroll-mt-24 space-y-6">
-    <div class="border-t border-slate-200 pt-8">
-        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-1">Taller de Compilación</span>
-        <h2 class="text-2xl font-bold text-slate-900 mb-4">Ejemplos Resueltos de Generación TAC y Problemario</h2>
-    </div>
-
-    <!-- EJEMPLO RESUELTO TAC DE ARREGLO 2D -->
-    <div class="bg-white border-2 border-indigo-100 rounded-2xl p-5 shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold text-indigo-700 bg-indigo-100 px-2.5 py-0.5 rounded font-mono">Ejemplo Resuelto 2.1</span>
-            <span class="text-[11px] text-slate-500 font-medium">Acceso a Arreglos Multidimensionales</span>
-        </div>
-        <h4 class="font-bold text-slate-900 text-sm mb-2">
-            Generar el Código de Tres Direcciones (TAC) para la asignación: <code>matriz[i][j] = vector[k] * 2 + c</code>, considerando enteros de 4 bytes y matriz de dimensión \(10 	imes 20\).
-        </h4>
-        <div class="text-xs font-mono text-slate-700 bg-slate-900 p-4 rounded-xl border border-slate-800 text-emerald-300">
-            <span class="text-slate-500">// 1. Cálculo de offset para vector[k]:</span><br>
-            t1 = k * 4<br>
-            t2 = vector[t1]<br>
-            t3 = t2 * 2<br>
-            t4 = t3 + c<br><br>
-            <span class="text-slate-500">// 2. Cálculo de offset 2D para matriz[i][j] (Ncols = 20):</span><br>
-            t5 = i * 20<br>
-            t6 = t5 + j<br>
-            t7 = t6 * 4<br>
-            matriz[t7] = t4<br>
-            <span class="text-purple-300 font-bold font-sans">// Asignación completada con 7 instrucciones TAC</span>
+                <div class="p-2.5 bg-white border rounded-lg">
+                    <strong class="text-indigo-900">Sección 2: Opciones, Directivas y Macros</strong><br>
+                    Entre el primer y segundo <code>%%</code>. Se configuran directivas como <code>%class Scanner</code>, <code>%public</code>, <code>%unicode</code>, <code>%line</code>, <code>%column</code>, <code>%type Token</code> y se definen macros de expresiones regulares.
+                </div>
+                <div class="p-2.5 bg-white border rounded-lg">
+                    <strong class="text-indigo-900">Sección 3: Reglas Léxicas (Patrón ➔ Acción)</strong><br>
+                    Después del segundo <code>%%</code>. Cada regla asocia un patrón de expresión regular con un bloque de código Java ejecutable: <code>patron { codigo_java; }</code>.
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- PROBLEMARIO PARA EL ALUMNO -->
-    <div class="bg-gradient-to-br from-slate-50 to-indigo-50/30 border border-indigo-200 rounded-2xl p-6">
-        <div class="flex items-center space-x-2 text-xs font-bold text-indigo-800 uppercase tracking-wider mb-2">
-            <i class="fas fa-code text-indigo-600"></i> Problemario de Taller (Firmas - 40%)
+    <!-- FASE 3: ESPECIFICACIÓN JFLEX COMPLETA -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-file-code mr-1.5"></i> 3. Código Fuente del Archivo Lexer.flex</span>
+        <div class="bg-slate-900 p-4 rounded-xl text-white font-mono text-xs overflow-x-auto">
+<pre class="text-slate-200"><code>/* ======================================================
+   SECCIÓN 1: Código de Usuario
+   ====================================================== */
+package mi.compilador;
+import java.io.*;
+
+%%
+/* ======================================================
+   SECCIÓN 2: Opciones y Directivas de JFlex
+   ====================================================== */
+%class Lexer
+%public
+%unicode
+%line
+%column
+%type Token
+
+/* Declaración de variables y métodos de apoyo */
+%{
+    private Token crearToken(String tipo) {
+        return new Token(tipo, yytext(), yyline + 1, yycolumn + 1);
+    }
+%}
+
+/* Definición de Macros de Expresiones Regulares */
+LETRA        = [a-zA-Z_]
+DIGITO       = [0-9]
+ESPACIO      = [ \t\r\n]+
+IDENTIFICADOR= {LETRA}({LETRA}|{DIGITO})*
+NUM_ENTERO   = {DIGITO}+
+NUM_DECIMAL  = {DIGITO}+ \. {DIGITO}+
+
+/* Declaración de Estado Léxico para Comentarios Multilínea */
+%state COMENTARIO
+
+%%
+/* ======================================================
+   SECCIÓN 3: Reglas Patrón - Acción
+   ====================================================== */
+&lt;YYINITIAL&gt; {
+    /* Palabras Reservadas (Declaradas primero) */
+    "if"          { return crearToken("PR_IF"); }
+    "else"        { return crearToken("PR_ELSE"); }
+    "while"       { return crearToken("PR_WHILE"); }
+    "int"         { return crearToken("TIPO_INT"); }
+    "float"       { return crearToken("TIPO_FLOAT"); }
+    "return"      { return crearToken("PR_RETURN"); }
+
+    /* Operadores Aritméticos y Asignación */
+    "+"           { return crearToken("OP_SUMA"); }
+    "-"           { return crearToken("OP_RESTA"); }
+    "*"           { return crearToken("OP_MULT"); }
+    "/"           { return crearToken("OP_DIV"); }
+    "="           { return crearToken("OP_ASIGN"); }
+
+    /* Operadores Relacionales */
+    "=="          { return crearToken("OP_IGUAL"); }
+    "!="          { return crearToken("OP_DIFERENTE"); }
+    "&lt;="          { return crearToken("OP_MENOR_IGUAL"); }
+    "&gt;="          { return crearToken("OP_MAYOR_IGUAL"); }
+    "&lt;"           { return crearToken("OP_MENOR"); }
+    "&gt;"           { return crearToken("OP_MAYOR"); }
+
+    /* Delimitadores */
+    "("           { return crearToken("PARENTESIS_IZQ"); }
+    ")"           { return crearToken("PARENTESIS_DER"); }
+    "{"           { return crearToken("LLAVE_IZQ"); }
+    "}"           { return crearToken("LLAVE_DER"); }
+    ";"           { return crearToken("PUNTO_Y_COMA"); }
+    ","           { return crearToken("COMA"); }
+
+    /* Literales y Variables */
+    {NUM_DECIMAL}   { return crearToken("CONST_FLOAT"); }
+    {NUM_ENTERO}    { return crearToken("CONST_INT"); }
+    {IDENTIFICADOR} { return crearToken("ID"); }
+
+    /* Ignorar Espacios en Blanco */
+    {ESPACIO}       { /* Ignorar */ }
+
+    /* Inicio de Comentario Multilínea */
+    "/*"            { yybegin(COMENTARIO); }
+    "//".*          { /* Ignorar comentario de una línea */ }
+
+    /* Captura de Errores Léxicos */
+    .               { return crearToken("ERROR_LEXICO"); }
+}
+
+&lt;COMENTARIO&gt; {
+    "*/"            { yybegin(YYINITIAL); }
+    [^*\n]+         { /* Ignorar contenido */ }
+    "*"             { /* Ignorar */ }
+    \n              { /* Ignorar saltos de línea */ }
+}</code></pre>
         </div>
-        <h3 class="text-lg font-bold text-slate-900 mb-3">Ejercicios Propuestos de Código Intermedio</h3>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 1 (Control de Flujo):</strong>
-                <p class="text-slate-600 mb-2">Genera el código TAC para el bucle <code>for (i = 0; i &lt; 100; i++) sum += A[i];</code></p>
-                <span class="text-[10px] text-indigo-600 font-mono font-bold">Pista: Incluye etiqueta de inicio, salto condicional y salto incondicional de retorno.</span>
+    </div>
+
+    <!-- FASE 4: CLASE TOKEN -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Clase Token.java de Soporte</span>
+        <div class="bg-slate-900 p-3 rounded-lg text-white font-mono text-xs overflow-x-auto">
+<pre class="text-slate-200"><code>package mi.compilador;
+
+public class Token {
+    private String tipo;
+    private String lexema;
+    private int linea;
+    private int columna;
+
+    public Token(String tipo, String lexema, int linea, int columna) {
+        this.tipo = tipo;
+        this.lexema = lexema;
+        this.linea = linea;
+        this.columna = columna;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[Línea %02d, Col %02d] %-16s -> '%s'", linea, columna, tipo, lexema);
+    }
+
+    // Getters
+    public String getTipo() { return tipo; }
+    public String getLexema() { return lexema; }
+    public int getLinea() { return linea; }
+    public int getColumna() { return columna; }
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- 2.4 FLUJO EN CONSOLA CON VS CODE Y JAVAC -->
+<!-- ============================================================================== -->
+<div id="tema-2-4" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
+        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">2.4</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Compilación y Ejecución en Consola (VS Code + javac + java)</h2>
+    </div>
+
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-terminal mr-1.5"></i> 1. Flujo de Trabajo en Terminal / PowerShell</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>
+                Para ejecutar JFlex desde la consola de comandos (en Windows PowerShell o terminal de Linux/Mac dentro de Visual Studio Code), se utiliza la herramienta <code>jflex.jar</code> y el compilador estándar <code>javac</code>:
+            </p>
+            <div class="bg-slate-900 text-emerald-400 p-3 rounded-lg font-mono text-xs space-y-1">
+                <p class="text-slate-400"># 1. Generar la clase Lexer.java a partir de Lexer.flex</p>
+                <p>java -jar lib/jflex-full-1.9.1.jar src/mi/compilador/Lexer.flex</p>
+                <p class="text-slate-400 mt-2"># 2. Compilar todas las clases Java del paquete</p>
+                <p>javac -d bin -cp src src/mi/compilador/*.java</p>
+                <p class="text-slate-400 mt-2"># 3. Ejecutar el analizador pasándole un archivo fuente de prueba</p>
+                <p>java -cp bin mi.compilador.Principal pruebas/programa.src</p>
             </div>
-            <div class="p-3.5 bg-white border border-slate-200 rounded-xl">
-                <strong class="text-slate-900 block mb-1">Ejercicio 2 (Expresiones Booleanas en Cortocircuito):</strong>
-                <p class="text-slate-600 mb-2">Traduce a TAC con saltos condicionales: <code>if (x &gt; 5 || y &lt; 10 && z == 0) a = 1; else a = 0;</code></p>
-                <span class="text-[10px] text-indigo-600 font-mono font-bold">Pista: Evalúa el operador AND con mayor precedencia que el OR.</span>
-            </div>
+        </div>
+    </div>
+
+    <!-- FASE 3: CLASE PRINCIPAL DE CONSOLA -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-code mr-1.5"></i> 3. Clase Principal.java para Lectura de Archivo en Consola</span>
+        <div class="bg-slate-900 p-4 rounded-xl text-white font-mono text-xs overflow-x-auto">
+<pre class="text-slate-200"><code>package mi.compilador;
+import java.io.*;
+
+public class Principal {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Uso: java mi.compilador.Principal <archivo.src>");
+            return;
+        }
+
+        File archivo = new File(args[0]);
+        if (!archivo.exists()) {
+            System.err.println("Error: El archivo '" + args[0] + "' no existe.");
+            return;
+        }
+
+        try (FileReader reader = new FileReader(archivo);
+             BufferedReader br = new BufferedReader(reader)) {
+
+            System.out.println("=================================================");
+            System.out.println("   INICIANDO ANÁLISIS LÉXICO CON JFLEX (CONSOLA)");
+            System.out.println("   Archivo: " + archivo.getName());
+            System.out.println("=================================================");
+
+            Lexer lexer = new Lexer(br);
+            Token token;
+            int totalTokens = 0;
+            int totalErrores = 0;
+
+            while ((token = lexer.yylex()) != null) {
+                totalTokens++;
+                if ("ERROR_LEXICO".equals(token.getTipo())) {
+                    totalErrores++;
+                    System.err.printf("[ERROR LÉXICO] Carácter desconocido en Línea %d, Col %d: '%s'%n",
+                            token.getLinea(), token.getColumna(), token.getLexema());
+                } else {
+                    System.out.println(token);
+                }
+            }
+
+            System.out.println("=================================================");
+            System.out.printf("Análisis finalizado: %d tokens reconocidos, %d errores léxicos.%n",
+                    totalTokens, totalErrores);
+
+        } catch (IOException e) {
+            System.err.println("Excepción de E/S: " + e.getMessage());
+        }
+    }
+}</code></pre>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- 2.5 PROYECTO NETBEANS CON GUI JAVAX.SWING -->
+<!-- ============================================================================== -->
+<div id="tema-2-5" class="topic-container scroll-mt-24 border-2 border-indigo-300 rounded-2xl p-6 bg-white shadow-md mb-8">
+    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-indigo-100">
+        <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white text-sm flex items-center justify-center font-mono font-bold shadow-sm">2.5</span>
+        <h2 class="text-xl font-extrabold text-slate-900">Proyecto Completo en Apache NetBeans con GUI (`javax.swing`)</h2>
+    </div>
+
+    <div class="pedagogy-step bg-indigo-50/40 border border-indigo-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-indigo-600 text-white"><i class="fas fa-desktop mr-1.5"></i> 1. Arquitectura de la Aplicación Visual Swing</span>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
+            <p>
+                En esta fase, integramos el escáner generado por JFlex dentro de una aplicación de escritorio profesional en <strong>Apache NetBeans</strong> utilizando la librería estándar <strong><code>javax.swing</code></strong> y <strong><code>java.awt</code></strong>:
+            </p>
+            <ul class="space-y-1 text-xs">
+                <li>• <strong><code>JFileChooser</code>:</strong> Diálogo para buscar y seleccionar archivos de texto con código fuente (<code>.txt</code>, <code>.c</code>, <code>.pas</code>).</li>
+                <li>• <strong><code>JTextArea</code> con números de línea:</strong> Editor de texto donde el alumno puede escribir código directamente o ver el archivo cargado.</li>
+                <li>• <strong><code>JTable</code> con <code>DefaultTableModel</code>:</strong> Tabla interactiva donde se listan los tokens encontrados con columnas: <em>Línea, Columna, Tipo de Token, Lexema</em>.</li>
+                <li>• <strong><code>JOptionPane</code>:</strong> Diálogos de advertencia y mensajes de éxito al concluir el análisis léxico.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- FASE 3: CÓDIGO DEL JFRAME EN NETBEANS -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-window-maximize mr-1.5"></i> 3. Código Completo del Formulario Visual: VentanaCompilador.java</span>
+        <div class="bg-slate-900 p-4 rounded-xl text-white font-mono text-xs overflow-x-auto">
+<pre class="text-slate-200"><code>package mi.compilador.gui;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import mi.compilador.Lexer;
+import mi.compilador.Token;
+
+public class VentanaCompilador extends JFrame {
+
+    private JTextArea txtCodigo;
+    private JTable tblTokens;
+    private DefaultTableModel modeloTabla;
+    private JButton btnAbrir, btnAnalizar, btnLimpiar;
+    private JLabel lblEstado;
+
+    public VentanaCompilador() {
+        super("Compilador Didáctico • Analizador Léxico con JFlex - IT Chilpancingo");
+        initComponents();
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(950, 650);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(8, 8));
+
+        // Panel Superior de Herramientas (Botones)
+        JPanel pnlHerramientas = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 8));
+        btnAbrir = new JButton("Abrir Archivo (.txt / .src)", new ImageIcon());
+        btnAnalizar = new JButton("Analizar Léxico con JFlex");
+        btnLimpiar = new JButton("Limpiar Tablas");
+
+        btnAbrir.setBackground(new Color(241, 245, 249));
+        btnAnalizar.setBackground(new Color(79, 70, 229));
+        btnAnalizar.setForeground(Color.WHITE);
+        btnAnalizar.setFont(new Font("SansSerif", Font.BOLD, 12));
+
+        pnlHerramientas.add(btnAbrir);
+        pnlHerramientas.add(btnAnalizar);
+        pnlHerramientas.add(btnLimpiar);
+        add(pnlHerramientas, BorderLayout.NORTH);
+
+        // Panel Central Dividido: Editor a la izquierda, Tabla de Tokens a la derecha
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setResizeWeight(0.5);
+
+        // Editor de Código
+        txtCodigo = new JTextArea();
+        txtCodigo.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        txtCodigo.setText("// Escribe o abre un archivo para analizar con JFlex\nint total = 100;\nif (total >= 50) {\n    float promedio = 8.5;\n}\n");
+        JScrollPane scrollCodigo = new JScrollPane(txtCodigo);
+        scrollCodigo.setBorder(BorderFactory.createTitledBorder("Editor de Código Fuente"));
+        splitPane.setLeftComponent(scrollCodigo);
+
+        // Tabla de Tokens
+        String[] columnas = {"Línea", "Columna", "Componente Léxico (Token)", "Lexema"};
+        modeloTabla = new DefaultTableModel(columnas, 0);
+        tblTokens = new JTable(modeloTabla);
+        tblTokens.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        tblTokens.setRowHeight(22);
+        JScrollPane scrollTabla = new JScrollPane(tblTokens);
+        scrollTabla.setBorder(BorderFactory.createTitledBorder("Tokens Reconocidos (Tabla de Símbolos)"));
+        splitPane.setRightComponent(scrollTabla);
+
+        add(splitPane, BorderLayout.CENTER);
+
+        // Barra de Estado Inferior
+        lblEstado = new JLabel(" Listo para analizar código fuente.");
+        lblEstado.setBorder(BorderFactory.createEtchedBorder());
+        add(lblEstado, BorderLayout.SOUTH);
+
+        // Eventos de los Botones
+        btnAbrir.addActionListener(e -> abrirArchivo());
+        btnAnalizar.addActionListener(e -> ejecutarAnalisisLexico());
+        btnLimpiar.addActionListener(e -> {
+            txtCodigo.setText("");
+            modeloTabla.setRowCount(0);
+            lblEstado.setText(" Tablas limpias.");
+        });
+    }
+
+    private void abrirArchivo() {
+        JFileChooser chooser = new JFileChooser();
+        int opc = chooser.showOpenDialog(this);
+        if (opc == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+            try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+                txtCodigo.read(br, null);
+                lblEstado.setText(" Archivo cargado: " + f.getAbsolutePath());
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al leer archivo: " + ex.getMessage(),
+                        "Error E/S", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void ejecutarAnalisisLexico() {
+        String codigo = txtCodigo.getText();
+        if (codigo.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El editor de código está vacío.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        modeloTabla.setRowCount(0); // Limpiar tabla previa
+        Reader reader = new StringReader(codigo);
+        Lexer lexer = new Lexer(reader);
+        Token token;
+        int count = 0;
+        int errores = 0;
+
+        try {
+            while ((token = lexer.yylex()) != null) {
+                count++;
+                if ("ERROR_LEXICO".equals(token.getTipo())) {
+                    errores++;
+                }
+                modeloTabla.addRow(new Object[]{
+                    token.getLinea(),
+                    token.getColumna(),
+                    token.getTipo(),
+                    token.getLexema()
+                });
+            }
+
+            lblEstado.setText(String.format(" Análisis finalizado: %d tokens procesados (%d errores).", count, errores));
+            if (errores > 0) {
+                JOptionPane.showMessageDialog(this,
+                    "Se encontraron " + errores + " errores léxicos en el código fuente.",
+                    "Reporte Léxico", JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                    "¡Análisis Léxico exitoso! " + count + " tokens identificados sin errores.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Error durante el escaneo: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new VentanaCompilador().setVisible(true);
+        });
+    }
+}</code></pre>
+        </div>
+    </div>
+
+    <!-- FASE 5: PRÁCTICAS PARA ALUMNOS -->
+    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
+            <p><strong>1. Práctica en VS Code:</strong> Descarga <code>jflex.jar</code>, compila el archivo <code>Lexer.flex</code> desde la terminal de PowerShell y ejecuta el analizador con un archivo de prueba con 20 líneas de código fuente.</p>
+            <p><strong>2. Práctica en NetBeans:</strong> Crea el proyecto <code>CompiladorLexicoGUI</code> en NetBeans, añade el archivo <code>VentanaCompilador.java</code>, ejecuta la interfaz gráfica y analiza un archivo cargado con <code>JFileChooser</code> que contenga comentarios multilínea y caracteres no válidos para comprobar el manejo de errores con <code>JOptionPane</code>.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================================== -->
+<!-- SIMULADOR INTERACTIVO DE ANÁLISIS LÉXICO -->
+<!-- ============================================================================== -->
+<section id="simulador-lexico" class="scroll-mt-24">
+    <div class="border-2 border-indigo-200 rounded-2xl p-6 bg-gradient-to-b from-indigo-50/40 via-white to-white shadow-sm">
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-play text-indigo-600 mr-2"></i>Simulador Interactivo de Análisis Léxico (JFlex Emulator)</h3>
+        <p class="text-xs text-slate-600 mb-4">Escribe o edita una sentencia de código para ver en tiempo real cómo el escáner de JFlex descompone la entrada en tokens:</p>
+
+        <div class="mb-4">
+            <textarea id="simInputCode" rows="4" class="w-full p-3 border border-slate-300 rounded-xl font-mono text-xs bg-slate-900 text-emerald-400 shadow-inner">while (contador <= 100) {
+    float promedio = total / 2.5;
+    /* Comentario multilínea */
+    if (promedio != 0) return;
+}</textarea>
+        </div>
+
+        <div class="text-center mb-4">
+            <button onclick="ejecutarSimuladorLexico()" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-md">
+                <i class="fas fa-bolt mr-1"></i> Ejecutar Escaneo Léxico
+            </button>
+        </div>
+
+        <div class="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm">
+            <table class="w-full text-xs text-left">
+                <thead class="bg-slate-100 text-slate-700 font-mono">
+                    <tr><th class="p-2 border-b">#</th><th class="p-2 border-b">Token (Componente Léxico)</th><th class="p-2 border-b">Lexema</th><th class="p-2 border-b">Categoría</th></tr>
+                </thead>
+                <tbody id="tblTokensSimBody" class="divide-y divide-slate-100 font-mono text-slate-700">
+                    <!-- Filas generadas por JS -->
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
 
+
+                <!-- Navegación Inferior -->
+                <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
+                    <a href="unidad1.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-arrow-left mr-2 text-slate-400"></i> U1: Análisis Semántico</a>
+                    <a href="unidad3.html" class="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 3: Optimización <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                </div>
+
             </main>
 
-            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky -->
             <aside class="hidden lg:block lg:col-span-3 space-y-6">
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-indigo-600 text-xs"></i>
-                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta página</h4>
+                        <h4 class="font-bold text-xs uppercase tracking-wider">En esta unidad</h4>
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
-                        <a href="#tema-2-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.1 Notaciones intermedias</a>
-                        <a href="#tema-2-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.2 Representaciones (TAC)</a>
-                        <a href="#tema-2-2-cuadruplos" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">↳ Cuádruplos y Triplos</a>
-                        <a href="#tema-2-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.3 Esquema de generación</a>
-                        <a href="#tema-2-3-control" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">↳ Saltos y Backpatching</a>
-                        <a href="#tema-2-3-arreglos" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">↳ Direcciones de Arreglos</a>
-                        <a href="#laboratorio-tac" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Generador TAC</a>
-<a href="#ejemplos-y-practica" class="block py-1 text-indigo-700 font-bold border-l-2 border-indigo-500 pl-2 transition">Ejemplos & Problemario</a>
+                        <a href="#tema-2-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.1 Formalización del Análisis Léxico</a>
+<a href="#tema-2-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.2 Estrategias de Implementación</a>
+<a href="#tema-2-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.3 Estructura del Archivo JFlex (.flex)</a>
+<a href="#tema-2-4" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.4 Flujo en Consola con VS Code y javac</a>
+<a href="#tema-2-5" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">2.5 Proyecto NetBeans con GUI javax.swing</a>
+<a href="#simulador-lexico" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Simulador Interactivo JFlex</a>
+
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-indigo-50/60 p-3 rounded-xl border border-indigo-100">
-                        <div class="text-[11px] font-bold text-indigo-900 mb-1"><i class="fas fa-tools mr-1"></i> Laboratorio TAC</div>
-                        <p class="text-[11px] text-indigo-700 leading-tight">
-                            Prácticas 7 a 11: Emisión de cuádruplos y saltos para control de flujo.
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-laptop-code mr-1"></i> Taller Práctico JFlex (40%)</div>
+                        <p class="text-[11px] text-slate-600 leading-tight">
+                            Prácticas 5 a 8: Creación de analizador léxico en VS Code vía terminal y proyecto GUI en NetBeans con lectura de archivos y tabla de tokens.
                         </p>
                     </div>
                 </div>
@@ -546,70 +886,72 @@
 
     <!-- Footer -->
     <footer class="bg-slate-50 border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-        <p>Lenguajes y Autómatas II • SCD-1016 • IT Chilpancingo</p>
-        <p class="mt-1">Catedrático: Cruz Enrique García</p>
+        <p>Lenguajes y Autómatas II • SCD-1016 • TecNM IT Chilpancingo</p>
+        <p class="mt-1">Catedrático: Cruz Enrique García • Generación de Analizadores Léxicos con JFlex</p>
     </footer>
 
-    <script>
-        function copyCode(btn) {
-            const pre = btn.closest('.code-container').querySelector('code');
-            navigator.clipboard.writeText(pre.innerText).then(() => {
-                const orig = btn.innerText;
-                btn.innerText = "¡Copiado!";
-                setTimeout(() => { btn.innerText = orig; }, 1500);
-            });
-        }
+    
+<script>
+    function ejecutarSimuladorLexico() {
+        const code = document.getElementById('simInputCode').value;
+        const tbody = document.getElementById('tblTokensSimBody');
+        tbody.innerHTML = "";
 
-        function cargarEjemploControl() {
-            document.getElementById('tacSrcInput').value = "while (i < 10) { suma = suma + i; }";
-            generarTAC();
-        }
+        const rules = [
+            { type: "PR_WHILE", regex: /^while\b/, cat: "Palabra Reservada" },
+            { type: "PR_IF", regex: /^if\b/, cat: "Palabra Reservada" },
+            { type: "PR_ELSE", regex: /^else\b/, cat: "Palabra Reservada" },
+            { type: "PR_RETURN", regex: /^return\b/, cat: "Palabra Reservada" },
+            { type: "TIPO_FLOAT", regex: /^float\b/, cat: "Tipo de Dato" },
+            { type: "TIPO_INT", regex: /^int\b/, cat: "Tipo de Dato" },
+            { type: "OP_REL", regex: /^(<=|>=|==|!=|<|>)/, cat: "Op. Relacional" },
+            { type: "OP_ARIT", regex: /^(\+|-|\*|\/)/, cat: "Op. Aritmético" },
+            { type: "OP_ASIGN", regex: /^=/, cat: "Asignación" },
+            { type: "DELIMITADOR", regex: /^(\(|\)|\{|\}|;|,)/, cat: "Delimitador" },
+            { type: "CONST_FLOAT", regex: /^[0-9]+\.[0-9]+/, cat: "Literal Numérica" },
+            { type: "CONST_INT", regex: /^[0-9]+/, cat: "Literal Numérica" },
+            { type: "ID", regex: /^[a-zA-Z_][a-zA-Z0-9_]*/, cat: "Identificador" },
+            { type: "COMENTARIO", regex: /^\/\*[\s\S]*?\*\/|^\/\/.*/, cat: "Comentario (Ignorado)" },
+            { type: "ESPACIO", regex: /^\s+/, cat: "Espacio" },
+            { type: "ERROR_LEXICO", regex: /^./, cat: "Error Léxico" }
+        ];
 
-        function generarTAC() {
-            const src = document.getElementById('tacSrcInput').value;
-            const display = document.getElementById('tacCodeDisplay');
-            const tbody = document.getElementById('quadTableBody');
-
-            tbody.innerHTML = "";
-
-            if (src.includes("while")) {
-                display.innerHTML = `
-L1: t1 = i &lt; 10<br>
-&nbsp;&nbsp;&nbsp;&nbsp;if_false t1 goto L2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;t2 = suma + i<br>
-&nbsp;&nbsp;&nbsp;&nbsp;suma = t2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;goto L1<br>
-L2: // Fin del bucle
-                `;
-                const quads = [
-                    { num: 0, op: "<", arg1: "i", arg2: "10", res: "t1" },
-                    { num: 1, op: "if_false", arg1: "t1", arg2: "-", res: "L2" },
-                    { num: 2, op: "+", arg1: "suma", arg2: "i", res: "t2" },
-                    { num: 3, op: "=", arg1: "t2", arg2: "-", res: "suma" },
-                    { num: 4, op: "goto", arg1: "-", arg2: "-", res: "L1" }
-                ];
-                quads.forEach(q => {
-                    tbody.innerHTML += `<tr><td class="p-1">${q.num}</td><td class="p-1 font-bold text-indigo-600">${q.op}</td><td class="p-1">${q.arg1}</td><td class="p-1">${q.arg2}</td><td class="p-1 font-bold text-emerald-700">${q.res}</td></tr>`;
-                });
-            } else {
-                display.innerHTML = `
-t1 = base * 1.16<br>
-t2 = envio - descuento<br>
-t3 = t1 + t2<br>
-total = t3
-                `;
-                const quads = [
-                    { num: 0, op: "*", arg1: "base", arg2: "1.16", res: "t1" },
-                    { num: 1, op: "-", arg1: "envio", arg2: "descuento", res: "t2" },
-                    { num: 2, op: "+", arg1: "t1", arg2: "t2", res: "t3" },
-                    { num: 3, op: "=", arg1: "t3", arg2: "-", res: "total" }
-                ];
-                quads.forEach(q => {
-                    tbody.innerHTML += `<tr><td class="p-1">${q.num}</td><td class="p-1 font-bold text-indigo-600">${q.op}</td><td class="p-1">${q.arg1}</td><td class="p-1">${q.arg2}</td><td class="p-1 font-bold text-emerald-700">${q.res}</td></tr>`;
-                });
+        let pos = 0;
+        let tokenCount = 1;
+        while (pos < code.length) {
+            const sub = code.slice(pos);
+            let matched = false;
+            for (let r of rules) {
+                const match = sub.match(r.regex);
+                if (match) {
+                    const lexema = match[0];
+                    if (r.type !== "ESPACIO" && r.type !== "COMENTARIO") {
+                        const isError = r.type === "ERROR_LEXICO";
+                        tbody.innerHTML += `
+                            <tr class="${isError ? 'bg-rose-50 text-rose-800' : 'hover:bg-slate-50'}">
+                                <td class="p-2 border-b text-slate-400 font-bold">${tokenCount++}</td>
+                                <td class="p-2 border-b font-bold ${isError ? 'text-rose-700' : 'text-indigo-700'}">${r.type}</td>
+                                <td class="p-2 border-b font-mono font-semibold">${escapeHtml(lexema)}</td>
+                                <td class="p-2 border-b"><span class="px-2 py-0.5 rounded text-[10px] ${isError ? 'bg-rose-200 text-rose-900' : 'bg-slate-100 text-slate-700'}">${r.cat}</span></td>
+                            </tr>`;
+                    }
+                    pos += lexema.length;
+                    matched = true;
+                    break;
+                }
             }
+            if (!matched) pos++;
         }
-        window.onload = generarTAC;
-    </script>
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    window.onload = function() {
+        ejecutarSimuladorLexico();
+    };
+</script>
+
 </body>
 </html>
