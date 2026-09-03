@@ -1,49 +1,50 @@
-# Directrices de Diseño y Planeación Didáctica para Materias TecNM
+# Directrices de Diseño y Planeación Didáctica para Materias TecNM y CONALEP
 
-Este repositorio centraliza las planeaciones didácticas del Instituto Tecnológico de Chilpancingo (TecNM).
+Este repositorio centraliza las planeaciones didácticas del Catedrático **Cruz Enrique García** para:
+1. **TecNM — Instituto Tecnológico de Chilpancingo** (Ingeniería en Sistemas Computacionales).
+2. **CONALEP — Plantel Chilpancingo** (Profesional Técnico-Bachiller en Informática).
 
-## 1. Arquitectura Modular del Repositorio (Multi-Materia)
+## 1. Arquitectura Modular del Repositorio (Multi-Institución)
 - **Raíz (`/`)**:
-  - `index.html`: Portal principal (HUB) con el catálogo y tarjetas de todas las materias.
+  - `index.html`: Portal principal (HUB) con el catálogo y tarjetas de todas las materias de TecNM y CONALEP.
   - `GEMINI.md` y `.agents/rules/`: Reglas y estándares del proyecto.
-- **Subcarpetas por Materia**:
-  - Cada materia se crea en su propia subcarpeta con nombre en minúsculas y guiones (ej. `lenguajes-y-automatas-1/`, `lenguajes-y-automatas-2/`, `matematicas-discretas/`, `sistemas-operativos/`).
-  - Dentro de cada subcarpeta se aloja su propio `index.html` (planeación semestral de 16 semanas, 5 hrs/sem) y sus unidades (`unidad1.html`, `unidad2.html`, etc.).
-  - Los enlaces de retorno al portal central deben apuntar a `../index.html`.
-  - Cada nueva materia debe agregarse como tarjeta en el HUB de la raíz (`index.html`).
+- **Sección TecNM (`/lenguajes-y-automatas-1/`, `/lenguajes-y-automatas-2/`, `/matematicas-discretas/`)**:
+  - Planeaciones semestrales de 16 semanas (5 hrs/semana • 80 horas).
+- **Sección CONALEP (`/conalep/`)**:
+  - `conalep/index.html`: Portal catálogo de módulos CONALEP.
+  - `conalep/aplicacion-de-la-seguridad-informatica/`: Módulo **ASIN-03** (18 semanas • 4 hrs/semana • 72 horas totales / 7 créditos).
 
-## 2. Datos Institucionales y Docente
-- **Institución**: Instituto Tecnológico de Chilpancingo (TecNM).
+## 2. Datos Docentes e Institucionales
 - **Catedrático**: Cruz Enrique García.
-- **Periodo Escolar**: No especificar semestre/periodo particular; mantener formato semestral genérico y atemporal.
+- **Instituciones**:
+  - Instituto Tecnológico de Chilpancingo (TecNM).
+  - CONALEP Plantel Chilpancingo (Colegio Nacional de Educación Profesional Técnica).
+- **Periodo**: Formato semestral genérico y atemporal.
 
-## 3. Esquema Oficial de Evaluación
-Todas las planeaciones deben reflejar este desglose de evaluación:
-- **40% Firmas**: Evidencias de actividades en clase, ejercicios en libreta/taller y reportes de prácticas.
-- **10% Asistencias**: Puntualidad, asistencia regular y permanencia reglamentaria en el aula/laboratorio.
-- **50% Proyecto Integrador**: Desarrollo funcional y entrega del proyecto de la materia (ej. compilador, sistema, base de datos).
+## 3. Criterios de Evaluación Oficiales
+Todas las materias aplican el esquema institucional:
+- **40% Firmas**: Actividades en clase, ejercicios en libreta/taller y reportes de prácticas.
+- **10% Asistencias**: Asistencia, puntualidad reglamentaria y preceptorías.
+- **50% Proyecto Integrador / Evidencias SAE**: Proyecto funcional semestral y Actividades de Evaluación Oficiales (AE 1.1.1, 1.2.1, 2.1.1, 2.2.1, 2.3.1).
 
-## 4. Requisitos Pedagógicos de Contenido por Unidad
-Cada unidad temática (`unidadX.html`) DEBE contener obligatoriamente:
-1. **Teoría rigurosa y completa** alineada al programa oficial del TecNM.
-2. **Ilustraciones y Diagramas Vectoriales (SVG)** con animaciones CSS para facilitar la comprensión visual.
-3. **Ejemplos Resueltos Paso a Paso**: Problemas desarrollados con detalle procedimental para estudio guiado.
-4. **Problemario / Ejercicios de Práctica Propuestos**: Ejercicios para que los estudiantes resuelvan en clase/taller para su portafolio de firmas (40%).
-5. **Laboratorio / Simulador Interactivo en JavaScript**: Mini herramientas para que los alumnos experimenten en tiempo real.
+## 4. Estructura Pedagógica Obligatoria de 5 Fases por Subtema (CONALEP)
+Cada subtema y Resultado de Aprendizaje (RA) debe desarrollarse obligatoriamente bajo 5 fases secuenciales:
+1. **Fase 1: Apertura (Activación & Contexto)**: Casos de estudio de incidentes reales, preguntas detonadoras y evaluación diagnóstica.
+2. **Fase 2: Desarrollo Conceptual**: Marco teórico riguroso alineado al programa oficial, normas ISO/IEC (27000, 27032-27036), ITIL, COBIT, y glosarios técnicos.
+3. **Fase 3: Demostración & Modelado Paso a Paso**: Procedimientos guiados, scripts y comandos en consola (PowerShell, Linux, Firewall), y diagramas vectoriales SVG interactivos.
+4. **Fase 4: Aplicación Práctica**:
+   - **Simuladores Interactivos en JavaScript**: Herramientas integradas en la página (Calculadora CIA de Riesgos, Generador de Políticas ISO, Terminal de Firewall, Parser SIEM de Logs, Matriz de Auditoría).
+   - **Problemario / Taller**: 10 ejercicios prácticos resueltos y propuestos para el portafolio de firmas (40%).
+5. **Fase 5: Cierre, Evaluación & Metacognición**: Rúbrica oficial CONALEP (Excelente / Suficiente / Insuficiente) con ponderación exacta para el SAE y preguntas metacognitivas.
 
-## 5. Estilo Visual y Arquitectura (Inspirado en Luis Llamas - White UI)
-- **Tema Visual**: Fondo blanco/claro (`bg-white` / `#ffffff`) con acentos de color diferenciados por unidad.
-- **Estructura en 3 Columnas (Responsive y Proyector-Ready)**:
-  1. **Sidebar Izquierda**: Menú de navegación con todas las unidades del temario oficial, badges de dificultad (`diff-easy`, `diff-med`, `diff-hard`) y horas de cada unidad.
-  2. **Columna Central**: Contenido didáctico estructurado tipo diapositivas interactivas con migas de pan (*breadcrumbs*), pasos de algoritmos numerados, cajas de notas didácticas (`lll-info`, `lll-warning`, `lll-tip`), bloques de código con botón interactivo de "Copiar", ejemplos resueltos y ejercicios de práctica.
-  3. **Sidebar Derecha**: Tabla de contenidos dinámica (*"En esta página"* / TOC sticky) y caja de prácticas.
-- **Sub-páginas por Unidad**: Cada unidad se aloja en su archivo independiente (`unidad1.html`, `unidad2.html`, etc.) con navegación conectada hacia la unidad anterior y siguiente.
+## 5. Arquitectura de Diseño (Inspirado en Luis Llamas - White UI)
+- **Tema Visual Blanco y Limpio**: Fondos `#ffffff` con acentos de color profesionales.
+- **3 Columnas Responsive**:
+  - Columna 1 (Izquierda): Menú lateral de navegación con badges de dificultad (`diff-easy`, `diff-med`, `diff-hard`), duración y enlaces a las 5 fases.
+  - Columna 2 (Centro): Contenido didáctico para proyector/diapositivas, migas de pan, callouts (`lll-info`, `lll-warning`, `lll-tip`, `lll-danger`), bloques de código y problemarios.
+  - Columna 3 (Derecha): Tabla de contenidos dinámica (*"En esta página"* / TOC interactivo) y caja de entregables SAE.
 
-## 6. Calidad Técnica y Dependencias
-- **Cero dependencias obsoletas**: NUNCA incluir `polyfill.io`.
-- CDNs seguros y modernos:
-  - Tailwind CSS (`https://cdn.tailwindcss.com`)
-  - FontAwesome 6 (`https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css`)
-  - MathJax 3 (`https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js`)
-  - Google Fonts (*Outfit* para títulos/texto y *JetBrains Mono* para código y fórmulas)
-- Totalmente responsivo para proyectores en clase, computadoras de escritorio, laptops y dispositivos móviles.
+## 6. Seguridad y Librerías
+- **Prohibido**: `polyfill.io`.
+- **Permitido**: Tailwind CSS, FontAwesome 6, MathJax 3 (vía jsdelivr), Google Fonts (*Outfit* y *JetBrains Mono*).
+- Interactividad en JavaScript nativo.

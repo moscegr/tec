@@ -141,7 +141,7 @@
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
                     <a href="index.html" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition flex items-center"><i class="fas fa-home mr-1.5 text-slate-400"></i> Inicio</a>
-                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white transition flex items-center shadow-sm">Unidad 2: Código Intermedio <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
+                    <a href="unidad2.html" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white transition flex items-center shadow-sm">Unidad 2: Análisis Léxico JFlex <i class="fas fa-chevron-right ml-1.5 text-white/60"></i></a>
                 </div>
             </div>
         </div>
@@ -166,15 +166,15 @@
                             <span class="difficulty-badge bg-white/20 text-white border-0">20h</span>
                         </a>
                         <a href="unidad2.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>2. Código Intermedio (TAC)</span>
+                            <span>2. Análisis Léxico con JFlex</span>
                             <span class="difficulty-badge diff-med">20h</span>
                         </a>
                         <a href="unidad3.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>3. Optimización de Código</span>
+                            <span>3. Parser Sintáctico con CUP</span>
                             <span class="difficulty-badge diff-hard">20h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
-                            <span>4. Generación de Código Objeto</span>
+                            <span>4. Compilador JFlex + CUP</span>
                             <span class="difficulty-badge diff-hard">20h</span>
                         </a>
                     </nav>
@@ -208,7 +208,7 @@
                         Unidad 1: Análisis Semántico
                     </h1>
                     <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Árboles de expresiones (A.A.S.), acciones semánticas, comprobación estática de tipos, evaluación en pila semántica con recorridos IDR (SiVaVa) y RID (VaVaSi), tablas de símbolos/direcciones y gestión de errores semánticos mediante análisis manual.
+                        Árboles de expresiones (A.A.S.), acciones semánticas, comprobación estática de tipos, evaluación en pila semántica vertical con recorridos IDR (SiVaVa) y RID (VaVaSi), tablas de símbolos/direcciones y gestión de errores semánticos mediante análisis manual.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 20 Horas (Semanas 1-4)</span>
@@ -225,7 +225,7 @@
 <div class="lll-box lll-info">
     <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-brain text-purple-600 mr-2"></i>Fase de Análisis Semántico (SCD-1016)</h4>
     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-        El <strong>Análisis Semántico</strong> es la tercera fase de un compilador. Su misión es verificar que el árbol sintáctico generado cumpla con las reglas lógicas y de tipado del lenguaje de programación (comprobación de tipos, compatibilidad de operandos, existencia de variables y ámbito). En esta unidad, todo el trabajo se realiza mediante <strong>análisis manual riguroso</strong>, construcción de <strong>árboles de expresiones</strong>, evaluación en <strong>pilas semánticas (IDR y RID)</strong> y tablas de símbolos y direcciones.
+        El <strong>Análisis Semántico</strong> es la tercera fase de un compilador. Su misión es verificar que el árbol sintáctico generado cumpla con las reglas lógicas y de tipado del lenguaje de programación (comprobación de tipos, compatibilidad de operandos, existencia de variables y ámbito). En esta unidad, todo el trabajo se realiza mediante <strong>análisis manual riguroso</strong>, construcción de <strong>árboles de expresiones</strong>, evaluación en <strong>pilas semánticas verticales (IDR y RID)</strong> y tablas de símbolos y direcciones.
     </p>
 </div>
 
@@ -298,7 +298,6 @@
         <div class="bg-slate-900 p-4 rounded-xl text-white my-2">
             <div class="text-[11px] font-bold text-purple-400 mb-2 text-center uppercase tracking-wider font-mono">Árbol Sintáctico de la Expresión: (A + B) * (C - D)</div>
             <svg viewBox="0 0 460 140" class="w-full max-w-md mx-auto block">
-                <!-- Nodos y Enlaces -->
                 <line x1="230" y1="25" x2="140" y2="65" stroke="#94a3b8" stroke-width="2"/>
                 <line x1="230" y1="25" x2="320" y2="65" stroke="#94a3b8" stroke-width="2"/>
                 <line x1="140" y1="65" x2="90" y2="105" stroke="#94a3b8" stroke-width="2"/>
@@ -306,19 +305,15 @@
                 <line x1="320" y1="65" x2="270" y2="105" stroke="#94a3b8" stroke-width="2"/>
                 <line x1="320" y1="65" x2="370" y2="105" stroke="#94a3b8" stroke-width="2"/>
 
-                <!-- Raiz: Operador * -->
                 <circle cx="230" cy="25" r="16" fill="#9333ea" stroke="#ffffff" stroke-width="2"/>
                 <text x="230" y="31" fill="#ffffff" font-family="JetBrains Mono" font-size="16" font-weight="bold" text-anchor="middle">*</text>
 
-                <!-- Subarbol Izq: + -->
                 <circle cx="140" cy="65" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
                 <text x="140" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">+</text>
 
-                <!-- Subarbol Der: - -->
                 <circle cx="320" cy="65" r="14" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
                 <text x="320" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">-</text>
 
-                <!-- Hojas: A, B, C, D -->
                 <circle cx="90" cy="105" r="12" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
                 <text x="90" y="109" fill="#ffffff" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">A</text>
 
@@ -498,12 +493,12 @@
 </div>
 
 <!-- ============================================================================== -->
-<!-- 1.4 PILA SEMÁNTICA EN UN ANALIZADOR SINTÁCTICO -->
+<!-- 1.4 PILA SEMÁNTICA EN UN ANALIZADOR SINTÁCTICO (REPRESENTACIÓN VERTICAL) -->
 <!-- ============================================================================== -->
 <div id="tema-1-4" class="topic-container scroll-mt-24 border-2 border-purple-300 rounded-2xl p-6 bg-white shadow-md mb-8">
     <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-purple-100">
         <span class="w-9 h-9 rounded-xl bg-purple-600 text-white text-sm flex items-center justify-center font-mono font-bold shadow-sm">1.4</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Pila Semántica en un Analizador Sintáctico (Criterios IDR y RID)</h2>
+        <h2 class="text-xl font-extrabold text-slate-900">Pila Semántica en un Analizador Sintáctico (Representación Vertical IDR y RID)</h2>
     </div>
 
     <div class="pedagogy-step bg-purple-50/40 border border-purple-100 rounded-xl p-4 mb-4">
@@ -534,53 +529,325 @@
         </div>
     </div>
 
-    <!-- FASE 4: EJERCICIOS COMPLETOS DESARROLLADOS -->
+    <!-- FASE 3: REPRESENTACIÓN VERTICAL DE PILAS INICIALES -->
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso (Del Material Oficial)</span>
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-columns mr-1.5"></i> 3. Estructura Vertical de Pilas Semánticas Creadas con IDR y RID</span>
+        <p class="text-xs text-slate-600 mb-3">Para la expresión \(((1 + 2) * 4) + 3\), las pilas quedan ordenadas verticalmente desde el <strong>TOP (tope superior)</strong> hasta el <strong>Fondo</strong>:</p>
         
-        <!-- EJERCICIO 1 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-lg mx-auto my-2">
+            <!-- Pila IDR Vertical -->
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl border border-purple-200 shadow-sm">
+                <span class="text-xs font-bold text-purple-900 mb-2 uppercase font-mono">Pila Creada con IDR</span>
+                <div class="w-24 border-2 border-purple-400 rounded-lg overflow-hidden font-mono text-center text-xs shadow-inner">
+                    <div class="bg-purple-600 text-white font-bold py-1 text-[10px] tracking-wider">TOP</div>
+                    <div class="py-1.5 border-b border-purple-100 bg-purple-50 font-bold text-purple-900">+</div>
+                    <div class="py-1.5 border-b border-purple-100">3</div>
+                    <div class="py-1.5 border-b border-purple-100">*</div>
+                    <div class="py-1.5 border-b border-purple-100">4</div>
+                    <div class="py-1.5 border-b border-purple-100 bg-purple-100 text-purple-900 font-bold">+</div>
+                    <div class="py-1.5 border-b border-purple-100 bg-purple-100 text-purple-900 font-bold">2</div>
+                    <div class="py-1.5 bg-purple-100 text-purple-900 font-bold">1</div>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-1.5 font-mono">Fondo (F.I.)</span>
+            </div>
+
+            <!-- Pila RID Vertical -->
+            <div class="flex flex-col items-center bg-white p-4 rounded-xl border border-indigo-200 shadow-sm">
+                <span class="text-xs font-bold text-indigo-900 mb-2 uppercase font-mono">Pila Creada con RID</span>
+                <div class="w-24 border-2 border-indigo-400 rounded-lg overflow-hidden font-mono text-center text-xs shadow-inner">
+                    <div class="bg-indigo-600 text-white font-bold py-1 text-[10px] tracking-wider">TOP</div>
+                    <div class="py-1.5 border-b border-indigo-100">3</div>
+                    <div class="py-1.5 border-b border-indigo-100">4</div>
+                    <div class="py-1.5 border-b border-indigo-100 bg-indigo-100 text-indigo-900 font-bold">2</div>
+                    <div class="py-1.5 border-b border-indigo-100 bg-indigo-100 text-indigo-900 font-bold">1</div>
+                    <div class="py-1.5 border-b border-indigo-100 bg-indigo-100 text-indigo-900 font-bold">+</div>
+                    <div class="py-1.5 border-b border-indigo-100">*</div>
+                    <div class="py-1.5 bg-indigo-50 font-bold text-indigo-900">+</div>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-1.5 font-mono">Fondo (F.I.)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FASE 4: EVALUACIÓN VERTICAL PASO A PASO -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-chalkboard-teacher mr-1.5"></i> 4. Evaluación de Pilas Semánticas en Columnas Verticales Paso a Paso</span>
+        
+        <!-- EJERCICIO 1 IDR VERTICAL -->
         <div class="mb-6 bg-white p-4 border rounded-xl shadow-sm">
-            <h4 class="font-bold text-purple-900 text-sm mb-2">Caso de Estudio 1: Expresión \(((1 + 2) * 4) + 3\)</h4>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-                <div class="bg-purple-50/60 p-3 rounded-lg border border-purple-200">
-                    <strong class="text-purple-800 block mb-2 font-sans">Pila Creada con IDR (Evaluación SiVaVa):</strong>
-                    <div class="space-y-1">
-                        <div>Pila Inicial (Top a Fondo): <code>[ +, 3, *, 4, +, 2, 1 ]</code></div>
-                        <div>Paso 1: Terna <code>[+, 2, 1]</code> ➔ \(1 + 2 = 3\) ➔ Pila: <code>[ +, 3, *, 4, 3 ]</code></div>
-                        <div>Paso 2: Terna <code>[*, 4, 3]</code> ➔ \(3 * 4 = 12\) ➔ Pila: <code>[ +, 3, 12 ]</code></div>
-                        <div>Paso 3: Terna <code>[+, 3, 12]</code> ➔ \(12 + 3 = 15\) ➔ Pila: <code>[ 15 ]</code></div>
-                        <div class="text-emerald-700 font-bold font-sans mt-1">Resultado Final: 15</div>
+            <h4 class="font-bold text-purple-900 text-sm mb-1">Caso 1: Evaluación Paso a Paso en Pila IDR (Criterio SiVaVa: Signo-Valor-Valor)</h4>
+            <p class="text-xs text-slate-600 mb-4">Expresión: \(((1 + 2) * 4) + 3\). En cada paso se resalta en <span class="text-emerald-700 font-bold">verde</span> la terna reducida:</p>
+            
+            <div class="flex items-center justify-start gap-4 overflow-x-auto pb-4 pt-2 font-mono text-xs">
+                <!-- Paso 1 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Pila Inicial</span>
+                    <div class="w-16 border-2 border-purple-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-purple-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b">+</div>
+                        <div class="py-1 border-b">3</div>
+                        <div class="py-1 border-b">*</div>
+                        <div class="py-1 border-b">4</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">+</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">2</div>
+                        <div class="py-1 bg-emerald-100 text-emerald-900 font-bold">1</div>
                     </div>
+                    <span class="text-[9px] text-slate-400 mt-1">1 + 2 = 3</span>
                 </div>
 
-                <div class="bg-indigo-50/60 p-3 rounded-lg border border-indigo-200">
-                    <strong class="text-indigo-800 block mb-2 font-sans">Pila Creada con RID (Evaluación VaVaSi):</strong>
-                    <div class="space-y-1">
-                        <div>Pila Inicial (Top a Fondo): <code>[ 3, 4, 2, 1, +, *, + ]</code></div>
-                        <div>Paso 1: Terna <code>[2, 1, +]</code> ➔ \(1 + 2 = 3\) ➔ Pila: <code>[ 3, 4, 3, *, + ]</code></div>
-                        <div>Paso 2: Terna <code>[4, 3, *]</code> ➔ \(3 * 4 = 12\) ➔ Pila: <code>[ 3, 12, + ]</code></div>
-                        <div>Paso 3: Terna <code>[3, 12, +]</code> ➔ \(12 + 3 = 15\) ➔ Pila: <code>[ 15 ]</code></div>
-                        <div class="text-emerald-700 font-bold font-sans mt-1">Resultado Final: 15</div>
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 2 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Paso 2</span>
+                    <div class="w-16 border-2 border-purple-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-purple-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b">+</div>
+                        <div class="py-1 border-b">3</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">*</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">4</div>
+                        <div class="py-1 bg-emerald-100 text-emerald-900 font-bold">3</div>
                     </div>
+                    <span class="text-[9px] text-slate-400 mt-1">3 * 4 = 12</span>
+                </div>
+
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 3 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Paso 3</span>
+                    <div class="w-16 border-2 border-purple-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-purple-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">+</div>
+                        <div class="py-1 border-b bg-emerald-100 text-emerald-900 font-bold">3</div>
+                        <div class="py-1 bg-emerald-100 text-emerald-900 font-bold">12</div>
+                    </div>
+                    <span class="text-[9px] text-slate-400 mt-1">12 + 3 = 15</span>
+                </div>
+
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 4 Final -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-emerald-700 mb-1">Resultado Final</span>
+                    <div class="w-20 border-2 border-emerald-500 rounded-lg overflow-hidden bg-emerald-50 text-center shadow-md">
+                        <div class="bg-emerald-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-3 font-extrabold text-emerald-900 text-sm">15</div>
+                    </div>
+                    <span class="text-[9px] text-emerald-700 font-bold mt-1">Pila Evaluada</span>
                 </div>
             </div>
         </div>
 
-        <!-- EJERCICIO 2 -->
-        <div class="bg-white p-4 border rounded-xl shadow-sm">
-            <h4 class="font-bold text-purple-900 text-sm mb-2">Caso de Estudio 2: Expresión \(X = (5 * 3)^2 + \frac{(10 / 3)^2}{2}\)</h4>
-            <div class="text-xs text-slate-700 mb-3 space-y-1">
-                <p>1. Construcción del A.A.S.: Raíz principal <code>=</code> con hijo izquierdo <code>X</code> e hijo derecho <code>+</code>.</p>
-                <p>2. Subárbol derecho: <code>+</code> tiene a la izquierda <code>^ (* (5, 3), 2)</code> y a la derecha <code>/ (^ (/ (10, 3), 2), 2)</code>.</p>
+        <!-- EJERCICIO 1 RID VERTICAL -->
+        <div class="mb-6 bg-white p-4 border rounded-xl shadow-sm">
+            <h4 class="font-bold text-indigo-900 text-sm mb-1">Caso 2: Evaluación Paso a Paso en Pila RID (Criterio VaVaSi: Valor-Valor-Signo)</h4>
+            <p class="text-xs text-slate-600 mb-4">Expresión: \(((1 + 2) * 4) + 3\). Reducción terna por terna:</p>
+            
+            <div class="flex items-center justify-start gap-4 overflow-x-auto pb-4 pt-2 font-mono text-xs">
+                <!-- Paso 1 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Pila Inicial</span>
+                    <div class="w-16 border-2 border-indigo-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-indigo-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b">3</div>
+                        <div class="py-1 border-b">4</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">2</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">1</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">+</div>
+                        <div class="py-1 border-b">*</div>
+                        <div class="py-1">+</div>
+                    </div>
+                    <span class="text-[9px] text-slate-400 mt-1">1 + 2 = 3</span>
+                </div>
+
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 2 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Paso 2</span>
+                    <div class="w-16 border-2 border-indigo-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-indigo-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b">3</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">4</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">3</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">*</div>
+                        <div class="py-1">+</div>
+                    </div>
+                    <span class="text-[9px] text-slate-400 mt-1">3 * 4 = 12</span>
+                </div>
+
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 3 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-slate-500 mb-1">Paso 3</span>
+                    <div class="w-16 border-2 border-indigo-300 rounded-lg overflow-hidden bg-white text-center">
+                        <div class="bg-indigo-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">3</div>
+                        <div class="py-1 border-b bg-indigo-100 text-indigo-900 font-bold">12</div>
+                        <div class="py-1 bg-indigo-100 text-indigo-900 font-bold">+</div>
+                    </div>
+                    <span class="text-[9px] text-slate-400 mt-1">12 + 3 = 15</span>
+                </div>
+
+                <div class="text-slate-400 font-bold text-lg">➔</div>
+
+                <!-- Paso 4 Final -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[11px] font-bold text-indigo-700 mb-1">Resultado Final</span>
+                    <div class="w-20 border-2 border-indigo-500 rounded-lg overflow-hidden bg-indigo-50 text-center shadow-md">
+                        <div class="bg-indigo-600 text-white font-bold py-0.5 text-[9px]">TOP</div>
+                        <div class="py-3 font-extrabold text-indigo-900 text-sm">15</div>
+                    </div>
+                    <span class="text-[9px] text-indigo-700 font-bold mt-1">Pila Evaluada</span>
+                </div>
             </div>
-            <div class="overflow-x-auto bg-slate-900 text-white p-3 rounded-xl font-mono text-[11px] mb-3">
-                <div class="text-purple-400 font-bold mb-1">Traza de Evaluación Pila IDR (SiVaVa):</div>
-                [=, +, /, 2, ^, 2, /, 3, 10, ^, 2, *, 3, 5, X] ➔ Evalúa 10/3=3.33<br>
-                [=, +, /, 2, ^, 2, 3.33, ^, 2, *, 3, 5, X] ➔ Evalúa 3.33^2=11.11<br>
-                [=, +, /, 2, 11.11, ^, 2, *, 3, 5, X] ➔ Evalúa 11.11/2=5.555<br>
-                [=, +, 5.555, ^, 2, 15, X] ➔ Evalúa 5*3=15, luego 15^2=225<br>
-                [=, +, 5.555, 225, X] ➔ Evalúa 225 + 5.555 = 230.55<br>
-                [=, 230.55, X] ➔ Asignación final: <strong class="text-emerald-400">X = 230.55</strong>
+        </div>
+
+        <!-- EJERCICIO 2 COMPLETO -->
+        <div class="bg-white p-4 border rounded-xl shadow-sm">
+            <h4 class="font-bold text-purple-900 text-sm mb-2">Caso 3: Expresión \(X = (5 * 3)^2 + \frac{(10 / 3)^2}{2}\)</h4>
+            <p class="text-xs text-slate-600 mb-3">Pila IDR Vertical con todas las reducciones intermedias calculadas:</p>
+            
+            <div class="flex items-center justify-start gap-3 overflow-x-auto pb-4 pt-1 font-mono text-[11px]">
+                <!-- Pila 1 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Inicio</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b">+</div>
+                        <div class="py-0.5 border-b">/</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b">^</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">/</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">3</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">10</div>
+                        <div class="py-0.5 border-b">^</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b">*</div>
+                        <div class="py-0.5 border-b">3</div>
+                        <div class="py-0.5 border-b">5</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">10/3=3.33</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila 2 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Paso 2</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b">+</div>
+                        <div class="py-0.5 border-b">/</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">^</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">3.33</div>
+                        <div class="py-0.5 border-b">^</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b">*</div>
+                        <div class="py-0.5 border-b">3</div>
+                        <div class="py-0.5 border-b">5</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">3.33^2=11.11</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila 3 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Paso 3</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b">+</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">/</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">11.11</div>
+                        <div class="py-0.5 border-b">^</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b">*</div>
+                        <div class="py-0.5 border-b">3</div>
+                        <div class="py-0.5 border-b">5</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">11.11/2=5.55</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila 4 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Paso 4</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b">+</div>
+                        <div class="py-0.5 border-b">5.555</div>
+                        <div class="py-0.5 border-b">^</div>
+                        <div class="py-0.5 border-b">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">*</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">3</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">5</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">5*3=15</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila 5 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Paso 5</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b">+</div>
+                        <div class="py-0.5 border-b">5.555</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">^</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">2</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">15</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">15^2=225</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila 6 -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-slate-400 mb-1">Paso 6</span>
+                    <div class="w-14 border border-slate-300 rounded overflow-hidden text-center bg-slate-50">
+                        <div class="bg-slate-700 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b">=</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">+</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">5.555</div>
+                        <div class="py-0.5 border-b bg-emerald-100 text-emerald-900 font-bold">225</div>
+                        <div class="py-0.5">X</div>
+                    </div>
+                    <span class="text-[8px] text-slate-400 mt-1">225+5.55</span>
+                </div>
+
+                <div class="text-slate-300 font-bold">➔</div>
+
+                <!-- Pila Final -->
+                <div class="flex flex-col items-center flex-shrink-0">
+                    <span class="text-[10px] font-bold text-emerald-700 mb-1">Asignación</span>
+                    <div class="w-16 border-2 border-emerald-500 rounded overflow-hidden text-center bg-emerald-50 shadow-sm">
+                        <div class="bg-emerald-600 text-white py-0.5 text-[8px]">TOP</div>
+                        <div class="py-0.5 border-b font-bold text-slate-800">=</div>
+                        <div class="py-0.5 border-b font-bold text-emerald-800">230.55</div>
+                        <div class="py-0.5 font-bold text-slate-800">X</div>
+                    </div>
+                    <strong class="text-[9px] text-emerald-700 mt-1">X = 230.55</strong>
+                </div>
             </div>
         </div>
     </div>
@@ -589,19 +856,56 @@
     <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
         <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
         <div class="text-xs sm:text-sm text-slate-700 space-y-3 mt-1">
-            <div class="p-3 bg-white border border-slate-200 rounded-lg">
-                <strong>Ejercicio Inverso 1 (Reconstrucción desde Pila IDR):</strong>
-                <p class="text-slate-600 text-xs">Dada la pila IDR con Top <code>[ =, -, ^, 2, c, +, ^, 2, b, ^, 2, a, x ]</code>, reconstruye el A.A.S. y encuentra la expresión original.</p>
-                <span class="text-purple-700 font-bold font-mono text-[11px]">Respuesta: \(x = a^2 + b^2 - c^2\)</span>
+            <div class="p-3 bg-white border border-slate-200 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <strong>Ejercicio Inverso 1 (Reconstrucción desde Pila IDR Vertical):</strong>
+                    <p class="text-slate-600 text-xs mt-0.5">Dada la pila IDR con elementos de arriba a abajo <code>[ =, -, ^, 2, c, +, ^, 2, b, ^, 2, a, x ]</code>, reconstruye el A.A.S. y encuentra la expresión original.</p>
+                    <span class="text-purple-700 font-bold font-mono text-[11px] block mt-1">Respuesta: \(x = a^2 + b^2 - c^2\)</span>
+                </div>
+                <div class="w-14 border border-purple-300 rounded text-center text-[10px] font-mono bg-purple-50/50 flex-shrink-0">
+                    <div class="bg-purple-600 text-white text-[8px] py-0.5">TOP</div>
+                    <div class="py-0.5 border-b">=</div>
+                    <div class="py-0.5 border-b">-</div>
+                    <div class="py-0.5 border-b">^</div>
+                    <div class="py-0.5 border-b">2</div>
+                    <div class="py-0.5 border-b">c</div>
+                    <div class="py-0.5 border-b">+</div>
+                    <div class="py-0.5 border-b">...</div>
+                    <div class="py-0.5">x</div>
+                </div>
             </div>
-            <div class="p-3 bg-white border border-slate-200 rounded-lg">
-                <strong>Ejercicio Inverso 2 (Reconstrucción desde Pila RID):</strong>
-                <p class="text-slate-600 text-xs">Dada la pila RID con Top <code>[ 2, d, c, +, ^, 2, b, a, +, ^, +, x, = ]</code>, obtén el árbol sintáctico y la expresión original.</p>
-                <span class="text-purple-700 font-bold font-mono text-[11px]">Respuesta: \(x = (a + b)^2 + (c + d)^2\)</span>
+
+            <div class="p-3 bg-white border border-slate-200 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <strong>Ejercicio Inverso 2 (Reconstrucción desde Pila RID Vertical):</strong>
+                    <p class="text-slate-600 text-xs mt-0.5">Dada la pila RID con elementos de arriba a abajo <code>[ 2, d, c, +, ^, 2, b, a, +, ^, +, x, = ]</code>, obtén el árbol sintáctico y la expresión original.</p>
+                    <span class="text-purple-700 font-bold font-mono text-[11px] block mt-1">Respuesta: \(x = (a + b)^2 + (c + d)^2\)</span>
+                </div>
+                <div class="w-14 border border-indigo-300 rounded text-center text-[10px] font-mono bg-indigo-50/50 flex-shrink-0">
+                    <div class="bg-indigo-600 text-white text-[8px] py-0.5">TOP</div>
+                    <div class="py-0.5 border-b">2</div>
+                    <div class="py-0.5 border-b">d</div>
+                    <div class="py-0.5 border-b">c</div>
+                    <div class="py-0.5 border-b">+</div>
+                    <div class="py-0.5 border-b">^</div>
+                    <div class="py-0.5 border-b">...</div>
+                    <div class="py-0.5">=</div>
+                </div>
             </div>
-            <div class="p-3 bg-white border border-slate-200 rounded-lg">
-                <strong>Ejercicio Inverso 3 (Pila RID):</strong>
-                <p class="text-slate-600 text-xs">Dada la pila RID <code>A 9 Y 5 * 2 X ^ 2 * + - 3 * /</code>, genera el A.A.S. correspondiente y simplifícalo.</p>
+
+            <div class="p-3 bg-white border border-slate-200 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                    <strong>Ejercicio Inverso 3 (Pila RID):</strong>
+                    <p class="text-slate-600 text-xs mt-0.5">Dada la pila RID vertical con Top <code>A 9 Y 5 * 2 X ^ 2 * + - 3 * /</code>, genera el A.A.S. correspondiente y simplifícalo.</p>
+                </div>
+                <div class="w-14 border border-slate-300 rounded text-center text-[10px] font-mono bg-slate-50 flex-shrink-0">
+                    <div class="bg-slate-700 text-white text-[8px] py-0.5">TOP</div>
+                    <div class="py-0.5 border-b">A</div>
+                    <div class="py-0.5 border-b">9</div>
+                    <div class="py-0.5 border-b">Y</div>
+                    <div class="py-0.5 border-b">...</div>
+                    <div class="py-0.5">/</div>
+                </div>
             </div>
         </div>
     </div>
@@ -742,12 +1046,12 @@
 </div>
 
 <!-- ============================================================================== -->
-<!-- SIMULADOR INTERACTIVO DE PILA SEMÁNTICA -->
+<!-- SIMULADOR INTERACTIVO DE PILA SEMÁNTICA (REPRESENTACIÓN VERTICAL) -->
 <!-- ============================================================================== -->
 <section id="simulador-pila" class="scroll-mt-24">
     <div class="border-2 border-purple-200 rounded-2xl p-6 bg-gradient-to-b from-purple-50/40 via-white to-white shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-layer-group text-purple-600 mr-2"></i>Simulador de Pila Semántica (Evaluador Paso a Paso)</h3>
-        <p class="text-xs text-slate-600 mb-4">Selecciona una expresión para observar cómo se apila según el recorrido y cómo se evalúa aplicando el criterio <strong>SiVaVa (IDR)</strong> o <strong>VaVaSi (RID)</strong>:</p>
+        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-layer-group text-purple-600 mr-2"></i>Simulador de Pila Semántica Vertical (Evaluador Paso a Paso)</h3>
+        <p class="text-xs text-slate-600 mb-4">Selecciona una expresión para observar cómo se apila verticalmente según el recorrido y cómo se evalúa aplicando el criterio <strong>SiVaVa (IDR)</strong> o <strong>VaVaSi (RID)</strong>:</p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mb-4">
             <div>
@@ -777,12 +1081,19 @@
         </div>
 
         <div class="bg-slate-900 text-white p-4 rounded-xl font-mono text-xs max-w-lg mx-auto shadow-inner">
-            <div class="text-purple-400 font-bold mb-2 flex justify-between">
-                <span>Estado de la Pila Semántica:</span>
+            <div class="text-purple-400 font-bold mb-2 flex justify-between items-center">
+                <span>Pila Semántica Vertical:</span>
                 <span id="pasoNum" class="text-slate-400 text-[11px]">Paso 0</span>
             </div>
-            <div id="stackView" class="space-y-1 my-3 flex flex-col items-center">
-                <!-- Celdas de la pila -->
+            
+            <!-- Columna Vertical de Pila -->
+            <div class="flex justify-center my-3">
+                <div id="stackContainer" class="w-28 border-2 border-purple-400 rounded-lg overflow-hidden bg-slate-800 shadow-md">
+                    <div class="bg-purple-600 text-white font-bold py-1 text-center text-[10px] tracking-wider">TOP</div>
+                    <div id="stackView" class="flex flex-col divide-y divide-slate-700 text-center font-bold">
+                        <!-- Celdas verticales -->
+                    </div>
+                </div>
             </div>
             <div id="simLog" class="text-slate-300 text-[11px] border-t border-slate-700 pt-2 text-center"></div>
         </div>
@@ -793,7 +1104,7 @@
                 <!-- Navegación Inferior -->
                 <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
                     <a href="index.html" class="flex items-center text-slate-600 hover:text-slate-900 transition"><i class="fas fa-home mr-2 text-slate-400"></i> Temario Lenguajes y Autómatas II</a>
-                    <a href="unidad2.html" class="flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 2: Código Intermedio <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
+                    <a href="unidad2.html" class="flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition shadow-sm font-bold">Unidad 2: Análisis Léxico JFlex <i class="fas fa-arrow-right ml-2 text-white/60"></i></a>
                 </div>
 
             </main>
@@ -821,7 +1132,7 @@
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-purple-50/60 p-3 rounded-xl border border-purple-100">
                         <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-pencil-ruler mr-1"></i> Taller Manual y Firmas (40%)</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Prácticas 1 a 4: Construcción manual de A.A.S., evaluación paso a paso en pilas IDR/RID y generación de tablas de direcciones.
+                            Prácticas 1 a 4: Construcción manual de A.A.S., evaluación paso a paso en pilas verticales IDR/RID y generación de tablas de direcciones.
                         </p>
                     </div>
                 </div>
@@ -912,7 +1223,7 @@
         container.innerHTML = "";
         pasoData.stack.forEach((item, idx) => {
             const isTop = idx === 0;
-            container.innerHTML += `<div class="w-48 py-1.5 text-center rounded border ${isTop ? 'bg-purple-600 text-white font-bold border-purple-400 shadow' : 'bg-slate-800 text-slate-200 border-slate-700'}">${isTop ? '<span class="text-[9px] text-purple-200 block uppercase font-mono">TOS (Top of Stack)</span>' : ''}${item}</div>`;
+            container.innerHTML += `<div class="py-1.5 ${isTop ? 'bg-purple-900/60 text-purple-200' : 'text-slate-200'}">${item}</div>`;
         });
     }
 
