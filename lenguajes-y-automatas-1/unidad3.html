@@ -854,16 +854,16 @@ String cadena = <span class="text-green-400">"10101"</span>;
 </div>
 <!-- EJERCICIOS PRÁCTICOS PARA CLASE -->
 <div class="mt-8 border-t border-slate-200 pt-8">
-<h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-cyan-500"></i> Ejercicios Prácticos (Java)</h3>
+<h3 class="text-2xl font-bold text-slate-800 mb-2"><i class="fas fa-users-class mr-2 text-cyan-600"></i> Ejercicios Prácticos (Java)</h3>
 <p class="text-sm text-slate-600 mb-6">Completa estos "esqueletos" de código en tu IDE para construir y evaluar autómatas sin expresiones regulares.</p>
 <div class="grid md:grid-cols-2 gap-6">
 <!-- Ejercicio 1 -->
-<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto1_IniciaConA.java</span>
-<span class="text-[10px] bg-emerald-500 text-white px-2 py-0.5 rounded font-bold uppercase">Básico</span>
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 flex flex-col">
+<div class="bg-slate-50 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-700 font-semibold"><i class="fab fa-java text-cyan-600 mr-2"></i>Reto1_IniciaConA.java</span>
+<span class="text-[10px] bg-emerald-100 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-bold uppercase">Básico</span>
 </div>
-<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<div class="p-4 text-xs font-mono overflow-x-auto bg-slate-900 text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">AFD_IniciaA</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         String cad = <span class="text-green-400">"abba"</span>;
@@ -872,23 +872,23 @@ String cadena = <span class="text-green-400">"10101"</span>;
         <span class="text-slate-500">// TAREA: Programa las transiciones 
         // para aceptar cadenas de 'a' y 'b' 
         // que OBLIGATORIAMENTE empiecen con 'a'</span>
-        <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i=0; i<cad.<span class="text-blue-300">length(); i++) {
+        <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> i=0; i&lt;cad.<span class="text-blue-300">length</span>(); i++) {
             <span class="text-purple-400">char</span> c = cad.<span class="text-blue-300">charAt</span>(i);
             <span class="text-slate-500">// ESCRIBE_TU_SWITCH_AQUÍ</span>
         }
         
         <span class="text-slate-500">// Evalúa e imprime aceptación</span>
     }
-}</cad.<span></code></pre>
+}</code></pre>
 </div>
 </div>
 <!-- Ejercicio 2 -->
-<div class="bg-slate-900 rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-<div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
-<span class="text-xs font-mono text-slate-300"><i class="fab fa-java text-cyan-400 mr-2"></i>Reto2_Matriz.java</span>
-<span class="text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded font-bold uppercase">Medio</span>
+<div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 flex flex-col">
+<div class="bg-slate-50 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center">
+<span class="text-xs font-mono text-slate-700 font-semibold"><i class="fab fa-java text-cyan-600 mr-2"></i>Reto2_Matriz.java</span>
+<span class="text-[10px] bg-amber-100 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-bold uppercase">Medio</span>
 </div>
-<div class="p-4 text-xs font-mono overflow-x-auto text-slate-300 flex-1">
+<div class="p-4 text-xs font-mono overflow-x-auto bg-slate-900 text-slate-300 flex-1">
 <pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">AFD_Matriz</span> {
     <span class="text-purple-400">public static void</span> <span class="text-blue-300">main</span>(String[] args) {
         <span class="text-slate-500">// En vez de un switch, usa un arreglo 2D</span>
@@ -914,30 +914,30 @@ String cadena = <span class="text-green-400">"10101"</span>;
 </div>
 </section>
 <!-- Laboratorio Interactivo -->
-<section class="scroll-mt-32" id="laboratorio">
-<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-<div class="absolute -top-20 -right-20 w-80 h-80 bg-cyan-600 rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
-<div class="relative z-10">
-<h2 class="text-2xl md:text-3xl font-bold flex items-center mb-4">
-<i class="fas fa-microchip text-cyan-400 mr-3"></i> Simulador: Motor AFD en JS
-                    </h2>
-<p class="text-slate-300 text-sm mb-8 leading-relaxed">
-                        Este laboratorio ejecuta en tiempo real el <strong>Autómata del Ejemplo Guiado (sección 3.1)</strong>, cuyo objetivo es detectar si una cadena binaria termina estrictamente en <code>01</code>.
-                    </p>
-<div class="grid md:grid-cols-2 gap-8">
+<section class="scroll-mt-32 pb-8" id="laboratorio">
+<div class="topic-container border-2 border-slate-200 rounded-2xl p-6 sm:p-8 bg-gradient-to-b from-cyan-50/40 via-white to-white shadow-sm">
+<div>
+<span class="badge-step bg-cyan-100 text-cyan-800 mb-2 inline-flex"><i class="fas fa-flask mr-1.5"></i> Laboratorio Interactivo</span>
+<h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center mb-2">
+<i class="fas fa-microchip text-cyan-600 mr-2.5"></i> Simulador: Motor AFD en JS
+</h2>
+<p class="text-slate-600 text-xs sm:text-sm mb-6 leading-relaxed">
+Este laboratorio ejecuta en tiempo real el <strong>Autómata del Ejemplo Guiado (sección 3.1)</strong>, cuyo objetivo es detectar si una cadena binaria termina estrictamente en <code class="bg-white border border-slate-200 text-cyan-700 px-1.5 py-0.5 rounded font-mono font-bold">01</code>.
+</p>
+<div class="grid md:grid-cols-2 gap-6">
 <div class="space-y-4">
-<label class="block text-xs font-bold uppercase tracking-wider text-cyan-300">Ingresa Cadena Binaria (0s y 1s)</label>
-<input class="w-full bg-slate-800 border border-slate-600 text-white px-4 py-3 rounded-xl focus:border-cyan-400 outline-none transition font-mono" id="afdInput" placeholder="Ej: 101001" type="text"/>
-<button class="w-full bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg" onclick="simularAFD()">
-                                Simular Transiciones
-                            </button>
+<label class="block text-xs font-bold uppercase tracking-wider text-slate-700">Ingresa Cadena Binaria (0s y 1s)</label>
+<input class="w-full bg-white border border-slate-300 text-slate-900 px-4 py-2.5 rounded-xl focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 outline-none transition font-mono text-sm shadow-sm" id="afdInput" placeholder="Ej: 101001" type="text"/>
+<button class="w-full bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-2.5 rounded-xl font-bold transition shadow-sm text-sm" onclick="simularAFD()">
+Simular Transiciones
+</button>
 </div>
-<div class="bg-slate-950 rounded-2xl p-6 border border-slate-800 font-mono text-sm relative overflow-hidden">
-<h4 class="text-xs text-slate-500 uppercase tracking-wider font-bold mb-3 border-b border-slate-800 pb-2">Log de Ejecución</h4>
-<div class="space-y-2 h-40 overflow-y-auto text-xs" id="afdLog">
-<p class="text-slate-600 italic">Esperando cadena para procesar...</p>
+<div class="bg-slate-900 rounded-2xl p-5 border border-slate-800 font-mono text-sm relative overflow-hidden shadow-inner">
+<h4 class="text-xs text-slate-400 uppercase tracking-wider font-bold mb-3 border-b border-slate-800 pb-2">Log de Ejecución</h4>
+<div class="space-y-1.5 h-36 overflow-y-auto text-xs" id="afdLog">
+<p class="text-slate-500 italic">Esperando cadena para procesar...</p>
 </div>
-<div class="mt-4 pt-3 border-t border-slate-800 text-center font-bold text-lg" id="afdResult"></div>
+<div class="mt-3 pt-2 border-t border-slate-800 text-center font-bold text-sm" id="afdResult"></div>
 </div>
 </div>
 </div>
@@ -945,61 +945,67 @@ String cadena = <span class="text-green-400">"10101"</span>;
 </section>
 <!-- SECCIÓN DE PROYECTO (RANDOM ASSIGNMENT CON EXCEL Y SOLUCIONES) -->
 <section class="scroll-mt-32 pb-20" id="proyecto">
-<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+<div class="topic-container border-2 border-slate-200 rounded-2xl p-6 sm:p-8 bg-gradient-to-b from-slate-50 via-white to-white shadow-sm">
 <!-- TABS NAVEGACIÓN PROYECTO -->
-<div class="flex justify-center mb-8 relative z-10 border-b border-slate-700">
-<button class="px-6 py-3 text-sm font-bold text-rose-400 border-b-2 border-rose-500 uppercase tracking-wider transition" id="tabAlumno" onclick="switchTab('alumno')">Panel Alumno</button>
-<button class="px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider" id="tabDocente" onclick="switchTab('docente')">Acceso Docente</button>
+<div class="flex justify-center mb-8 border-b border-slate-200">
+<button class="px-6 py-2.5 text-xs sm:text-sm font-bold text-rose-700 border-b-2 border-rose-600 uppercase tracking-wider transition bg-rose-50/50 rounded-t-lg" id="tabAlumno" onclick="switchTab('alumno')">Panel Alumno</button>
+<button class="px-6 py-2.5 text-xs sm:text-sm font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-900 transition uppercase tracking-wider" id="tabDocente" onclick="switchTab('docente')">Acceso Docente</button>
 </div>
 <!-- 1. PANEL ALUMNO -->
-<div class="relative z-10" id="panel-alumno">
+<div id="panel-alumno">
 <!-- REGISTRO DEL ESTUDIANTE -->
 <div class="text-center py-6 max-w-lg mx-auto" id="registro-u3">
-<i class="fas fa-gamepad text-5xl text-rose-500 mb-4"></i>
-<h2 class="text-2xl md:text-3xl font-bold mb-2">Asignación de Proyecto Final</h2>
-<p class="text-slate-400 mb-8 text-sm">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 acertijos lógicos. <strong>Importante:</strong> Esta asignación se registrará y no podrás cambiarla después.</p>
-<div class="flex flex-col gap-4">
-<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center" id="nombreAlumno" placeholder="Tu Nombre Completo..." type="text"/>
-<button class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg w-full" onclick="asignarProyecto()">Obtener Proyecto</button>
+<div class="w-14 h-14 mx-auto rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4 border border-rose-200 shadow-sm">
+<i class="fas fa-gamepad"></i>
 </div>
-<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorNombre"><i class="fas fa-exclamation-triangle mr-2"></i>Debes ingresar tu nombre.</p>
+<h2 class="text-2xl font-extrabold text-slate-900 mb-2">Asignación de Proyecto Final</h2>
+<p class="text-slate-600 mb-6 text-xs sm:text-sm leading-relaxed">Ingresa tu nombre completo. El sistema te asignará aleatoriamente 1 de los 5 acertijos lógicos. <strong>Importante:</strong> Esta asignación se registrará y no podrás cambiarla después.</p>
+<div class="flex flex-col sm:flex-row gap-2.5">
+<input class="flex-1 bg-white border border-slate-300 text-slate-900 px-4 py-2.5 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none text-xs sm:text-sm transition text-center sm:text-left shadow-sm" id="nombreAlumno" placeholder="Tu Nombre Completo..." type="text"/>
+<button class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition shadow-sm" onclick="asignarProyecto()">Obtener Proyecto</button>
+</div>
+<p class="text-rose-600 mt-3 text-xs font-bold hidden" id="errorNombre"><i class="fas fa-exclamation-triangle mr-1.5"></i>Debes ingresar tu nombre.</p>
 </div>
 <!-- TICKET DEL PROYECTO -->
 <div class="hidden" id="resultado-u3">
 <div class="flex justify-end mb-4">
-<button class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center" onclick="descargarPDF()">
-<i class="fas fa-file-pdf mr-2"></i> Descargar Ticket en PDF
-                            </button>
+<button class="bg-rose-600 hover:bg-rose-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center shadow-sm" onclick="descargarPDF()">
+<i class="fas fa-file-pdf mr-1.5"></i> Descargar Ticket en PDF
+</button>
 </div>
-<div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4">
+<div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-200 pb-4">
 <div class="mb-4 md:mb-0">
-<h2 class="text-2xl md:text-3xl font-bold text-white flex items-center">
-<i class="fas fa-award text-rose-500 mr-3"></i> Ticket de Proyecto
-                                </h2>
-<p class="text-slate-400 mt-2 text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
+<span class="badge-step bg-rose-100 text-rose-800 mb-1 inline-flex"><i class="fas fa-award mr-1.5"></i> Ticket de Proyecto</span>
+<h2 class="text-2xl font-extrabold text-slate-900 flex items-center mt-1">
+Motor AFD en Java (GUI)
+</h2>
+<p class="text-slate-600 mt-1 text-xs sm:text-sm">Construcción de un Motor AFD (GUI) en Java.</p>
 </div>
 <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-<div class="text-left md:text-right">
-<span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-1">Estudiante:</span>
-<span class="text-cyan-400 font-bold text-lg" id="lblNombreEstudiante"></span>
+<div class="text-left md:text-right bg-slate-50 border border-slate-200 rounded-xl px-4 py-2">
+<span class="text-[10px] uppercase tracking-widest text-slate-500 font-bold block mb-0.5">Estudiante:</span>
+<span class="text-rose-700 font-bold text-sm sm:text-base" id="lblNombreEstudiante"></span>
 </div>
 </div>
 </div>
 <!-- ACERTIJO ASIGNADO -->
-<div class="bg-slate-800/80 p-6 rounded-xl border border-rose-500/50 mb-8 shadow-lg">
-<h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Reto Asignado</h4>
-<h3 class="text-xl font-bold text-white mb-4" id="lblTituloAcertijo"></h3>
-<p class="text-sm text-slate-300 leading-relaxed mb-4" id="lblDescAcertijo"></p>
-<div class="bg-slate-950 p-4 rounded-lg border border-slate-700 text-sm">
-<strong class="text-cyan-400">Alfabeto (\(\Sigma\)):</strong> <span class="text-slate-300 font-mono" id="lblAlfabeto"></span><br/>
-<strong class="text-cyan-400 mt-2 block">Aceptación:</strong> <span class="text-slate-300" id="lblAceptacion"></span>
+<div class="bg-rose-50/50 p-5 rounded-2xl border border-rose-200 mb-6 shadow-sm">
+<h4 class="font-bold text-rose-800 mb-1.5 uppercase tracking-wide text-xs">Reto Asignado</h4>
+<h3 class="text-lg font-bold text-slate-900 mb-3" id="lblTituloAcertijo"></h3>
+<p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-4" id="lblDescAcertijo"></p>
+<div class="bg-white p-4 rounded-xl border border-rose-100 text-xs sm:text-sm shadow-sm space-y-2">
+<div>
+<strong class="text-rose-900 block mb-0.5">Alfabeto (\(\Sigma\)):</strong> <span class="text-rose-700 font-mono text-xs bg-rose-50 px-2 py-1 rounded border border-rose-100 inline-block" id="lblAlfabeto"></span>
+</div>
+<div>
+<strong class="text-slate-900 block mb-0.5">Aceptación:</strong> <span class="text-slate-700 text-xs" id="lblAceptacion"></span>
+</div>
 </div>
 </div>
 <!-- REQUERIMIENTOS TÉCNICOS -->
-<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-8">
-<h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm"><i class="fas fa-cogs mr-2"></i> Requerimientos Técnicos Obligatorios</h4>
-<ol class="space-y-3 text-sm text-slate-300 list-decimal pl-5">
+<div class="pedagogy-step bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6">
+<h4 class="font-bold text-slate-900 mb-3 uppercase tracking-wide text-xs sm:text-sm flex items-center"><i class="fas fa-cogs mr-2 text-rose-600"></i> Requerimientos Técnicos Obligatorios</h4>
+<ol class="space-y-2.5 text-xs sm:text-sm text-slate-700 list-decimal pl-5 leading-relaxed">
 <li><strong>Interfaz Gráfica (GUI):</strong> El proyecto debe programarse en Java utilizando Swing o JavaFX. No se aceptan programas únicamente de consola.</li>
 <li><strong>Cero Regex y Cero Switch-Case:</strong> Está estrictamente prohibido usar expresiones regulares (<code>java.util.regex</code>) y también la estructura <code>switch-case</code>. La lógica debe programarse obligatoriamente utilizando una <strong>Matriz de Transiciones</strong> (arreglo 2D <code>int[][]</code>) o el <strong>Patrón de Diseño 'State'</strong> (Objetos).</li>
 <li><strong>Interfaz Completa:</strong> La GUI no solo debe tener los botones de control, sino que debe mostrar gráficamente en pantalla (como imagen o panel dibujado) el <strong>Diagrama de Estados</strong> y la <strong>Tabla de Transiciones</strong> del autómata.</li>
@@ -1007,34 +1013,36 @@ String cadena = <span class="text-green-400">"10101"</span>;
 </ol>
 </div>
 <!-- RÚBRICA -->
-<h4 class="font-bold text-rose-400 mb-3 uppercase tracking-wide text-sm"><i class="fas fa-check-double mr-2"></i> Rúbrica de Evaluación (100 pts)</h4>
-<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
+<div class="mt-6">
+<h4 class="font-bold text-slate-900 mb-3 uppercase tracking-wide text-xs sm:text-sm flex items-center"><i class="fas fa-check-double mr-2 text-rose-600"></i> Rúbrica de Evaluación (100 pts)</h4>
+<div class="bg-white rounded-xl overflow-hidden border border-slate-200 text-xs sm:text-sm shadow-sm">
 <table class="w-full text-left">
-<thead class="text-xs uppercase bg-slate-900 text-slate-400">
+<thead class="text-xs uppercase bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
 <tr>
-<th class="px-5 py-3 w-3/4 border-b border-slate-700">Criterio</th>
-<th class="px-5 py-3 border-b border-l border-slate-700 text-center">Puntaje</th>
+<th class="px-5 py-3 w-3/4">Criterio</th>
+<th class="px-5 py-3 border-l border-slate-200 text-center">Puntaje</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-700">
-<tr class="hover:bg-slate-700/50">
+<tbody class="divide-y divide-slate-100 text-slate-700">
+<tr class="hover:bg-slate-50">
 <td class="px-5 py-3"><strong>Lógica (Motor AFD):</strong> Modelado correcto de los estados usando Matriz 2D o Patrón State (Prohibido switch/regex). Frena o se resetea adecuadamente al equivocarse.</td>
-<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">40 pts</td>
+<td class="px-5 py-3 border-l border-slate-100 font-bold text-rose-700 text-center">40 pts</td>
 </tr>
-<tr class="hover:bg-slate-700/50">
+<tr class="hover:bg-slate-50">
 <td class="px-5 py-3"><strong>Interfaz y UX:</strong> Diseño de la interfaz gráfica y los controles (botones) correspondientes al alfabeto del problema.</td>
-<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+<td class="px-5 py-3 border-l border-slate-100 font-bold text-rose-700 text-center">20 pts</td>
 </tr>
-<tr class="hover:bg-slate-700/50">
+<tr class="hover:bg-slate-50">
 <td class="px-5 py-3"><strong>Integración Teórica:</strong> El Grafo de transiciones y la Tabla de transiciones están visibles integrados en la Interfaz Gráfica.</td>
-<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+<td class="px-5 py-3 border-l border-slate-100 font-bold text-rose-700 text-center">20 pts</td>
 </tr>
-<tr class="hover:bg-slate-700/50">
+<tr class="hover:bg-slate-50">
 <td class="px-5 py-3"><strong>Traza de Estados (Log):</strong> Muestra visiblemente en la interfaz los saltos de estado y las notificaciones de éxito/error en tiempo real.</td>
-<td class="px-5 py-3 border-l border-slate-700 font-bold text-rose-400 text-center">20 pts</td>
+<td class="px-5 py-3 border-l border-slate-100 font-bold text-rose-700 text-center">20 pts</td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -1096,45 +1104,50 @@ String cadena = <span class="text-green-400">"10101"</span>;
 </div>
 </div>
 <!-- 2. PANEL DOCENTE -->
-<div class="hidden relative z-10" id="panel-docente">
+<div class="hidden" id="panel-docente">
 <div class="text-center py-6 max-w-md mx-auto" id="login-docente">
-<i class="fas fa-lock text-4xl text-slate-500 mb-4"></i>
-<h2 class="text-2xl font-bold mb-4">Área del Docente</h2>
-<input class="w-full bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-cyan-500 outline-none transition text-center mb-4" id="passDocente" placeholder="Contraseña..." type="password"/>
-<button class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition w-full" onclick="loginDocente()">Ingresar</button>
-<p class="text-red-400 mt-4 text-sm hidden font-bold" id="errorPassDocente"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
+<div class="w-12 h-12 mx-auto rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center text-xl mb-3 border border-slate-200">
+<i class="fas fa-lock"></i>
+</div>
+<h2 class="text-xl font-bold text-slate-900 mb-2">Área del Docente</h2>
+<p class="text-xs text-slate-600 mb-4">Introduce la clave docente para consultar las asignaciones y soluciones.</p>
+<div class="flex flex-col sm:flex-row gap-2">
+<input class="flex-1 bg-white border border-slate-300 text-slate-900 px-4 py-2.5 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none transition text-xs sm:text-sm text-center shadow-sm" id="passDocente" placeholder="Contraseña..." type="password"/>
+<button class="bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition shadow-sm" onclick="loginDocente()">Ingresar</button>
+</div>
+<p class="text-rose-600 mt-2 text-xs font-bold hidden" id="errorPassDocente"><i class="fas fa-exclamation-triangle mr-1.5"></i>Contraseña incorrecta.</p>
 </div>
 <div class="hidden" id="dashboard-docente">
-<div class="flex justify-between items-end mb-6 border-b border-slate-700 pb-4">
+<div class="flex justify-between items-end mb-6 border-b border-slate-200 pb-4">
 <div>
-<h2 class="text-2xl font-bold text-white"><i class="fas fa-database text-cyan-400 mr-2"></i> Dashboard de Asignaciones</h2>
-<p class="text-slate-400 text-sm">Control de proyectos asignados a los alumnos.</p>
+<h2 class="text-xl font-bold text-slate-900 flex items-center"><i class="fas fa-database text-rose-600 mr-2"></i> Dashboard de Asignaciones</h2>
+<p class="text-slate-600 text-xs mt-0.5">Control de proyectos asignados a los alumnos.</p>
 </div>
-<button class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-bold transition shadow-lg text-sm flex items-center" onclick="exportarExcel()">
-<i class="fas fa-file-excel mr-2"></i> Descargar Excel (CSV)
-                            </button>
+<button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold transition shadow-sm text-xs flex items-center" onclick="exportarExcel()">
+<i class="fas fa-file-excel mr-1.5"></i> Descargar Excel (CSV)
+</button>
 </div>
 <!-- Tabla de asignaciones -->
-<div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 shadow-lg mb-8">
+<div class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm mb-8">
 <div class="max-h-60 overflow-y-auto">
-<table class="w-full text-left text-sm text-slate-300">
-<thead class="bg-slate-900 text-slate-400 text-xs uppercase sticky top-0">
+<table class="w-full text-left text-xs sm:text-sm">
+<thead class="bg-slate-50 text-slate-600 text-xs uppercase font-bold sticky top-0 border-b border-slate-200">
 <tr>
 <th class="px-4 py-3">Nombre del Alumno</th>
-<th class="px-4 py-3 border-l border-slate-700">Acertijo Asignado</th>
-<th class="px-4 py-3 border-l border-slate-700">Fecha/Hora</th>
+<th class="px-4 py-3 border-l border-slate-200">Acertijo Asignado</th>
+<th class="px-4 py-3 border-l border-slate-200">Fecha/Hora</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-700" id="tablaAsignacionesBody">
+<tbody class="divide-y divide-slate-100" id="tablaAsignacionesBody">
 <!-- Llenado por JS -->
 </tbody>
 </table>
 </div>
-<div class="p-4 text-center text-slate-500 text-sm hidden" id="emptyTableMsg">Aún no hay alumnos registrados.</div>
+<div class="p-4 text-center text-slate-500 text-xs hidden" id="emptyTableMsg">Aún no hay alumnos registrados.</div>
 </div>
 <!-- Ver todos los acertijos -->
-<h4 class="font-bold text-white mb-3"><i class="fas fa-list text-cyan-400 mr-2"></i> Catálogo de Acertijos y Soluciones</h4>
-<div class="grid md:grid-cols-2 gap-4 text-sm" id="catalogoAcertijos">
+<h4 class="font-bold text-slate-900 mb-3 text-xs sm:text-sm uppercase tracking-wider flex items-center"><i class="fas fa-list text-rose-600 mr-2"></i> Catálogo de Acertijos y Soluciones</h4>
+<div class="grid md:grid-cols-2 gap-4 text-xs sm:text-sm" id="catalogoAcertijos">
 <!-- Llenado por JS -->
 </div>
 </div>
@@ -1292,12 +1305,12 @@ String cadena = <span class="text-green-400">"10101"</span>;
         // Cambiar entre Pestaña Alumno y Docente
         function switchTab(tab) {
             document.getElementById('tabAlumno').className = tab === 'alumno' 
-                ? "px-6 py-3 text-sm font-bold text-rose-400 border-b-2 border-rose-500 uppercase tracking-wider transition" 
-                : "px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider";
+                ? "px-6 py-2.5 text-xs sm:text-sm font-bold text-rose-700 border-b-2 border-rose-600 uppercase tracking-wider transition bg-rose-50/50 rounded-t-lg" 
+                : "px-6 py-2.5 text-xs sm:text-sm font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-900 transition uppercase tracking-wider";
             
             document.getElementById('tabDocente').className = tab === 'docente' 
-                ? "px-6 py-3 text-sm font-bold text-cyan-400 border-b-2 border-cyan-500 uppercase tracking-wider transition" 
-                : "px-6 py-3 text-sm font-bold text-slate-400 border-b-2 border-transparent hover:text-white transition uppercase tracking-wider";
+                ? "px-6 py-2.5 text-xs sm:text-sm font-bold text-rose-700 border-b-2 border-rose-600 uppercase tracking-wider transition bg-rose-50/50 rounded-t-lg" 
+                : "px-6 py-2.5 text-xs sm:text-sm font-semibold text-slate-500 border-b-2 border-transparent hover:text-slate-900 transition uppercase tracking-wider";
 
             document.getElementById('panel-alumno').classList.toggle('hidden', tab !== 'alumno');
             document.getElementById('panel-docente').classList.toggle('hidden', tab !== 'docente');
@@ -1419,10 +1432,10 @@ String cadena = <span class="text-green-400">"10101"</span>;
                 for (const key in asignaciones) {
                     const data = asignaciones[key];
                     tbody.innerHTML += `
-                        <tr class="hover:bg-slate-800">
-                            <td class="px-4 py-2 text-white">${data.nombreOriginal}</td>
-                            <td class="px-4 py-2 border-l border-slate-700 text-cyan-300 font-medium">${data.acertijo.titulo}</td>
-                            <td class="px-4 py-2 border-l border-slate-700 text-slate-400">${data.fecha}</td>
+                        <tr class="hover:bg-slate-50 transition border-b border-slate-100">
+                            <td class="px-4 py-2.5 text-slate-900 font-medium">${data.nombreOriginal}</td>
+                            <td class="px-4 py-2.5 border-l border-slate-100 text-rose-700 font-semibold">${data.acertijo.titulo}</td>
+                            <td class="px-4 py-2.5 border-l border-slate-100 text-slate-500">${data.fecha}</td>
                         </tr>
                     `;
                 }
@@ -1433,13 +1446,13 @@ String cadena = <span class="text-green-400">"10101"</span>;
             catalogo.innerHTML = '';
             acertijos.forEach((a, i) => {
                 catalogo.innerHTML += `
-                    <div class="bg-slate-800 p-4 rounded-lg border border-slate-700 flex flex-col justify-between">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
                         <div>
-                            <strong class="text-cyan-400 block mb-1">${i+1}. ${a.titulo}</strong>
-                            <p class="text-slate-400 text-xs mb-3">${a.desc}</p>
+                            <strong class="text-rose-900 font-bold block mb-1">${i+1}. ${a.titulo}</strong>
+                            <p class="text-slate-600 text-xs mb-3 leading-relaxed">${a.desc}</p>
                         </div>
-                        <div class="bg-slate-900 p-3 rounded border border-slate-700 mt-2">
-                            <p class="text-emerald-400 text-xs"><strong><i class="fas fa-key mr-1"></i>Solución Esperada:</strong><br>${a.solucion}</p>
+                        <div class="bg-emerald-50/80 p-3 rounded-lg border border-emerald-200 mt-2">
+                            <p class="text-emerald-900 text-xs"><strong><i class="fas fa-key text-emerald-600 mr-1"></i>Solución Esperada:</strong><br><span class="text-emerald-800">${a.solucion}</span></p>
                         </div>
                     </div>
                 `;

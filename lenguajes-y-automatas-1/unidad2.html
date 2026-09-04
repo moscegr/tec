@@ -701,132 +701,154 @@
 </div>
 </section>
 <!-- SECCIÓN DE PROYECTO FINAL (PROTEGIDA) -->
-<section class="scroll-mt-32 pb-20" id="proyecto-final">
-<div class="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-800">
-<!-- Decoración -->
-<div class="absolute -bottom-20 -left-20 w-80 h-80 bg-rose-600 rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
-<!-- Pantalla de Bloqueo -->
-<div class="text-center py-10 relative z-10" id="lock-screen">
-<i class="fas fa-lock text-5xl text-rose-500 mb-4"></i>
-<h2 class="text-2xl md:text-3xl font-bold mb-2">Proyectos Prácticos - Unidad 2</h2>
-<p class="text-slate-400 mb-8 max-w-lg mx-auto">Esta sección contiene los requerimientos para el proyecto de Regex. Ingresa la contraseña del docente.</p>
-<div class="max-w-sm mx-auto flex flex-col sm:flex-row gap-3">
-<input class="flex-1 bg-slate-800 border border-slate-700 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none transition text-center sm:text-left" id="projectPassword" placeholder="Contraseña..." type="password"/>
-<button class="bg-rose-600 hover:bg-rose-500 text-white px-6 py-3 rounded-xl font-bold transition shadow-lg shadow-rose-900/50" onclick="unlockProjects()">
-                            Desbloquear
-                        </button>
-</div>
-<p class="text-red-400 mt-4 text-sm hidden font-bold" id="passwordError"><i class="fas fa-exclamation-triangle mr-2"></i>Contraseña incorrecta.</p>
-</div>
-<!-- Contenido Desbloqueado (Oculto por defecto) -->
-<div class="hidden relative z-10" id="unlocked-content">
-<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
-<div>
-<h2 class="text-2xl md:text-3xl font-bold flex items-center">
-<i class="fas fa-award text-rose-500 mr-3"></i> Proyecto Final Libre
-                            </h2>
-<p class="text-slate-400 mt-2 text-sm">Objetivo: Resolver un problema del mundo real aplicando el motor de Expresiones Regulares de Java.</p>
-</div>
-</div>
-<!-- REQUERIMIENTOS DEL PROYECTO LIBRE -->
-<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
-<h4 class="font-bold text-rose-400 mb-4 uppercase tracking-wide text-sm flex items-center">
-<i class="fas fa-clipboard-list mr-2"></i> Puntos a Cubrir (Obligatorios)
-                        </h4>
-<p class="text-sm text-slate-300 leading-relaxed mb-4">
-                            Deberás elegir, diseñar y construir una aplicación en Java (consola o interfaz gráfica) que resuelva un problema útil utilizando <strong>estrictamente</strong> la librería <code>java.util.regex</code>.
-                        </p>
-<ul class="space-y-4 text-sm text-slate-300">
-<li class="flex items-start">
-<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-<div>
-<strong class="text-white">1. Uso de la API nativa:</strong> 
-                                    El núcleo del programa debe depender de las clases <code>Pattern</code> y <code>Matcher</code>. Queda prohibido el uso de métodos básicos como <code>split()</code>, <code>indexOf()</code> o bucles manuales de caracteres para la lógica principal.
-                                </div>
-</li>
-<li class="flex items-start">
-<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-<div>
-<strong class="text-white">2. Múltiples Operaciones Regex:</strong> 
-                                    El proyecto debe implementar al menos <strong>dos acciones diferentes</strong> del motor. Por ejemplo: Validar un formato (usando <code>matches()</code>) Y extraer información específica (usando <code>find()</code> y <code>group()</code>), o realizar reemplazos estructurados (<code>replaceAll()</code>).
-                                </div>
-</li>
-<li class="flex items-start">
-<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-<div>
-<strong class="text-white">3. Complejidad del Patrón:</strong> 
-                                    Las Expresiones Regulares deben ser de tu autoría y mostrar nivel técnico. Deben incluir el uso de cuantificadores (<code>+, *, ?</code>), clases de caracteres (<code>\d, \w, [...]</code>), anclas (<code>^, $</code>) y agrupaciones con paréntesis <code>()</code>.
-                                </div>
-</li>
-<li class="flex items-start">
-<i class="fas fa-check-circle text-emerald-400 mt-1 mr-3 text-lg"></i>
-<div>
-<strong class="text-white">4. Dataset Realista:</strong> 
-                                    El programa debe procesar un conjunto de datos lógico. Puede leer un archivo de texto (<code>.txt</code>, <code>.csv</code>, <code>.log</code>) o procesar un bloque grande de texto introducido por el usuario.
-                                </div>
-</li>
-</ul>
-</div>
-<!-- EJEMPLOS DE IDEAS -->
-<div class="bg-indigo-900/30 p-5 rounded-xl border border-indigo-500/30 mb-10">
-<h4 class="font-bold text-indigo-300 mb-2 text-sm"><i class="fas fa-lightbulb mr-2"></i>Ideas de inspiración (puedes elegir otra):</h4>
-<p class="text-xs text-indigo-200/80 leading-relaxed">
-                            - Un analizador de código fuente que extraiga todas las variables declaradas y detecte si siguen las reglas de estilo <em>camelCase</em>.<br/>
-                            - Un procesador de logs de servidor que extraiga direcciones IP maliciosas y fechas de ataque.<br/>
-                            - Un "Web Scraper" simulado que reciba el código HTML de una página y extraiga todos los links (<code>href</code>) y correos electrónicos ocultos.
-                        </p>
-</div>
-<!-- RÚBRICA DE EVALUACIÓN LIBRE -->
-<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Lista a Evaluar (100 Puntos)</h3>
-<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700 text-sm text-slate-300 shadow-lg">
-<table class="w-full text-left">
-<thead class="text-xs uppercase bg-slate-900 text-slate-400">
-<tr>
-<th class="px-5 py-4 w-3/4">Criterio de Evaluación</th>
-<th class="px-5 py-4 border-l border-slate-700 text-center">Puntaje</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-700">
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-5 py-4">
-<strong class="text-white block mb-1">Complejidad y Precisión de Regex</strong>
-<span class="text-xs text-slate-400">Los patrones están bien construidos, utilizan funciones avanzadas (grupos, anclas, cuantificadores) y no arrojan falsos positivos ni falsos negativos.</span>
-</td>
-<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">35</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-5 py-4">
-<strong class="text-white block mb-1">Uso estricto de la API de Java</strong>
-<span class="text-xs text-slate-400">Implementación lógica y correcta de la instanciación de <code>Pattern.compile()</code> y la iteración con métodos de <code>Matcher</code> (matches, find, group).</span>
-</td>
-<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">25</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-5 py-4">
-<strong class="text-white block mb-1">Aplicación y Utilidad (Resolución del Problema)</strong>
-<span class="text-xs text-slate-400">El problema elegido tiene sentido en el mundo real, resuelve una necesidad práctica y el uso de expresiones regulares está totalmente justificado.</span>
-</td>
-<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">20</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-5 py-4">
-<strong class="text-white block mb-1">Interfaz y Experiencia de Usuario (UX)</strong>
-<span class="text-xs text-slate-400">El programa es fácil de usar, no colapsa con entradas vacías, muestra resultados limpios y presenta un menú claro (en consola o GUI).</span>
-</td>
-<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-5 py-4">
-<strong class="text-white block mb-1">Documentación y Defensa</strong>
-<span class="text-xs text-slate-400">El alumno es capaz de explicar detalladamente (paso a paso) cómo funciona su Expresión Regular y el código cuenta con comentarios pertinentes.</span>
-</td>
-<td class="px-5 py-4 border-l border-slate-700 font-bold text-rose-400 text-center text-lg">10</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+<section class="scroll-mt-32 pb-16" id="proyecto-final">
+    <div class="topic-container border-2 border-slate-200 rounded-2xl p-6 sm:p-8 bg-gradient-to-b from-slate-50 via-white to-white shadow-sm">
+        
+        <!-- Pantalla de Bloqueo -->
+        <div class="text-center py-8 max-w-md mx-auto" id="lock-screen">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4 border border-rose-200 shadow-sm">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Proyectos Prácticos • Unidad 2</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
+                Esta sección contiene los requerimientos para el proyecto de Regex. Ingresa la contraseña del docente.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2.5">
+                <input class="flex-1 bg-white border border-slate-300 text-slate-900 px-4 py-2.5 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none text-xs sm:text-sm transition text-center sm:text-left shadow-sm" id="projectPassword" placeholder="Contraseña de acceso..." type="password"/>
+                <button class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition shadow-sm" onclick="unlockProjects()">
+                    Desbloquear
+                </button>
+            </div>
+            <p class="text-rose-600 mt-3 text-xs font-bold hidden" id="passwordError">
+                <i class="fas fa-exclamation-triangle mr-1.5"></i>Contraseña incorrecta.
+            </p>
+        </div>
+
+        <!-- Contenido Desbloqueado -->
+        <div class="hidden" id="unlocked-content">
+            <div class="border-b border-slate-200 pb-5 mb-6">
+                <div class="flex items-center space-x-2 text-xs text-rose-600 font-bold uppercase tracking-wider mb-2">
+                    <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-code mr-1.5"></i> Java Regex API (Pattern & Matcher)</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center">
+                    <i class="fas fa-award text-rose-500 mr-2.5"></i> Proyecto Final Libre de Expresiones Regulares
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed max-w-3xl">
+                    Objetivo: Resolver un problema del mundo real aplicando el motor de Expresiones Regulares de Java (<code class="bg-white border border-slate-200 text-purple-700 px-1.5 py-0.5 rounded font-mono font-bold">java.util.regex</code>).
+                </p>
+            </div>
+
+            <!-- REQUERIMIENTOS DEL PROYECTO LIBRE -->
+            <div class="pedagogy-step bg-slate-50 border border-slate-200 rounded-xl p-5 mb-8">
+                <h4 class="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wider mb-3 flex items-center">
+                    <i class="fas fa-clipboard-list text-purple-600 mr-2"></i> Puntos a Cubrir (Obligatorios)
+                </h4>
+                <p class="text-xs text-slate-700 leading-relaxed mb-4">
+                    Deberás elegir, diseñar y construir una aplicación en Java (consola o interfaz gráfica) que resuelva un problema útil utilizando <strong>estrictamente</strong> la librería <code class="bg-white border border-slate-200 text-purple-700 px-1.5 py-0.5 rounded font-mono font-bold">java.util.regex</code>.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-emerald-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">1. Uso de la API nativa:</strong>
+                            El núcleo del programa debe depender de las clases <code class="text-purple-700 font-mono font-bold">Pattern</code> y <code class="text-purple-700 font-mono font-bold">Matcher</code>. Queda prohibido el uso de métodos básicos como <code class="font-mono text-slate-500">split()</code> o <code class="font-mono text-slate-500">indexOf()</code> para la lógica principal.
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-emerald-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">2. Múltiples Operaciones Regex:</strong>
+                            Implementar al menos dos acciones del motor: Validar formato (<code class="font-mono text-purple-700">matches()</code>) y extraer datos (<code class="font-mono text-purple-700">find()</code> / <code class="font-mono text-purple-700">group()</code>), o reemplazos estructurados (<code class="font-mono text-purple-700">replaceAll()</code>).
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-emerald-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">3. Complejidad del Patrón:</strong>
+                            Las Regex deben incluir cuantificadores (<code class="font-mono text-purple-700">+, *, ?</code>), clases (<code class="font-mono text-purple-700">\d, \w, [...]</code>), anclas (<code class="font-mono text-purple-700">^, $</code>) y grupos con paréntesis <code class="font-mono text-purple-700">()</code>.
+                        </div>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-emerald-600 mt-0.5 text-sm"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">4. Dataset Realista:</strong>
+                            El programa debe procesar un archivo (<code class="font-mono text-slate-600">.txt</code>, <code class="font-mono text-slate-600">.csv</code>, <code class="font-mono text-slate-600">.log</code>) o procesar bloques de texto introducidos por el usuario.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EJEMPLOS DE IDEAS -->
+            <div class="bg-indigo-50/70 p-5 rounded-2xl border border-indigo-100 mb-8">
+                <h4 class="font-bold text-indigo-950 mb-2 text-xs sm:text-sm flex items-center">
+                    <i class="fas fa-lightbulb text-indigo-600 mr-2"></i> Ideas de inspiración (puedes proponer otra):
+                </h4>
+                <ul class="text-xs text-indigo-900/80 space-y-1.5 leading-relaxed">
+                    <li>• <strong>Analizador de Estilo de Código:</strong> Extraer variables declaradas y validar que cumplan la convención <em>camelCase</em>.</li>
+                    <li>• <strong>Procesador de Logs de Servidor:</strong> Detectar direcciones IP sospechosas, códigos HTTP de error (404, 500) y timestamps.</li>
+                    <li>• <strong>Web Scraper de Correos y URLs:</strong> Recibir HTML crudo y extraer de forma estructurada enlaces válidos (<code class="font-mono text-indigo-800">href</code>) y correos de contacto.</li>
+                </ul>
+            </div>
+
+            <!-- RÚBRICA DE EVALUACIÓN LIBRE -->
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fas fa-clipboard-check text-purple-600 mr-2"></i> Rúbrica de Evaluación (100 Puntos)
+                    </h3>
+                    <span class="difficulty-badge diff-med">Evaluación Oficial</span>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-x-auto border border-slate-200 shadow-sm">
+                    <table class="w-full text-left text-xs text-slate-700">
+                        <thead class="text-[11px] uppercase bg-slate-50 text-slate-700 font-mono border-b border-slate-200">
+                            <tr>
+                                <th class="px-5 py-3.5 w-3/4">Criterio de Evaluación</th>
+                                <th class="px-5 py-3.5 border-l border-slate-200 text-center">Puntaje</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="hover:bg-slate-50/70 transition">
+                                <td class="px-5 py-3.5">
+                                    <strong class="text-slate-900 block mb-0.5">Complejidad y Precisión de Regex</strong>
+                                    <span class="text-xs text-slate-500">Los patrones utilizan funciones avanzadas (grupos, anclas, cuantificadores) sin falsos positivos ni falsos negativos.</span>
+                                </td>
+                                <td class="px-5 py-3.5 border-l border-slate-200 font-bold text-purple-700 text-center font-mono text-sm">35 pts</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/70 transition">
+                                <td class="px-5 py-3.5">
+                                    <strong class="text-slate-900 block mb-0.5">Uso estricto de la API de Java</strong>
+                                    <span class="text-xs text-slate-500">Implementación correcta de <code class="font-mono text-slate-700">Pattern.compile()</code> y métodos de <code class="font-mono text-slate-700">Matcher</code> (matches, find, group).</span>
+                                </td>
+                                <td class="px-5 py-3.5 border-l border-slate-200 font-bold text-purple-700 text-center font-mono text-sm">25 pts</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/70 transition">
+                                <td class="px-5 py-3.5">
+                                    <strong class="text-slate-900 block mb-0.5">Aplicación y Utilidad del Problema</strong>
+                                    <span class="text-xs text-slate-500">El problema resuelve una necesidad práctica y el uso de expresiones regulares está totalmente justificado.</span>
+                                </td>
+                                <td class="px-5 py-3.5 border-l border-slate-200 font-bold text-purple-700 text-center font-mono text-sm">20 pts</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/70 transition">
+                                <td class="px-5 py-3.5">
+                                    <strong class="text-slate-900 block mb-0.5">Interfaz y Experiencia de Usuario (UX)</strong>
+                                    <span class="text-xs text-slate-500">Fácil de usar, no colapsa con entradas vacías y presenta salidas limpias y estructuradas.</span>
+                                </td>
+                                <td class="px-5 py-3.5 border-l border-slate-200 font-bold text-purple-700 text-center font-mono text-sm">10 pts</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/70 transition">
+                                <td class="px-5 py-3.5">
+                                    <strong class="text-slate-900 block mb-0.5">Documentación y Defensa</strong>
+                                    <span class="text-xs text-slate-500">Explicación paso a paso de la Expresión Regular y código fuente documentado.</span>
+                                </td>
+                                <td class="px-5 py-3.5 border-l border-slate-200 font-bold text-purple-700 text-center font-mono text-sm">10 pts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- Navegación Inferior entre Unidades -->
 <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold mt-12 mb-8">
