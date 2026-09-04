@@ -14,11 +14,8 @@
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']]
-            },
-            options: {
-                processHtmlClass: 'tex2jax_process'
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
             }
         };
     </script>
@@ -1216,203 +1213,441 @@
 </div>
 <!-- Contenido Desbloqueado (Oculto por defecto) -->
 <div class="hidden relative z-10" id="unlocked-content">
-<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700 pb-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 border-b border-slate-700/80 pb-6">
 <div>
-<h2 class="text-2xl md:text-3xl font-bold flex items-center">
-<i class="fas fa-award text-rose-500 mr-3"></i> Proyectos Finales
-                            </h2>
-<p class="text-slate-400 mt-2 text-sm">Objetivo: Desarrollar un programa que combine la teoría de Lenguajes Regulares (Tipo 3) y Libres de Contexto (Tipo 2).</p>
+    <div class="flex items-center space-x-2 text-xs text-rose-400 font-bold uppercase tracking-wider mb-2">
+        <span class="bg-rose-950/80 text-rose-300 px-2.5 py-1 rounded-full border border-rose-800/60 font-mono text-[10px]">Chomsky: Tipo 3 (Regex) + Tipo 2 (Pila)</span>
+    </div>
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white flex items-center">
+        <i class="fas fa-award text-rose-500 mr-3"></i> Proyectos Finales de Unidad 1
+    </h2>
+    <p class="text-slate-300 mt-2 text-xs sm:text-sm leading-relaxed max-w-2xl">
+        Objetivo: Desarrollar un programa en consola o interfaz gráfica que integre la teoría de <strong>Lenguajes Regulares (Chomsky Tipo 3)</strong> para extracción de tokens y <strong>Lenguajes Libres de Contexto (Chomsky Tipo 2)</strong> para validación de anidamientos con Pila (LIFO).
+    </p>
 </div>
 </div>
-<div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-10">
-<h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wide text-xs">Instrucciones Generales</h4>
-<p class="text-sm text-slate-300 leading-relaxed mb-2">El programa debe recibir una cadena de texto (String) ingresada por el usuario.</p>
-<ol class="list-decimal pl-5 text-sm text-slate-300 space-y-1">
-<li>Validar que los "tokens" de la cadena sean válidos usando <strong>Expresiones Regulares (Tipo 3)</strong>.</li>
-<li>Validar que el anidamiento de la cadena sea correcto utilizando una <strong>Pila / Stack (Tipo 2)</strong>.</li>
-</ol>
-<p class="text-sm text-slate-300 mt-4 font-bold">Elige UNO de los siguientes problemas (según el formato asignado):</p>
+
+<!-- Instrucciones Generales -->
+<div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700/80 mb-10 shadow-lg">
+    <h4 class="font-bold text-rose-400 mb-2 uppercase tracking-wider text-xs flex items-center">
+        <i class="fas fa-clipboard-list mr-2"></i> Instrucciones de Implementación
+    </h4>
+    <p class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-3">
+        El programa debe solicitar una cadena de texto (<code class="bg-slate-900 text-rose-300 px-1.5 py-0.5 rounded font-mono">String</code>) y realizar dos fases consecutivas de análisis:
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300">
+        <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-700/50 flex items-start space-x-3">
+            <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+            <div>
+                <strong class="text-sky-300 block mb-1">Fase Léxica (Tipo 3):</strong>
+                Validar que todos los tokens individuales cumplan con las <strong>Expresiones Regulares (Regex)</strong> asignadas al problema.
+            </div>
+        </div>
+        <div class="bg-slate-900/70 p-3.5 rounded-xl border border-slate-700/50 flex items-start space-x-3">
+            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+            <div>
+                <strong class="text-emerald-300 block mb-1">Fase Sintáctica (Tipo 2):</strong>
+                Validar que los símbolos de apertura y cierre estén anidados y balanceados mediante una <strong>Pila / Stack (LIFO)</strong>.
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 pt-3 border-t border-slate-700/50 flex items-center justify-between text-xs text-slate-400">
+        <span>Elige <strong>UNO</strong> de los siguientes problemas según el formato que te corresponda:</span>
+    </div>
 </div>
-<!-- FORMATO 1 -->
-<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato A (Set 1)</h3>
-<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
-<!-- Opcion 1.1 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-rose-300">1. Fórmulas Químicas</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">En química, las moléculas se representan con letras mayúsculas, minúsculas, números y signos de agrupación. El objetivo es crear un validador que determine si una fórmula está bien escrita.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar elementos. Empiezan con Mayúscula, seguida de cero o una minúscula, y opcionalmente un número (ej. H, Na, O2). No se permiten caracteres especiales sueltos.</span>
+
+<!-- FORMATO A (SET 1) -->
+<div class="mb-14">
+    <div class="flex items-center space-x-3 mb-6 pb-2 border-b border-slate-800">
+        <span class="px-3 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-mono font-bold text-xs border border-rose-500/30">Set 1</span>
+        <h3 class="text-xl font-bold text-white">Formato A: Problemas Asignados</h3>
+    </div>
+
+    <div class="space-y-6">
+        <!-- Opcion 1.1: Formulas Quimicas -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-300 font-mono font-bold text-sm flex items-center justify-center border border-rose-500/30">1</span>
+                        <h4 class="font-bold text-white text-lg text-rose-200">Fórmulas Químicas</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-950/80 text-rose-300 border border-rose-800/60">Química & Anidamiento</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    En química, las moléculas se representan con letras mayúsculas, minúsculas, números y signos de agrupación. El objetivo es crear un validador que determine si una fórmula está sintácticamente bien escrita.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usa <strong>Regex</strong> para validar elementos: inician con mayúscula, seguida de cero o una minúscula y opcionalmente un número de subíndice (ej. <code class="text-sky-300 font-mono">H</code>, <code class="text-sky-300 font-mono">Na</code>, <code class="text-sky-300 font-mono">O2</code>, <code class="text-sky-300 font-mono">Fe</code>).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usa una <strong>Pila (Stack)</strong> para validar que los paréntesis <code class="text-emerald-300 font-mono">()</code> y corchetes <code class="text-emerald-300 font-mono">[]</code> abran y cierren en estricto orden LIFO.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px]">✔ K4[Fe(CN)6]</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Estructura y anidamiento correcto.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px]">✘ [Na(Cl)]]</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error: Corchete de cierre sobrante.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+
+        <!-- Opcion 1.2: Linter XML/HTML -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-300 font-mono font-bold text-sm flex items-center justify-center border border-rose-500/30">2</span>
+                        <h4 class="font-bold text-white text-lg text-rose-200">Linter XML / HTML</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-950/80 text-rose-300 border border-rose-800/60">Marcado & Etiquetas</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Los lenguajes de marcado utilizan etiquetas emparejadas que envuelven datos. El objetivo es crear un validador que verifique la sintaxis y anidamiento de un subconjunto de HTML/XML.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Validar con <strong>Regex</strong> los nombres de etiqueta y el contenido interno (ej. en <code class="text-sky-300 font-mono">&lt;email&gt;</code> validar formato de correo, en <code class="text-sky-300 font-mono">&lt;tel&gt;</code> validar 10 dígitos).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usar una <strong>Pila</strong> para apilar etiquetas de apertura <code class="text-emerald-300 font-mono">&lt;tag&gt;</code> y desapilar al encontrar su correspondiente <code class="text-emerald-300 font-mono">&lt;/tag&gt;</code> exacto.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px] truncate">✔ &lt;user&gt;&lt;email&gt;a@tec.mx&lt;/email&gt;&lt;/user&gt;</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Etiquetas cerradas en orden.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px] truncate">✘ &lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt;</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error: Cruce indebido de etiquetas.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+
+        <!-- Opcion 1.3: Clausulas WHERE SQL -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-300 font-mono font-bold text-sm flex items-center justify-center border border-rose-500/30">3</span>
+                        <h4 class="font-bold text-white text-lg text-rose-200">Cláusulas WHERE (SQL)</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-950/80 text-rose-300 border border-rose-800/60">Bases de Datos & Lógica</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Las consultas a bases de datos requieren lógica booleana fuertemente estructurada y variables normalizadas. El objetivo es validar la sintaxis de condiciones WHERE complejas.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usar <strong>Regex</strong> para nombres de columnas válidos (<code class="text-sky-300 font-mono">id_usuario</code>, <code class="text-sky-300 font-mono">edad</code>), operadores relacionales (<code class="text-sky-300 font-mono">&gt;=</code>, <code class="text-sky-300 font-mono">&lt;=</code>, <code class="text-sky-300 font-mono">=</code>, <code class="text-sky-300 font-mono">&lt;&gt;</code>) y conectores (<code class="text-sky-300 font-mono">AND</code>, <code class="text-sky-300 font-mono">OR</code>).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usar una <strong>Pila</strong> para garantizar que todos los paréntesis de agrupación de las cláusulas booleanas compuestas abran y cierren sin desbalanceos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px] truncate">✔ (edad &gt; 18 AND (saldo &gt; 0))</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Condición válida y balanceada.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px] truncate">✘ (1edad &gt; 18)</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error léxico: Identificador inicia con dígito.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Debes usar una <strong>Pila (Stack)</strong> para validar que los paréntesis () y corchetes [] estén perfectamente balanceados y cerrados en el orden LIFO correcto.</span>
+
+<!-- FORMATO B (SET 2) -->
+<div class="mb-14">
+    <div class="flex items-center space-x-3 mb-6 pb-2 border-b border-slate-800">
+        <span class="px-3 py-1 rounded-lg bg-purple-500/20 text-purple-300 font-mono font-bold text-xs border border-purple-500/30">Set 2</span>
+        <h3 class="text-xl font-bold text-white">Formato B: Problemas Asignados</h3>
+    </div>
+
+    <div class="space-y-6">
+        <!-- Opcion 2.1: Sintaxis JSON -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-bold text-sm flex items-center justify-center border border-purple-500/30">1</span>
+                        <h4 class="font-bold text-white text-lg text-purple-200">Sintaxis JSON Simplificada</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">Intercambio de Datos</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    El formato JSON es el estándar de serialización web, compuesto por objetos entre llaves y arreglos entre corchetes. El objetivo es crear un validador sintáctico estricto.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usa <strong>Regex</strong> para validar claves entre comillas dobles (<code class="text-sky-300 font-mono">"nombre"</code>), números enteros/decimales y literales booleanos (<code class="text-sky-300 font-mono">true</code>, <code class="text-sky-300 font-mono">false</code>, <code class="text-sky-300 font-mono">null</code>).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usa una <strong>Pila</strong> para asegurar que las llaves <code class="text-emerald-300 font-mono">{}</code> de objetos y corchetes <code class="text-emerald-300 font-mono">[]</code> de arreglos se abran y cierren sin entrecruzarse.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px] truncate">✔ { "id": [1, 2], "ok": true }</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Estructura JSON válida.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px] truncate">✘ { "id": [1, 2} ]</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error: Cruce de llave dentro de corchete.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+
+        <!-- Opcion 2.2: Formulas de Excel -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-bold text-sm flex items-center justify-center border border-purple-500/30">2</span>
+                        <h4 class="font-bold text-white text-lg text-purple-200">Fórmulas de Hojas de Cálculo (Excel)</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">Cálculo & Funciones</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Las hojas de cálculo ejecutan operaciones anidadas mediante referencias a celdas y llamadas a funciones predefinidas. El objetivo es validar expresiones algebraicas de hoja de cálculo.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            <strong>Regex</strong> para coordenadas de celda (<code class="text-sky-300 font-mono">[A-Z]{{1,3}}[1-9][0-9]*</code>) y catálogo de funciones soportadas (<code class="text-sky-300 font-mono">SUMA</code>, <code class="text-sky-300 font-mono">PROMEDIO</code>, <code class="text-sky-300 font-mono">MAX</code>, <code class="text-sky-300 font-mono">MIN</code>, <code class="text-sky-300 font-mono">SI</code>).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Usa una <strong>Pila</strong> para asegurar que los paréntesis de cada función anidada abran y cierren sin dejar argumentos huérfanos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px] truncate">✔ SUMA(A1, MAX(B1, C2))</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Funciones anidadas correctas.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px] truncate">✘ SUMA(1A, B1)</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error léxico: Coordenada de celda inválida.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+
+        <!-- Opcion 2.3: Arboles de Carpetas -->
+        <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80 shadow-md flex flex-col md:flex-row gap-6">
+            <div class="flex-1 space-y-4">
+                <div class="flex items-center justify-between gap-2 border-b border-slate-700/60 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 font-mono font-bold text-sm flex items-center justify-center border border-purple-500/30">3</span>
+                        <h4 class="font-bold text-white text-lg text-purple-200">Árboles de Carpetas y Archivos</h4>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-purple-950/80 text-purple-300 border border-purple-800/60">Sistemas & Jerarquías</span>
+                </div>
+                
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Los sistemas operativos organizan sus directorios jerárquicamente mediante bloques delimitados. El objetivo es validar la estructura textual de un árbol de archivos.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-sky-400 font-bold flex items-center mb-1.5"><i class="fas fa-search mr-1.5"></i> Análisis Léxico (Tipo 3):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            <strong>Regex</strong>: Nombres de carpetas inician con Mayúscula (sin caracteres especiales), archivos en minúsculas terminando con punto y extensión de 2 a 4 caracteres (<code class="text-sky-300 font-mono">a.txt</code>, <code class="text-sky-300 font-mono">foto.png</code>).
+                        </p>
+                    </div>
+                    <div class="text-xs bg-slate-900/80 p-3.5 rounded-xl border border-slate-700/60">
+                        <span class="text-emerald-400 font-bold flex items-center mb-1.5"><i class="fas fa-layer-group mr-1.5"></i> Análisis Sintáctico (Tipo 2):</span>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Las carpetas usan llaves <code class="text-emerald-300 font-mono">{{ }}</code>. Usa una <strong>Pila</strong> para asegurar que cada subdirectorio abra y cierre sin llaves desparejadas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casos de Prueba Panel -->
+            <div class="md:w-64 bg-slate-950/80 p-4 rounded-xl text-xs font-mono border border-slate-800 flex flex-col justify-between flex-shrink-0">
+                <div>
+                    <span class="text-slate-400 block mb-2 uppercase tracking-wider font-sans font-bold text-[10px]"><i class="fas fa-vial mr-1 text-purple-400"></i> Casos de Prueba</span>
+                    <div class="space-y-2">
+                        <div class="bg-emerald-950/40 border border-emerald-800/50 p-2.5 rounded-lg">
+                            <span class="text-emerald-400 font-bold block text-[11px] truncate">✔ Raiz {{ Carpeta {{ a.txt }} b.png }}</span>
+                            <span class="text-emerald-200/70 text-[10px] font-sans">Jerarquía de carpetas correcta.</span>
+                        </div>
+                        <div class="bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-lg">
+                            <span class="text-rose-400 font-bold block text-[11px] truncate">✘ Sistema {{ a.txt }} }}</span>
+                            <span class="text-rose-200/70 text-[10px] font-sans">Error sintáctico: Llave extra de cierre.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800/80 text-[10px] text-slate-400 font-sans">
+                    <i class="fas fa-check-circle text-sky-400 mr-1"></i> Tipo 3 (Regex) + Tipo 2 (Pila)
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ K4[Fe(CN)6]</span>
-<span class="text-red-400 block truncate">✘ [Na(Cl)]] <span class="text-slate-500 text-[9px] font-sans">(Corchete extra)</span></span>
+
+<!-- RÚBRICA DE CALIFICACIÓN -->
+<div class="mt-12 pt-8 border-t border-slate-700">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold text-white flex items-center">
+            <i class="fas fa-clipboard-check text-rose-400 mr-2"></i> Rúbrica de Calificación (100 Puntos)
+        </h3>
+        <span class="text-xs text-slate-400">Ponderación Oficial para Portafolio / Proyecto</span>
+    </div>
+
+    <div class="bg-slate-800/90 rounded-2xl overflow-x-auto border border-slate-700 shadow-md">
+        <table class="w-full text-xs text-left text-slate-300">
+            <thead class="text-[11px] uppercase bg-slate-900/90 text-slate-400 font-mono">
+                <tr>
+                    <th class="px-5 py-3.5">Criterio de Evaluación</th>
+                    <th class="px-5 py-3.5 border-l border-slate-700">Excelente (100%)</th>
+                    <th class="px-5 py-3.5 border-l border-slate-700">Suficiente (70%)</th>
+                    <th class="px-5 py-3.5 border-l border-slate-700">Deficiente (0%)</th>
+                    <th class="px-5 py-3.5 border-l border-slate-700 text-center">Pts</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-700/80 text-xs">
+                <tr class="hover:bg-slate-750 transition">
+                    <td class="px-5 py-3.5 font-bold text-white">1. Análisis Léxico (Tipo 3)</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-300">Define Regex exactas y eficientes para clasificar y extraer todos los tokens válidos.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-400">Implementa Regex con fallos menores o falsos positivos en casos límite.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-500">No utiliza Expresiones Regulares o no valida tokens.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-center font-bold text-rose-400 font-mono text-sm">30</td>
+                </tr>
+                <tr class="hover:bg-slate-750 transition">
+                    <td class="px-5 py-3.5 font-bold text-white">2. Análisis Sintáctico (Tipo 2)</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-300">Implementa una estructura de Pila (Stack) LIFO para verificar anidamientos de apertura y cierre.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-400">Utiliza Pila pero falla en casos de cruces o símbolos de cierre sin apertura previa.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-500">Utiliza contadores numéricos simples en lugar de una Pila LIFO.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-center font-bold text-rose-400 font-mono text-sm">30</td>
+                </tr>
+                <tr class="hover:bg-slate-750 transition">
+                    <td class="px-5 py-3.5 font-bold text-white">3. Manejo de Errores</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-300">Distingue y reporta con precisión si el fallo ocurre por token léxico o por desbalanceo sintáctico.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-400">Valida la cadena pero emite mensajes genéricos sin ubicar la fase del error.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-500">No reporta errores o colapsa el programa.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-center font-bold text-rose-400 font-mono text-sm">20</td>
+                </tr>
+                <tr class="hover:bg-slate-750 transition">
+                    <td class="px-5 py-3.5 font-bold text-white">4. Batería de Pruebas</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-300">Demuestra la validación completa sobre al menos 5 casos válidos y 5 casos inválidos con traza.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-400">Solo prueba los 2 casos de ejemplo sin casos adicionales.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-500">No presenta pruebas ni trazas.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-center font-bold text-rose-400 font-mono text-sm">10</td>
+                </tr>
+                <tr class="hover:bg-slate-750 transition">
+                    <td class="px-5 py-3.5 font-bold text-white">5. Código e Interfaz</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-300">Código modular, limpio y comentado. Interfaz intuitiva (consola formateada o GUI).</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-400">Código en un solo bloque con cadenas hardcodeadas o poca documentación.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-slate-500">Código desordenado o no ejecutable.</td>
+                    <td class="px-5 py-3.5 border-l border-slate-700/80 text-center font-bold text-rose-400 font-mono text-sm">10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-</div>
-</div>
-<!-- Opcion 1.2 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-rose-300">2. Linter XML/HTML</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">Los lenguajes de marcado utilizan etiquetas que envuelven contenido. El objetivo es crear un validador que analice una versión simplificada de un lenguaje de marcado como HTML.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed">Validar el contenido interno con <strong>Regex</strong>. Si hay una etiqueta &lt;email&gt; o &lt;tel&gt;, garantiza que el texto dentro sea un correo válido o un número de 10 dígitos.</span>
-</div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Usar una <strong>Pila</strong> para leer etiquetas y verificar que cada etiqueta de apertura tenga exactamente su etiqueta de cierre correspondiente en el orden correcto.</span>
-</div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ &lt;user&gt;&lt;email&gt;a@edu.mx&lt;/email&gt;&lt;/user&gt;</span>
-<span class="text-red-400 block truncate">✘ &lt;a&gt;&lt;b&gt;&lt;/a&gt;&lt;/b&gt; <span class="text-slate-500 text-[9px] font-sans">(Cruce de etiquetas)</span></span>
-</div>
-</div>
-</div>
-<!-- Opcion 1.3 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-rose-300">3. Cláusulas WHERE (SQL)</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">Las consultas a bases de datos requieren lógica booleana fuertemente estructurada y variables específicas. Valida la sintaxis de una condición WHERE de SQL.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed">Usar <strong>Regex</strong> para nombres de columnas (letras, números y guión bajo, sin empezar con números) y validar operadores estrictamente como &gt;, &lt;, =, AND, OR.</span>
-</div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Las condiciones lógicas se agrupan. Usar una <strong>Pila</strong> para garantizar que todos los paréntesis de la sentencia estén cerrados y balanceados.</span>
-</div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ (edad &gt; 18 AND (saldo &gt; 0))</span>
-<span class="text-red-400 block truncate">✘ (1edad &gt; 18) <span class="text-slate-500 text-[9px] font-sans">(Variable inválida)</span></span>
-</div>
-</div>
-</div>
-</div>
-<!-- FORMATO 2 -->
-<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Formato B (Set 2)</h3>
-<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 mb-12">
-<!-- Opcion 2.1 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-purple-300">1. Sintaxis JSON</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">El formato JSON es el estándar mundial para el intercambio de datos en la web, basado en arreglos y objetos anidados. Crea un analizador que valide su estructura.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed">Usa <strong>Regex</strong> para validar los tipos de datos primitivos: Las claves deben ser texto entre comillas dobles, y los valores números o booleanos (true, false).</span>
-</div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Los objetos se encierran en llaves {} y arreglos en corchetes []. Usa una <strong>Pila</strong> para validar que se abran y cierren sin cruzarse.</span>
-</div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ { "id": [1, 2] }</span>
-<span class="text-red-400 block truncate">✘ { "id": [1, 2} ] <span class="text-slate-500 text-[9px] font-sans">(Cruce)</span></span>
-</div>
-</div>
-</div>
-<!-- Opcion 2.2 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-purple-300">2. Fórmulas de Excel</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">Las hojas de cálculo utilizan un lenguaje específico para realizar cálculos anidados usando referencias a celdas específicas y llamadas a funciones predefinidas.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed"><strong>Regex</strong> para celdas: 1-3 letras mayúsculas seguidas de un número mayor a cero. Además, validar que las funciones existan en una lista (SUMA, PROMEDIO).</span>
-</div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Las fórmulas complejas evalúan funciones dentro de funciones. Debes usar una <strong>Pila</strong> para validar que los paréntesis de agrupación estén balanceados.</span>
-</div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ SUMA(A1, MAX(B1))</span>
-<span class="text-red-400 block truncate">✘ SUMA(1A, B1) <span class="text-slate-500 text-[9px] font-sans">(Referencia mala)</span></span>
-</div>
-</div>
-</div>
-<!-- Opcion 2.3 -->
-<div class="bg-slate-800 p-5 rounded-xl border border-slate-700 flex flex-col">
-<h4 class="font-bold text-white mb-2 text-md text-purple-300">3. Árboles de Carpetas</h4>
-<p class="text-xs text-slate-400 mb-4 leading-relaxed">Los sistemas operativos utilizan lenguajes de texto para definir la estructura de carpetas y archivos. Valida que el árbol cumpla reglas de nomenclatura y agrupamiento.</p>
-<div class="space-y-3 flex-1">
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-blue-400 font-bold block mb-1"><i class="fas fa-search mr-1"></i> Análisis Léxico (Tipo 3):</span>
-<span class="text-slate-300 leading-relaxed"><strong>Regex</strong>: Carpetas inician con Mayúscula, sin caracteres especiales. Archivos en minúsculas terminando con punto y extensión (2-4 letras).</span>
-</div>
-<div class="text-xs bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
-<span class="text-emerald-400 font-bold block mb-1"><i class="fas fa-layer-group mr-1"></i> Análisis Sintáctico (Tipo 2):</span>
-<span class="text-slate-300 leading-relaxed">Las carpetas usan llaves { }. Usa una <strong>Pila</strong> para asegurar que abran y cierren correctamente sin subcarpetas mal cerradas.</span>
-</div>
-<div class="bg-slate-950 p-3 rounded-lg text-[11px] font-mono border border-slate-800 mt-auto">
-<span class="text-slate-500 block mb-1 uppercase tracking-wider font-sans font-bold text-[9px]">Casos de Prueba</span>
-<span class="text-green-400 block truncate">✔ Raiz { Carpeta { a.txt } b.png }</span>
-<span class="text-red-400 block truncate">✘ Sistema { a.txt } } <span class="text-slate-500 text-[9px] font-sans">(Llave extra)</span></span>
-<span class="text-red-400 block truncate" title="Carpeta en minúscula y archivo con mayúscula">✘ raiz { Archivo.txt } <span class="text-slate-500 text-[9px] font-sans">(Regex falla)</span></span>
-</div>
-</div>
-</div>
-</div>
-<!-- RÚBRICA -->
-<h3 class="text-xl font-bold text-white mb-4 border-b border-slate-800 pb-2">Rúbrica de Calificación (100 Puntos)</h3>
-<div class="bg-slate-800 rounded-xl overflow-x-auto border border-slate-700">
-<table class="w-full text-sm text-left text-slate-300">
-<thead class="text-xs uppercase bg-slate-900 text-slate-400">
-<tr>
-<th class="px-6 py-4">Criterio</th>
-<th class="px-6 py-4 border-l border-slate-700">Excelente (100%)</th>
-<th class="px-6 py-4 border-l border-slate-700">Suficiente (70%)</th>
-<th class="px-6 py-4 border-l border-slate-700">Deficiente (0%)</th>
-<th class="px-6 py-4 border-l border-slate-700 text-center">Pts</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-700">
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-6 py-4 font-bold">1. Léxico (Tipo 3)</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Define Regex correctas y eficientes para extraer tokens.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Regex con fallos menores o falsos positivos.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No utiliza Regex.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-6 py-4 font-bold">2. Sintaxis (Tipo 2)</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Implementa Pila (Stack) perfecta para anidamiento.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Usa Pila, falla en casos cruzados o sobrantes.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Usa contadores simples o colapsa.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">30</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-6 py-4 font-bold">3. Lógica Total</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Funciona como "todo". Distingue error léxico de sintáctico.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Valida, pero da errores genéricos.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">Solo valida una parte.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">20</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-6 py-4 font-bold">4. Pruebas/Reporte</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Demostración matemática clara (Regex formal y dibujo de pila).</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Incompleto o poco claro.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No presenta.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
-</tr>
-<tr class="hover:bg-slate-700/50 transition">
-<td class="px-6 py-4 font-bold">5. Interfaz/UX</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Código comentado, admite múltiples pruebas.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs">Cadenas hardcodeadas, sin comentarios.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-xs text-slate-500">No compila.</td>
-<td class="px-6 py-4 border-l border-slate-700 text-center font-bold text-rose-400">10</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
