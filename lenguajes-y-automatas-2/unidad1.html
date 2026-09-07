@@ -959,12 +959,132 @@
         <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica</span>
         <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
             <p>
-                La <strong>Tabla de Símbolos</strong> almacena los metadatos de cada identificador declarado en el código fuente: nombre del lexema, categoría (variable, función, parámetro), tipo de dato, ámbito (scope: global o local) y su <strong>dirección relativa de memoria (offset)</strong>.
+                La <strong>Tabla de Símbolos</strong> es la estructura de datos central del compilador encargada de almacenar y gestionar los metadatos de todos los identificadores (variables, métodos, clases, atributos y parámetros) encontrados durante el análisis sintáctico y semántico.
             </p>
             <p>
-                La <strong>Tabla de Direcciones</strong> calcula el desplazamiento en bytes en el marco de pila (*stack frame*) según los anchos estándar de tipos:
+                Puede implementarse mediante diversas estructuras de datos en memoria: arreglos dinámicos (<code>ArrayList</code>), listas enlazadas, árboles de búsqueda o, más comúnmente en compiladores industriales, <strong>Tablas Hash (<code>HashMap</code>)</strong> por su complejidad de búsqueda \(O(1)\). Las columnas de metadatos registradas varían según el diseño del lenguaje (por ejemplo, en lenguajes fuertemente tipados como Java la columna de <em>Tipo</em> es obligatoria para la comprobación semántica, mientras que en lenguajes dinámicos puede inferirse en tiempo de ejecución).
+            </p>
+            <p>
+                La <strong>Tabla de Direcciones</strong> calcula el desplazamiento en bytes en el marco de pila (*stack frame*) o heap según los anchos estándar de tipos:
                 <code>char: 1 byte, int: 4 bytes, float: 4 bytes, double: 8 bytes, arreglo T[N]: N * ancho(T)</code>.
             </p>
+        </div>
+    </div>
+
+    <!-- EJEMPLO DEL VIDEO: GENERACIÓN DE TABLA DE SÍMBOLOS EN POO -->
+    <div class="pedagogy-step bg-purple-50/50 border border-purple-200 rounded-xl p-4 mb-4">
+        <div class="flex items-center justify-between mb-3 pb-2 border-b border-purple-100">
+            <span class="badge-step bg-purple-100 text-purple-900 mb-0"><i class="fab fa-youtube text-red-600 mr-1.5"></i> Caso Práctico Guiado: Generación de Tabla de Símbolos en Java</span>
+            <span class="text-[11px] font-bold text-purple-700 font-mono">Ejemplo Canónico TecNM</span>
+        </div>
+        
+        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-3">
+            Analicemos paso a paso cómo el <strong>Analizador Sintáctico</strong> va poblando la tabla de símbolos conforme identifica cada token, y cómo el <strong>Analizador Semántico</strong> consulta esta información para validar reglas del lenguaje a partir del siguiente fragmento de código:
+        </p>
+
+        <!-- Código de entrada -->
+        <div class="bg-slate-900 rounded-xl p-3.5 text-xs font-mono text-slate-200 mb-4 shadow-sm border border-slate-800">
+            <div class="text-slate-400 text-[10px] uppercase font-bold mb-2 pb-1 border-b border-slate-800 flex justify-between">
+                <span><i class="fab fa-java text-orange-400 mr-1.5"></i>Fragmento de Código Fuente (Java)</span>
+                <span class="text-purple-400">Entrada del Parser</span>
+            </div>
+<pre><code><span class="text-purple-400">public class</span> <span class="text-yellow-300">Auto</span> {
+    <span class="text-purple-400">protected</span> <span class="text-yellow-300">Auto</span> <span class="text-cyan-300">a</span>;
+    <span class="text-purple-400">private int</span> <span class="text-cyan-300">km</span>;
+    <span class="text-purple-400">public</span> <span class="text-yellow-300">String</span> <span class="text-cyan-300">modelo</span>;
+}</code></pre>
+        </div>
+
+        <!-- Tabla construida -->
+        <h4 class="font-bold text-slate-900 text-xs sm:text-sm mb-2 flex items-center">
+            <i class="fas fa-table text-purple-600 mr-1.5"></i> Tabla de Símbolos Poblada (Metadatos Registrados):
+        </h4>
+        <div class="overflow-x-auto my-2">
+            <table class="w-full text-xs text-left border border-purple-200 rounded-lg bg-white shadow-sm">
+                <thead class="bg-purple-100/70 text-purple-900 font-bold font-mono">
+                    <tr>
+                        <th class="p-2.5 border border-purple-200">Token / Lexema</th>
+                        <th class="p-2.5 border border-purple-200">Tipo</th>
+                        <th class="p-2.5 border border-purple-200">Ámbito (Scope)</th>
+                        <th class="p-2.5 border border-purple-200">Visibilidad</th>
+                        <th class="p-2.5 border border-purple-200 text-center">Tamaño</th>
+                        <th class="p-2.5 border border-purple-200 text-center">Posición (Heap)</th>
+                        <th class="p-2.5 border border-purple-200">Rol</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-purple-100 text-slate-700 font-mono">
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2.5 font-bold text-purple-900 border border-purple-100">Auto</td>
+                        <td class="p-2.5 text-blue-700 font-semibold border border-purple-100">class</td>
+                        <td class="p-2.5 border border-purple-100"><span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded text-[11px]">global</span></td>
+                        <td class="p-2.5 border border-purple-100">public</td>
+                        <td class="p-2.5 text-center font-bold text-indigo-700 border border-purple-100">3 <span class="text-[10px] text-slate-500 font-normal">(atributos)</span></td>
+                        <td class="p-2.5 text-center text-slate-400 border border-purple-100">—</td>
+                        <td class="p-2.5 font-bold text-slate-800 border border-purple-100">Clase</td>
+                    </tr>
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2.5 font-bold text-purple-900 border border-purple-100">a</td>
+                        <td class="p-2.5 text-blue-700 font-semibold border border-purple-100">Auto</td>
+                        <td class="p-2.5 border border-purple-100"><span class="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-[11px] font-bold">Auto</span></td>
+                        <td class="p-2.5 text-amber-700 border border-purple-100">protected</td>
+                        <td class="p-2.5 text-center border border-purple-100">1</td>
+                        <td class="p-2.5 text-center font-bold text-purple-700 bg-purple-50/80 border border-purple-100">0</td>
+                        <td class="p-2.5 text-slate-700 border border-purple-100">Atributo</td>
+                    </tr>
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2.5 font-bold text-purple-900 border border-purple-100">km</td>
+                        <td class="p-2.5 text-blue-700 font-semibold border border-purple-100">int</td>
+                        <td class="p-2.5 border border-purple-100"><span class="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-[11px] font-bold">Auto</span></td>
+                        <td class="p-2.5 text-rose-700 border border-purple-100">private</td>
+                        <td class="p-2.5 text-center border border-purple-100">1</td>
+                        <td class="p-2.5 text-center font-bold text-purple-700 bg-purple-50/80 border border-purple-100">1</td>
+                        <td class="p-2.5 text-slate-700 border border-purple-100">Atributo</td>
+                    </tr>
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2.5 font-bold text-purple-900 border border-purple-100">modelo</td>
+                        <td class="p-2.5 text-blue-700 font-semibold border border-purple-100">String</td>
+                        <td class="p-2.5 border border-purple-100"><span class="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-[11px] font-bold">Auto</span></td>
+                        <td class="p-2.5 text-emerald-700 border border-purple-100">public</td>
+                        <td class="p-2.5 text-center border border-purple-100">1</td>
+                        <td class="p-2.5 text-center font-bold text-purple-700 bg-purple-50/80 border border-purple-100">2</td>
+                        <td class="p-2.5 text-slate-700 border border-purple-100">Atributo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Validaciones Semánticas Demostradas -->
+        <h4 class="font-bold text-slate-900 text-xs sm:text-sm mt-4 mb-2 flex items-center">
+            <i class="fas fa-shield-alt text-purple-600 mr-1.5"></i> Reglas y Validaciones Semánticas en Acción:
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="bg-white p-3.5 rounded-xl border border-rose-200 shadow-sm">
+                <div class="flex items-center text-rose-700 font-bold mb-1.5">
+                    <i class="fas fa-times-circle mr-1.5 text-sm"></i> Caso 1: Incompatibilidad de Tipos
+                </div>
+                <p class="text-slate-700 leading-relaxed mb-2">
+                    Si el analizador encuentra la expresión: <code class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-mono font-bold">km * modelo;</code>
+                </p>
+                <ul class="text-slate-600 space-y-1 pl-3 border-l-2 border-rose-300">
+                    <li>• <strong>Sintáctico:</strong> Válido (Regla: <code>EXP * EXP</code>).</li>
+                    <li>• <strong>Consulta a Tabla:</strong> <code>km</code> es <code>int</code>, <code>modelo</code> es <code>String</code>.</li>
+                    <li>• <strong>Semántico:</strong> <code>int * String</code> no está definido en Java $\rightarrow$ <strong>¡Error Semántico de Compilación!</strong></li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-3.5 rounded-xl border border-rose-200 shadow-sm">
+                <div class="flex items-center text-rose-700 font-bold mb-1.5">
+                    <i class="fas fa-times-circle mr-1.5 text-sm"></i> Caso 2: Conflicto de Redeclaración
+                </div>
+                <p class="text-slate-700 leading-relaxed mb-2">
+                    Si más abajo se intenta declarar: <code class="bg-slate-100 text-slate-800 px-1.5 py-0.5 rounded font-mono font-bold">public String modelo;</code>
+                </p>
+                <ul class="text-slate-600 space-y-1 pl-3 border-l-2 border-rose-300">
+                    <li>• <strong>Consulta a Tabla:</strong> Busca el identificador <code>modelo</code> en el ámbito <code>Auto</code>.</li>
+                    <li>• <strong>Resultado:</strong> Ya existe un registro previo.</li>
+                    <li>• <strong>Semántico:</strong> Emite error: <em>"Variable 'modelo' already defined in scope Auto"</em> y frena la compilación.</li>
+                </ul>
+            </div>
         </div>
     </div>
 
