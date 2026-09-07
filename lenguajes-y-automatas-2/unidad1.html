@@ -1122,46 +1122,261 @@
 </div>
 
 <!-- ============================================================================== -->
-<!-- 1.7 MANEJO DE ERRORES SEMÁNTICOS -->
+<!-- 1.7 MANEJO DE ERRORES SEMÁNTICOS Y TAXONOMÍA GENERAL DE ERRORES EN JAVA -->
 <!-- ============================================================================== -->
 <div id="tema-1-7" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
     <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
         <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-800 text-sm flex items-center justify-center font-mono font-bold">1.7</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Manejo de Errores Semánticos</h2>
+        <h2 class="text-xl font-extrabold text-slate-900">Manejo de Errores Semánticos y Taxonomía General de Errores en Java</h2>
     </div>
 
+    <!-- FASE 1: EXPLICACIÓN TEÓRICA -->
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica</span>
+        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Fundamentación y Diferenciación de Errores</span>
         <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
             <p>
-                Un <strong>error semántico</strong> ocurre cuando un programa es sintácticamente correcto según la gramática, pero viola las reglas de significado, tipos o ámbito del lenguaje.
+                En la construcción de software y compiladores, un <strong>error</strong> representa una discrepancia entre lo que el desarrollador escribió y lo que las especificaciones formales del lenguaje permiten. Para los estudiantes de ingeniería, es fundamental distinguir con precisión en qué <strong>fase del ciclo de vida del software</strong> se detecta cada anomalía:
             </p>
-            <p>
-                Los errores semánticos más comunes son:
-            </p>
-            <ol class="list-decimal list-inside space-y-1 text-xs text-slate-700">
-                <li><strong>Variable no declarada:</strong> Intentar usar un identificador que no existe en la tabla de símbolos.</li>
-                <li><strong>Redeclaración de variable:</strong> Declarar dos veces el mismo identificador dentro del mismo ámbito.</li>
-                <li><strong>Incompatibilidad de tipos:</strong> Intentar asignar valores no convertibles (ej. asignar <code>string</code> a <code>int</code>).</li>
-                <li><strong>Llamada incorrecta a función:</strong> Discrepancia en el número o tipos de argumentos pasados respecto a la firma de la función.</li>
-                <li><strong>Acceso inválido a arreglos:</strong> Indexar una variable que no es un arreglo o usar un índice no entero.</li>
-            </ol>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-2 text-xs">
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="font-bold text-indigo-700 block mb-1 flex items-center"><i class="fas fa-cogs mr-1.5"></i> 1. Tiempo de Compilación</span>
+                    <p class="text-slate-600">Detectados por el compilador (<code>javac</code>) antes de generar el bytecode (<code>.class</code>). Incluye errores léxicos, sintácticos y semánticos estáticos.</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="font-bold text-rose-700 block mb-1 flex items-center"><i class="fas fa-bolt mr-1.5"></i> 2. Tiempo de Ejecución (Runtime)</span>
+                    <p class="text-slate-600">El programa compila exitosamente, pero la Máquina Virtual de Java (JVM) aborta la ejecución al encontrar condiciones anómalas (Excepciones/Errores).</p>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="font-bold text-amber-700 block mb-1 flex items-center"><i class="fas fa-bug mr-1.5"></i> 3. Errores Lógicos (Bugs)</span>
+                    <p class="text-slate-600">El programa compila y corre sin excepciones, pero entrega resultados matemáticos o de negocio incorrectos debido a algoritmos defectuosos.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- FASE 3: TABLA DE ERRORES -->
+    <!-- FASE 2: TAXONOMÍA DETALLADA DE ERRORES EN JAVA -->
+    <div class="pedagogy-step bg-purple-50/40 border border-purple-200 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-purple-100 text-purple-900"><i class="fas fa-layer-group mr-1.5"></i> 2. Taxonomía Completa de Errores con Ejemplos en Java</span>
+        
+        <div class="space-y-4 mt-3 text-xs">
+            
+            <!-- BLOQUE 1: ERRORES DE COMPILACIÓN -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                    <h4 class="font-bold text-slate-900 text-xs sm:text-sm flex items-center">
+                        <span class="w-6 h-6 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold mr-2 text-xs">A</span>
+                        Errores en Tiempo de Compilación (Compile-Time Errors)
+                    </h4>
+                    <span class="badge-step bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] mb-0">Filtro: javac</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <!-- Léxico -->
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1 text-[11px]"><i class="fas fa-font text-blue-600 mr-1"></i> Error Léxico (Scanner)</span>
+                        <p class="text-slate-600 text-[11px] mb-2">Caracteres ajenos al alfabeto del lenguaje o patrones de tokens mal formados.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            <span class="text-rose-400">int</span> total = 100<span class="text-rose-400 font-bold">@</span>; <span class="text-slate-500">// '@' ilegal</span><br>
+                            <span class="text-rose-400">String</span> cad = <span class="text-rose-400 font-bold">"texto sin cerrar</span>;
+                        </div>
+                    </div>
+
+                    <!-- Sintáctico -->
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <span class="font-bold text-slate-800 block mb-1 text-[11px]"><i class="fas fa-code-branch text-purple-600 mr-1"></i> Error Sintáctico (Parser)</span>
+                        <p class="text-slate-600 text-[11px] mb-2">Estructuras que violan la gramática formal (falta de tokens, desbalance de llaves/paréntesis).</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            <span class="text-purple-400">if</span> (x &gt; 0 <span class="text-rose-400 font-bold">{</span> <span class="text-slate-500">// Falta ')'</span><br>
+                            <span class="text-purple-400">int</span> a = 5 <span class="text-slate-500">// Falta ';'</span>
+                        </div>
+                    </div>
+
+                    <!-- Semántico -->
+                    <div class="bg-purple-50 p-3 rounded-lg border border-purple-200">
+                        <span class="font-bold text-purple-900 block mb-1 text-[11px]"><i class="fas fa-brain text-purple-600 mr-1"></i> Error Semántico (Semantic Checker)</span>
+                        <p class="text-slate-700 text-[11px] mb-2">Sintaxis válida, pero carece de sentido lógico en las reglas de tipos y ámbitos.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            <span class="text-purple-400">int</span> x = <span class="text-rose-400 font-bold">"hola"</span>; <span class="text-slate-500">// Tipos incompatibles</span><br>
+                            y = 10; <span class="text-slate-500">// 'y' no declarada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOQUE 2: ERRORES EN TIEMPO DE EJECUCIÓN -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                    <h4 class="font-bold text-slate-900 text-xs sm:text-sm flex items-center">
+                        <span class="w-6 h-6 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center font-bold mr-2 text-xs">B</span>
+                        Errores en Tiempo de Ejecución (Runtime Errors / Excepciones JVM)
+                    </h4>
+                    <span class="badge-step bg-rose-50 text-rose-700 border border-rose-200 text-[10px] mb-0">Filtro: JVM (java)</span>
+                </div>
+                
+                <p class="text-slate-600 text-xs mb-3">
+                    El código compila perfectamente generando el archivo <code>.class</code>, pero al ejecutarse en la JVM ocurre una condición irrecuperable o no manejada:
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">NullPointerException</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Intento de invocar métodos o acceder a atributos de una referencia con valor <code>null</code>.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            String s = <span class="text-rose-400">null</span>;<br>
+                            s.<span class="text-yellow-300">length</span>(); <span class="text-rose-400">// ¡Crash!</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">ArrayIndexOutOfBoundsException</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Acceso a una posición de arreglo negativa o mayor/igual a su longitud.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            int[] arr = <span class="text-purple-400">new int</span>[3];<br>
+                            int x = arr[<span class="text-rose-400 font-bold">5</span>]; <span class="text-rose-400">// ¡Crash!</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">ArithmeticException</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Operación aritmética indefinida en enteros (como división entre cero).</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            int a = 10 / <span class="text-rose-400 font-bold">0</span>; <span class="text-rose-400">// ¡Crash!</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">ClassCastException</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Conversión de tipos (casting) incompatible entre clases en tiempo de ejecución.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            Object obj = <span class="text-green-400">"Hola"</span>;<br>
+                            Integer n = (<span class="text-rose-400 font-bold">Integer</span>) obj;
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">NumberFormatException</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Fallo al convertir una cadena con formato no numérico a tipo primitivo.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            int v = Integer.<span class="text-yellow-300">parseInt</span>(<span class="text-rose-400 font-bold">"abc"</span>);
+                        </div>
+                    </div>
+
+                    <div class="bg-rose-50/50 p-3 rounded-lg border border-rose-100">
+                        <span class="font-bold text-rose-900 block mb-0.5 font-mono text-[11px]">StackOverflowError</span>
+                        <p class="text-slate-600 text-[11px] mb-1.5">Agotamiento de la pila de llamadas debido a recursión infinita sin caso base.</p>
+                        <div class="bg-slate-900 text-slate-200 p-2 rounded text-[10px] font-mono">
+                            <span class="text-purple-400">void</span> <span class="text-yellow-300">f</span>() { <span class="text-yellow-300">f</span>(); } <span class="text-slate-500">// Sin fin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOQUE 3: ERRORES LÓGICOS -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                    <h4 class="font-bold text-slate-900 text-xs sm:text-sm flex items-center">
+                        <span class="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold mr-2 text-xs">C</span>
+                        Errores Lógicos (Logical Bugs)
+                    </h4>
+                    <span class="badge-step bg-amber-50 text-amber-700 border border-amber-200 text-[10px] mb-0">Detección: Pruebas Unitarias / QA</span>
+                </div>
+                <p class="text-slate-600 text-xs mb-2">
+                    Ni el compilador ni la JVM detectan este error porque el código es técnicamente válido, pero el resultado es erróneo:
+                </p>
+                <div class="bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-[11px]">
+                    <span class="text-purple-400">double</span> promedio = (nota1 + nota2) / <span class="text-rose-400 font-bold">3.0</span>; <span class="text-slate-500">// Bug: Debería dividirse entre 2.0</span><br>
+                    <span class="text-purple-400">while</span> (i &gt; 0) { <span class="text-slate-500">/* Olvido de decrementar i */</span> } <span class="text-slate-500">// Bucle infinito lógico</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FASE 3: TABLA COMPARATIVA MAESTRA -->
     <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-exclamation-triangle mr-1.5"></i> 3. Registro y Reporte de Errores Semánticos</span>
-        <div class="bg-slate-900 p-3 rounded-xl text-white font-mono text-xs space-y-1">
-            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO Línea 14, Col 8]: Variable 'total' no ha sido declarada en este ámbito.</p>
-            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO Línea 22, Col 12]: Incompatibilidad de tipos: No se puede asignar 'string' a la variable entera 'edad'.</p>
-            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO Línea 30, Col 5]: La función 'calcularPromedio(int, int)' requiere 2 argumentos, se recibieron 3.</p>
+        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-table mr-1.5"></i> 3. Matriz Comparativa Maestra de Errores</span>
+        <div class="overflow-x-auto my-2">
+            <table class="w-full text-xs text-left border border-slate-200 rounded-lg bg-white shadow-sm">
+                <thead class="bg-slate-100 text-slate-800 font-mono font-bold">
+                    <tr>
+                        <th class="p-2.5 border">Categoría</th>
+                        <th class="p-2.5 border">Momento de Detección</th>
+                        <th class="p-2.5 border">Mecanismo Detector</th>
+                        <th class="p-2.5 border">Ejemplo Representativo</th>
+                        <th class="p-2.5 border">Efecto Inmediato</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-700">
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-2.5 font-bold text-slate-900 border">Léxico</td>
+                        <td class="p-2.5 border font-mono">Compilación</td>
+                        <td class="p-2.5 border text-blue-700 font-semibold">Analizador Léxico (Scanner)</td>
+                        <td class="p-2.5 border font-mono text-[11px]"><code>int $#total;</code></td>
+                        <td class="p-2.5 border text-rose-600 font-semibold">No genera bytecode</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-2.5 font-bold text-slate-900 border">Sintáctico</td>
+                        <td class="p-2.5 border font-mono">Compilación</td>
+                        <td class="p-2.5 border text-purple-700 font-semibold">Analizador Sintáctico (Parser)</td>
+                        <td class="p-2.5 border font-mono text-[11px]"><code>if (x == 5 { ... }</code></td>
+                        <td class="p-2.5 border text-rose-600 font-semibold">No genera bytecode</td>
+                    </tr>
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2.5 font-bold text-purple-900 border">Semántico Estático</td>
+                        <td class="p-2.5 border font-mono">Compilación</td>
+                        <td class="p-2.5 border text-purple-800 font-bold">Analizador Semántico + Tabla Símbolos</td>
+                        <td class="p-2.5 border font-mono text-[11px] text-purple-900"><code>int x = "texto";</code> / Variable no declarada</td>
+                        <td class="p-2.5 border text-rose-600 font-semibold">Freno en fase intermedia</td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-2.5 font-bold text-slate-900 border">Tiempo de Ejecución</td>
+                        <td class="p-2.5 border font-mono">Ejecución</td>
+                        <td class="p-2.5 border text-rose-700 font-semibold">JVM (Lanza Exception / Error)</td>
+                        <td class="p-2.5 border font-mono text-[11px]"><code>NullPointerException</code> / <code>/ 0</code></td>
+                        <td class="p-2.5 border text-rose-600 font-semibold">Crash o captura en <code>try-catch</code></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                        <td class="p-2.5 font-bold text-slate-900 border">Lógico / Bug</td>
+                        <td class="p-2.5 border font-mono">Producción / QA</td>
+                        <td class="p-2.5 border text-amber-700 font-semibold">Pruebas Humanas / Tests Automatizados</td>
+                        <td class="p-2.5 border font-mono text-[11px]">Fórmulas mal planteadas</td>
+                        <td class="p-2.5 border text-amber-600 font-semibold">Resultado de negocio incorrecto</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
+    <!-- FASE 4: EJEMPLO DE REPORTE FORMAL DE ERRORES -->
+    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-exclamation-triangle mr-1.5"></i> 4. Formato de Reporte de Errores Semánticos del Compilador</span>
+        <p class="text-xs text-slate-600 mb-2">
+            El analizador semántico debe emitir diagnósticos precisos indicando <strong>línea, columna, código de error y contexto</strong> para guiar al programador:
+        </p>
+        <div class="bg-slate-900 p-3.5 rounded-xl text-white font-mono text-xs space-y-1.5 shadow-inner">
+            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO L14:C8 - E_UNDECLARED]: Identificador 'total' no existe en la Tabla de Símbolos para el ámbito actual.</p>
+            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO L22:C12 - E_TYPE_MISMATCH]: Incompatibilidad de tipos: java.lang.String no es asignable a primitivo 'int'.</p>
+            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO L30:C5 - E_ARG_COUNT]: El método 'calcularPromedio(int, int)' requiere 2 argumentos; se proporcionaron 3.</p>
+            <p class="text-rose-400 font-bold">[ERROR SEMÁNTICO L45:C2 - E_DUPLICATE_ID]: El símbolo 'modelo' ya fue definido previamente en la clase 'Auto'.</p>
+        </div>
+    </div>
+
+    <!-- FASE 5: EJERCICIO PRÁCTICO -->
     <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicio de Práctica (Firmas 40%)</span>
-        <p class="text-xs text-slate-700">Dado un programa fuente de 15 líneas con 4 errores semánticos intencionales, elabora el reporte de la fase de análisis semántico indicando línea, tipo de error y regla semántica violada.</p>
+        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicio de Práctica para Alumnos (Firmas 40%)</span>
+        <p class="text-xs text-slate-700 leading-relaxed">
+            <strong>Instrucciones:</strong> Dado el siguiente fragmento de código con 5 errores intencionales, clasifica cada uno según su tipo (Léxico, Sintáctico, Semántico, Runtime o Lógico) e indica qué componente del compilador o la JVM es responsable de detectarlo:
+        </p>
+        <div class="bg-slate-900 text-slate-200 p-3 rounded-lg font-mono text-[11px] my-2">
+            1: <span class="text-purple-400">int</span> 1a = 10; <span class="text-slate-500">// Error 1</span><br>
+            2: <span class="text-purple-400">if</span> (a &gt; 5 { System.out.println(a); } <span class="text-slate-500">// Error 2</span><br>
+            3: <span class="text-purple-400">boolean</span> flag = 5 * 2; <span class="text-slate-500">// Error 3</span><br>
+            4: String str = <span class="text-rose-400">null</span>; System.out.println(str.toUpperCase()); <span class="text-slate-500">// Error 4</span><br>
+            5: <span class="text-purple-400">double</span> perimetroCuadrado = lado + lado; <span class="text-slate-500">// Error 5</span>
+        </div>
+        <p class="text-[11px] text-purple-700 font-semibold font-mono">
+            Pista: 1 = Léxico (identificador inicia con dígito), 2 = Sintáctico (falta paréntesis de cierre), 3 = Semántico (asignación de entero a booleano), 4 = Runtime (NullPointerException), 5 = Lógico (el perímetro es lado * 4).
+        </p>
     </div>
 </div>
 
