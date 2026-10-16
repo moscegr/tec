@@ -162,12 +162,53 @@
             overflow-x: auto;
         }
     </style>
+    <style id="platform-wide-ui-override">
+        /* === Expansión de Ancho y Eliminación de Tarjetas Anidadas (Toda la Plataforma) === */
+        .concept-card,
+        .topic-container {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0 0 2.25rem 0 !important;
+            margin-bottom: 2.25rem !important;
+        }
+        .pedagogy-step {
+            background: transparent !important;
+            border: none !important;
+            border-left: 3px solid #cbd5e1 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0.25rem 0 0.25rem 1.25rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        /* Evitar redundancia de tarjetas dentro de tarjetas en toda la plataforma */
+        main div[class*="rounded-"][class*="border"] div[class*="rounded-"][class*="border"] {
+            box-shadow: none !important;
+        }
+        main div[class*="rounded-"][class*="border"] > div[class*="bg-slate-50"][class*="rounded-"][class*="border"]:has(div[class*="rounded-"][class*="border"]) {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0.25rem 0 !important;
+        }
+        /* Grafos SVG e imágenes 100% responsivos sin recortes */
+        main svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        /* Laterales compactos y elegantes */
+        aside .sticky {
+            padding: 0.875rem !important;
+        }
+    </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900">
 
     <!-- Top Bar -->
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-sky-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
@@ -182,7 +223,7 @@
 
     <!-- Navegación Sticky -->
     <nav class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
@@ -203,11 +244,11 @@
     </nav>
 
     <!-- Contenedor Principal de 3 Columnas -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
-            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+            <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
                         <i class="fas fa-book text-cyan-600"></i>
@@ -259,7 +300,7 @@
             </aside>
 
             <!-- COLUMNA CENTRAL: Contenido Principal (6 Cols) -->
-            <main class="lg:col-span-6 space-y-8">
+            <main class="lg:col-span-8 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
@@ -302,8 +343,7 @@
 </section>
 <!-- 3.1 Definición Formal -->
 <section class="scroll-mt-32" id="afd">
-<div id="formal" class="concept-card p-8">
-<div class="concept-card p-8">
+<div id="formal" class="concept-card">
 <div class="flex items-center mb-6">
 <span class="text-4xl font-black text-slate-200 mr-4">3.1</span>
 <h2 class="text-2xl font-bold text-slate-800">Definición Formal (La 5-tupla)</h2>
@@ -311,8 +351,8 @@
 <p class="text-slate-600 text-sm leading-relaxed mb-6">
                     En matemáticas y programación, no podemos programar "con dibujos". Necesitamos definir al autómata formalmente como un conjunto de 5 elementos (una 5-tupla): \( M = (Q, \Sigma, \delta, q_0, F) \).
                 </p>
-<div class="grid md:grid-cols-2 gap-6 mb-8">
-<div class="space-y-4">
+<div class="grid md:grid-cols-2 gap-4 mb-8">
+<div class="space-y-3">
 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
 <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">Q</span>
 <div>
@@ -335,7 +375,7 @@
 </div>
 </div>
 </div>
-<div class="space-y-4">
+<div class="space-y-3">
 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start">
 <span class="font-bold text-cyan-600 text-xl font-mono mr-3 w-8 text-center">\(q_0\)</span>
 <div>
@@ -353,14 +393,14 @@
 </div>
 </div>
 <!-- EJEMPLO GUIADO -->
-<div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-inner">
-<h3 class="font-bold text-slate-800 mb-4 flex items-center text-lg"><i class="fas fa-chalkboard-teacher mr-2 text-cyan-600"></i> Ejemplo Guiado: Reconocedor de "01"</h3>
+<div class="pt-4 border-t border-slate-200">
+<h3 class="font-bold text-slate-800 mb-2 flex items-center text-lg"><i class="fas fa-chalkboard-teacher mr-2 text-cyan-600"></i> Ejemplo Guiado: Reconocedor de "01"</h3>
 <p class="text-sm text-slate-600 mb-4">Diseñemos un autómata que acepte cadenas binarias que terminen en "01".</p>
 <!-- Representación Gráfica (Grafo de Transiciones) -->
-<div class="bg-white p-4 rounded-xl border border-slate-200 mb-6 shadow-sm overflow-x-auto flex flex-col items-center">
-<h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 text-center">1. Diagrama de Transiciones (Grafo)</h4>
-<div class="min-w-[550px]">
-<svg height="230" viewbox="0 0 600 230" width="600" xmlns="http://www.w3.org/2000/svg">
+<div class="bg-slate-50/70 p-5 rounded-xl border border-slate-200 mb-6 flex flex-col items-center">
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 text-center">1. Diagrama de Transiciones (Grafo)</h4>
+<div class="w-full">
+<svg class="w-full max-w-[680px] h-auto mx-auto block" viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <marker id="arrow" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
 <path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2"></path>
@@ -403,35 +443,35 @@
 </div>
 <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 text-center">2. Tabla de Transiciones (\(\delta\))</h4>
 <div class="overflow-x-auto">
-<table class="automata-table w-full text-sm bg-white mb-6">
-<thead>
+<table class="automata-table w-full text-sm bg-white mb-6 border border-slate-200 rounded-xl overflow-hidden">
+<thead class="bg-slate-100 text-slate-700">
 <tr>
-<th>Estado Actual</th>
-<th>Lee '0'</th>
-<th>Lee '1'</th>
+<th class="p-3 border border-slate-200 text-left">Estado Actual</th>
+<th class="p-3 border border-slate-200 text-left">Lee '0'</th>
+<th class="p-3 border border-slate-200 text-left">Lee '1'</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>\(\rightarrow q_0\) (Inicio)</td>
-<td class="text-cyan-700 font-bold">\(q_1\) (Encontré un 0)</td>
-<td>\(q_0\) (Reseteo)</td>
+<td class="p-3 border border-slate-200">\(\rightarrow q_0\) (Inicio)</td>
+<td class="p-3 border border-slate-200 text-cyan-700 font-bold">\(q_1\) (Encontré un 0)</td>
+<td class="p-3 border border-slate-200">\(q_0\) (Reseteo)</td>
 </tr>
 <tr>
-<td>\(q_1\) (Tengo un 0)</td>
-<td>\(q_1\) (Me mantengo)</td>
-<td class="text-green-600 font-bold">\(q_2\) (¡Encontré 01!)</td>
+<td class="p-3 border border-slate-200">\(q_1\) (Tengo un 0)</td>
+<td class="p-3 border border-slate-200">\(q_1\) (Me mantengo)</td>
+<td class="p-3 border border-slate-200 text-green-600 font-bold">\(q_2\) (¡Encontré 01!)</td>
 </tr>
 <tr class="bg-green-50">
-<td>\(*q_2\) (Aceptación)</td>
-<td>\(q_1\) (Encontré un 0)</td>
-<td>\(q_0\) (Reseteo total)</td>
+<td class="p-3 border border-slate-200">\(*q_2\) (Aceptación)</td>
+<td class="p-3 border border-slate-200">\(q_1\) (Encontré un 0)</td>
+<td class="p-3 border border-slate-200">\(q_0\) (Reseteo total)</td>
 </tr>
 </tbody>
 </table>
 </div>
 <!-- Explicación de cómo leer -->
-<div class="bg-white p-5 rounded-xl border-l-4 border-cyan-500 shadow-sm mt-4">
+<div class="bg-cyan-50/40 p-5 rounded-xl border-l-4 border-cyan-500 mt-4">
 <h4 class="font-bold text-cyan-900 mb-3"><i class="fas fa-book-reader mr-2"></i>¿Cómo leer este Autómata? (Prueba de Escritorio)</h4>
 <p class="text-sm text-slate-600 mb-3">Las cadenas <strong>siempre se leen de izquierda a derecha</strong>, un carácter a la vez. Imagina que evaluamos la cadena <code class="bg-slate-100 px-1 font-bold text-cyan-700 rounded">101</code>:</p>
 <ol class="list-decimal pl-5 text-sm text-slate-700 space-y-3">
@@ -441,16 +481,17 @@
 <li><strong>Lee '1':</strong> (Tercer carácter). Estando en <code class="font-bold text-slate-800">q1</code>, el grafo nos manda a través de la flecha hacia <strong>el estado q2</strong>.</li>
 <li><strong>El Veredicto:</strong> La cadena se acabó. Miramos dónde nos quedamos parados. Como estamos en <code class="font-bold text-green-600">q2</code> (círculo doble / estado de aceptación), el autómata dice: <strong>¡CADENA ACEPTADA!</strong>.</li>
 </ol>
-<p class="text-xs text-slate-500 italic mt-3 border-t border-slate-100 pt-2">
+<p class="text-xs text-slate-500 italic mt-3 border-t border-slate-200/60 pt-2">
                             *Nota sobre las flechas inferiores: Si ya estás en q2 y llega otro carácter, se leen las flechas de retroceso. Si llega un '0', se va a q1 (porque ese 0 puede iniciar un nuevo "01"). Si llega un '1', se resetea hasta q0.
                         </p>
+</div>
 </div>
 
 <!-- ========================================================================= -->
 <!-- 3 EJERCICIOS DIFERENTES PARA EL TEMA 3.1 (DIAGRAMA, TABLA, EXPRESIÓN)    -->
 <!-- ========================================================================= -->
 <div class="mt-8 pt-6 border-t border-slate-200">
-    <div class="flex items-center space-x-2 text-cyan-800 font-bold mb-4">
+    <div class="flex items-center space-x-2 text-cyan-800 font-bold mb-3">
         <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-800 flex items-center justify-center text-sm font-mono"><i class="fas fa-layer-group"></i></span>
         <h3 class="text-lg font-bold text-slate-900">Ejercicios Prácticos del Tema 3.1</h3>
     </div>
@@ -458,18 +499,18 @@
         Para dominar la formalización de un Autómata Finito Determinista (AFD), analizaremos <strong>3 casos de estudio complementarios</strong> con metodologías distintas: a partir de un <em>Diagrama de Estados (Grafo)</em>, a partir de una <em>Tabla de Transiciones con Estado Pozo</em> y a partir de una <em>Expresión Regular de Patrón Léxico</em>.
     </p>
 
-    <div class="space-y-6">
+    <div class="space-y-8">
 
         <!-- ========================================================== -->
         <!-- EJERCICIO 1: A PARTIR DE UN DIAGRAMA (GRAFO SVG)           -->
         <!-- ========================================================== -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-cyan-200 transition">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
                 <div class="flex items-center space-x-2">
                     <span class="px-2.5 py-1 bg-cyan-100 text-cyan-800 rounded-md font-mono text-xs font-bold"><i class="fas fa-project-diagram mr-1"></i> Ejercicio 1 • Tipo Diagrama</span>
                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">Análisis de un AFD por su Grafo de Transiciones</h4>
                 </div>
-                <span class="text-[11px] font-semibold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-100">Paridad de Ceros (Cantidad Par de '0')</span>
+                <span class="text-[11px] font-semibold text-cyan-700 bg-cyan-50 px-2.5 py-0.5 rounded border border-cyan-100">Paridad de Ceros (Cantidad Par de '0')</span>
             </div>
 
             <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
@@ -477,18 +518,18 @@
             </p>
 
             <!-- Grafo SVG Interactivo/Vectorial -->
-            <div class="bg-slate-900 p-4 rounded-xl text-white mb-4 overflow-x-auto flex flex-col items-center">
+            <div class="bg-slate-900 p-5 rounded-xl text-white mb-5 flex flex-col items-center">
                 <span class="text-[11px] font-mono font-bold text-cyan-400 mb-2 uppercase tracking-wider"><i class="fas fa-sitemap mr-1"></i> Grafo Vectorial: Detector de Números con Cantidad Par de '0'</span>
-                <div class="min-w-[460px]">
-                    <svg height="170" viewBox="0 0 460 170" width="460" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-full">
+                    <svg class="w-full max-w-[540px] h-auto mx-auto block" viewBox="0 0 460 170" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="arrow-ej1" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewBox="0 0 10 10">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"></path>
                             </marker>
                         </defs>
                         <!-- Flecha Inicial -->
-                        <path d="M 30 85 L 85 85" marker-end="url(#arrow-ej1)" stroke="#38bdf8" stroke-width="2"></path>
-                        <text fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" x="35" y="75">Inicio</text>
+                        <path d="M 30 85 L 78 85" marker-end="url(#arrow-ej1)" stroke="#38bdf8" stroke-width="2"></path>
+                        <text fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" x="32" y="75">Inicio</text>
 
                         <!-- Transición q0 -> q1 (lee 0) Curva Superior -->
                         <path d="M 138 70 Q 230 25 320 70" fill="none" marker-end="url(#arrow-ej1)" stroke="#38bdf8" stroke-width="2"></path>
@@ -522,12 +563,12 @@
                 </div>
             </div>
 
-            <!-- Solución Paso a Paso -->
-            <div class="grid md:grid-cols-2 gap-4 text-xs">
+            <!-- Solución Paso a Paso (Sin tarjetas anidadas redundantes) -->
+            <div class="grid md:grid-cols-2 gap-6 text-xs pt-2">
                 <!-- Tupla Formal -->
-                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                <div class="border-l-4 border-cyan-500 pl-4 py-1">
                     <h5 class="font-bold text-slate-800 mb-2 flex items-center text-xs"><i class="fas fa-check-circle text-cyan-600 mr-1.5"></i> 1. Formalización de la 5-tupla</h5>
-                    <ul class="space-y-1 text-slate-700 font-mono">
+                    <ul class="space-y-1.5 text-slate-700 font-mono">
                         <li>• <strong>Q:</strong> \{q_0, q_1\}</li>
                         <li>• <strong>\(\Sigma\):</strong> \{0, 1\}</li>
                         <li>• <strong>\(q_0\):</strong> \(q_0\) (representa 0 ceros acumulados, cantidad par).</li>
@@ -537,19 +578,19 @@
                 </div>
 
                 <!-- Pruebas de Escritorio -->
-                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                    <h5 class="font-bold text-slate-800 mb-2 flex items-center text-xs"><i class="fas fa-clipboard-list text-cyan-600 mr-1.5"></i> 2. Pruebas de Escritorio (Traza)</h5>
-                    <div class="space-y-2 text-slate-700">
-                        <div class="bg-white p-2 rounded border border-slate-200">
+                <div class="border-l-4 border-emerald-500 pl-4 py-1">
+                    <h5 class="font-bold text-slate-800 mb-2 flex items-center text-xs"><i class="fas fa-clipboard-list text-emerald-600 mr-1.5"></i> 2. Pruebas de Escritorio (Traza)</h5>
+                    <div class="space-y-3 text-slate-700">
+                        <div>
                             <strong class="text-cyan-800 font-mono">Cadena "1010":</strong>
-                            <p class="font-mono text-[11px] text-slate-600">
+                            <p class="font-mono text-[11px] text-slate-600 my-0.5">
                                 \(q_0 \xrightarrow{1} q_0 \xrightarrow{0} q_1 \xrightarrow{1} q_1 \xrightarrow{0} \mathbf{q_0} \in F\)
                             </p>
                             <span class="text-emerald-700 font-bold text-[11px]"><i class="fas fa-check mr-1"></i> ACEPTADA (contiene exactamente 2 ceros).</span>
                         </div>
-                        <div class="bg-white p-2 rounded border border-slate-200">
+                        <div class="pt-2 border-t border-slate-100">
                             <strong class="text-rose-800 font-mono">Cadena "0100":</strong>
-                            <p class="font-mono text-[11px] text-slate-600">
+                            <p class="font-mono text-[11px] text-slate-600 my-0.5">
                                 \(q_0 \xrightarrow{0} q_1 \xrightarrow{1} q_1 \xrightarrow{0} q_0 \xrightarrow{0} \mathbf{q_1} \notin F\)
                             </p>
                             <span class="text-rose-700 font-bold text-[11px]"><i class="fas fa-times mr-1"></i> RECHAZADA (contiene 3 ceros, cantidad impar).</span>
@@ -562,77 +603,80 @@
         <!-- ========================================================== -->
         <!-- EJERCICIO 2: A PARTIR DE UNA TABLA DE TRANSICIÓN           -->
         <!-- ========================================================== -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-cyan-200 transition">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
                 <div class="flex items-center space-x-2">
                     <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-md font-mono text-xs font-bold"><i class="fas fa-table mr-1"></i> Ejercicio 2 • Tipo Tabla</span>
                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">Construcción y Manejo de Estados de Error (Pozo / Dead State)</h4>
                 </div>
-                <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Cadenas que inician con 'a'</span>
+                <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-100">Cadenas que inician con 'a'</span>
             </div>
 
             <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
                 <strong>Enunciado:</strong> Dado el alfabeto \(\Sigma = \{a, b\}\), diseña la <strong>Tabla de Transiciones</strong> de un AFD que acepte exclusivamente cadenas que inicien con la letra 'a' (ej. <em>"a", "ab", "aba", "abbb"</em>). Todo intento de iniciar con 'b' debe derivarse inmediatamente a un <strong>Estado Pozo (\(q_{error}\))</strong> que atrape la ejecución.
             </p>
 
-            <div class="grid md:grid-cols-2 gap-4 mb-4">
-                <!-- Tabla de Transición -->
+            <div class="space-y-5 mb-4">
+                <!-- Tabla de Transición (Ancho Completo) -->
                 <div class="overflow-x-auto">
-                    <table class="automata-table w-full text-xs bg-white border border-slate-200">
+                    <table class="automata-table w-full text-xs sm:text-sm bg-white border border-slate-200 rounded-xl overflow-hidden">
                         <thead class="bg-slate-100 text-slate-700 font-bold">
                             <tr>
-                                <th class="p-2 border border-slate-200">Estado Actual (\(Q\))</th>
-                                <th class="p-2 border border-slate-200 text-cyan-700">Entrada 'a'</th>
-                                <th class="p-2 border border-slate-200 text-cyan-700">Entrada 'b'</th>
-                                <th class="p-2 border border-slate-200">Semántica y Rol</th>
+                                <th class="p-3 border border-slate-200 text-left">Estado Actual (\(Q\))</th>
+                                <th class="p-3 border border-slate-200 text-cyan-700 text-center">Entrada 'a'</th>
+                                <th class="p-3 border border-slate-200 text-cyan-700 text-center">Entrada 'b'</th>
+                                <th class="p-3 border border-slate-200 text-left">Semántica y Rol</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="p-2 font-mono font-bold border border-slate-200">\(\rightarrow q_0\)</td>
-                                <td class="p-2 font-mono text-emerald-700 font-bold border border-slate-200">\(q_1\)</td>
-                                <td class="p-2 font-mono text-rose-600 font-bold border border-slate-200">\(q_e\)</td>
-                                <td class="p-2 text-slate-600 text-[11px] border border-slate-200">Estado inicial; evalúa primer carácter.</td>
+                                <td class="p-3 font-mono font-bold border border-slate-200">\(\rightarrow q_0\)</td>
+                                <td class="p-3 font-mono text-emerald-700 font-bold border border-slate-200 text-center">\(q_1\)</td>
+                                <td class="p-3 font-mono text-rose-600 font-bold border border-slate-200 text-center">\(q_e\)</td>
+                                <td class="p-3 text-slate-600 text-xs border border-slate-200">Estado inicial; evalúa primer carácter.</td>
                             </tr>
                             <tr class="bg-emerald-50/60">
-                                <td class="p-2 font-mono font-bold text-emerald-900 border border-slate-200">\(*q_1\)</td>
-                                <td class="p-2 font-mono border border-slate-200">\(q_1\)</td>
-                                <td class="p-2 font-mono border border-slate-200">\(q_1\)</td>
-                                <td class="p-2 text-emerald-800 text-[11px] border border-slate-200"><strong>Aceptación:</strong> Ya inició con 'a', acepta cualquier símbolo posterior.</td>
+                                <td class="p-3 font-mono font-bold text-emerald-900 border border-slate-200">\(*q_1\)</td>
+                                <td class="p-3 font-mono border border-slate-200 text-center">\(q_1\)</td>
+                                <td class="p-3 font-mono border border-slate-200 text-center">\(q_1\)</td>
+                                <td class="p-3 text-emerald-800 text-xs border border-slate-200"><strong>Aceptación:</strong> Ya inició con 'a', acepta cualquier símbolo posterior.</td>
                             </tr>
                             <tr class="bg-rose-50/60">
-                                <td class="p-2 font-mono font-bold text-rose-900 border border-slate-200">\(q_e\)</td>
-                                <td class="p-2 font-mono border border-slate-200">\(q_e\)</td>
-                                <td class="p-2 font-mono border border-slate-200">\(q_e\)</td>
-                                <td class="p-2 text-rose-800 text-[11px] border border-slate-200"><strong>Estado Pozo (Muerto):</strong> Sin escape. Garantiza función total.</td>
+                                <td class="p-3 font-mono font-bold text-rose-900 border border-slate-200">\(q_e\)</td>
+                                <td class="p-3 font-mono border border-slate-200 text-center">\(q_e\)</td>
+                                <td class="p-3 font-mono border border-slate-200 text-center">\(q_e\)</td>
+                                <td class="p-3 text-rose-800 text-xs border border-slate-200"><strong>Estado Pozo (Muerto):</strong> Sin escape. Garantiza función total.</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Grafo SVG del Pozo -->
-                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col justify-center items-center">
-                    <span class="text-[11px] font-mono font-bold text-slate-600 mb-1">Diagrama Resultante de la Tabla:</span>
-                    <svg height="110" viewBox="0 0 340 110" width="340" xmlns="http://www.w3.org/2000/svg">
+                <!-- Grafo SVG del Pozo (Amplio y Sin Recortes) -->
+                <div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200 flex flex-col justify-center items-center">
+                    <span class="text-xs font-mono font-bold text-slate-600 mb-2">Diagrama Resultante de la Tabla:</span>
+                    <svg class="w-full max-w-[420px] h-auto mx-auto block" viewBox="0 -18 250 146" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="arrow-ej2" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="8" refy="5" viewBox="0 0 10 10">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#0891b2"></path>
                             </marker>
+                            <marker id="arrow-ej2-err" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="8" refy="5" viewBox="0 0 10 10">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e11d48"></path>
+                            </marker>
                         </defs>
                         <!-- Start -> q0 -->
-                        <path d="M 10 55 L 35 55" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="1.8"></path>
+                        <path d="M 10 55 L 35 55" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="2"></path>
                         <!-- q0 -> q1 (a) -->
-                        <path d="M 80 50 L 140 30" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="1.8"></path>
-                        <text fill="#0891b2" font-size="11" font-weight="bold" x="105" y="33">a</text>
+                        <path d="M 80 48 L 145 30" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="2"></path>
+                        <text fill="#0891b2" font-size="11" font-weight="bold" x="108" y="32">a</text>
                         <!-- q0 -> qe (b) -->
-                        <path d="M 80 60 L 140 80" marker-end="url(#arrow-ej2)" stroke="#e11d48" stroke-width="1.8"></path>
-                        <text fill="#e11d48" font-size="11" font-weight="bold" x="105" y="78">b</text>
+                        <path d="M 80 62 L 145 80" marker-end="url(#arrow-ej2-err)" stroke="#e11d48" stroke-width="2"></path>
+                        <text fill="#e11d48" font-size="11" font-weight="bold" x="108" y="82">b</text>
                         <!-- Bucle q1 (a,b) -->
-                        <path d="M 180 15 C 160 -15, 210 -15, 195 15" fill="none" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="1.8"></path>
-                        <text fill="#0891b2" font-size="10" font-weight="bold" x="180" y="8">a, b</text>
+                        <path d="M 162 11 C 150 -14, 195 -14, 180 11" fill="none" marker-end="url(#arrow-ej2)" stroke="#0891b2" stroke-width="1.8"></path>
+                        <text fill="#0891b2" font-size="10" font-weight="bold" text-anchor="middle" x="172" y="-7">a, b</text>
                         <!-- Bucle qe (a,b) -->
-                        <path d="M 180 95 C 160 125, 210 125, 195 95" fill="none" marker-end="url(#arrow-ej2)" stroke="#e11d48" stroke-width="1.8"></path>
-                        <text fill="#e11d48" font-size="10" font-weight="bold" x="180" y="108">a, b</text>
+                        <path d="M 162 99 C 150 124, 195 124, 180 99" fill="none" marker-end="url(#arrow-ej2-err)" stroke="#e11d48" stroke-width="1.8"></path>
+                        <text fill="#e11d48" font-size="10" font-weight="bold" text-anchor="middle" x="172" y="124">a, b</text>
 
                         <!-- Nodos -->
                         <circle cx="60" cy="55" fill="#ffffff" r="20" stroke="#0891b2" stroke-width="2"></circle>
@@ -648,7 +692,7 @@
                 </div>
             </div>
 
-            <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-200 text-xs text-amber-900">
+            <div class="bg-amber-50/70 p-3.5 rounded-xl border-l-4 border-amber-400 text-xs text-amber-900">
                 <strong><i class="fas fa-lightbulb text-amber-600 mr-1"></i> Principio Fundamental del AFD:</strong>
                 En un autómata determinista, <em>ningún estado puede dejar transiciones indefinidas</em>. Si el autómata recibe una 'b' en \(q_0\), formalmente debe viajar a un estado de descarte o pozo (\(q_e\)) con bucles absorbentes para completar la función matemática total \(\delta: Q \times \Sigma \to Q\).
             </div>
@@ -657,13 +701,13 @@
         <!-- ========================================================== -->
         <!-- EJERCICIO 3: A PARTIR DE UNA EXPRESIÓN REGULAR             -->
         <!-- ========================================================== -->
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-cyan-200 transition">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-100">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
                 <div class="flex items-center space-x-2">
                     <span class="px-2.5 py-1 bg-purple-100 text-purple-800 rounded-md font-mono text-xs font-bold"><i class="fas fa-code mr-1"></i> Ejercicio 3 • Tipo Expresión Regular</span>
                     <h4 class="font-bold text-slate-900 text-sm sm:text-base">De Patrón Regex a Modelo Formal AFD</h4>
                 </div>
-                <span class="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-100">Expresión: (a|b)*abb</span>
+                <span class="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-100">Expresión: (a|b)*abb</span>
             </div>
 
             <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
@@ -671,17 +715,17 @@
             </p>
 
             <!-- Diagrama Vectorial del Reconocedor abb -->
-            <div class="bg-slate-900 p-4 rounded-xl text-white mb-4 overflow-x-auto flex flex-col items-center">
+            <div class="bg-slate-900 p-5 rounded-xl text-white mb-5 flex flex-col items-center">
                 <span class="text-[11px] font-mono font-bold text-purple-400 mb-2 uppercase tracking-wider"><i class="fas fa-terminal mr-1"></i> AFD Reconocedor de Sufijo "abb"</span>
-                <div class="min-w-[560px]">
-                    <svg height="170" viewBox="0 0 560 170" width="560" xmlns="http://www.w3.org/2000/svg">
+                <div class="w-full">
+                    <svg class="w-full max-w-[660px] h-auto mx-auto block" viewBox="0 0 540 185" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="arrow-ej3" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewBox="0 0 10 10">
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7"></path>
                             </marker>
                         </defs>
                         <!-- Start -> q0 -->
-                        <path d="M 15 85 L 55 85" marker-end="url(#arrow-ej3)" stroke="#a855f7" stroke-width="2"></path>
+                        <path d="M 15 85 L 50 85" marker-end="url(#arrow-ej3)" stroke="#a855f7" stroke-width="2"></path>
 
                         <!-- q0 Loop b -->
                         <path d="M 70 57 C 45 10, 115 10, 90 57" fill="none" marker-end="url(#arrow-ej3)" stroke="#a855f7" stroke-width="2"></path>
@@ -713,7 +757,7 @@
 
                         <!-- q3 -> q0 (b) Si tras 'abb' llega 'b' -->
                         <path d="M 470 108 Q 270 185 82 108" fill="none" marker-end="url(#arrow-ej3)" stroke="#a855f7" stroke-width="2"></path>
-                        <text fill="#c084fc" font-family="JetBrains Mono" font-size="12" font-weight="bold" x="180" y="165">b</text>
+                        <text fill="#c084fc" font-family="JetBrains Mono" font-size="12" font-weight="bold" x="180" y="172">b</text>
 
                         <!-- Nodos -->
                         <!-- q0 -->
@@ -733,9 +777,9 @@
                 </div>
             </div>
 
-            <!-- Tabla y Deducción Lógica -->
-            <div class="grid md:grid-cols-2 gap-4 text-xs">
-                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+            <!-- Tabla y Deducción Lógica (Sin tarjetas anidadas redundantes) -->
+            <div class="grid md:grid-cols-2 gap-6 text-xs pt-2">
+                <div class="border-l-4 border-purple-500 pl-4 py-1">
                     <h5 class="font-bold text-slate-800 mb-2 flex items-center"><i class="fas fa-sitemap text-purple-600 mr-1.5"></i> Semántica de los Estados</h5>
                     <ul class="space-y-1.5 text-slate-700">
                         <li>• <code class="font-bold text-purple-800">q0:</code> Estado inicial; ningún avance en el sufijo "abb".</li>
@@ -745,8 +789,8 @@
                     </ul>
                 </div>
 
-                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                    <h5 class="font-bold text-slate-800 mb-2 flex items-center"><i class="fas fa-vial text-purple-600 mr-1.5"></i> Simulación de Cadena: "a b a b b"</h5>
+                <div class="border-l-4 border-indigo-500 pl-4 py-1">
+                    <h5 class="font-bold text-slate-800 mb-2 flex items-center"><i class="fas fa-vial text-indigo-600 mr-1.5"></i> Simulación de Cadena: "a b a b b"</h5>
                     <ol class="list-decimal pl-4 space-y-1 text-slate-700 font-mono text-[11px]">
                         <li>Arranca en \(q_0\).</li>
                         <li>Lee 'a' &rarr; Pasa a \(q_1\) (empieza "a...").</li>
@@ -765,7 +809,6 @@
 <!-- FIN DE LOS 3 EJERCICIOS DEL TEMA 3.1                                      -->
 <!-- ========================================================================= -->
 
-</div>
 </div>
 </section>
 <!-- 3.2 AFD vs AFND -->
@@ -874,7 +917,7 @@
 <!-- DESGLOSE DETALLADO Y DIGERIBLE (CON GRAFOS) -->
 <div class="space-y-8">
 <!-- Tema 3.3 y 3.4: Thompson -->
-<div class="bg-indigo-50/40 p-6 rounded-2xl border border-indigo-100">
+<div class="border-l-4 border-indigo-500 pl-5 py-1">
 <h3 class="text-lg font-bold text-indigo-900 mb-2"><i class="fas fa-cubes text-indigo-500 mr-2"></i> 3.3 y 3.4 Representar ER usando AFND (Construcción de Thompson)</h3>
 <p class="text-sm text-slate-700 mb-4">
 <strong>¿De qué trata?</strong> Imagina que es como armar un set de Legos. Cada operación matemática de las expresiones regulares (Unión, Concatenación, Cerradura) tiene un "bloque de Lego" (un mini-autómata) ya predefinido. Simplemente tomamos la ER y conectamos las piezas usando transiciones "mágicas" o vacías (\(\epsilon\)) que no consumen caracteres.
@@ -884,7 +927,7 @@
 <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
 <span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Concatenación ( a · b )</span>
 <p class="text-[10px] text-slate-500 mb-3 text-center">Conectas el final de "a" directamente con el inicio de "b".</p>
-<div class="w-full overflow-x-auto min-w-[200px] flex justify-center">
+<div class="w-full flex justify-center">
 <svg class="w-full h-auto max-w-[300px]" viewbox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <marker id="arrow-ind" markerheight="6" markerwidth="6" orient="auto-start-reverse" refx="9" refy="5" viewbox="0 0 10 10">
@@ -909,7 +952,7 @@
 <div class="bg-white p-4 rounded-xl border border-indigo-100 shadow-sm flex flex-col items-center">
 <span class="font-bold text-indigo-700 text-xs uppercase tracking-wide mb-1">Unión ( a | b )</span>
 <p class="text-[10px] text-slate-500 mb-3 text-center">Creas dos caminos paralelos usando \(\epsilon\) (épsilon).</p>
-<div class="w-full overflow-x-auto min-w-[250px] flex justify-center">
+<div class="w-full flex justify-center">
 <svg class="w-full h-auto max-w-[350px]" viewbox="0 0 350 150" xmlns="http://www.w3.org/2000/svg">
 <!-- Enlaces -->
 <path d="M 10 75 L 35 75" marker-end="url(#arrow-ind)" stroke="#4f46e5" stroke-width="2"></path>
@@ -941,7 +984,7 @@
 </div>
 </div>
 <!-- Tema 3.3: AFND a AFD -->
-<div class="bg-cyan-50/40 p-6 rounded-2xl border border-cyan-100">
+<div class="border-l-4 border-cyan-500 pl-5 py-1">
 <h3 class="text-lg font-bold text-cyan-900 mb-2"><i class="fas fa-compress-arrows-alt text-cyan-500 mr-2"></i> 3.3 Convertir AFND a AFD (Subconjuntos)</h3>
 <p class="text-sm text-slate-700 mb-4">
 <strong>¿Por qué lo hacemos?</strong> El AFND que armamos arriba es genial en papel, pero <em>imposible</em> de programar en un <code>switch</code> de Java porque un estado puede ir a múltiples lugares con la misma letra, ¡y la computadora no puede dividirse en dos!
@@ -951,7 +994,7 @@
 <!-- SVG Subconjuntos -->
 <div class="bg-white p-4 rounded-xl border border-cyan-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
 <!-- AFND -->
-<div class="text-center min-w-[150px]">
+<div class="text-center flex-1">
 <span class="text-[10px] font-bold text-slate-500 uppercase">Antes (AFND - Ambigüedad)</span>
 <svg class="w-full max-w-[160px] mx-auto mt-2" viewbox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
 <defs>
@@ -974,7 +1017,7 @@
 <i class="fas fa-arrow-right text-3xl text-cyan-300 hidden md:block"></i>
 <i class="fas fa-arrow-down text-3xl text-cyan-300 block md:hidden my-2"></i>
 <!-- AFD -->
-<div class="text-center min-w-[200px]">
+<div class="text-center flex-1">
 <span class="text-[10px] font-bold text-slate-500 uppercase">Después (AFD - Macroestado)</span>
 <svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
 <path d="M 50 60 L 120 60" marker-end="url(#arrow-cyn)" stroke="#0891b2" stroke-width="2"></path>
@@ -988,7 +1031,7 @@
 </div>
 </div>
 <!-- Tema 3.5: Minimización -->
-<div class="bg-emerald-50/40 p-6 rounded-2xl border border-emerald-100">
+<div class="border-l-4 border-emerald-500 pl-5 py-1">
 <h3 class="text-lg font-bold text-emerald-900 mb-2"><i class="fas fa-compress text-emerald-500 mr-2"></i> 3.5 Minimización de Estados</h3>
 <p class="text-sm text-slate-700 mb-4">
 <strong>Nadie quiere código redundante.</strong> Después de crear los macro-estados, tu autómata puede ser gigante y tener "estados basura" que hacen exactamente lo mismo. El algoritmo de minimización (Hopcroft) busca dos cosas:
@@ -1000,7 +1043,7 @@
 <!-- SVG Minimizacion -->
 <div class="bg-white p-4 rounded-xl border border-emerald-100 shadow-sm flex flex-col md:flex-row items-center justify-center gap-6 overflow-x-auto">
 <!-- Antes -->
-<div class="text-center min-w-[200px]">
+<div class="text-center flex-1">
 <span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Redundante</span>
 <svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
 <defs>
@@ -1031,7 +1074,7 @@
 <i class="fas fa-arrow-right text-3xl text-emerald-300 hidden md:block"></i>
 <i class="fas fa-arrow-down text-3xl text-emerald-300 block md:hidden my-2"></i>
 <!-- Despues -->
-<div class="text-center min-w-[200px]">
+<div class="text-center flex-1">
 <span class="text-[10px] font-bold text-slate-500 uppercase">Autómata Optimizado</span>
 <svg class="w-full max-w-[200px] mx-auto mt-2" viewbox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
 <path d="M 65 70 L 125 70" marker-end="url(#arrow-em)" stroke="#10b981" stroke-width="2"></path>
@@ -1118,7 +1161,7 @@
 <!-- Paso 1 -->
 <div class="flex gap-4 items-start">
 <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">1</div>
-<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<div class="flex-1">
 <h4 class="font-bold text-slate-800 text-sm">Estado Inicial y el Bucle de Lectura</h4>
 <p class="text-xs text-slate-600 mt-1 mb-2">Empezamos en el estado 0 y recorremos la cadena carácter por carácter.</p>
 <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
@@ -1135,7 +1178,7 @@ String cadena = <span class="text-green-400">"10101"</span>;
 <!-- Paso 2 -->
 <div class="flex gap-4 items-start">
 <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">2</div>
-<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<div class="flex-1">
 <h4 class="font-bold text-slate-800 text-sm">El Switch de Transiciones</h4>
 <p class="text-xs text-slate-600 mt-1 mb-2">Construimos la matriz lógica. Dependiendo de dónde estemos y qué letra llegue, cambiamos el valor de la variable <code>estado</code>.</p>
 <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
@@ -1159,7 +1202,7 @@ String cadena = <span class="text-green-400">"10101"</span>;
 <!-- Paso 3 -->
 <div class="flex gap-4 items-start">
 <div class="flex-shrink-0 w-8 h-8 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-md">3</div>
-<div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex-1">
+<div class="flex-1">
 <h4 class="font-bold text-slate-800 text-sm">Verificar Aceptación</h4>
 <p class="text-xs text-slate-600 mt-1 mb-2">Una vez que termina el bucle <code>for</code>, verificamos si el autómata se detuvo en un estado de aceptación (el estado 2 en este caso).</p>
 <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700">
@@ -1487,7 +1530,7 @@ Motor AFD en Java (GUI)
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
-            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+            <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-cyan-600 text-xs"></i>

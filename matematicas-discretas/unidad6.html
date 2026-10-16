@@ -158,12 +158,53 @@
             animation: dash 1.5s linear infinite;
         }
     </style>
+    <style id="platform-wide-ui-override">
+        /* === Expansión de Ancho y Eliminación de Tarjetas Anidadas (Toda la Plataforma) === */
+        .concept-card,
+        .topic-container {
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0 0 2.25rem 0 !important;
+            margin-bottom: 2.25rem !important;
+        }
+        .pedagogy-step {
+            background: transparent !important;
+            border: none !important;
+            border-left: 3px solid #cbd5e1 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            padding: 0.25rem 0 0.25rem 1.25rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        /* Evitar redundancia de tarjetas dentro de tarjetas en toda la plataforma */
+        main div[class*="rounded-"][class*="border"] div[class*="rounded-"][class*="border"] {
+            box-shadow: none !important;
+        }
+        main div[class*="rounded-"][class*="border"] > div[class*="bg-slate-50"][class*="rounded-"][class*="border"]:has(div[class*="rounded-"][class*="border"]) {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0.25rem 0 !important;
+        }
+        /* Grafos SVG e imágenes 100% responsivos sin recortes */
+        main svg {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        /* Laterales compactos y elegantes */
+        aside .sticky {
+            padding: 0.875rem !important;
+        }
+    </style>
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
     <!-- Top Bar Institucional -->
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
@@ -178,7 +219,7 @@
 
     <!-- Navegación Sticky -->
     <nav class="sticky-sub-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-14 items-center">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-slate-500 hover:text-slate-800 text-sm font-semibold flex items-center">
@@ -199,11 +240,11 @@
     </nav>
 
     <!-- Contenedor Principal de 3 Columnas -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
-            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+            <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
                         <i class="fas fa-book text-rose-600"></i>
@@ -255,7 +296,7 @@
             </aside>
 
             <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (6 Cols) -->
-            <main class="lg:col-span-6 space-y-8">
+            <main class="lg:col-span-8 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
@@ -750,7 +791,7 @@
             </main>
 
             <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
-            <aside class="hidden lg:block lg:col-span-3 space-y-6">
+            <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
                         <i class="fas fa-list text-rose-600 text-xs"></i>
