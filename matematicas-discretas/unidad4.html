@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 4: Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2) | Matemáticas Discretas • TecNM</title>
+    <title>Unidad 4: Álgebra Booleana (4.1 - 4.3.2) | Matemáticas Discretas • TecNM</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -55,7 +55,7 @@
         }
         .lll-info { border-left-color: #4f46e5; background-color: #f8fafc; }
         .lll-warning { border-left-color: #f59e0b; background-color: #fffbeb; }
-        .lll-tip { border-left-color: #0284c7; background-color: #f0f9ff; }
+        .lll-tip { border-left-color: #10b981; background-color: #f0fdf4; }
 
         .difficulty-badge {
             font-size: 0.65rem;
@@ -89,56 +89,13 @@
         .badge-step {
             display: inline-flex;
             align-items: center;
-            font-size: 0.68rem;
+            font-size: 0.7rem;
             font-weight: 800;
             text-transform: uppercase;
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.75rem;
             border-radius: 9999px;
             letter-spacing: 0.05em;
-            margin-bottom: 0.6rem;
-        }
-
-        .chip-hardware {
-            background-color: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #1e293b;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .step-item {
-            position: relative;
-            padding-left: 2.25rem;
-            margin-bottom: 1.25rem;
-        }
-        .step-item::before {
-            content: attr(data-step);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 1.5rem;
-            height: 1.5rem;
-            background: #4f46e5;
-            color: white;
-            font-weight: bold;
-            font-size: 0.7rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .step-item::after {
-            content: '';
-            position: absolute;
-            left: 0.75rem;
-            top: 1.6rem;
-            bottom: -0.6rem;
-            width: 2px;
-            background: #e2e8f0;
-        }
-        .step-item:last-child::after {
-            display: none;
+            margin-bottom: 0.75rem;
         }
 
         .sticky-sub-nav {
@@ -150,12 +107,27 @@
             border-bottom: 1px solid #e2e8f0;
         }
 
-        @keyframes dash {
-            to { stroke-dashoffset: -20; }
+        .bit-1 {
+            display: inline-block;
+            min-width: 1.6rem;
+            padding: 0.1rem 0.45rem;
+            border-radius: 0.375rem;
+            background-color: #dcfce7;
+            color: #166534;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
         }
-        .anim-flow {
-            stroke-dasharray: 6;
-            animation: dash 1.5s linear infinite;
+        .bit-0 {
+            display: inline-block;
+            min-width: 1.6rem;
+            padding: 0.1rem 0.45rem;
+            border-radius: 0.375rem;
+            background-color: #ffe4e6;
+            color: #9f1239;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
         }
     </style>
     <style id="platform-wide-ui-override">
@@ -200,7 +172,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+<body class="bg-white text-slate-800 antialiased selection:bg-indigo-100 selection:text-indigo-900">
 
     <!-- Top Bar Institucional -->
     <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
@@ -208,7 +180,7 @@
             <div class="flex items-center space-x-3">
                 <span class="font-semibold text-white"><i class="fas fa-university text-emerald-400 mr-1.5"></i> TecNM - IT Chilpancingo</span>
                 <span class="text-slate-600 hidden sm:inline">|</span>
-                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales</span>
+                <span class="text-slate-400 hidden sm:inline">Ingeniería en Sistemas Computacionales • Primer Semestre</span>
             </div>
             <div class="flex items-center space-x-4">
                 <span class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-mono text-[11px]">AEF-1041 • Unidad 4</span>
@@ -228,7 +200,7 @@
                     <span class="text-slate-300">/</span>
                     <span class="font-bold text-slate-900 text-sm flex items-center">
                         <span class="w-6 h-6 rounded bg-indigo-100 text-indigo-800 text-xs flex items-center justify-center font-bold mr-2">U4</span>
-                        Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2)
+                        Álgebra Booleana (4.1 - 4.3.2)
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 text-xs font-semibold">
@@ -243,7 +215,7 @@
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (3 Cols) -->
+            <!-- COLUMNA IZQUIERDA: Menú de Navegación del Curso (2 Cols) -->
             <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-slate-50 border border-slate-200 rounded-2xl p-4">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-200">
@@ -252,7 +224,6 @@
                     </div>
 
                     <nav class="space-y-1 text-xs">
-                        
                         <a href="unidad1.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
                             <span>1. Sistemas Numéricos</span>
                             <span class="difficulty-badge diff-easy">12h</span>
@@ -266,7 +237,7 @@
                             <span class="difficulty-badge diff-med">16h</span>
                         </a>
                         <a href="unidad4.html" class="flex items-center justify-between p-2 rounded-lg bg-indigo-600 text-white font-bold shadow-sm">
-                            <span>4. Álgebra Booleana y Circuitos</span>
+                            <span>4. Álgebra Booleana</span>
                             <span class="difficulty-badge bg-white/20 text-white border-0">14h</span>
                         </a>
                         <a href="unidad5.html" class="flex items-center justify-between p-2 rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 transition">
@@ -280,301 +251,966 @@
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-200">
-                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Subtemas Oficiales U4</h5>
+                        <h5 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Temario Oficial U4</h5>
                         <ul class="space-y-1 text-xs text-slate-600">
-                            <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Teoremas y Postulados</a>
-<a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.2 Mapas de Karnaugh</a>
-<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Compuertas y Sumador 4 Bits</a>
-<a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Karnaugh Interactivo</a>
-
+                            <a href="#puente-u3-u4" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Introducción: De V/F a 1/0</a>
+                            <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition font-semibold">4.1 Teoremas y Postulados</a>
+                            <a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition font-semibold">4.2 Optimización de Expresiones</a>
+                            <a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition font-semibold">4.3 Compuertas Lógicas</a>
+                            <a href="#sub-4-3-1" class="block py-1 pl-4 text-[11px] text-slate-500 hover:text-indigo-600 transition">• 4.3.1 Mini y Maxi términos</a>
+                            <a href="#sub-4-3-2" class="block py-1 pl-4 text-[11px] text-slate-500 hover:text-indigo-600 transition">• 4.3.2 Circuitos Lógicos</a>
+                            <a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-indigo-500 pl-2 transition">Simulador Interactivo</a>
                         </ul>
                     </div>
                 </div>
             </aside>
 
-            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (6 Cols) -->
+            <!-- COLUMNA CENTRAL: Contenido Didáctico Completo (8 Cols) -->
             <main class="lg:col-span-8 space-y-8">
 
                 <!-- Header de la Lección -->
                 <header class="border-b border-slate-200 pb-6">
                     <div class="flex items-center space-x-2 text-xs text-indigo-600 font-bold uppercase tracking-wider mb-2">
-                        <span>Programa Oficial TecNM • Matemáticas Discretas</span>
+                        <span>Programa Oficial TecNM (AEF-1041) • De lo Básico a lo Completo</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
-                        Álgebra Booleana y Circuitos Lógicos (4.1 - 4.3.2)
+                        Unidad 4: Álgebra Booleana
                     </h1>
-                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
-                        Teoremas de Huntington, optimización con Karnaugh, compuertas TTL (74LSxx) y construcción del sumador binario de 4 bits (74LS83).
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-4">
+                        Descubre cómo la lógica que aprendiste en la Unidad 3 se transforma en <strong>ceros (0) y unos (1)</strong> para simplificar fórmulas mediante teoremas y Mapas de Karnaugh, obtener <strong>minitérminos y maxitérminos</strong>, y dibujar <strong>circuitos con compuertas lógicas</strong> paso a paso.
                     </p>
                     <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500">
                         <span class="flex items-center"><i class="far fa-clock mr-1 text-slate-400"></i> 14 Horas (Semanas 8-11)</span>
                         <span>•</span>
-                        <span class="difficulty-badge diff-med">Programa Oficial</span>
+                        <span class="difficulty-badge diff-easy">Explicado Desde Cero</span>
                         <span>•</span>
                         <span>Docente: Cruz Enrique García</span>
                     </div>
                 </header>
 
-                <!-- CONTENIDO PEDAGÓGICO COMPLETO -->
-                
-<div class="lll-box lll-info">
-    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Unidad 4 • Álgebra Booleana y Circuitos Lógicos (14 Horas)</h4>
-    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-        <strong>Competencia Específica:</strong> Aplicar los conceptos básicos, teoremas, mapas de Karnaugh y propiedades del álgebra booleana para optimizar expresiones y <strong>diseñar circuitos digitales con compuertas lógicas (AND, OR, NOT, XOR y sumador de 4 bits)</strong>.
-    </p>
-</div>
+                <!-- Competencia Oficial -->
+                <div class="lll-box lll-info">
+                    <h4 class="font-bold text-slate-900 text-sm mb-1"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Competencia Específica de la Unidad 4 (Temario Oficial TecNM)</h4>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        Aplicar los conceptos básicos, teoremas, mapas de Karnaugh y propiedades del álgebra booleana, para optimizar expresiones booleanas y diseñar circuitos básicos con compuertas lógicas.
+                    </p>
+                </div>
 
-<div id="tema-4-1" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
-    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">4.1</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Teoremas y Postulados del Álgebra Booleana</h2>
-    </div>
+                <!-- ========================================================================= -->
+                <!-- INTRODUCCIÓN PEDAGÓGICA: EL PUENTE ENTRE LA UNIDAD 3 Y LA UNIDAD 4        -->
+                <!-- ========================================================================= -->
+                <div id="puente-u3-u4" class="topic-container scroll-mt-24">
+                    <div class="bg-indigo-50/70 border border-indigo-200 rounded-2xl p-6">
+                        <h2 class="text-lg sm:text-xl font-extrabold text-indigo-950 mb-2 flex items-center">
+                            <i class="fas fa-exchange-alt text-indigo-600 mr-2.5"></i> Antes de empezar: ¿Qué es el Álgebra Booleana y cómo se conecta con la Unidad 3?
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-700 leading-relaxed mb-4">
+                            En 1854, el matemático inglés <strong>George Boole</strong> descubrió que podíamos hacer "álgebra" (sumas y multiplicaciones) usando únicamente dos valores: <strong>Verdadero</strong> y <strong>Falso</strong>. Cien años después, <strong>Claude Shannon</strong> demostró que esa misma álgebra servía para diseñar circuitos eléctricos y computadoras si cambiábamos <em>Verdadero</em> por <strong>1 (Encendido / Pasa corriente)</strong> y <em>Falso</em> por <strong>0 (Apagado / No pasa corriente)</strong>.
+                        </p>
+                        <p class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-2">
+                            Mira qué fácil: ¡Ya conoces el Álgebra Booleana por la Unidad 3, solo cambian los símbolos!
+                        </p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse border border-indigo-200 text-xs bg-white rounded-xl overflow-hidden">
+                                <thead class="bg-indigo-900 text-white">
+                                    <tr>
+                                        <th class="p-2.5 border border-indigo-800">Concepto</th>
+                                        <th class="p-2.5 border border-indigo-800">En la Unidad 3 (Lógica Proposicional)</th>
+                                        <th class="p-2.5 border border-indigo-800 bg-indigo-950">En la Unidad 4 (Álgebra Booleana)</th>
+                                        <th class="p-2.5 border border-indigo-800">Significado Físico en un Circuito</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">
+                                    <tr>
+                                        <td class="p-2.5 font-bold text-slate-800">Valores posibles</td>
+                                        <td class="p-2.5">Verdadero (<strong>V</strong>) y Falso (<strong>F</strong>)</td>
+                                        <td class="p-2.5 font-bold"><span class="bit-1">1</span> (Uno) y <span class="bit-0">0</span> (Cero)</td>
+                                        <td class="p-2.5"><span class="bit-1">1</span> = Interruptor cerrado / Foco encendido (5V).<br><span class="bit-0">0</span> = Interruptor abierto / Foco apagado (0V).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2.5 font-bold text-slate-800">Letras (Variables)</td>
+                                        <td class="p-2.5 font-mono">Minúsculas: \(p, q, r\)</td>
+                                        <td class="p-2.5 font-mono font-bold text-indigo-700">Mayúsculas: \(A, B, C, D\)</td>
+                                        <td class="p-2.5">Representan las entradas o botones de un circuito.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2.5 font-bold text-slate-800">Operación "O" (OR)</td>
+                                        <td class="p-2.5 font-mono">Disyunción: \(p \lor q\)</td>
+                                        <td class="p-2.5 font-mono font-bold text-emerald-700">Suma Booleana: \(A + B\)</td>
+                                        <td class="p-2.5">Interruptores en <strong>Paralelo</strong> (basta que uno sea <span class="bit-1">1</span> para dar <span class="bit-1">1</span>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2.5 font-bold text-slate-800">Operación "Y" (AND)</td>
+                                        <td class="p-2.5 font-mono">Conjunción: \(p \land q\)</td>
+                                        <td class="p-2.5 font-mono font-bold text-sky-700">Producto Booleano: \(A \cdot B\) ó \(AB\)</td>
+                                        <td class="p-2.5">Interruptores en <strong>Serie</strong> (ambos deben ser <span class="bit-1">1</span> para dar <span class="bit-1">1</span>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2.5 font-bold text-slate-800">Operación "NO" (NOT)</td>
+                                        <td class="p-2.5 font-mono">Negación: \(\sim p\) ó \(\neg p\)</td>
+                                        <td class="p-2.5 font-mono font-bold text-rose-700">Complemento: \(A'\) ó \(\overline{A}\)</td>
+                                        <td class="p-2.5"><strong>Inversor:</strong> cambia <span class="bit-1">1</span> por <span class="bit-0">0</span>, y <span class="bit-0">0</span> por <span class="bit-1">1</span>. Se lee <em>"A negada"</em>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
-        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
-            <p>El <strong>Álgebra Booleana</strong> es la estructura algebraica que modela operaciones lógicas sobre el conjunto binario \(B = \{0, 1\}\) con las operaciones suma (+) y producto (\(\cdot\)). Los <strong>Postulados de Huntington</strong> establecen las propiedades de cerradura, conmutatividad, distributividad, elementos neutros (\(0\) y \(1\)) y complementación.</p>
-        </div>
-    </div>
+                <!-- ========================================================================= -->
+                <!-- TEMA 4.1: TEOREMAS Y POSTULADOS DEL ÁLGEBRA BOOLEANA                      -->
+                <!-- ========================================================================= -->
+                <div id="tema-4-1" class="topic-container scroll-mt-24">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-200">
+                        <span class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-800 text-base flex items-center justify-center font-mono font-bold">4.1</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Teoremas y Postulados del Álgebra Booleana</h2>
+                            <p class="text-xs text-slate-500">De lo básico (cómo sumar y multiplicar 0 y 1) hasta los 12 teoremas para simplificar expresiones</p>
+                        </div>
+                    </div>
 
-    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Principio de Dualidad:</strong> Toda identidad es válida si se intercambian (+) por (\(\cdot\)) y 0 por 1.</li><li>• <strong>Idempotencia:</strong> \(x + x = x\) y \(x \cdot x = x\).</li><li>• <strong>Absorción:</strong> \(x + x \cdot y = x\) y \(x \cdot (x + y) = x\).</li><li>• <strong>Teorema de De Morgan:</strong> \((x + y)' = x' \cdot y'\) y \((x \cdot y)' = x' + y'\).</li></ul>
-        </div>
-    </div>
+                    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL DESDE CERO -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Paso a Paso (De lo Básico a lo Completo)</span>
+                        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-5 mt-1">
 
-    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
-        <div class="my-2">
-            
-<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
-    <div class="text-[11px] font-bold text-indigo-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-cube mr-1"></i> Retículo Booleano y Postulados de Huntington</div>
-    <svg viewBox="0 0 460 90" class="w-full max-w-md mx-auto block">
-        <rect x="30" y="15" width="90" height="60" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
-        <text x="75" y="40" fill="#818cf8" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">Neutro</text>
-        <text x="75" y="58" fill="#94a3b8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">x+0=x, x·1=x</text>
+                            <!-- Parte A: Las 3 operaciones básicas y los Postulados -->
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 mb-2">
+                                    Paso 1 (Lo Básico): ¿Qué es un Postulado y cómo se calcula con 0 y 1?
+                                </h3>
+                                <p class="mb-3">
+                                    Un <strong>Postulado</strong> (también llamado <em>axioma</em>) es una regla básica de partida tan evidente que no requiere demostración. En el Álgebra Booleana solo existen dos números (<span class="bit-0">0</span> y <span class="bit-1">1</span>) y tres operaciones básicas:
+                                </p>
 
-        <rect x="135" y="15" width="95" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
-        <text x="182" y="40" fill="#38bdf8" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">Complemento</text>
-        <text x="182" y="58" fill="#94a3b8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">x+x'=1, x·x'=0</text>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <!-- Suma OR -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-emerald-800 text-sm mb-2"><i class="fas fa-plus-circle mr-1"></i> 1. Suma Booleana (OR: \(+\))</h4>
+                                        <p class="text-xs text-slate-600 mb-2">Equivale al conector <strong>"O"</strong>. Basta que haya un <span class="bit-1">1</span> para que el resultado sea <span class="bit-1">1</span>:</p>
+                                        <ul class="font-mono text-xs space-y-1 bg-slate-50 p-2.5 rounded border border-slate-100">
+                                            <li>0 + 0 = <span class="bit-0">0</span></li>
+                                            <li>0 + 1 = <span class="bit-1">1</span></li>
+                                            <li>1 + 0 = <span class="bit-1">1</span></li>
+                                            <li class="font-bold text-emerald-900 bg-emerald-50 px-1 rounded">1 + 1 = <span class="bit-1">1</span> &larr; ¡Ojo aquí!</li>
+                                        </ul>
+                                    </div>
+                                    <!-- Producto AND -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-sky-800 text-sm mb-2"><i class="fas fa-times-circle mr-1"></i> 2. Producto Booleano (AND: \(\cdot\))</h4>
+                                        <p class="text-xs text-slate-600 mb-2">Equivale al conector <strong>"Y"</strong>. Solo da <span class="bit-1">1</span> cuando los dos son <span class="bit-1">1</span>:</p>
+                                        <ul class="font-mono text-xs space-y-1 bg-slate-50 p-2.5 rounded border border-slate-100">
+                                            <li>0 · 0 = <span class="bit-0">0</span></li>
+                                            <li>0 · 1 = <span class="bit-0">0</span></li>
+                                            <li>1 · 0 = <span class="bit-0">0</span></li>
+                                            <li class="font-bold text-sky-900 bg-sky-50 px-1 rounded">1 · 1 = <span class="bit-1">1</span></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Complemento NOT -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-200">
+                                        <h4 class="font-bold text-rose-800 text-sm mb-2"><i class="fas fa-sync-alt mr-1"></i> 3. Complemento (NOT: \('\))</h4>
+                                        <p class="text-xs text-slate-600 mb-2">Equivale al <strong>"NO"</strong> (Inversor). Cambia el bit por su opuesto:</p>
+                                        <ul class="font-mono text-xs space-y-2 bg-slate-50 p-2.5 rounded border border-slate-100">
+                                            <li>0' = <span class="bit-1">1</span> &nbsp;<span class="font-sans text-[11px] text-slate-500">(El opuesto de 0 es 1)</span></li>
+                                            <li>1' = <span class="bit-0">0</span> &nbsp;<span class="font-sans text-[11px] text-slate-500">(El opuesto de 1 es 0)</span></li>
+                                        </ul>
+                                        <p class="text-[11px] text-slate-500 mt-2">Nota: En los libros verás \(A'\) o también \(\overline{A}\). Significan exactamente lo mismo.</p>
+                                    </div>
+                                </div>
 
-        <rect x="245" y="15" width="95" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
-        <text x="292" y="40" fill="#10b981" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">Distributiva</text>
-        <text x="292" y="58" fill="#94a3b8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">x(y+z)=xy+xz</text>
+                                <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200 text-xs text-amber-900">
+                                    <strong><i class="fas fa-lightbulb text-amber-600 mr-1"></i> ¿Por qué en Álgebra Booleana \(1 + 1 = 1\) y no \(2\)?</strong><br>
+                                    Porque en el sistema binario booleano el número \(2\) no existe: solo existen los estados <strong>Apagado (0)</strong> y <strong>Encendido (1)</strong>. Imagina una lámpara con dos botones en paralelo: si presionas el botón 1 (Encendido = 1) <strong>O</strong> presionas el botón 2 (Encendido = 1), el resultado es que la lámpara está <strong>Encendida (1)</strong>.
+                                </div>
+                            </div>
 
-        <rect x="355" y="15" width="85" height="60" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5"/>
-        <text x="397" y="40" fill="#f43f5e" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">De Morgan</text>
-        <text x="397" y="58" fill="#94a3b8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">(x+y)'=x'y'</text>
-    </svg>
-</div>
+                            <!-- Parte B: Tabla Maestra de Postulados y Teoremas -->
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 mb-2">
+                                    Paso 2 (Lo Completo): Tabla Maestra de los 12 Postulados y Teoremas
+                                </h3>
+                                <p class="mb-3">
+                                    Un <strong>Teorema</strong> es una regla que se deduce de los postulados y nos permite <strong>simplificar expresiones con letras (\(A, B, C\))</strong>. Observa cómo cada regla tiene dos versiones (una con suma \(+\) y otra con multiplicación \(\cdot\)):
+                                </p>
 
-        </div>
-    </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left border-collapse border border-slate-200 text-xs bg-white rounded-xl overflow-hidden">
+                                        <thead class="bg-slate-800 text-white">
+                                            <tr>
+                                                <th class="p-2.5 border border-slate-700">Nombre de la Propiedad / Teorema</th>
+                                                <th class="p-2.5 border border-slate-700 bg-indigo-950">Forma con Suma (OR)</th>
+                                                <th class="p-2.5 border border-slate-700 bg-sky-950">Forma con Producto (AND)</th>
+                                                <th class="p-2.5 border border-slate-700">¿Cómo entenderla fácilmente?</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-200">
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">1. Identidad (Elemento Neutro)</td>
+                                                <td class="p-2.5 font-mono font-bold text-indigo-700">\(A + 0 = A\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-sky-700">\(A \cdot 1 = A\)</td>
+                                                <td class="p-2.5">Sumar \(0\) o multiplicar por \(1\) deja a la letra \(A\) intacta.</td>
+                                            </tr>
+                                            <tr class="bg-slate-50/60">
+                                                <td class="p-2.5 font-bold text-slate-900">2. Dominación (Nulo / Absorbente)</td>
+                                                <td class="p-2.5 font-mono font-bold text-indigo-700">\(A + 1 = 1\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-sky-700">\(A \cdot 0 = 0\)</td>
+                                                <td class="p-2.5">En suma, un \(1\) gana siempre y da \(1\). En producto, un \(0\) anula todo a \(0\).</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">3. Idempotencia (Repetición)</td>
+                                                <td class="p-2.5 font-mono font-bold text-indigo-700">\(A + A = A\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-sky-700">\(A \cdot A = A\)</td>
+                                                <td class="p-2.5">Si sumas o multiplicas la misma letra consigo misma, queda una sola vez (no existen exponentes \(A^2\) ni \(2A\)).</td>
+                                            </tr>
+                                            <tr class="bg-slate-50/60">
+                                                <td class="p-2.5 font-bold text-slate-900">4. Complemento (Inverso)</td>
+                                                <td class="p-2.5 font-mono font-bold text-indigo-700">\(A + A' = 1\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-sky-700">\(A \cdot A' = 0\)</td>
+                                                <td class="p-2.5">Como una vale \(1\) y su opuesta vale \(0\): sumadas dan \(1+0=1\), y multiplicadas dan \(1 \cdot 0 = 0\).</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">5. Involución (Doble Negación)</td>
+                                                <td class="p-2.5 font-mono font-bold text-rose-700" colspan="2">\((A')' = A\)</td>
+                                                <td class="p-2.5">Si niegas dos veces una letra, las dos comillas se cancelan y vuelve a ser \(A\).</td>
+                                            </tr>
+                                            <tr class="bg-slate-50/60">
+                                                <td class="p-2.5 font-bold text-slate-900">6. Conmutativa</td>
+                                                <td class="p-2.5 font-mono">\(A + B = B + A\)</td>
+                                                <td class="p-2.5 font-mono">\(A \cdot B = B \cdot A\)</td>
+                                                <td class="p-2.5">El orden de las letras no altera el resultado.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">7. Asociativa</td>
+                                                <td class="p-2.5 font-mono">\(A + (B + C) = (A + B) + C\)</td>
+                                                <td class="p-2.5 font-mono">\(A(BC) = (AB)C\)</td>
+                                                <td class="p-2.5">Puedes agrupar los paréntesis como más te convenga.</td>
+                                            </tr>
+                                            <tr class="bg-slate-50/60">
+                                                <td class="p-2.5 font-bold text-slate-900">8. Distributiva (Factor Común)</td>
+                                                <td class="p-2.5 font-mono font-bold text-indigo-700">\(A(B + C) = AB + AC\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-sky-700">\(A + BC = (A + B)(A + C)\)</td>
+                                                <td class="p-2.5">Permite multiplicar paréntesis o <strong>sacar factor común</strong> cuando una letra se repite.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">9. Absorción (Atajo Clave)</td>
+                                                <td class="p-2.5 font-mono font-bold text-emerald-700">\(A + AB = A\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-emerald-700">\(A(A + B) = A\)</td>
+                                                <td class="p-2.5">La letra sola \(A\) "absorbe" y elimina al término más grande \(AB\).</td>
+                                            </tr>
+                                            <tr class="bg-slate-50/60">
+                                                <td class="p-2.5 font-bold text-slate-900">10. Absorción con Negada</td>
+                                                <td class="p-2.5 font-mono font-bold text-emerald-700">\(A + A'B = A + B\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-emerald-700">\(A(A' + B) = AB\)</td>
+                                                <td class="p-2.5">Si tienes \(A + A'B\), la \(A'\) pegada a la \(B\) desaparece y queda solo \(A + B\).</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-slate-900">11. Teoremas de De Morgan</td>
+                                                <td class="p-2.5 font-mono font-bold text-rose-700">\((A + B)' = A' \cdot B'\)</td>
+                                                <td class="p-2.5 font-mono font-bold text-rose-700">\((A \cdot B)' = A' + B'\)</td>
+                                                <td class="p-2.5"><strong>Regla:</strong> "Rompe la barra/paréntesis, niega cada letra y cambia el signo (\(+\) por \(\cdot\), o \(\cdot\) por \(+\))".</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Simplificar algebraicamente la expresión \(F = A \cdot B + A \cdot B'\).</p><p class='text-slate-600 font-mono mt-1'>1. Factorizar por distributividad: \(F = A \cdot (B + B')\).<br>2. Aplicar postulado de complemento (\(B + B' = 1\)): \(F = A \cdot (1)\).<br>3. Aplicar neutro: \(F = A\).</p></div>
-        </div>
-    </div>
+                        </div>
+                    </div>
 
-    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
-    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Simplifica la expresión booleana \(F = (A + B) \cdot (A + B')\). <span class='text-indigo-700 font-bold font-mono'>Pista: \(F = A\).</span></p></div>
-        </div>
-    </div>
-</div>
+                    <!-- FASE 2: GLOSARIO DE TÉRMINOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos Técnicos (Explicados con Sencillez)</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs mt-1">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-indigo-800">• Variable Booleana:</strong> Es una letra (\(A, B, C\)) que únicamente puede tomar el valor <span class="bit-0">0</span> o el valor <span class="bit-1">1</span>.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-indigo-800">• Literal:</strong> Es cada aparición de una variable en una fórmula, ya sea normal (\(A\)) o negada (\(A'\)). Por ejemplo, en \(AB' + C\) hay 3 literales.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-emerald-700">• Principio de Dualidad:</strong> Dice que toda fórmula booleana tiene una "hermana gemela" verdadera si cambiamos los signos \(+\) por \(\cdot\) y los \(0\) por \(1\) (por ejemplo: de \(A + 0 = A\) sale su dual \(A \cdot 1 = A\)).
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-purple-700">• Postulados de Huntington:</strong> Es el nombre formal que reciben las 4 reglas básicas (identidad, conmutativa, distributiva y complemento) demostradas por Edward Huntington en 1904.
+                            </div>
+                        </div>
+                    </div>
 
-<div id="tema-4-2" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
-    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">4.2</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Optimización de Expresiones Booleanas (Mapas de Karnaugh)</h2>
-    </div>
+                    <!-- FASE 3: DIAGRAMA VISUAL -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Esquema Visual: Las 4 Cancelaciones Más Usadas en Exámenes</span>
+                        <div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+                            <svg viewBox="0 0 520 85" class="w-full max-w-lg mx-auto block">
+                                <rect x="10" y="12" width="115" height="60" rx="8" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+                                <text x="67" y="37" fill="#818cf8" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">A + A' = 1</text>
+                                <text x="67" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">Complemento Suma</text>
 
-    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
-        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
-            <p>Los <strong>Mapas de Karnaugh (K-Maps)</strong> proporcionan un método visual sistemático para simplificar funciones booleanas de 2, 3 y 4 variables. La cuadrícula se organiza en <strong>Código Gray</strong> (solo cambia un bit entre celdas adyacentes), permitiendo agrupar unos en bloques de \(2^k\) (\(1, 2, 4, 8, 16\)) para eliminar variables redundantes.</p>
-        </div>
-    </div>
+                                <rect x="138" y="12" width="115" height="60" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                                <text x="195" y="37" fill="#38bdf8" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">A · A' = 0</text>
+                                <text x="195" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">Complemento Prod.</text>
 
-    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Código Gray:</strong> Secuencia binaria 00, 01, 11, 10 donde celdas contiguas difieren en un único bit.</li><li>• <strong>Agrupamiento de Unos:</strong> Rectángulos de tamaño \(2^k\) que deben ser lo más grandes posible.</li><li>• <strong>Adyacencia Tórica:</strong> Los bordes izquierdo-derecho y superior-inferior son vecinos continuos.</li><li>• <strong>Condiciones No Importa (Don't Care - X):</strong> Estados que pueden asumirse como 0 ó 1 para agrandar grupos.</li></ul>
-        </div>
-    </div>
+                                <rect x="266" y="12" width="115" height="60" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+                                <text x="323" y="37" fill="#10b981" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">A + AB = A</text>
+                                <text x="323" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">Absorción Directa</text>
 
-    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
-        <div class="my-2">
-            
-<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
-    <div class="text-[11px] font-bold text-emerald-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-th mr-1"></i> Mapa de Karnaugh con Lazos de Agrupación (K-Map 4x2)</div>
-    <svg viewBox="0 0 460 120" class="w-full max-w-md mx-auto block">
-        <!-- Grilla -->
-        <g fill="#1e293b" stroke="#475569" stroke-width="1.5">
-            <rect x="100" y="30" width="60" height="35"/>
-            <rect x="160" y="30" width="60" height="35"/>
-            <rect x="220" y="30" width="60" height="35"/>
-            <rect x="280" y="30" width="60" height="35"/>
+                                <rect x="394" y="12" width="115" height="60" rx="8" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5"/>
+                                <text x="451" y="37" fill="#f43f5e" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">(AB)' = A'+B'</text>
+                                <text x="451" y="55" fill="#94a3b8" font-size="9" text-anchor="middle">Ley de De Morgan</text>
+                            </svg>
+                        </div>
+                    </div>
 
-            <rect x="100" y="65" width="60" height="35"/>
-            <rect x="160" y="65" width="60" height="35"/>
-            <rect x="220" y="65" width="60" height="35"/>
-            <rect x="280" y="65" width="60" height="35"/>
-        </g>
-        <!-- Etiquetas Gray -->
-        <text x="65" y="42" fill="#94a3b8" font-family="JetBrains Mono" font-size="10">A=0</text>
-        <text x="65" y="87" fill="#94a3b8" font-family="JetBrains Mono" font-size="10">A=1</text>
-        <text x="130" y="22" fill="#94a3b8" font-family="JetBrains Mono" font-size="10" text-anchor="middle">00</text>
-        <text x="190" y="22" fill="#94a3b8" font-family="JetBrains Mono" font-size="10" text-anchor="middle">01</text>
-        <text x="250" y="22" fill="#94a3b8" font-family="JetBrains Mono" font-size="10" text-anchor="middle">11</text>
-        <text x="310" y="22" fill="#94a3b8" font-family="JetBrains Mono" font-size="10" text-anchor="middle">10</text>
+                    <!-- FASE 4: EJERCICIOS RESUELTOS PASO A PASO -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejemplos Resueltos Paso a Paso (De Básico a Completo)</span>
+                        <div class="space-y-4 mt-1 text-xs">
 
-        <!-- Unos -->
-        <text x="130" y="53" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">1</text>
-        <text x="190" y="53" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">1</text>
-        <text x="250" y="53" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">0</text>
-        <text x="310" y="53" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">0</text>
+                            <!-- Ejemplo 1 -->
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-indigo-800 font-bold mb-1.5">
+                                    <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-xs font-mono">Ejemplo Resuelto 1 (Básico)</span>
+                                    <span>Simplificar por Factor Común: \(F = A \cdot B + A \cdot B'\)</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono space-y-1.5 text-slate-700">
+                                    <p><strong>Expresión original:</strong> \(F = A \cdot B + A \cdot B'\)</p>
+                                    <p><strong>Paso 1 (Sacamos la \(A\) como factor común - Distributiva):</strong> \(F = A \cdot (B + B')\)</p>
+                                    <p><strong>Paso 2 (Por Complemento sabemos que \(B + B' = 1\)):</strong> \(F = A \cdot (1)\)</p>
+                                    <p><strong>Paso 3 (Por Identidad sabemos que \(A \cdot 1 = A\)):</strong> \(F = \mathbf{A}\)</p>
+                                </div>
+                            </div>
 
-        <text x="130" y="88" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">1</text>
-        <text x="190" y="88" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">1</text>
-        <text x="250" y="88" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">0</text>
-        <text x="310" y="88" fill="#ffffff" font-family="JetBrains Mono" font-size="13" font-weight="bold" text-anchor="middle">0</text>
+                            <!-- Ejemplo 2 -->
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-emerald-800 font-bold mb-1.5">
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded text-xs font-mono">Ejemplo Resuelto 2 (Intermedio)</span>
+                                    <span>Simplificar: \(F = A \cdot B + A \cdot B \cdot C\)</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono space-y-1.5 text-slate-700">
+                                    <p><strong>Paso 1 (Observa que \(AB\) está en ambos términos; sacamos factor común \(AB\)):</strong> \(F = AB \cdot (1 + C)\)</p>
+                                    <p><strong>Paso 2 (Por Dominación, \(1 + \text{cualquier cosa} = 1\)):</strong> \(F = AB \cdot (1)\)</p>
+                                    <p><strong>Paso 3 (Por Identidad):</strong> \(F = \mathbf{AB}\)</p>
+                                </div>
+                            </div>
 
-        <!-- Lazo de 4 unos -->
-        <rect x="105" y="34" width="110" height="62" rx="10" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4"/>
-        <text x="375" y="65" fill="#10b981" font-family="JetBrains Mono" font-size="11" font-weight="bold">Lazo: B'</text>
-    </svg>
-</div>
+                            <!-- Ejemplo 3 -->
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-rose-800 font-bold mb-1.5">
+                                    <span class="px-2 py-0.5 bg-rose-100 text-rose-800 rounded text-xs font-mono">Ejemplo Resuelto 3 (Completo con De Morgan)</span>
+                                    <span>Simplificar: \(F = (A + B)' \cdot (A' + B')'\)</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono space-y-1.5 text-slate-700">
+                                    <p><strong>Paso 1 (Aplicamos De Morgan al primer paréntesis \((A+B)' = A'B'\)):</strong> \(F = (A' \cdot B') \cdot (A' + B')'\)</p>
+                                    <p><strong>Paso 2 (Aplicamos De Morgan al segundo paréntesis \((A'+B')' = A'' \cdot B'' = A \cdot B\)):</strong> \(F = A' \cdot B' \cdot A \cdot B\)</p>
+                                    <p><strong>Paso 3 (Acomodamos las letras juntas por Conmutativa):</strong> \(F = (A \cdot A') \cdot (B \cdot B')\)</p>
+                                    <p><strong>Paso 4 (Por Complemento, \(A \cdot A' = 0\) y \(B \cdot B' = 0\)):</strong> \(F = 0 \cdot 0 = \mathbf{0}\)</p>
+                                </div>
+                            </div>
 
-        </div>
-    </div>
+                        </div>
+                    </div>
 
-    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Minimizar con Karnaugh \(F(A,B,C) = \sum m(0, 2, 4, 6)\).</p><p class='text-slate-600 mt-1'>Las 4 esquinas/columnas externas de \(C=0\) forman un grupo de 4 unos donde \(A\) y \(B\) varían en todos sus estados.<br><strong class='text-indigo-800 font-mono'>Resultado simplificado: \(F(A,B,C) = C'\).</strong></p></div>
-        </div>
-    </div>
+                    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica para tu Cuaderno (Firmas 40%)</span>
+                        <div class="space-y-2.5 text-xs sm:text-sm text-slate-700 mt-1">
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>1. (Básico):</strong> Calcula el valor final (<span class="bit-0">0</span> ó <span class="bit-1">1</span>) de la expresión \(F = A \cdot B' + C\) cuando \(A = 1, B = 1, C = 0\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>2. (Factor común):</strong> Simplifica paso a paso la expresión \(F = A'B + A'B'\). <span class="text-indigo-700 font-semibold">(Respuesta esperada: \(F = A'\))</span>.</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>3. (Distributiva):</strong> Demuestra paso a paso que \(F = (A + B)(A + B')\) se simplifica a \(F = A\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>4. (De Morgan):</strong> Aplica el Teorema de De Morgan para quitar el paréntesis negado en: \(F = (A \cdot B' + C)'\).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
-    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Simplifica mediante K-Map la función \(F(A,B) = \sum m(1, 2, 3)\). <span class='text-indigo-700 font-bold font-mono'>Pista: \(F = A + B\).</span></p></div>
-        </div>
-    </div>
-</div>
+                <!-- ========================================================================= -->
+                <!-- TEMA 4.2: OPTIMIZACIÓN DE EXPRESIONES BOOLEANAS (MAPAS DE KARNAUGH)       -->
+                <!-- ========================================================================= -->
+                <div id="tema-4-2" class="topic-container scroll-mt-24">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-200">
+                        <span class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-800 text-base flex items-center justify-center font-mono font-bold">4.2</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Optimización de Expresiones Booleanas (Mapas de Karnaugh)</h2>
+                            <p class="text-xs text-slate-500">Cómo encontrar la expresión más corta posible agrupando unos (1) en una cuadrícula visual</p>
+                        </div>
+                    </div>
 
-<div id="tema-4-3" class="topic-container scroll-mt-24 border border-slate-200 rounded-2xl p-6 bg-white shadow-sm mb-8">
-    <div class="flex items-center space-x-3 mb-4 pb-3 border-b border-slate-100">
-        <span class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-800 text-sm flex items-center justify-center font-mono font-bold">4.3</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Aplicación del Álgebra Booleana (Compuertas Lógicas y Sumador 4 Bits)</h2>
-    </div>
+                    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Paso a Paso (¿Cómo funciona un Mapa de Karnaugh?)</span>
+                        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-4 mt-1">
+                            <p>
+                                Simplificar fórmulas con los teoremas del tema 4.1 es fácil cuando son pequeñas, pero cuando tienen 3 o 4 variables (\(A, B, C, D\)) es fácil no ver algún factor común. En 1953, <strong>Maurice Karnaugh</strong> inventó un método visual parecido a un juego de mesa llamado <strong>Mapa de Karnaugh (o Mapa K)</strong>.
+                            </p>
 
-    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Teórica y Conceptual</span>
-        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-2 mt-1 text-justify">
-            <p>Las expresiones booleanas optimizadas se implementan físicamente mediante <strong>Compuertas Lógicas Digitales TTL</strong>. Las formas estándar son <strong>Minitérminos (Suma de Productos - SOP)</strong> y <strong>Maxitérminos (Producto de Sumas - POS)</strong>. El proyecto cumbre de esta unidad es el armado en protoboard de un <strong>Sumador Binario de 4 bits con el CI 74LS83 / 74LS283</strong>.</p>
-        </div>
-    </div>
+                            <div class="bg-indigo-50/60 p-4 rounded-xl border border-indigo-200">
+                                <h3 class="font-bold text-indigo-950 text-sm mb-2"><i class="fas fa-list-ol text-indigo-600 mr-1.5"></i> Las 4 Reglas de Oro para Resolver cualquier Mapa de Karnaugh:</h3>
+                                <ol class="list-decimal pl-5 space-y-2 text-xs text-slate-700">
+                                    <li><strong>Pasa los resultados de tu Tabla de Verdad al Mapa:</strong> Cada fila de tu tabla de verdad tiene su propia casilla en la cuadrícula. Solo nos interesan las casillas que tienen un <span class="bit-1">1</span>.</li>
+                                    <li><strong>Encierra grupos de <span class="bit-1">1</span>s vecinos (en horizontal o vertical, NUNCA en diagonal):</strong> Los grupos solo pueden tener tamaños que sean potencias de 2: <strong>grupos de 1, de 2, de 4 o de 8 unos</strong> (está prohibido hacer grupos de 3 o de 5). ¡Mientras más grande sea el grupo, más letras se eliminan!</li>
+                                    <li><strong>Los bordes dan la vuelta (Efecto cilindro / Pac-Man):</strong> La columna de hasta la izquierda es vecina de la columna de hasta la derecha, y la fila de arriba es vecina de la de abajo.</li>
+                                    <li><strong>¿Cómo se escribe la respuesta de cada grupo? ¡El truco de "Quién cambia y quién se queda"!:</strong>
+                                        <br>• Miras las casillas de tu grupo: la letra que <strong>cambia de 0 a 1 se ELIMINA</strong>.
+                                        <br>• La letra que <strong>se mantiene igual se QUEDA</strong> (si se mantuvo en <span class="bit-1">1</span> se escribe normal \(A\); si se mantuvo en <span class="bit-0">0</span> se escribe negada \(A'\)).
+                                    </li>
+                                </ol>
+                            </div>
 
-    <!-- FASE 2: GLOSARIO DE TÉRMINOS Y DEFINICIONES -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos y Definiciones</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <ul class='space-y-1 font-mono text-xs'><li>• <strong>Minitérmino (\(m_i\)):</strong> Producto booleano de todas las variables que produce un 1 en la fila \(i\).</li><li>• <strong>74LS08 (AND):</strong> Circuito integrado con 4 compuertas AND de 2 entradas (\(F = A \cdot B\)).</li><li>• <strong>74LS32 (OR):</strong> Circuito integrado con 4 compuertas OR de 2 entradas (\(F = A + B\)).</li><li>• <strong>74LS04 (NOT):</strong> Inversor séxtuplo (\(F = A'\)).</li><li>• <strong>74LS86 (XOR):</strong> 4 compuertas OR-Exclusiva (\(F = A \oplus B\)).</li><li>• <strong>74LS83 / 74LS283:</strong> Sumador completo binario de 4 bits con acarreo rápido.</li></ul>
-        </div>
-    </div>
+                            <div class="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200 text-xs text-amber-900">
+                                <strong><i class="fas fa-exclamation-circle text-amber-600 mr-1"></i> ¡Detalle muy importante en mapas de 3 y 4 letras! (El orden 00, 01, 11, 10):</strong><br>
+                                Cuando pongas dos letras juntas en el encabezado del mapa (por ejemplo \(BC\)), el orden de las columnas <strong>NO es 00, 01, 10, 11</strong>, sino <strong><code>00, 01, 11, 10</code></strong> (se salta el 11 antes del 10). A este orden se le llama <strong>Código Gray</strong> y se hace para que entre una casilla y su vecina solo cambie una letra a la vez.
+                            </div>
+                        </div>
+                    </div>
 
-    <!-- FASE 3: EJEMPLOS CON ILUSTRACIONES / DIAGRAMAS (SVG) -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ejemplos con Ilustraciones y Diagramas</span>
-        <div class="my-2">
-            
-<div class="bg-slate-900 p-4 rounded-xl text-white my-2">
-    <div class="text-[11px] font-bold text-indigo-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-microchip mr-1"></i> Diagrama Esquemático del Circuito Integrado 74LS83 (Sumador 4 Bits)</div>
-    <svg viewBox="0 0 460 140" class="w-full max-w-md mx-auto block">
-        <!-- Chip 16 Pines -->
-        <rect x="130" y="20" width="200" height="95" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="2"/>
-        <text x="230" y="65" fill="#38bdf8" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">74LS83 / 74LS283</text>
-        <text x="230" y="82" fill="#94a3b8" font-family="JetBrains Mono" font-size="10" text-anchor="middle">Sumador Binario 4 Bits</text>
-        <!-- Muesca -->
-        <circle cx="130" cy="67" r="6" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+                    <!-- FASE 2: GLOSARIO -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos Técnicos</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs mt-1">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-indigo-800">• Optimizar / Minimizar:</strong> Encontrar la expresión booleana equivalente que tenga la menor cantidad posible de términos y letras.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-indigo-800">• Casillas Adyacentes:</strong> Son dos casillas vecinas (arriba/abajo o izquierda/derecha, incluyendo los extremos opuestos del tablero) que solo difieren en el valor de una variable.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-emerald-700">• Código Gray (00, 01, 11, 10):</strong> Ordenamiento binario donde al avanzar de una columna a la siguiente únicamente cambia un bit a la vez.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-purple-700">• Traslape de Grupos:</strong> Un mismo <span class="bit-1">1</span> puede usarse en más de un grupo si eso te ayuda a formar un grupo más grande con otro <span class="bit-1">1</span> que estaba solo.
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Entradas Izquierda -->
-        <text x="40" y="45" fill="#10b981" font-family="JetBrains Mono" font-size="10" font-weight="bold">Entradas A [A₁..A₄]</text>
-        <line x1="100" y1="40" x2="130" y2="40" stroke="#10b981" stroke-width="2"/>
-        <text x="40" y="95" fill="#fbbf24" font-family="JetBrains Mono" font-size="10" font-weight="bold">Entradas B [B₁..B₄]</text>
-        <line x1="100" y1="90" x2="130" y2="90" stroke="#fbbf24" stroke-width="2"/>
+                    <!-- FASE 3: DIAGRAMA VISUAL DEL MAPA DE KARNAUGH -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ilustración Visual: Cómo un Grupo Elimina Variables</span>
+                        <div class="bg-slate-900 p-4 rounded-xl text-white my-2">
+                            <div class="text-[11px] font-bold text-emerald-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-th mr-1"></i> Mapa de Karnaugh de 3 Variables (A en filas, BC en columnas con orden 00, 01, 11, 10)</div>
+                            <svg viewBox="0 0 500 130" class="w-full max-w-lg mx-auto block">
+                                <!-- Grilla -->
+                                <g fill="#1e293b" stroke="#475569" stroke-width="1.5">
+                                    <rect x="90" y="35" width="60" height="36"/>
+                                    <rect x="150" y="35" width="60" height="36"/>
+                                    <rect x="210" y="35" width="60" height="36"/>
+                                    <rect x="270" y="35" width="60" height="36"/>
 
-        <!-- Salidas Derecha -->
-        <line x1="330" y1="55" x2="370" y2="55" stroke="#38bdf8" stroke-width="2"/>
-        <text x="380" y="59" fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="bold">Suma [S₁..S₄] ➔ LEDs</text>
-        <line x1="330" y1="85" x2="370" y2="85" stroke="#f43f5e" stroke-width="2"/>
-        <text x="380" y="89" fill="#f43f5e" font-family="JetBrains Mono" font-size="10" font-weight="bold">Carry C₄ ➔ LED Rojo</text>
+                                    <rect x="90" y="71" width="60" height="36"/>
+                                    <rect x="150" y="71" width="60" height="36"/>
+                                    <rect x="210" y="71" width="60" height="36"/>
+                                    <rect x="270" y="71" width="60" height="36"/>
+                                </g>
+                                <!-- Etiquetas -->
+                                <text x="45" y="24" fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="bold">A \ BC</text>
+                                <text x="55" y="57" fill="#94a3b8" font-family="JetBrains Mono" font-size="11">A = 0</text>
+                                <text x="55" y="93" fill="#94a3b8" font-family="JetBrains Mono" font-size="11">A = 1</text>
+                                <text x="120" y="25" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">00</text>
+                                <text x="180" y="25" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">01</text>
+                                <text x="240" y="25" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">11</text>
+                                <text x="300" y="25" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">10</text>
 
-        <!-- Alimentacion -->
-        <text x="230" y="15" fill="#ef4444" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Pin 5: VCC (+5V)</text>
-        <text x="230" y="130" fill="#94a3b8" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Pin 12: GND (Tierra)</text>
-    </svg>
-</div>
+                                <!-- Valores -->
+                                <text x="120" y="58" fill="#4ade80" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+                                <text x="180" y="58" fill="#4ade80" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+                                <text x="240" y="58" fill="#64748b" font-family="JetBrains Mono" font-size="13" text-anchor="middle">0</text>
+                                <text x="300" y="58" fill="#64748b" font-family="JetBrains Mono" font-size="13" text-anchor="middle">0</text>
 
-        </div>
-    </div>
+                                <text x="120" y="94" fill="#4ade80" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+                                <text x="180" y="94" fill="#4ade80" font-family="JetBrains Mono" font-size="14" font-weight="bold" text-anchor="middle">1</text>
+                                <text x="240" y="94" fill="#64748b" font-family="JetBrains Mono" font-size="13" text-anchor="middle">0</text>
+                                <text x="300" y="94" fill="#64748b" font-family="JetBrains Mono" font-size="13" text-anchor="middle">0</text>
 
-    <!-- FASE 4: EJERCICIOS GUIADOS PASO A PASO -->
-    <div class="pedagogy-step bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4">
-        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejercicios Guiados Paso a Paso</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>Problema:</strong> Obtener la expresión en minitérminos (SOP) y el esquema de compuertas para un sistema de alarma que se activa si la llave (\(A\)) está puesta y la puerta (\(B\)) está abierta (\(A=1, B=0\)).</p><p class='text-slate-600 mt-1'>1. Minitérmino: \(m_2 = A \cdot B'\).<br>2. Circuito: Entrada \(B\) a inversor <code>74LS04</code> ➔ salida \(B'\) y entrada \(A\) a compuerta AND <code>74LS08</code> ➔ Salida de alarma a LED indicador.</p></div>
-        </div>
-    </div>
+                                <!-- Lazo de 4 unos -->
+                                <rect x="96" y="39" width="108" height="64" rx="10" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4"/>
+                                <text x="345" y="55" fill="#10b981" font-family="Outfit, sans-serif" font-size="11" font-weight="bold">Grupo de 4 unos:</text>
+                                <text x="345" y="72" fill="#cbd5e1" font-family="Outfit, sans-serif" font-size="10">• A cambia (0 y 1) ➔ Se va</text>
+                                <text x="345" y="86" fill="#cbd5e1" font-family="Outfit, sans-serif" font-size="10">• C cambia (0 y 1) ➔ Se va</text>
+                                <text x="345" y="102" fill="#fbbf24" font-family="JetBrains Mono" font-size="11" font-weight="bold">• B fija en 0 ➔ Queda B'</text>
+                            </svg>
+                        </div>
+                    </div>
 
-    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS (FIRMAS 40%) -->
-    <div class="pedagogy-step bg-rose-50/50 border border-rose-100 rounded-xl p-4">
-        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica Propuestos para Alumnos (Firmas 40%)</span>
-        <div class="text-xs sm:text-sm text-slate-700 space-y-2 mt-1">
-            <div class='bg-white p-3 border rounded text-xs'><p><strong>1.</strong> Dibuja el diagrama con compuertas 74LS08, 74LS32 y 74LS04 para la función \(F = A \cdot B + C'\). <span class='text-indigo-700 font-bold font-mono'>Pista: 1 NOT, 1 AND, 1 OR.</span></p></div>
-        </div>
-    </div>
-</div>
+                    <!-- FASE 4: EJERCICIOS GUIADOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejemplos Resueltos Paso a Paso</span>
+                        <div class="space-y-4 mt-1 text-xs">
 
-<section id="laboratorio-karnaugh" class="scroll-mt-24">
-    <div class="border-2 border-indigo-200 rounded-2xl p-6 bg-gradient-to-b from-indigo-50/40 via-white to-white shadow-sm">
-        <h3 class="text-lg font-bold text-slate-900 mb-2"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Simulador de Mapa de Karnaugh (2 Variables)</h3>
-        <div class="max-w-xs mx-auto mb-4 bg-white p-4 border border-slate-200 rounded-2xl shadow-sm">
-            <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono font-bold">
-                <div class="p-2 text-slate-400">A \ B</div><div class="p-2 bg-slate-100 rounded">B=0</div><div class="p-2 bg-slate-100 rounded">B=1</div>
-                <div class="p-2 bg-slate-100 rounded">A=0</div>
-                <button id="kcell00" onclick="toggleKCell('00')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">0</button>
-                <button id="kcell01" onclick="toggleKCell('01')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">1</button>
-                <div class="p-2 bg-slate-100 rounded">A=1</div>
-                <button id="kcell10" onclick="toggleKCell('10')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">0</button>
-                <button id="kcell11" onclick="toggleKCell('11')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition">1</button>
-            </div>
-        </div>
-        <div class="text-center font-mono text-xs bg-slate-900 text-emerald-400 p-3 rounded-xl max-w-xs mx-auto">
-            <span class="text-slate-400 font-sans block text-[10px] uppercase font-bold mb-1">Circuito Simplificado:</span>
-            <strong id="kResultDisplay" class="text-sm">F(A, B) = B</strong>
-        </div>
-    </div>
-</section>
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-indigo-800 font-bold mb-2">
+                                    <span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-xs font-mono">Ejemplo Resuelto 1 (Mapa de 2 Variables)</span>
+                                    <span>Simplificar \(F(A, B) = A'B + AB' + AB\) usando Mapa de Karnaugh</span>
+                                </div>
+                                <p class="text-slate-600 mb-2">
+                                    <strong>Paso 1:</strong> Colocamos un <span class="bit-1">1</span> en las tres casillas que menciona la función: \((A=0, B=1)\), \((A=1, B=0)\) y \((A=1, B=1)\). Solo la casilla \((0,0)\) tiene <span class="bit-0">0</span>.<br>
+                                    <strong>Paso 2:</strong> Como no podemos hacer un grupo de 3, formamos <strong>dos parejas de 2 unos</strong> (compartiendo la casilla \(A=1, B=1\)):<br>
+                                    • <strong>Pareja Horizontal abajo</strong> (casillas \(1,0\) y \(1,1\)): La letra \(A\) vale siempre \(1\) (se queda como \(\mathbf{A}\)) y la \(B\) cambia de \(0\) a \(1\) (se elimina).<br>
+                                    • <strong>Pareja Vertical derecha</strong> (casillas \(0,1\) y \(1,1\)): La letra \(A\) cambia de \(0\) a \(1\) (se elimina) y la \(B\) vale siempre \(1\) (se queda como \(\mathbf{B}\)).<br>
+                                    <strong>Resultado final sumando ambos grupos:</strong> <span class="font-mono font-bold text-indigo-800">\(F(A, B) = A + B\)</span>.
+                                </p>
+                            </div>
 
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-emerald-800 font-bold mb-2">
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded text-xs font-mono">Ejemplo Resuelto 2 (Mapa de 3 Variables con Bordes Vecinos)</span>
+                                    <span>Simplificar cuando hay unos en las dos columnas de las orillas</span>
+                                </div>
+                                <p class="text-slate-600">
+                                    <strong>Problema:</strong> En un mapa de 3 variables (como el dibujo de arriba), tenemos un <span class="bit-1">1</span> en la casilla \((A=1, BC=00)\) y otro <span class="bit-1">1</span> en la esquina derecha \((A=1, BC=10)\).<br>
+                                    <strong>Solución:</strong> Como el borde izquierdo (\(BC=00\)) y el borde derecho (\(BC=10\)) son vecinos, forman una <strong>pareja de 2 unos</strong>:<br>
+                                    • En la fila, \(A\) vale <span class="bit-1">1</span> en ambos &rarr; se queda \(\mathbf{A}\).<br>
+                                    • En las columnas (\(00\) y \(10\)), la primera letra (\(B\)) cambia de \(0\) a \(1\) (se elimina), y la segunda letra (\(C\)) se mantiene fija en \(0\) &rarr; se queda \(\mathbf{C'}\).<br>
+                                    <strong>Resultado simplificado:</strong> <span class="font-mono font-bold text-emerald-800">\(F = A \cdot C'\)</span>.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FASE 5: EJERCICIOS PROPUESTOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica para tu Cuaderno (Firmas 40%)</span>
+                        <div class="space-y-2.5 text-xs sm:text-sm text-slate-700 mt-1">
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>1.</strong> En un Mapa de Karnaugh de 2 variables (\(A\) y \(B\)), tienes un <span class="bit-1">1</span> en \((A=0, B=0)\) y otro <span class="bit-1">1</span> en \((A=0, B=1)\). Enciérralos en pareja y escribe la expresión simplificada. <span class="text-indigo-700 font-semibold">(Pista: observa qué letra se mantiene fija en 0)</span>.</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>2.</strong> Simplifica primero con teoremas y luego comprueba con un Mapa de Karnaugh de 2 variables la función: \(F = A'B' + A'B + AB\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>3.</strong> Dibuja un Mapa de Karnaugh de 3 variables (\(A, B, C\)), coloca un <span class="bit-1">1</span> en toda la fila inferior completa (donde \(A = 1\) para las cuatro columnas \(00, 01, 11, 10\)) y determina a qué única letra se reduce ese grupo de 4 unos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- TEMA 4.3: APLICACIÓN DEL ÁLGEBRA BOOLEANA (COMPUERTAS LÓGICAS)            -->
+                <!-- SUBTEMAS: 4.3.1 MINI Y MAXI TÉRMINOS | 4.3.2 CIRCUITOS LÓGICOS            -->
+                <!-- ========================================================================= -->
+                <div id="tema-4-3" class="topic-container scroll-mt-24">
+                    <div class="flex items-center space-x-3 mb-5 pb-3 border-b border-slate-200">
+                        <span class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-800 text-base flex items-center justify-center font-mono font-bold">4.3</span>
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Aplicación del Álgebra Booleana (Compuertas Lógicas)</h2>
+                            <p class="text-xs text-slate-500">Subtemas oficiales: 4.3.1 Mini y maxi términos • 4.3.2 Representación de expresiones booleanas con circuitos lógicos</p>
+                        </div>
+                    </div>
+
+                    <!-- FASE 1: EXPLICACIÓN TEÓRICA Y CONCEPTUAL COMPLETA -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-blue-100 text-blue-800"><i class="fas fa-book-open mr-1.5"></i> 1. Explicación Paso a Paso (Compuertas, 4.3.1 Mini/Maxitérminos y 4.3.2 Circuitos)</span>
+                        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed space-y-6 mt-1">
+
+                            <!-- Parte 1: Las Compuertas Lógicas -->
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 mb-2">
+                                    Parte A: ¿Qué son las Compuertas Lógicas? (Los bloques de construcción)
+                                </h3>
+                                <p class="mb-3">
+                                    Una <strong>Compuerta Lógica</strong> es un componente electrónico (y su símbolo en dibujo) que recibe señales de entrada (<span class="bit-0">0</span> ó <span class="bit-1">1</span>), les aplica una operación del Álgebra Booleana y entrega un resultado a la salida. Estas son las <strong>5 compuertas que debes conocer</strong>:
+                                </p>
+
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left border-collapse border border-slate-200 text-xs bg-white rounded-xl overflow-hidden">
+                                        <thead class="bg-slate-100 text-slate-800">
+                                            <tr>
+                                                <th class="p-2.5 border border-slate-200">Compuerta</th>
+                                                <th class="p-2.5 border border-slate-200">Operación Matemática</th>
+                                                <th class="p-2.5 border border-slate-200">Forma del Dibujo</th>
+                                                <th class="p-2.5 border border-slate-200">Regla Rápida de Funcionamiento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-slate-200">
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-sky-800">1. AND (Y)</td>
+                                                <td class="p-2.5 font-mono font-bold">\(F = A \cdot B\)</td>
+                                                <td class="p-2.5">Pared trasera recta y frente redondo (como una letra <strong>D</strong>).</td>
+                                                <td class="p-2.5"><strong>Multiplicación:</strong> Solo sale <span class="bit-1">1</span> si <strong>TODAS</strong> sus entradas son <span class="bit-1">1</span>.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-emerald-800">2. OR (O)</td>
+                                                <td class="p-2.5 font-mono font-bold">\(F = A + B\)</td>
+                                                <td class="p-2.5">Pared trasera curva y punta afilada (como punta de cohete).</td>
+                                                <td class="p-2.5"><strong>Suma:</strong> Sale <span class="bit-1">1</span> si <strong>AL MENOS UNA</strong> entrada es <span class="bit-1">1</span>.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-rose-800">3. NOT (Inversor)</td>
+                                                <td class="p-2.5 font-mono font-bold">\(F = A'\)</td>
+                                                <td class="p-2.5">Un <strong>triángulo con un circulito</strong> (burbuja) en la punta.</td>
+                                                <td class="p-2.5"><strong>Inversor:</strong> Entra <span class="bit-0">0</span> y sale <span class="bit-1">1</span>; entra <span class="bit-1">1</span> y sale <span class="bit-0">0</span>.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-purple-800">4. NAND y NOR</td>
+                                                <td class="p-2.5 font-mono font-bold">\((A \cdot B)'\) y \((A + B)'\)</td>
+                                                <td class="p-2.5">Son iguales a la AND y OR, pero con un <strong>circulito en la salida</strong>.</td>
+                                                <td class="p-2.5">Dan exactamente el resultado contrario de la AND y de la OR.</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2.5 font-bold text-amber-800">5. XOR (OR Exclusiva)</td>
+                                                <td class="p-2.5 font-mono font-bold">\(F = A \oplus B\)</td>
+                                                <td class="p-2.5">Igual que la OR, pero con una <strong>doble línea curva</strong> atrás.</td>
+                                                <td class="p-2.5">Sale <span class="bit-1">1</span> únicamente cuando las dos entradas son <strong>DIFERENTES</strong> (`0,1` ó `1,0`).</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- SUBTEMA 4.3.1: MINI Y MAXI TÉRMINOS -->
+                            <div id="sub-4-3-1" class="scroll-mt-24 pt-2 border-t border-slate-200">
+                                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center">
+                                    <span class="bg-indigo-100 text-indigo-800 font-mono text-xs px-2 py-0.5 rounded mr-2">4.3.1</span>
+                                    Mini términos (Minitérminos) y Maxi términos (Maxitérminos)
+                                </h3>
+                                <p class="mb-3">
+                                    Cuando te dan una <strong>Tabla de Verdad</strong> y te piden escribir su fórmula matemática, existen dos formas estándar (llamadas <em>formas canónicas</em>) de hacerlo: usando <strong>Minitérminos</strong> o usando <strong>Maxitérminos</strong>. ¡Mira qué sencilla es la diferencia entre los dos!
+                                </p>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <!-- Minitérminos -->
+                                    <div class="bg-sky-50/70 p-4 rounded-xl border border-sky-200">
+                                        <h4 class="font-bold text-sky-950 text-sm mb-2">
+                                            <i class="fas fa-check-square text-sky-600 mr-1"></i> 1. Minitérminos (\(m_i\) — Suma de Productos / SOP)
+                                        </h4>
+                                        <ul class="space-y-1.5 text-xs text-slate-700">
+                                            <li>• <strong>¿En qué filas me fijo?</strong> Solo en las filas donde la salida final \(F\) dio <span class="bit-1">1</span>.</li>
+                                            <li>• <strong>¿Cómo armo cada término?</strong> <strong>Multiplicando (\(\cdot\))</strong> todas las letras de esa fila.</li>
+                                            <li>• <strong>Regla de las letras en Minitérminos:</strong>
+                                                <br>&nbsp;&nbsp;&rarr; Si la letra vale <span class="bit-1">1</span>, se escribe <strong>Normal (\(A\))</strong>.
+                                                <br>&nbsp;&nbsp;&rarr; Si la letra vale <span class="bit-0">0</span>, se escribe <strong>Negada (\(A'\))</strong>.
+                                            </li>
+                                            <li>• <strong>Al final:</strong> Se <strong>SUMAN (\(+\))</strong> todos los minitérminos que dieron <span class="bit-1">1</span> (por eso se llama <em>Suma de Productos</em> y se usa el símbolo de suma \(\sum m\)).</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Maxitérminos -->
+                                    <div class="bg-purple-50/70 p-4 rounded-xl border border-purple-200">
+                                        <h4 class="font-bold text-purple-950 text-sm mb-2">
+                                            <i class="fas fa-times-rectangle text-purple-600 mr-1"></i> 2. Maxitérminos (\(M_i\) — Producto de Sumas / POS)
+                                        </h4>
+                                        <ul class="space-y-1.5 text-xs text-slate-700">
+                                            <li>• <strong>¿En qué filas me fijo?</strong> Solo en las filas donde la salida final \(F\) dio <span class="bit-0">0</span>.</li>
+                                            <li>• <strong>¿Cómo armo cada término?</strong> <strong>Sumando (\(+\))</strong> dentro de un paréntesis todas las letras de esa fila.</li>
+                                            <li>• <strong>Regla de las letras en Maxitérminos (¡Es al revés!):</strong>
+                                                <br>&nbsp;&nbsp;&rarr; Si la letra vale <span class="bit-0">0</span>, se escribe <strong>Normal (\(A\))</strong>.
+                                                <br>&nbsp;&nbsp;&rarr; Si la letra vale <span class="bit-1">1</span>, se escribe <strong>Negada (\(A'\))</strong>.
+                                            </li>
+                                            <li>• <strong>Al final:</strong> Se <strong>MULTIPLICAN (\(\cdot\))</strong> todos los paréntesis de las filas que dieron <span class="bit-0">0</span> (por eso se llama <em>Producto de Sumas</em> y se usa \(\prod M\)).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Tabla de Referencia de Minitérminos y Maxitérminos -->
+                                <p class="text-xs font-bold text-slate-700 mb-2">Tabla de Referencia para 3 Variables (\(A, B, C\)) — ¡Observa cómo se escribe cada fila!</p>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-center border-collapse border border-slate-200 text-xs bg-white rounded-xl overflow-hidden">
+                                        <thead class="bg-slate-800 text-white">
+                                            <tr>
+                                                <th class="p-2 border border-slate-700">Fila</th>
+                                                <th class="p-2 border border-slate-700">\(A\)</th>
+                                                <th class="p-2 border border-slate-700">\(B\)</th>
+                                                <th class="p-2 border border-slate-700">\(C\)</th>
+                                                <th class="p-2 border border-slate-700 bg-sky-900">Minitérmino (\(m_i\))<br><span class="text-[10px] font-normal">(1 = Normal, 0 = Negada, se multiplican)</span></th>
+                                                <th class="p-2 border border-slate-700 bg-purple-900">Maxitérmino (\(M_i\))<br><span class="text-[10px] font-normal">(0 = Normal, 1 = Negada, se suman)</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="font-mono divide-y divide-slate-200">
+                                            <tr><td class="p-1.5">0</td><td>0</td><td>0</td><td>0</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_0 = A' \cdot B' \cdot C'\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_0 = (A + B + C)\)</td></tr>
+                                            <tr><td class="p-1.5">1</td><td>0</td><td>0</td><td>1</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_1 = A' \cdot B' \cdot C\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_1 = (A + B + C')\)</td></tr>
+                                            <tr><td class="p-1.5">2</td><td>0</td><td>1</td><td>0</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_2 = A' \cdot B \cdot C'\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_2 = (A + B' + C)\)</td></tr>
+                                            <tr><td class="p-1.5">3</td><td>0</td><td>1</td><td>1</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_3 = A' \cdot B \cdot C\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_3 = (A + B' + C')\)</td></tr>
+                                            <tr><td class="p-1.5">4</td><td>1</td><td>0</td><td>0</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_4 = A \cdot B' \cdot C'\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_4 = (A' + B + C)\)</td></tr>
+                                            <tr><td class="p-1.5">5</td><td>1</td><td>0</td><td>1</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_5 = A \cdot B' \cdot C\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_5 = (A' + B + C')\)</td></tr>
+                                            <tr><td class="p-1.5">6</td><td>1</td><td>1</td><td>0</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_6 = A \cdot B \cdot C'\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_6 = (A' + B' + C)\)</td></tr>
+                                            <tr><td class="p-1.5">7</td><td>1</td><td>1</td><td>1</td><td class="bg-sky-50/50 text-sky-900 font-bold">\(m_7 = A \cdot B \cdot C\)</td><td class="bg-purple-50/50 text-purple-900 font-bold">\(M_7 = (A' + B' + C')\)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- SUBTEMA 4.3.2: REPRESENTACIÓN DE EXPRESIONES BOOLEANAS CON CIRCUITOS LÓGICOS -->
+                            <div id="sub-4-3-2" class="scroll-mt-24 pt-2 border-t border-slate-200">
+                                <h3 class="text-base font-bold text-slate-900 mb-2 flex items-center">
+                                    <span class="bg-indigo-100 text-indigo-800 font-mono text-xs px-2 py-0.5 rounded mr-2">4.3.2</span>
+                                    Representación de Expresiones Booleanas con Circuitos Lógicos
+                                </h3>
+                                <p class="mb-3">
+                                    Una vez que tienes una expresión booleana (por ejemplo, \(F = A \cdot B + C'\)), transformarla en un <strong>diagrama de circuito lógico</strong> se hace siguiendo el orden de las operaciones de izquierda a derecha en <strong>3 sencillos pasos</strong>:
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                                        <strong class="text-rose-700 block mb-1">Paso 1: Primero las Negaciones (\(A'\))</strong>
+                                        <p class="text-slate-600">Dibuja a la izquierda las líneas de tus variables (\(A, B, C\)). Si alguna letra lleva comilla (\(C'\)), pásala primero por un triángulo inversor <strong>NOT</strong>.</p>
+                                    </div>
+                                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                                        <strong class="text-sky-700 block mb-1">Paso 2: Luego las Multiplicaciones (\(\cdot\))</strong>
+                                        <p class="text-slate-600">Por cada multiplicación (como \(A \cdot B\)), conecta los cables de esas letras a las entradas de una compuerta <strong>AND</strong>.</p>
+                                    </div>
+                                    <div class="bg-white p-3.5 rounded-xl border border-slate-200">
+                                        <strong class="text-emerald-700 block mb-1">Paso 3: Al final las Sumas (\(+\))</strong>
+                                        <p class="text-slate-600">Une las salidas de los pasos anteriores dentro de una compuerta <strong>OR</strong> para obtener la salida final \(F\).</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FASE 2: GLOSARIO -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-purple-100 text-purple-800"><i class="fas fa-spell-check mr-1.5"></i> 2. Glosario de Términos Técnicos</span>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs mt-1">
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-indigo-800">• Minitérmino (\(m_i\)):</strong> Término donde todas las variables aparecen multiplicándose una sola vez (normal si vale 1, negada si vale 0). Representa una fila donde la función vale <span class="bit-1">1</span>.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-purple-800">• Maxitérmino (\(M_i\)):</strong> Término donde todas las variables aparecen sumándose dentro de un paréntesis (normal si vale 0, negada si vale 1). Representa una fila donde la función vale <span class="bit-0">0</span>.
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-sky-800">• Suma de Productos (SOP):</strong> Expresión formada por varios productos sumados entre sí, por ejemplo: \(F = A'B + AB'\).
+                            </div>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                <strong class="text-emerald-700">• Producto de Sumas (POS):</strong> Expresión formada por varios paréntesis de sumas que se multiplican entre sí, por ejemplo: \(F = (A + B')(A' + B)\).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 3: DIAGRAMAS VECTORIALES SVG DE COMPUERTAS Y CIRCUITO PASO A PASO -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-emerald-100 text-emerald-800"><i class="fas fa-project-diagram mr-1.5"></i> 3. Ilustraciones: Símbolos de Compuertas y Circuito de \(F = A \cdot B + C'\)</span>
+                        <div class="space-y-4 my-2">
+
+                            <!-- SVG 1: Símbolos de las 4 Compuertas Principales -->
+                            <div class="bg-slate-900 p-4 rounded-xl text-white">
+                                <div class="text-[11px] font-bold text-indigo-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-shapes mr-1"></i> Símbolos Estándar de las Compuertas Lógicas para Dibujar en tu Cuaderno</div>
+                                <svg viewBox="0 0 560 110" class="w-full max-w-2xl mx-auto block">
+                                    <!-- AND -->
+                                    <g transform="translate(10, 15)">
+                                        <line x1="5" y1="22" x2="30" y2="22" stroke="#94a3b8" stroke-width="2"/>
+                                        <line x1="5" y1="42" x2="30" y2="42" stroke="#94a3b8" stroke-width="2"/>
+                                        <path d="M 30 12 L 55 12 A 20 20 0 0 1 55 52 L 30 52 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                                        <line x1="75" y1="32" x2="100" y2="32" stroke="#38bdf8" stroke-width="2"/>
+                                        <text x="52" y="72" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">AND (A · B)</text>
+                                        <text x="52" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Multiplica</text>
+                                    </g>
+                                    <!-- OR -->
+                                    <g transform="translate(150, 15)">
+                                        <line x1="5" y1="22" x2="32" y2="22" stroke="#94a3b8" stroke-width="2"/>
+                                        <line x1="5" y1="42" x2="32" y2="42" stroke="#94a3b8" stroke-width="2"/>
+                                        <path d="M 25 12 Q 40 32 25 52 Q 58 52 78 32 Q 58 12 25 12 Z" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                                        <line x1="78" y1="32" x2="103" y2="32" stroke="#10b981" stroke-width="2"/>
+                                        <text x="52" y="72" fill="#10b981" font-size="11" font-weight="bold" text-anchor="middle">OR (A + B)</text>
+                                        <text x="52" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Suma</text>
+                                    </g>
+                                    <!-- NOT -->
+                                    <g transform="translate(290, 15)">
+                                        <line x1="5" y1="32" x2="30" y2="32" stroke="#94a3b8" stroke-width="2"/>
+                                        <polygon points="30,14 30,50 66,32" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                                        <circle cx="71" cy="32" r="5" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                                        <line x1="76" y1="32" x2="100" y2="32" stroke="#f43f5e" stroke-width="2"/>
+                                        <text x="52" y="72" fill="#f43f5e" font-size="11" font-weight="bold" text-anchor="middle">NOT (A')</text>
+                                        <text x="52" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Niega / Invierte</text>
+                                    </g>
+                                    <!-- XOR -->
+                                    <g transform="translate(425, 15)">
+                                        <line x1="5" y1="22" x2="30" y2="22" stroke="#94a3b8" stroke-width="2"/>
+                                        <line x1="5" y1="42" x2="30" y2="42" stroke="#94a3b8" stroke-width="2"/>
+                                        <path d="M 22 12 Q 37 32 22 52" fill="none" stroke="#fbbf24" stroke-width="2"/>
+                                        <path d="M 30 12 Q 45 32 30 52 Q 63 52 83 32 Q 63 12 30 12 Z" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/>
+                                        <line x1="83" y1="32" x2="108" y2="32" stroke="#fbbf24" stroke-width="2"/>
+                                        <text x="56" y="72" fill="#fbbf24" font-size="11" font-weight="bold" text-anchor="middle">XOR (A ⊕ B)</text>
+                                        <text x="56" y="85" fill="#cbd5e1" font-size="9" text-anchor="middle">Entradas diferentes</text>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <!-- SVG 2: Ejemplo de Circuito Completo F = A·B + C' -->
+                            <div class="bg-slate-900 p-4 rounded-xl text-white">
+                                <div class="text-[11px] font-bold text-emerald-400 mb-2 text-center uppercase tracking-wider font-mono"><i class="fas fa-sitemap mr-1"></i> Ejemplo 4.3.2: Cómo se dibuja el Circuito Lógico de la Expresión F = (A · B) + C'</div>
+                                <svg viewBox="0 0 520 135" class="w-full max-w-xl mx-auto block">
+                                    <!-- Entradas A y B a compuerta AND -->
+                                    <text x="25" y="34" fill="#38bdf8" font-family="JetBrains Mono" font-size="13" font-weight="bold">A</text>
+                                    <line x1="45" y1="30" x2="130" y2="30" stroke="#38bdf8" stroke-width="2"/>
+                                    <text x="25" y="60" fill="#38bdf8" font-family="JetBrains Mono" font-size="13" font-weight="bold">B</text>
+                                    <line x1="45" y1="55" x2="130" y2="55" stroke="#38bdf8" stroke-width="2"/>
+
+                                    <!-- Compuerta AND -->
+                                    <path d="M 130 18 L 165 18 A 24 24 0 0 1 165 66 L 130 66 Z" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                                    <text x="155" y="46" fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">AND</text>
+
+                                    <!-- Salida A·B hacia OR -->
+                                    <line x1="189" y1="42" x2="290" y2="42" stroke="#38bdf8" stroke-width="2"/>
+                                    <line x1="290" y1="42" x2="290" y2="55" stroke="#38bdf8" stroke-width="2"/>
+                                    <line x1="290" y1="55" x2="322" y2="55" stroke="#38bdf8" stroke-width="2"/>
+                                    <text x="240" y="34" fill="#38bdf8" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">A · B</text>
+
+                                    <!-- Entrada C a compuerta NOT -->
+                                    <text x="25" y="105" fill="#f43f5e" font-family="JetBrains Mono" font-size="13" font-weight="bold">C</text>
+                                    <line x1="45" y1="100" x2="135" y2="100" stroke="#f43f5e" stroke-width="2"/>
+                                    <polygon points="135,84 135,116 172,100" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                                    <circle cx="177" cy="100" r="5" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+                                    <text x="150" y="103" fill="#f43f5e" font-family="JetBrains Mono" font-size="9" font-weight="bold" text-anchor="middle">NOT</text>
+
+                                    <!-- Salida C' hacia OR -->
+                                    <line x1="182" y1="100" x2="290" y2="100" stroke="#f43f5e" stroke-width="2"/>
+                                    <line x1="290" y1="100" x2="290" y2="79" stroke="#f43f5e" stroke-width="2"/>
+                                    <line x1="290" y1="79" x2="322" y2="79" stroke="#f43f5e" stroke-width="2"/>
+                                    <text x="240" y="93" fill="#f43f5e" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">C'</text>
+
+                                    <!-- Compuerta OR Final -->
+                                    <path d="M 315 43 Q 332 67 315 91 Q 355 91 380 67 Q 355 43 315 43 Z" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                                    <text x="345" y="70" fill="#10b981" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle">OR</text>
+
+                                    <!-- Salida Final F -->
+                                    <line x1="380" y1="67" x2="420" y2="67" stroke="#10b981" stroke-width="2.5"/>
+                                    <text x="465" y="71" fill="#4ade80" font-family="JetBrains Mono" font-size="12" font-weight="bold" text-anchor="middle">F = A·B + C'</text>
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FASE 4: EJERCICIOS GUIADOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-amber-100 text-amber-800"><i class="fas fa-tasks mr-1.5"></i> 4. Ejemplos Resueltos Paso a Paso (4.3.1 y 4.3.2)</span>
+                        <div class="space-y-4 mt-1 text-xs">
+
+                            <!-- Ejemplo 1: Minitérminos y Maxitérminos -->
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-sky-800 font-bold mb-2">
+                                    <span class="px-2 py-0.5 bg-sky-100 text-sky-800 rounded text-xs font-mono">Ejemplo Resuelto 1 (Subtema 4.3.1)</span>
+                                    <span>Obtener la expresión en Minitérminos (SOP) y Maxitérminos (POS) de una Tabla de Verdad</span>
+                                </div>
+                                <p class="text-slate-600 mb-3">
+                                    <strong>Problema:</strong> Dada la siguiente tabla de verdad de 2 variables (\(A\) y \(B\)), escribe su función en <strong>Suma de Minitérminos</strong> y en <strong>Producto de Maxitérminos</strong>:
+                                </p>
+                                <div class="overflow-x-auto mb-3">
+                                    <table class="w-full max-w-lg mx-auto text-center border-collapse border border-slate-200 text-xs font-mono">
+                                        <thead class="bg-slate-100 text-slate-800">
+                                            <tr>
+                                                <th class="p-1.5 border border-slate-200">Fila</th>
+                                                <th class="p-1.5 border border-slate-200">\(A\)</th>
+                                                <th class="p-1.5 border border-slate-200">\(B\)</th>
+                                                <th class="p-1.5 border border-slate-200 bg-indigo-50 text-indigo-900">Salida \(F\)</th>
+                                                <th class="p-1.5 border border-slate-200">¿Qué usamos en esta fila?</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="p-1.5 border border-slate-200">0</td><td>0</td><td>0</td>
+                                                <td class="p-1.5 border border-slate-200"><span class="bit-0">0</span></td>
+                                                <td class="p-1.5 border border-slate-200 font-sans text-purple-800">Dio 0 &rarr; Maxitérmino \(M_0 = (A + B)\)</td>
+                                            </tr>
+                                            <tr class="bg-sky-50/40">
+                                                <td class="p-1.5 border border-slate-200">1</td><td>0</td><td>1</td>
+                                                <td class="p-1.5 border border-slate-200"><span class="bit-1">1</span></td>
+                                                <td class="p-1.5 border border-slate-200 font-sans text-sky-800 font-bold">Dio 1 &rarr; Minitérmino \(m_1 = A' \cdot B\)</td>
+                                            </tr>
+                                            <tr class="bg-sky-50/40">
+                                                <td class="p-1.5 border border-slate-200">2</td><td>1</td><td>0</td>
+                                                <td class="p-1.5 border border-slate-200"><span class="bit-1">1</span></td>
+                                                <td class="p-1.5 border border-slate-200 font-sans text-sky-800 font-bold">Dio 1 &rarr; Minitérmino \(m_2 = A \cdot B'\)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1.5 border border-slate-200">3</td><td>1</td><td>1</td>
+                                                <td class="p-1.5 border border-slate-200"><span class="bit-0">0</span></td>
+                                                <td class="p-1.5 border border-slate-200 font-sans text-purple-800">Dio 0 &rarr; Maxitérmino \(M_3 = (A' + B')\)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1.5 text-slate-700">
+                                    <p>• <strong class="text-sky-900">1. Expresión en Minitérminos (Filas 1 y 2 que dieron 1):</strong><br>
+                                    \(\mathbf{F(A, B) = \sum m(1, 2) = A'B + AB'}\)</p>
+                                    <p>• <strong class="text-purple-900">2. Expresión en Maxitérminos (Filas 0 y 3 que dieron 0):</strong><br>
+                                    \(\mathbf{F(A, B) = \prod M(0, 3) = (A + B) \cdot (A' + B')}\)</p>
+                                </div>
+                            </div>
+
+                            <!-- Ejemplo 2: De un circuito dibujado a su expresión -->
+                            <div class="bg-white p-4 border border-slate-200 rounded-xl">
+                                <div class="flex items-center space-x-2 text-emerald-800 font-bold mb-2">
+                                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded text-xs font-mono">Ejemplo Resuelto 2 (Subtema 4.3.2)</span>
+                                    <span>¿Cuántas compuertas necesita la expresión \(F = A' \cdot B + (A + C)\)?</span>
+                                </div>
+                                <div class="text-slate-700 space-y-1">
+                                    <p>Para dibujar el circuito lógico de \(F = A' \cdot B + (A + C)\), leemos las operaciones por jerarquía:</p>
+                                    <p>1. La letra \(A\) lleva comilla en el primer término (\(A'\)) &rarr; Necesitamos <strong>1 compuerta NOT</strong>.</p>
+                                    <p>2. Hay una multiplicación (\(A' \cdot B\)) &rarr; Necesitamos <strong>1 compuerta AND</strong>.</p>
+                                    <p>3. Hay un paréntesis con suma \((A + C)\) y otra suma principal (\(+\)) &rarr; Necesitamos <strong>2 compuertas OR</strong> (o una compuerta OR de 3 entradas).</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- FASE 5: EJERCICIOS DE PRÁCTICA PROPUESTOS -->
+                    <div class="pedagogy-step">
+                        <span class="badge-step bg-rose-100 text-rose-800"><i class="fas fa-pencil-alt mr-1.5"></i> 5. Ejercicios de Práctica para tu Cuaderno (Firmas 40%)</span>
+                        <div class="space-y-2.5 text-xs sm:text-sm text-slate-700 mt-1">
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>1. (Subtema 4.3.1 - Minitérminos):</strong> Usando la Tabla de Referencia de 3 variables (\(A, B, C\)), escribe la suma de minitérminos con letras para una función que da <span class="bit-1">1</span> en las filas \(1, 4\) y \(7\): \(F(A,B,C) = \sum m(1, 4, 7)\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>2. (Subtema 4.3.1 - Maxitérminos):</strong> Escribe el producto de maxitérminos con paréntesis para una función de 3 variables que da <span class="bit-0">0</span> en las filas \(0\) y \(5\): \(F(A,B,C) = \prod M(0, 5)\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>3. (Subtema 4.3.2 - Dibujar Circuito):</strong> Dibuja en tu libreta el circuito con compuertas lógicas (NOT, AND, OR) para la expresión: \(F = A \cdot B' + A' \cdot B\).</p>
+                            </div>
+                            <div class="bg-white p-3.5 border border-slate-200 rounded-xl">
+                                <p><strong>4. (Integrador: Simplificar antes de dibujar):</strong> Te piden construir el circuito de \(F = A \cdot B + A \cdot B'\). Primero simplifícalo usando el Tema 4.1 y explica cuántas compuertas te ahorraste al simplificarlo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================================= -->
+                <!-- LABORATORIO INTERACTIVO: SIMULADOR DE MAPA DE KARNAUGH Y MINITÉRMINOS     -->
+                <!-- ========================================================================= -->
+                <section id="laboratorio-karnaugh" class="scroll-mt-24">
+                    <div class="border-2 border-indigo-200 rounded-2xl p-6 bg-gradient-to-b from-indigo-50/40 via-white to-white shadow-sm">
+                        <span class="badge-step bg-indigo-100 text-indigo-800 mb-1"><i class="fas fa-flask mr-1.5"></i> Laboratorio Interactivo</span>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1"><i class="fas fa-microchip text-indigo-600 mr-2"></i>Simulador Interactivo: Mapa de Karnaugh, Minitérminos y Simplificación</h3>
+                        <p class="text-xs text-slate-600 mb-4">
+                            Haz clic sobre cualquier casilla del Mapa de Karnaugh para cambiar su valor entre <strong>0</strong> y <strong>1</strong>. Observa cómo cambian automáticamente la <strong>Suma de Minitérminos (4.3.1)</strong> y la <strong>Expresión Optimizada (4.2)</strong>:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                            <div class="max-w-xs mx-auto w-full bg-white p-4 border border-slate-200 rounded-2xl">
+                                <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono font-bold">
+                                    <div class="p-2 text-slate-500">A \ B</div>
+                                    <div class="p-2 bg-slate-100 rounded text-slate-700">B = 0</div>
+                                    <div class="p-2 bg-slate-100 rounded text-slate-700">B = 1</div>
+
+                                    <div class="p-2 bg-slate-100 rounded text-slate-700 flex items-center justify-center">A = 0</div>
+                                    <button id="kcell00" onclick="toggleKCell('00')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded-xl font-bold transition">0</button>
+                                    <button id="kcell01" onclick="toggleKCell('01')" class="p-3 bg-indigo-600 text-white text-base rounded-xl font-bold transition">1</button>
+
+                                    <div class="p-2 bg-slate-100 rounded text-slate-700 flex items-center justify-center">A = 1</div>
+                                    <button id="kcell10" onclick="toggleKCell('10')" class="p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded-xl font-bold transition">0</button>
+                                    <button id="kcell11" onclick="toggleKCell('11')" class="p-3 bg-indigo-600 text-white text-base rounded-xl font-bold transition">1</button>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 text-xs">
+                                <div class="bg-slate-900 text-sky-300 p-4 rounded-xl font-mono">
+                                    <span class="text-slate-400 font-sans block text-[10px] uppercase font-bold mb-1">1. Expresión en Minitérminos Sin Simplificar (4.3.1):</span>
+                                    <strong id="kMintermsDisplay" class="text-xs sm:text-sm">F(A, B) = A'B + AB</strong>
+                                </div>
+                                <div class="bg-slate-900 text-emerald-400 p-4 rounded-xl font-mono">
+                                    <span class="text-slate-400 font-sans block text-[10px] uppercase font-bold mb-1">2. Expresión Optimizada por Karnaugh (4.2):</span>
+                                    <strong id="kResultDisplay" class="text-sm sm:text-base">F(A, B) = B</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
                 <!-- Navegación Inferior -->
                 <div class="pt-8 border-t border-slate-200 flex justify-between items-center text-xs font-semibold">
@@ -584,7 +1220,7 @@
 
             </main>
 
-            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (3 Cols) -->
+            <!-- COLUMNA DERECHA: Tabla de Contenidos Sticky (2 Cols) -->
             <aside class="hidden lg:block lg:col-span-2 space-y-6">
                 <div class="sticky top-20 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center space-x-2 pb-3 mb-3 border-b border-slate-100 text-slate-800">
@@ -593,17 +1229,23 @@
                     </div>
 
                     <nav class="space-y-1.5 text-xs text-slate-600">
+                        <a href="#puente-u3-u4" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">De Unidad 3 a Unidad 4</a>
                         <a href="#tema-4-1" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.1 Teoremas y Postulados</a>
-<a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.2 Mapas de Karnaugh</a>
-<a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Compuertas y Sumador 4 Bits</a>
-<a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Karnaugh Interactivo</a>
-
+                        <a href="#tema-4-2" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.2 Optimización (Karnaugh)</a>
+                        <a href="#tema-4-3" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">4.3 Compuertas Lógicas</a>
+                        <a href="#sub-4-3-1" class="block py-1 pl-3 text-[11px] hover:text-indigo-600 transition">• 4.3.1 Mini y Maxi términos</a>
+                        <a href="#sub-4-3-2" class="block py-1 pl-3 text-[11px] hover:text-indigo-600 transition">• 4.3.2 Circuitos Lógicos</a>
+                        <a href="#laboratorio-karnaugh" class="block py-1 hover:text-indigo-600 border-l-2 border-transparent hover:border-emerald-500 pl-2 transition">Simulador Interactivo</a>
                     </nav>
 
                     <div class="mt-6 pt-4 border-t border-slate-100 bg-indigo-50/60 p-3 rounded-xl border border-indigo-100">
-                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-flask mr-1"></i> Actividades de Aprendizaje</div>
+                        <div class="text-[11px] font-bold text-slate-900 mb-1"><i class="fas fa-lightbulb text-indigo-600 mr-1"></i> Recordatorio Rápido</div>
                         <p class="text-[11px] text-slate-600 leading-tight">
-                            Práctica 7 oficial del TecNM: Construcción de circuito lógico y sumador binario de 4 bits (74LS83).
+                            • <strong>Suma (+)</strong> = Compuerta OR.<br>
+                            • <strong>Producto (·)</strong> = Compuerta AND.<br>
+                            • <strong>Comilla (')</strong> = Compuerta NOT.<br>
+                            • <strong>Minitérminos</strong> = Filas con 1.<br>
+                            • <strong>Maxitérminos</strong> = Filas con 0.
                         </p>
                     </div>
                 </div>
@@ -618,34 +1260,52 @@
         <p class="mt-1">Catedrático: Cruz Enrique García • Programa Oficial de Ingeniería en Sistemas</p>
     </footer>
 
-    
-<script>
-    const kstate = { '00': 0, '01': 1, '10': 0, '11': 1 };
-    function toggleKCell(id) {
-        kstate[id] = kstate[id] === 1 ? 0 : 1;
-        const btn = document.getElementById('kcell' + id);
-        btn.innerText = kstate[id];
-        btn.className = kstate[id] === 1 ? "p-3 bg-indigo-600 text-white text-base rounded font-bold transition" : "p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded font-bold transition";
-        actualizarKarnaugh();
-    }
-    function actualizarKarnaugh() {
-        const c00 = kstate['00'], c01 = kstate['01'], c10 = kstate['10'], c11 = kstate['11'];
-        const disp = document.getElementById('kResultDisplay');
-        if (c00 && c01 && c10 && c11) disp.innerText = "F(A, B) = 1 (VCC +5V)";
-        else if (!c00 && !c01 && !c10 && !c11) disp.innerText = "F(A, B) = 0 (GND 0V)";
-        else if (c01 && c11 && !c00 && !c10) disp.innerText = "F(A, B) = B (Línea directa)";
-        else if (c10 && c11 && !c00 && !c01) disp.innerText = "F(A, B) = A (Línea directa)";
-        else if (c00 && c01 && !c10 && !c11) disp.innerText = "F(A, B) = A' (74LS04 NOT)";
-        else if (c00 && c10 && !c01 && !c11) disp.innerText = "F(A, B) = B' (74LS04 NOT)";
-        else if (c01 && c10 && !c00 && !c11) disp.innerText = "F(A, B) = A ⊕ B (74LS86 XOR)";
-        else {
-            let terms = [];
-            if (c00) terms.push("A'B'"); if (c01) terms.push("A'B"); if (c10) terms.push("AB'"); if (c11) terms.push("AB");
-            disp.innerText = "F(A, B) = " + terms.join(" + ");
+    <script>
+        const kstate = { '00': 0, '01': 1, '10': 0, '11': 1 };
+        function toggleKCell(id) {
+            kstate[id] = kstate[id] === 1 ? 0 : 1;
+            const btn = document.getElementById('kcell' + id);
+            btn.innerText = kstate[id];
+            btn.className = kstate[id] === 1
+                ? "p-3 bg-indigo-600 text-white text-base rounded-xl font-bold transition"
+                : "p-3 bg-slate-100 hover:bg-indigo-100 text-slate-800 text-base rounded-xl font-bold transition";
+            actualizarKarnaugh();
         }
-    }
-    window.onload = function() { toggleKCell('01'); toggleKCell('01'); toggleKCell('11'); toggleKCell('11'); actualizarKarnaugh(); };
-</script>
+        function actualizarKarnaugh() {
+            const c00 = kstate['00'], c01 = kstate['01'], c10 = kstate['10'], c11 = kstate['11'];
+            const disp = document.getElementById('kResultDisplay');
+            const minDisp = document.getElementById('kMintermsDisplay');
+
+            let terms = [];
+            if (c00) terms.push("A'B' (m0)");
+            if (c01) terms.push("A'B (m1)");
+            if (c10) terms.push("AB' (m2)");
+            if (c11) terms.push("AB (m3)");
+            minDisp.innerText = terms.length > 0 ? "F(A, B) = " + terms.join(" + ") : "F(A, B) = 0 (Ningún minitérmino activo)";
+
+            if (c00 && c01 && c10 && c11) disp.innerText = "F(A, B) = 1 (Siempre Encendido)";
+            else if (!c00 && !c01 && !c10 && !c11) disp.innerText = "F(A, B) = 0 (Siempre Apagado)";
+            else if (c01 && c11 && !c00 && !c10) disp.innerText = "F(A, B) = B (A cambió de 0 a 1 y se eliminó)";
+            else if (c10 && c11 && !c00 && !c01) disp.innerText = "F(A, B) = A (B cambió de 0 a 1 y se eliminó)";
+            else if (c00 && c01 && !c10 && !c11) disp.innerText = "F(A, B) = A' (A fija en 0, B se eliminó)";
+            else if (c00 && c10 && !c01 && !c11) disp.innerText = "F(A, B) = B' (B fija en 0, A se eliminó)";
+            else if (c01 && c10 && !c00 && !c11) disp.innerText = "F(A, B) = A'B + AB' = A ⊕ B (Compuerta XOR)";
+            else if (c00 && c11 && !c01 && !c10) disp.innerText = "F(A, B) = A'B' + AB (XNOR / Igualdad)";
+            else if (c01 && c10 && c11 && !c00) disp.innerText = "F(A, B) = A + B (Compuerta OR)";
+            else if (c00 && c01 && c10 && !c11) disp.innerText = "F(A, B) = A' + B' = (AB)' (Compuerta NAND)";
+            else if (c00 && c01 && c11 && !c10) disp.innerText = "F(A, B) = A' + B";
+            else if (c00 && c10 && c11 && !c01) disp.innerText = "F(A, B) = A + B'";
+            else {
+                let raw = [];
+                if (c00) raw.push("A'B'");
+                if (c01) raw.push("A'B");
+                if (c10) raw.push("AB'");
+                if (c11) raw.push("AB");
+                disp.innerText = "F(A, B) = " + raw.join(" + ") + " (Un solo 1, no se reduce más)";
+            }
+        }
+        window.onload = function() { actualizarKarnaugh(); };
+    </script>
 
 </body>
 </html>
